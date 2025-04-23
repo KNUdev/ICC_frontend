@@ -1,0 +1,52 @@
+$bg-dark: #141414;
+$text-light: #d1d1d1;
+$text-white: #ffffff;
+$darker-white: #A0A0A0;
+$border-gray: #6d6d6d;
+$accent-yellow: #edd342;
+$text-gray: #a0a0a0;
+$darker-gray: #343434;
+
+@mixin desktop {
+    @media (max-width: 1919px) {
+        @content;
+    }
+}
+
+@mixin tablet-horizontal {
+    @media (max-width: 1439px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (max-width: 1335px) {
+        @content;
+    }
+}
+
+@mixin mobile-horizontal {
+    @media (max-width: 1023px) {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media (max-width: 639px) {
+        @content;
+    }
+}
+
+@mixin mobile-mini {
+    @media (max-width: 359px) {
+        @content;
+    }
+}
+
+@mixin flex-center($direction: row, $wrap: nowrap) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: $wrap;
+}
