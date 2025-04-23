@@ -4,14 +4,14 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('../pages/landing/landing.component').then((m) => m.LandingComponent),
+      import('../pages/landing/landing.component').then(
+        (m) => m.LandingComponent
+      ),
   },
   {
     path: 'error/404',
     loadComponent: () =>
-      import('../pages/error/404/404.component').then(
-        (m) => m.NotFoundPage
-      ),
+      import('../pages/error/404/404.component').then((m) => m.NotFoundPage),
     canActivate: [ErrorStateGuard],
   },
   {

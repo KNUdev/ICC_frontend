@@ -1,13 +1,17 @@
-import {Component, inject} from '@angular/core';
-import {I18nService} from '../../services/languages/i18n.service';
-import {LangChangeEvent, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {startWith, switchMap} from 'rxjs';
+import { Component, inject } from '@angular/core';
+import {
+  LangChangeEvent,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
+import { startWith, switchMap } from 'rxjs';
+import { I18nService } from '../../services/languages/i18n.service';
 
 @Component({
   selector: 'app-landing',
   imports: [TranslateModule],
   templateUrl: './landing.component.html',
-  styleUrl: './landing.component.scss'
+  styleUrl: './landing.component.scss',
 })
 export class LandingComponent {
   private i18nService = inject(I18nService);

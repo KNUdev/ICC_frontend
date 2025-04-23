@@ -1,6 +1,6 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {HeaderComponent} from './common/components/header/header.component';
+import { HeaderComponent } from './common/components/header/header.component';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +9,4 @@ import {HeaderComponent} from './common/components/header/header.component';
   styleUrl: './app.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent {
-}
+export class AppComponent {}

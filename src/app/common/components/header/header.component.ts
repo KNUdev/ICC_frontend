@@ -1,16 +1,18 @@
-import {Component, inject} from '@angular/core';
-import {LangSwitchComponent} from '../lang-switch/lang-switch.component';
-import {LangChangeEvent, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {I18nService} from '../../../services/languages/i18n.service';
-import {startWith, switchMap} from 'rxjs';
+import { Component, inject } from '@angular/core';
+import {
+  LangChangeEvent,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
+import { startWith, switchMap } from 'rxjs';
+import { I18nService } from '../../../services/languages/i18n.service';
+import { LangSwitchComponent } from '../lang-switch/lang-switch.component';
 
 @Component({
   selector: 'app-header',
-  imports: [
-    LangSwitchComponent, TranslateModule
-  ],
+  imports: [LangSwitchComponent, TranslateModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   private i18nService = inject(I18nService);
