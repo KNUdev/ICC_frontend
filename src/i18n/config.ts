@@ -7,6 +7,6 @@ export const LANGUAGE_LABELS = {
 	uk: 'Українська',
 } as const
 
-export const NAMESPACES = ['common', 'home']
-
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
+
+export const NAMESPACES = ['common', 'home']

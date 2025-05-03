@@ -1,19 +1,20 @@
-import { routing } from '@/i18n/routing'
-import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import { Metadata } from 'next'
+import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
-import { notFound } from 'next/navigation'
+
+export const metadata: Metadata = {
+	icons: {
+		icon: '/favicon.ico',
+	},
+}
 
 export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode
-	params: Promise<{ locale: string }>
 }) {
 	const locale = await getLocale()
 	const messages = await getMessages()
-	if (!hasLocale(routing.locales, locale)) {
-		notFound()
-	}
 
 	return (
 		<html lang={locale}>
