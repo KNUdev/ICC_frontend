@@ -1,0 +1,83 @@
+.Footer {
+  font-family: "Inter";
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 3.125rem;
+  gap: 6.25rem;
+}
+
+.InfoHeading {
+  text-transform: uppercase;
+  width: 17.5rem;
+  color: var(--text-nat-0, #272727);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.Heading {
+  text-transform: uppercase;
+  color: var(--text-nat-0, #272727);
+}
+
+.Container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.NavLinks {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.NavContainer {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 21rem;
+  min-width: 0;
+  gap: 1rem;
+  box-sizing: border-box;
+}
+
+.List {
+  padding: 0;
+  width: 23.75rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.938rem;
+}
+
+.List > li {
+  color: var(--text-nat-500, #6d6d6d);
+  width: 300px;
+}
+
+.Divider {
+  background: #d7d7d7;
+  width: 100%;
+  height: 1px;
+}
+
+.MailContainer,
+.TelephoneContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.313rem;
+}
+
+.SocialMediaContainer {
+  display: flex;
+  align-items: center;
+  gap: 3.125rem;
+}
+
+.Hyperlink {
+  color: var(--text-red-400, #ff525e);
+  text-decoration-line: underline;
+}
