@@ -1,130 +1,135 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
+import Link from "next/link";
+// import { footerNavLink, instituteLink, facultyLink } from "./footerConfig";
 import styles from "./Footer.module.scss";
 
-const navigation = [
-  "Головна",
-  "Запит на послугу",
-  "Історія",
-  "Фотогалерея",
-  "Штат",
-  "ЦОМ",
-  "Документи",
-  "Часті запитання",
-];
-
-const institutions = [
-  "Навчально-науковий інститут “Інститут геології”",
-  "Військовий інститут",
-  "Інститут Управління державної охорони України",
-  "Інститут післядипломної освіти",
-  "Навчально-науковий інститут",
-];
-
-const faculties = [
-  "Географічний факультет",
-  "Економічний факультет",
-  "Історичний факультет",
-  "Механіко-математичний факультет",
-  "Фікультет інформаційних технологій",
-];
-
 export function Footer() {
+  const locale = useLocale();
+  const tFooter = useTranslations("footer");
+  const navigationArr = (tFooter.raw("footer.navigationArr") as string[]) || [];
+  const institutionsArr =
+    (tFooter.raw("footer.institutionsArr") as string[]) || [];
+  const facultiesArr = (tFooter.raw("footer.facultiesArr") as string[]) || [];
+
   return (
-    <footer className={styles.Footer}>
-      <div className={styles.Container}>
-        <h2 className={styles.InfoHeading}>
-          Інформаційно-обчислювальний центр
+    <footer id={styles.footer}>
+      <div className={styles.container}>
+        <h2 className={styles.infoHeading}>
+          {tFooter("footer.infoCenterHeading")}
         </h2>
         <Image
-          src={"/FooterIcons/knu-logo.png"}
+          src={"/image/icons/logo_knu.webp"}
           alt="knu logo"
           width={80}
           height={86}
         />
       </div>
 
-      <hr className={styles.Divider} />
+      <hr className={styles.divider} />
 
-      <div className={styles.NavLinks}>
-        <div className={styles.NavContainer}>
-          <h3 className={styles.Heading}>Навігація</h3>
+      <nav className={styles.navLinks}>
+        <div className={styles.navContainer}>
+          <h3 className={styles.heading}>{tFooter("footer.navigation")}</h3>
 
-          <ul className={styles.List}>
-            {navigation.map((nav, index) => (
-              <li key={index}>{nav}</li>
+          <ul className={styles.list}>
+            {navigationArr.map((nav, index) => (
+              <li key={index}>
+                <Link
+                  href={`/${nav.toLowerCase().replace(/\s+/g, "-")}`}
+                  locale={locale}
+                >
+                  {nav}
+                </Link>
+              </li>
             ))}
           </ul>
         </div>
 
-        <div className={styles.NavContainer}>
-          <h3 className={styles.Heading}>Інститути</h3>
+        <div className={styles.navContainer}>
+          <h3 className={styles.heading}>{tFooter("footer.institutions")}</h3>
 
-          <ul className={styles.List}>
-            {institutions.map((institute, index) => (
-              <li key={index}>{institute}</li>
+          <ul className={styles.list}>
+            {institutionsArr.map((institute, index) => (
+              <li key={index}>
+                <Link
+                  href={`/${institute.toLowerCase().replace(/\s+/g, "-")}`}
+                  locale={locale}
+                >
+                  {institute}
+                </Link>
+              </li>
             ))}
 
             <li>
-              <a className={styles.Hyperlink}>Дивитись більше</a>
+              <a className={styles.hyperlink}>{tFooter("footer.seeMore")}</a>
             </li>
           </ul>
         </div>
 
-        <div className={styles.NavContainer}>
-          <h3 className={styles.Heading}>Факультети</h3>
+        <div className={styles.navContainer}>
+          <h3 className={styles.heading}>{tFooter("footer.faculties")}</h3>
 
-          <ul className={styles.List}>
-            {faculties.map((faculty, index) => (
-              <li key={index}>{faculty}</li>
+          <ul className={styles.list}>
+            {facultiesArr.map((faculty, index) => (
+              <li key={index}>
+                <Link
+                  href={`/${faculty.toLowerCase().replace(/\s+/g, "-")}`}
+                  locale={locale}
+                >
+                  {faculty}
+                </Link>
+              </li>
             ))}
 
             <li>
-              <a className={styles.Hyperlink}>Дивитись більше</a>
+              <a className={styles.hyperlink}>{tFooter("footer.seeMore")}</a>
             </li>
           </ul>
         </div>
-      </div>
+      </nav>
 
-      <hr className={styles.Divider} />
+      <hr className={styles.divider} />
 
-      <div className={styles.Container}>
-        <div className={styles.MailContainer}>
+      <div className={styles.container}>
+        <div className={styles.mailContainer}>
           <Image
-            src={"/FooterIcons/social/mail.png"}
+            src={"/image/icons/social/mail.svg"}
             alt="mail"
             width={24}
-            height={24}
+            height={20}
           />
           <p>example@gmail.com</p>
         </div>
 
-        <div className={styles.SocialMediaContainer}>
+        <div className={styles.socialMediaContainer}>
           <Image
-            src={"/FooterIcons/social/instagram.png"}
+            src={"/image/icons/social/instagram.svg"}
             alt="instagram"
             width={30}
-            height={30}
+            height={18}
           />
           <Image
-            src={"/FooterIcons/social/facebook.png"}
+            src={"/image/icons/social/facebook.svg"}
             alt="facebook"
             width={30}
             height={30}
           />
           <Image
-            src={"/FooterIcons/social/linkedin.png"}
+            src={"/image/icons/social/linkedin.svg"}
             alt="linkedin"
             width={30}
             height={30}
           />
         </div>
 
-        <div className={styles.TelephoneContainer}>
+        <div className={styles.telephoneContainer}>
           <Image
-            src={"/FooterIcons/social/telephone.png"}
+            src={"/image/icons/social/telephone.svg"}
             alt="telephone"
             width={24}
-            height={24}
+            height={20}
           />
           <p>+380(786)376-38-52</p>
         </div>
