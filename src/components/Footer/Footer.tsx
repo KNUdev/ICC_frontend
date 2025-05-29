@@ -7,11 +7,13 @@ import styles from "./Footer.module.scss";
 
 export function Footer() {
   const locale = useLocale();
+
   const tFooter = useTranslations("footer");
-  const navigationArr = (tFooter.raw("footer.navigationArr") as string[]) || [];
-  const institutionsArr =
-    (tFooter.raw("footer.institutionsArr") as string[]) || [];
-  const facultiesArr = (tFooter.raw("footer.facultiesArr") as string[]) || [];
+  const tCommon = useTranslations("common");
+
+  const navigationArr = (tFooter.raw("footer.navigation") as string[]) || [];
+  const institutionsArr = (tCommon.raw("institutions") as string[]) || [];
+  const facultiesArr = (tCommon.raw("faculties") as string[]) || [];
 
   return (
     <footer id={styles.footer}>
@@ -31,7 +33,9 @@ export function Footer() {
 
       <nav className={styles.navLinks}>
         <div className={styles.navContainer}>
-          <h3 className={styles.heading}>{tFooter("footer.navigation")}</h3>
+          <h3 className={styles.heading}>
+            {tFooter("footer.navigationHeading")}
+          </h3>
 
           <ul className={styles.list}>
             {navigationArr.map((nav, index) => (
@@ -48,19 +52,18 @@ export function Footer() {
         </div>
 
         <div className={styles.navContainer}>
-          <h3 className={styles.heading}>{tFooter("footer.institutions")}</h3>
+          <h3 className={styles.heading}>
+            {tFooter("footer.institutionsHeading")}
+          </h3>
 
           <ul className={styles.list}>
-            {institutionsArr.map((institute, index) => (
-              <li key={index}>
-                <Link
-                  href={`/${institute.toLowerCase().replace(/\s+/g, "-")}`}
-                  locale={locale}
-                >
-                  {institute}
-                </Link>
-              </li>
-            ))}
+            {Object.entries(institutionsArr)
+              .slice(0, 5)
+              .map(([key, value]) => (
+                <li key={key}>
+                  <a href={`/${value}`}>{value}</a>
+                </li>
+              ))}
 
             <li>
               <a className={styles.hyperlink}>{tFooter("footer.seeMore")}</a>
@@ -69,19 +72,18 @@ export function Footer() {
         </div>
 
         <div className={styles.navContainer}>
-          <h3 className={styles.heading}>{tFooter("footer.faculties")}</h3>
+          <h3 className={styles.heading}>
+            {tFooter("footer.facultiesHeading")}
+          </h3>
 
           <ul className={styles.list}>
-            {facultiesArr.map((faculty, index) => (
-              <li key={index}>
-                <Link
-                  href={`/${faculty.toLowerCase().replace(/\s+/g, "-")}`}
-                  locale={locale}
-                >
-                  {faculty}
-                </Link>
-              </li>
-            ))}
+            {Object.entries(facultiesArr)
+              .slice(0, 5)
+              .map(([key, value]) => (
+                <li key={key}>
+                  <a href={`/${value}`}>{value}</a>
+                </li>
+              ))}
 
             <li>
               <a className={styles.hyperlink}>{tFooter("footer.seeMore")}</a>
@@ -100,7 +102,7 @@ export function Footer() {
             width={24}
             height={20}
           />
-          <p>example@gmail.com</p>
+          <a href="mailto:example@gmail.com">example@gmail.com</a>
         </div>
 
         <div className={styles.socialMediaContainer}>
@@ -131,7 +133,7 @@ export function Footer() {
             width={24}
             height={20}
           />
-          <p>+380(786)376-38-52</p>
+          <a href="tel:+3807863763852">+380(786)376-38-52</a>
         </div>
       </div>
     </footer>

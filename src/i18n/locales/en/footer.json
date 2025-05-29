@@ -1,12 +1,12 @@
 {
   "footer": {
     "infoCenterHeading": "Information and Computing Center",
-    "navigation": "Navigation",
-    "institutions": "Institutes",
-    "faculties": "Faculties",
+    "navigationHeading": "Navigation",
+    "institutionsHeading": "Institutes",
+    "facultiesHeading": "Faculties",
     "seeMore": "See more",
 
-    "navigationArr": [
+    "navigation": [
       "Home",
       "Service Request",
       "History",
@@ -15,20 +15,6 @@
       "CIC",
       "Documents",
       "FAQ"
-    ],
-    "institutionsArr": [
-      "Educational and Scientific Institute 'Institute of Geology'",
-      "Military Institute",
-      "Institute of State Security Administration",
-      "Institute of Postgraduate Education",
-      "Educational and Scientific Institute"
-    ],
-    "facultiesArr": [
-      "Faculty of Geography",
-      "Faculty of Economics",
-      "Faculty of History",
-      "Faculty of Mechanics and Mathematics",
-      "Faculty of Information Technology"
     ]
   }
 }

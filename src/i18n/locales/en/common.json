@@ -1,3 +1,17 @@
 {
-	"title": "ICC"
+  "title": "ICC",
+  "institutions": {
+    "geologyInst": "Educational and Scientific Institute 'Institute of Geology'",
+    "militaryInst": "Military Institute",
+    "securityInst": "Institute of State Security Administration",
+    "postgraduateInst": "Institute of Postgraduate Education",
+    "scientificInst": "Educational and Scientific Institute"
+  },
+  "faculties": {
+    "geographyFac": "Faculty of Geography",
+    "economiscFac": "Faculty of Economics",
+    "historyFac": "Faculty of History",
+    "mechmathFac": "Faculty of Mechanics and Mathematics",
+    "infotechFac": "Faculty of Information Technology"
+  }
 }
