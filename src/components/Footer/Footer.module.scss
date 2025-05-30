@@ -53,8 +53,12 @@
 }
 
 .list > li {
-  color: var(--text-nat-500, #6d6d6d);
   width: 300px;
+}
+
+.listItemLink {
+  text-decoration: none;
+  color: var(--text-nat-500, #6d6d6d);
 }
 
 .divider {
@@ -80,4 +84,17 @@
 .hyperlink {
   color: var(--text-red-400, #ff525e);
   text-decoration-line: underline;
+}
+
+.contactImage {
+  color: var(--button-red-400, #ff525e);
+}
+
+.socialImage {
+  color: var(--icon-nat-500, #6d6d6d);
+}
+
+.contactLink {
+  text-decoration: none;
+  color: var(--text-nat-250, #3d3d3d);
 }
