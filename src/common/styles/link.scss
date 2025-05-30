@@ -1,0 +1,78 @@
+.hyperlink {
+  color: var(--text-red-400, #ff525e);
+  text-decoration-line: underline;
+}
+
+.hyperlink:hover {
+  color: var(--text-red-800, #a30e2c);
+}
+
+.hyperlink:focus-visible {
+  color: var(--text-red-800, #a30e2c);
+  outline: none;
+  border: 2px solid var(--border-red-800, #a30e2c);
+  padding: 0.625rem;
+}
+
+.hyperlink:active {
+  color: var(--text-red-1000, #73252a);
+}
+
+.navLink {
+  text-decoration: none;
+  color: var(--text-nat-500, #6d6d6d);
+}
+
+.navLink:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--border-red-400, #ff525e);
+  text-underline-offset: 0.313rem;
+  color: var(--text-nat-150, #464646);
+}
+
+.navLink:active {
+  color: var(--text-nat-500, #6d6d6d);
+}
+
+.contactLink {
+  text-decoration: none;
+  color: var(--text-nat-250, #3d3d3d);
+}
+
+.contactLink:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--border-red-400, #ff525e);
+  text-underline-offset: 0.313rem;
+  text-decoration-thickness: 1px;
+}
+
+.contactLink:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-color: var(--border-red-400, #ff525e);
+  text-underline-offset: 0.313rem;
+  text-decoration-thickness: 1.8px;
+}
+
+.contactLink:active {
+  color: var(--text-nat-500, #6d6d6d);
+}
+
+.socialLink {
+  color: var(--icon-nat-500, #6d6d6d);
+}
+
+.socialLink:hover {
+  color: var(--button-red-400, #ff525e);
+}
+
+.socialLink:focus-visible {
+  outline: none;
+  color: var(--button-red-400, #ff525e);
+  border-radius: 5px;
+  border: 1px solid var(--border-red-400, #ff525e);
+}
+
+.socialLink:active {
+  color: var(--button-red-800, #a30e2c);
+}

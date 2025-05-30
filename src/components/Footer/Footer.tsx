@@ -14,6 +14,7 @@ import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./Footer.module.scss";
+import "../../app/[locale]/globals.scss";
 
 export function Footer() {
   const locale = useLocale();
@@ -47,11 +48,7 @@ export function Footer() {
           <ul className={styles.list} role="list">
             {footerNavigation.map(({ key, link }) => (
               <li key={key} role="listitem">
-                <Link
-                  href={link}
-                  locale={locale}
-                  className={styles.listItemLink}
-                >
+                <Link href={link} locale={locale} className="navLink">
                   {tFooter(`navigation.${key}`)}
                 </Link>
               </li>
@@ -72,7 +69,7 @@ export function Footer() {
                   aria-label={`${tCommon(
                     `institutions.${key}`
                   )} (opens in a new tab)`}
-                  className={styles.listItemLink}
+                  className="navLink"
                 >
                   {tCommon(`institutions.${key}`)}
                 </a>
@@ -80,7 +77,7 @@ export function Footer() {
             ))}
 
             <li role="listitem">
-              <Link href={"/institutions"} className={styles.hyperlink}>
+              <Link href={"/institutions"} className="hyperlink">
                 {tCommon("seeMore")}
               </Link>
             </li>
@@ -100,7 +97,7 @@ export function Footer() {
                   aria-label={`${tCommon(
                     `faculties.${key}`
                   )} (opens in a new tab)`}
-                  className={styles.listItemLink}
+                  className="navLink"
                 >
                   {tCommon(`faculties.${key}`)}
                 </a>
@@ -108,7 +105,7 @@ export function Footer() {
             ))}
 
             <li role="listitem">
-              <Link href={"/faculties"} className={styles.hyperlink}>
+              <Link href={"/faculties"} className="hyperlink">
                 {tCommon("seeMore")}
               </Link>
             </li>
@@ -124,7 +121,7 @@ export function Footer() {
           <a
             href={`mailto:${contactInfo.email}`}
             aria-label={tFooter("aria.sendEmail")}
-            className={styles.contactLink}
+            className="contactLink"
           >
             {contactInfo.email}
           </a>
@@ -140,24 +137,27 @@ export function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={tFooter("aria.instagram")}
+            className="socialLink"
           >
-            <InstagramIcon alt="instagramIcon" className={styles.socialImage} />
+            <InstagramIcon alt="instagramIcon" />
           </a>
           <a
             href={contactInfo.socialMedia.facebook}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={tFooter("aria.facebook")}
+            className="socialLink"
           >
-            <FacebookIcon alt="facebookIcon" className={styles.socialImage} />
+            <FacebookIcon alt="facebookIcon" />
           </a>
           <a
             href={contactInfo.socialMedia.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={tFooter("aria.linkedin")}
+            className="socialLink"
           >
-            <LinkedInIcon alt="linkedinIcon" className={styles.socialImage} />
+            <LinkedInIcon alt="linkedinIcon" />
           </a>
         </div>
 
@@ -166,7 +166,7 @@ export function Footer() {
           <a
             href={`tel:${contactInfo.phone.replace(/[^\d+]/g, "")}`}
             aria-label={tFooter("aria.callPhone")}
-            className={styles.contactLink}
+            className="contactLink"
           >
             {contactInfo.phone}
           </a>
