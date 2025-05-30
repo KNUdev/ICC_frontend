@@ -26,8 +26,6 @@ const nextConfig: NextConfig = {
 	},
 	images: {
 		domains: ['knu-icc.netlify.app'],
-		loader: 'custom',
-		loaderFile: './src/lib/netlifyImageLoader.ts',
 	},
 }
 
