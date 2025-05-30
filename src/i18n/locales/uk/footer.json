@@ -1,20 +1,21 @@
 {
-  "footer": {
-    "infoCenterHeading": "Інформаційно-обчислювальний центр",
-    "navigationHeading": "Навігація",
-    "institutionsHeading": "Інститути",
-    "facultiesHeading": "Факультети",
-    "seeMore": "Дивитись більше",
+	"navigation": {
+		"home": "Головна",
+		"serviceRequest": "Запит на послугу",
+		"history": "Історія",
+		"photoGallery": "Фотогалерея",
+		"staff": "Штат",
+		"cic": "ЦОМ",
+		"documents": "Документи",
+		"faq": "Часті запитання"
+	},
 
-    "navigation": [
-      "Головна",
-      "Запит на послугу",
-      "Історія",
-      "Фотогалерея",
-      "Штат",
-      "ЦОМ",
-      "Документи",
-      "Часті запитання"
-    ]
-  }
+	"aria": {
+		"sendEmail": "Написати email",
+		"socialMedia": "Соціальні мережі",
+		"instagram": "Instagram (відкриється в новому вікні)",
+		"facebook": "Facebook (відкриється в новому вікні)",
+		"linkedin": "LinkedIn (відкриється в новому вікні)",
+		"callPhone": "Зателефонувати"
+	}
 }

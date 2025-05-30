@@ -1,141 +1,169 @@
-import Image from "next/image";
-import { useTranslations } from "next-intl";
-import { useLocale } from "next-intl";
-import Link from "next/link";
-// import { footerNavLink, instituteLink, facultyLink } from "./footerConfig";
-import styles from "./Footer.module.scss";
+import logoKnu from '@/assets/image/icons/logo_knu.png'
+import FacebookIcon from '@/assets/image/icons/social/facebook.svg'
+import InstagramIcon from '@/assets/image/icons/social/instagram.svg'
+import LinkedInIcon from '@/assets/image/icons/social/linkedin.svg'
+import Mail from '@/assets/image/icons/social/mail.svg'
+import Telephone from '@/assets/image/icons/social/telephone.svg'
+import {
+	contactInfo,
+	facultyLinks,
+	footerNavigation,
+	institutionLinks,
+} from '@/lib/footerData'
+import { useLocale, useTranslations } from 'next-intl'
+import Image from 'next/image'
+import Link from 'next/link'
+import styles from './Footer.module.scss'
 
 export function Footer() {
-  const locale = useLocale();
+	const locale = useLocale()
 
-  const tFooter = useTranslations("footer");
-  const tCommon = useTranslations("common");
+	const tFooter = useTranslations('footer')
+	const tCommon = useTranslations('common')
 
-  const navigationArr = (tFooter.raw("footer.navigation") as string[]) || [];
-  const institutionsArr = (tCommon.raw("institutions") as string[]) || [];
-  const facultiesArr = (tCommon.raw("faculties") as string[]) || [];
+	return (
+		<footer id={styles.footer} role='contentinfo'>
+			<header className={styles.container}>
+				<h2 className={styles.infoHeading}>{tCommon('titleFullName')}</h2>
+				<Image
+					src={logoKnu}
+					alt={`${tCommon('titleFullName')} logo`}
+					width={80}
+					height={86}
+					priority
+				/>
+			</header>
 
-  return (
-    <footer id={styles.footer}>
-      <div className={styles.container}>
-        <h2 className={styles.infoHeading}>
-          {tFooter("footer.infoCenterHeading")}
-        </h2>
-        <Image
-          src={"/image/icons/logo_knu.webp"}
-          alt="knu logo"
-          width={80}
-          height={86}
-        />
-      </div>
+			<hr className={styles.divider} role='separator' />
 
-      <hr className={styles.divider} />
+			<nav
+				className={styles.navLinks}
+				role='navigation'
+				aria-label='Footer navigation'
+			>
+				<section className={styles.navContainer}>
+					<h3 className={styles.heading}>{tCommon('navigationHeading')}</h3>
 
-      <nav className={styles.navLinks}>
-        <div className={styles.navContainer}>
-          <h3 className={styles.heading}>
-            {tFooter("footer.navigationHeading")}
-          </h3>
+					<ul className={styles.list} role='list'>
+						{footerNavigation.map(({ key, link }) => (
+							<li key={key} role='listitem'>
+								<Link href={link} locale={locale}>
+									{tFooter(`navigation.${key}`)}
+								</Link>
+							</li>
+						))}
+					</ul>
+				</section>
 
-          <ul className={styles.list}>
-            {navigationArr.map((nav, index) => (
-              <li key={index}>
-                <Link
-                  href={`/${nav.toLowerCase().replace(/\s+/g, "-")}`}
-                  locale={locale}
-                >
-                  {nav}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+				<section className={styles.navContainer}>
+					<h3 className={styles.heading}>{tCommon('institutionsHeading')}</h3>
 
-        <div className={styles.navContainer}>
-          <h3 className={styles.heading}>
-            {tFooter("footer.institutionsHeading")}
-          </h3>
+					<ul className={styles.list} role='list'>
+						{institutionLinks.slice(0, 5).map(({ key, link }) => (
+							<li key={key} role='listitem'>
+								<a
+									href={link}
+									target='_blank'
+									rel='noopener noreferrer'
+									aria-label={`${tCommon(
+										`institutions.${key}`
+									)} (opens in a new tab)`}
+								>
+									{tCommon(`institutions.${key}`)}
+								</a>
+							</li>
+						))}
 
-          <ul className={styles.list}>
-            {Object.entries(institutionsArr)
-              .slice(0, 5)
-              .map(([key, value]) => (
-                <li key={key}>
-                  <a href={`/${value}`}>{value}</a>
-                </li>
-              ))}
+						<li role='listitem'>
+							<Link href={'/institutions'} className={styles.hyperlink}>
+								{tCommon('seeMore')}
+							</Link>
+						</li>
+					</ul>
+				</section>
 
-            <li>
-              <a className={styles.hyperlink}>{tFooter("footer.seeMore")}</a>
-            </li>
-          </ul>
-        </div>
+				<section className={styles.navContainer}>
+					<h3 className={styles.heading}>{tCommon('facultiesHeading')}</h3>
 
-        <div className={styles.navContainer}>
-          <h3 className={styles.heading}>
-            {tFooter("footer.facultiesHeading")}
-          </h3>
+					<ul className={styles.list} role='list'>
+						{facultyLinks.slice(0, 5).map(({ key, link }) => (
+							<li key={key} role='listitem'>
+								<a
+									href={link}
+									target='_blank'
+									rel='noopener noreferrer'
+									aria-label={`${tCommon(
+										`faculties.${key}`
+									)} (opens in a new tab)`}
+								>
+									{tCommon(`faculties.${key}`)}
+								</a>
+							</li>
+						))}
 
-          <ul className={styles.list}>
-            {Object.entries(facultiesArr)
-              .slice(0, 5)
-              .map(([key, value]) => (
-                <li key={key}>
-                  <a href={`/${value}`}>{value}</a>
-                </li>
-              ))}
+						<li role='listitem'>
+							<Link href={'/faculties'} className={styles.hyperlink}>
+								{tCommon('seeMore')}
+							</Link>
+						</li>
+					</ul>
+				</section>
+			</nav>
 
-            <li>
-              <a className={styles.hyperlink}>{tFooter("footer.seeMore")}</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+			<hr className={styles.divider} role='separator' />
 
-      <hr className={styles.divider} />
+			<address className={styles.container}>
+				<div className={styles.mailContainer}>
+					<Mail alt='mailIcon' />
+					<a
+						href={`mailto:${contactInfo.email}`}
+						aria-label={tFooter('aria.sendEmail')}
+					>
+						{contactInfo.email}
+					</a>
+				</div>
 
-      <div className={styles.container}>
-        <div className={styles.mailContainer}>
-          <Image
-            src={"/image/icons/social/mail.svg"}
-            alt="mail"
-            width={24}
-            height={20}
-          />
-          <a href="mailto:example@gmail.com">example@gmail.com</a>
-        </div>
+				<div
+					className={styles.socialMediaContainer}
+					role='group'
+					aria-label={tFooter('aria.socialMedia')}
+				>
+					<a
+						href={contactInfo.socialMedia.instagram}
+						target='_blank'
+						rel='noopener noreferrer'
+						aria-label={tFooter('aria.instagram')}
+					>
+						<InstagramIcon alt='instagramIcon' />
+					</a>
+					<a
+						href={contactInfo.socialMedia.facebook}
+						target='_blank'
+						rel='noopener noreferrer'
+						aria-label={tFooter('aria.facebook')}
+					>
+						<FacebookIcon alt='facebookIcon' />
+					</a>
+					<a
+						href={contactInfo.socialMedia.linkedin}
+						target='_blank'
+						rel='noopener noreferrer'
+						aria-label={tFooter('aria.linkedin')}
+					>
+						<LinkedInIcon alt='linkedinIcon' />
+					</a>
+				</div>
 
-        <div className={styles.socialMediaContainer}>
-          <Image
-            src={"/image/icons/social/instagram.svg"}
-            alt="instagram"
-            width={30}
-            height={18}
-          />
-          <Image
-            src={"/image/icons/social/facebook.svg"}
-            alt="facebook"
-            width={30}
-            height={30}
-          />
-          <Image
-            src={"/image/icons/social/linkedin.svg"}
-            alt="linkedin"
-            width={30}
-            height={30}
-          />
-        </div>
-
-        <div className={styles.telephoneContainer}>
-          <Image
-            src={"/image/icons/social/telephone.svg"}
-            alt="telephone"
-            width={24}
-            height={20}
-          />
-          <a href="tel:+3807863763852">+380(786)376-38-52</a>
-        </div>
-      </div>
-    </footer>
-  );
+				<div className={styles.telephoneContainer}>
+					<Telephone alt='telephoneIcon' />
+					<a
+						href={`tel:${contactInfo.phone.replace(/[^\d+]/g, '')}`}
+						aria-label={tFooter('aria.callPhone')}
+					>
+						{contactInfo.phone}
+					</a>
+				</div>
+			</address>
+		</footer>
+	)
 }
