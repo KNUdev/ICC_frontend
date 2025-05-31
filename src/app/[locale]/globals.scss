@@ -1,6 +1,7 @@
-@use "../../common/styles/link.scss" as link;
-
-* {
-  margin: 0;
-  padding: 0;
-}
+@use '@/common/styles/reset-style.scss';
+@use '@/common/styles/variables.scss';
+@use '@/common/styles/fonts.scss';
+@use '@/common/styles/hyperlink.scss';
+@use '@/common/styles/buttons/iconbutton.scss';
+@use '@/common/styles/buttons/textbutton.scss';
+@use '@/common/styles/buttons/menunav.scss';

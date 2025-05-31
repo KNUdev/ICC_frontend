@@ -1,0 +1,20 @@
+.socialLink {
+	color: var(--icon-nat-500, #6d6d6d);
+	width: 1.875rem;
+	height: 1.875rem;
+}
+
+.socialLink:hover {
+	color: var(--button-red-400, #ff525e);
+}
+
+.socialLink:focus-visible {
+	outline: none;
+	color: var(--button-red-400, #ff525e);
+	border-radius: 5px;
+	border: 1px solid var(--border-red-400, #ff525e);
+}
+
+.socialLink:active {
+	color: var(--button-red-800, #a30e2c);
+}
