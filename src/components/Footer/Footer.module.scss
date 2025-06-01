@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
 #footer {
   font-family: "Inter";
   background: #fff;
@@ -14,9 +16,17 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.09px;
 }
 
 .heading {
+  text-transform: uppercase;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.1px;
   text-transform: uppercase;
   color: var(--text-nat-0, #272727);
 }
@@ -39,7 +49,7 @@
   flex: 1;
   max-width: 21rem;
   min-width: 0;
-  gap: 1rem;
+  gap: 1.563rem;
   box-sizing: border-box;
 }
 
@@ -54,6 +64,11 @@
 
 .list > li {
   width: 300px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.08px;
 }
 
 .divider {

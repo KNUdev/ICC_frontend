@@ -121,7 +121,7 @@ export function Footer() {
           <a
             href={`mailto:${contactInfo.email}`}
             aria-label={tFooter("aria.sendEmail")}
-            className="contactLink"
+            className="supportLink"
           >
             {contactInfo.email}
           </a>
@@ -137,7 +137,7 @@ export function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={tFooter("aria.instagram")}
-            className="socialLink"
+            className="imgLink"
           >
             <InstagramIcon alt="instagramIcon" />
           </a>
@@ -146,7 +146,7 @@ export function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={tFooter("aria.facebook")}
-            className="socialLink"
+            className="imgLink"
           >
             <FacebookIcon alt="facebookIcon" />
           </a>
@@ -155,7 +155,7 @@ export function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={tFooter("aria.linkedin")}
-            className="socialLink"
+            className="imgLink"
           >
             <LinkedInIcon alt="linkedinIcon" />
           </a>
@@ -166,7 +166,7 @@ export function Footer() {
           <a
             href={`tel:${contactInfo.phone.replace(/[^\d+]/g, "")}`}
             aria-label={tFooter("aria.callPhone")}
-            className="contactLink"
+            className="supportLink"
           >
             {contactInfo.phone}
           </a>

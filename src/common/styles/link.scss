@@ -1,6 +1,17 @@
 .hyperlink {
   color: var(--text-red-400, #ff525e);
   text-decoration-line: underline;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.08px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
 }
 
 .hyperlink:hover {
@@ -21,32 +32,63 @@
 .navLink {
   text-decoration: none;
   color: var(--text-nat-500, #6d6d6d);
+  position: relative;
+  transition: color 300ms ease-out;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-red-400, #ff525e);
+  opacity: 0;
+  transition: opacity 300ms ease-out;
 }
 
 .navLink:hover {
-  text-decoration: underline;
-  text-decoration-color: var(--border-red-400, #ff525e);
-  text-underline-offset: 0.313rem;
   color: var(--text-nat-150, #464646);
+}
+
+.navLink:hover::after {
+  opacity: 1;
 }
 
 .navLink:active {
   color: var(--text-nat-500, #6d6d6d);
 }
 
-.contactLink {
+.supportLink {
   text-decoration: none;
   color: var(--text-nat-250, #3d3d3d);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 23px;
+  letter-spacing: 0.08px;
+  position: relative;
+  transition: color 300ms ease-out;
 }
 
-.contactLink:hover {
-  text-decoration: underline;
-  text-decoration-color: var(--border-red-400, #ff525e);
-  text-underline-offset: 0.313rem;
-  text-decoration-thickness: 1px;
+.supportLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-red-400, #ff525e);
+  opacity: 0;
+  transition: opacity 300ms ease-out;
 }
 
-.contactLink:focus-visible {
+.supportLink:hover::after {
+  opacity: 1;
+}
+
+.supportLink:focus-visible {
   outline: none;
   text-decoration: underline;
   text-decoration-color: var(--border-red-400, #ff525e);
@@ -54,25 +96,25 @@
   text-decoration-thickness: 1.8px;
 }
 
-.contactLink:active {
+.supportLink:active {
   color: var(--text-nat-500, #6d6d6d);
 }
 
-.socialLink {
+.imgLink {
   color: var(--icon-nat-500, #6d6d6d);
 }
 
-.socialLink:hover {
+.imgLink:hover {
   color: var(--button-red-400, #ff525e);
 }
 
-.socialLink:focus-visible {
+.imgLink:focus-visible {
   outline: none;
   color: var(--button-red-400, #ff525e);
   border-radius: 5px;
   border: 1px solid var(--border-red-400, #ff525e);
 }
 
-.socialLink:active {
+.imgLink:active {
   color: var(--button-red-800, #a30e2c);
 }
