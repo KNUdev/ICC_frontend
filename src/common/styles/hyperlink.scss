@@ -1,19 +1,30 @@
 .hyperlink {
-	color: var(--text-red-400, #ff525e);
-	text-decoration-line: underline;
+  color: var(--text-red-400, #ff525e);
+  text-decoration-line: underline;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.08px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
 }
 
 .hyperlink:hover {
-	color: var(--text-red-800, #a30e2c);
+  color: var(--text-red-800, #a30e2c);
 }
 
 .hyperlink:focus-visible {
-	color: var(--text-red-800, #a30e2c);
-	outline: none;
-	border: 2px solid var(--border-red-800, #a30e2c);
-	padding: 0.625rem;
+  color: var(--text-red-800, #a30e2c);
+  outline: none;
+  border: 2px solid var(--border-red-800, #a30e2c);
+  padding: 0.625rem;
 }
 
 .hyperlink:active {
-	color: var(--text-red-1000, #73252a);
+  color: var(--text-red-1000, #73252a);
 }

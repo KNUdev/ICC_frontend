@@ -1,15 +1,30 @@
 .navLink {
-	text-decoration: none;
-	color: var(--text-nat-500, #6d6d6d);
+  text-decoration: none;
+  color: var(--text-nat-500, #6d6d6d);
+  position: relative;
+  transition: color 300ms ease-out;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-red-400, #ff525e);
+  opacity: 0;
+  transition: opacity 300ms ease-out;
 }
 
 .navLink:hover {
-	text-decoration: underline;
-	text-decoration-color: var(--border-red-400, #ff525e);
-	text-underline-offset: 0.313rem;
-	color: var(--text-nat-150, #464646);
+  color: var(--text-nat-150, #464646);
+}
+
+.navLink:hover::after {
+  opacity: 1;
 }
 
 .navLink:active {
-	color: var(--text-nat-500, #6d6d6d);
+  color: var(--text-nat-500, #6d6d6d);
 }
