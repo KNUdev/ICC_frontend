@@ -1,0 +1,19 @@
+.hyperlink {
+	color: var(--text-red-400, #ff525e);
+	text-decoration-line: underline;
+}
+
+.hyperlink:hover {
+	color: var(--text-red-800, #a30e2c);
+}
+
+.hyperlink:focus-visible {
+	color: var(--text-red-800, #a30e2c);
+	outline: none;
+	border: 2px solid var(--border-red-800, #a30e2c);
+	padding: 0.625rem;
+}
+
+.hyperlink:active {
+	color: var(--text-red-1000, #73252a);
+}

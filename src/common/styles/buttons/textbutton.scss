@@ -1,0 +1,23 @@
+.contactLink {
+	text-decoration: none;
+	color: var(--text-nat-250, #3d3d3d);
+}
+
+.contactLink:hover {
+	text-decoration: underline;
+	text-decoration-color: var(--border-red-400, #ff525e);
+	text-underline-offset: 0.313rem;
+	text-decoration-thickness: 1px;
+}
+
+.contactLink:focus-visible {
+	outline: none;
+	text-decoration: underline;
+	text-decoration-color: var(--border-red-400, #ff525e);
+	text-underline-offset: 0.313rem;
+	text-decoration-thickness: 1.8px;
+}
+
+.contactLink:active {
+	color: var(--text-nat-500, #6d6d6d);
+}

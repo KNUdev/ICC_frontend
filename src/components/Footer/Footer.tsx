@@ -10,15 +10,13 @@ import {
   footerNavigation,
   institutionLinks,
 } from "@/lib/footerData";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./Footer.module.scss";
 import "../../app/[locale]/globals.scss";
+import styles from "./Footer.module.scss";
 
 export function Footer() {
-  const locale = useLocale();
-
   const tFooter = useTranslations("footer");
   const tCommon = useTranslations("common");
 
@@ -48,7 +46,7 @@ export function Footer() {
           <ul className={styles.list} role="list">
             {footerNavigation.map(({ key, link }) => (
               <li key={key} role="listitem">
-                <Link href={link} locale={locale} className="navLink">
+                <Link href={link} className="navLink">
                   {tFooter(`navigation.${key}`)}
                 </Link>
               </li>
