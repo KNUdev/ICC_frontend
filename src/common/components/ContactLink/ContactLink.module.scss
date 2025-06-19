@@ -13,6 +13,16 @@ $active-color: #6d6d6d;
   letter-spacing: 0.005rem;
   position: relative;
   transition: color 300ms ease-out;
+  display: flex;
+  margin: auto 0;
+  gap: 0.625rem;
+
+  & > svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    aspect-ratio: 1/1;
+    color: #ff525e;
+  }
 }
 
 .ContactLink::after {

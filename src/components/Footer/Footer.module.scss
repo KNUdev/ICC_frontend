@@ -1,30 +1,43 @@
 #footer {
   font-family: Inter, sans-serif;
   background: #fff;
-  display: flex;
-  flex-direction: column;
   padding: 2.5rem 3.125rem;
-  gap: 6.25rem;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6.25rem;
+  }
 }
 
 .infoHeading {
   text-transform: uppercase;
-  width: 17.5rem;
   color: #272727;
-  font-size: 18px;
+  font-family: Inter;
+  font-size: 1.125rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  letter-spacing: 0.09px;
+  letter-spacing: 0.00563rem;
+  text-transform: uppercase;
+}
+
+.footerLogo {
+  display: flex;
+  width: 5rem;
+  height: 5rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .heading {
   font-family: Inter, sans-serif;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
-  letter-spacing: 0.1px;
+  letter-spacing: 0.00625rem;
   text-transform: uppercase;
   color: #272727;
 }
@@ -70,9 +83,10 @@
 }
 
 .divider {
-  background: #d7d7d7;
   width: 100%;
-  height: 1px;
+  border: none;
+  border-top: 1px solid #d7d7d7;
+  margin: 0;
 }
 
 .mailContainer,
@@ -87,8 +101,4 @@
   display: flex;
   align-items: center;
   gap: 3.125rem;
-}
-
-.contactImage {
-  color: #ff525e;
 }

@@ -4,6 +4,7 @@ import InstagramIcon from '@/assets/image/icons/social/instagram.svg'
 import LinkedInIcon from '@/assets/image/icons/social/linkedin.svg'
 import Mail from '@/assets/image/icons/social/mail.svg'
 import Telephone from '@/assets/image/icons/social/telephone.svg'
+import ContactLink from '@/common/components/ContactLink/ContactLink'
 import Hyperlink from '@/common/components/Hyperlink/Hyperlink'
 import {
   contactInfo,
@@ -27,6 +28,7 @@ export function Footer() {
           <h2 className={styles.infoHeading}>{tCommon('titleFullName')}</h2>
           <Image
             src={logoKnu}
+            className={styles.footerLogo}
             alt={`${tCommon('titleFullName')} logo`}
             width={80}
             height={86}
@@ -114,18 +116,9 @@ export function Footer() {
 
         <address className={styles.container}>
           <div className={styles.mailContainer}>
-            <Mail
-              aria-label='mailIcon'
-              role='img'
-              className={styles.contactImage}
-            />
-            <a
-              href={`mailto:${contactInfo.email}`}
-              aria-label={tFooter('aria.sendEmail')}
-              className='supportLink'
-            >
+            <ContactLink href={`mailto:${contactInfo.email}`} icon={Mail}>
               {contactInfo.email}
-            </a>
+            </ContactLink>
           </div>
 
           <div
@@ -163,18 +156,9 @@ export function Footer() {
           </div>
 
           <div className={styles.telephoneContainer}>
-            <Telephone
-              aria-label='telephoneIcon'
-              role='img'
-              className={styles.contactImage}
-            />
-            <a
-              href={`tel:${contactInfo.phone.replace(/[^\d+]/g, '')}`}
-              aria-label={tFooter('aria.callPhone')}
-              className='supportLink'
-            >
+            <ContactLink href={`mailto:${contactInfo.phone}`} icon={Telephone}>
               {contactInfo.phone}
-            </a>
+            </ContactLink>
           </div>
         </address>
       </div>
