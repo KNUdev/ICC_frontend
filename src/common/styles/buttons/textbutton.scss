@@ -12,6 +12,12 @@ $active-color: #6d6d6d;
   letter-spacing: 0.08px;
   position: relative;
   transition: color 300ms ease-out;
+
+  & > svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    aspect-ratio: 1/1;
+  }
 }
 
 .supportLink::after {
