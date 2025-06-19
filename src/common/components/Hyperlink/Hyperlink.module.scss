@@ -1,6 +1,12 @@
+$primary-color: #ff525e;
+$hover-color: #a30e2c;
+$active-color: #73252a;
+
 .hyperlink {
-  color: var(--text-red-400, #ff525e);
-  text-decoration-line: underline;
+  color: $primary-color;
+  display: inline-flex;
+  gap: 0.62rem;
+  font-family: Inter, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -12,19 +18,20 @@
   text-decoration-thickness: auto;
   text-underline-offset: auto;
   text-underline-position: from-font;
+  transition: color 300ms ease-out, border 300ms ease-out;
 }
 
 .hyperlink:hover {
-  color: var(--text-red-800, #a30e2c);
+  color: $hover-color;
 }
 
 .hyperlink:focus-visible {
-  color: var(--text-red-800, #a30e2c);
+  color: $hover-color;
   outline: none;
-  border: 2px solid var(--border-red-800, #a30e2c);
+  border: 2px solid $hover-color;
   padding: 0.625rem;
 }
 
 .hyperlink:active {
-  color: var(--text-red-1000, #73252a);
+  color: $active-color;
 }

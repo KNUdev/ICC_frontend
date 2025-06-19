@@ -1,18 +1,22 @@
+$primary-color: #6d6d6d;
+$hover-color: #ff525e;
+$active-color: #a30e2c;
+
 .imgLink {
-  color: var(--icon-nat-500, #6d6d6d);
+  color: $primary-color;
 }
 
 .imgLink:hover {
-  color: var(--button-red-400, #ff525e);
+  color: $hover-color;
 }
 
 .imgLink:focus-visible {
   outline: none;
-  color: var(--button-red-400, #ff525e);
+  color: $hover-color;
   border-radius: 5px;
-  border: 1px solid var(--border-red-400, #ff525e);
+  border: 1px solid $hover-color;
 }
 
 .imgLink:active {
-  color: var(--button-red-800, #a30e2c);
+  color: $active-color;
 }

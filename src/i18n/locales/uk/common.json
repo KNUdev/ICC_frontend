@@ -1,23 +1,23 @@
 {
-	"title": "ІОЦ",
-	"titleFullName": "Інформаційно-обчислювальний центр",
-	"navigationHeading": "Навігація",
-	"institutionsHeading": "Інститути",
-	"facultiesHeading": "Факультети",
-	"seeMore": "Дивитись більше",
+  "title": "ІОЦ",
+  "titleFullName": "Інформаційно-обчислювальний центр",
+  "navigationHeading": "Навігація",
+  "institutionsHeading": "Інститути",
+  "facultiesHeading": "Факультети",
+  "seeMore": "Дивитись більше",
 
-	"institutions": {
-		"geologyInst": "Навчально-науковий інститут “Інститут геології”",
-		"militaryInst": "Військовий інститут",
-		"securityInst": "Інститут Управління державної охорони України",
-		"postgraduateInst": "Інститут післядипломної освіти",
-		"scientificInst": "Навчально-науковий інститут"
-	},
-	"faculties": {
-		"geographyFac": "Географічний факультет",
-		"economiscFac": "Економічний факультет",
-		"historyFac": "Історичний факультет",
-		"mechmathFac": "Механіко-математичний факультет",
-		"infotechFac": "Фікультет інформаційних технологій"
-	}
+  "institutions": {
+    "geologyInst": "Навчально-науковий інститут “Інститут геології”",
+    "militaryInst": "Військовий інститут",
+    "securityInst": "Інститут Управління державної охорони України",
+    "postgraduateInst": "Інститут післядипломної освіти",
+    "scientificInst": "Навчально-науковий інститут"
+  },
+  "faculties": {
+    "geographyFac": "Географічний факультет",
+    "economiscFac": "Економічний факультет",
+    "historyFac": "Історичний факультет",
+    "mechmathFac": "Механіко-математичний факультет",
+    "infotechFac": "Фікультет інформаційних технологій"
+  }
 }
