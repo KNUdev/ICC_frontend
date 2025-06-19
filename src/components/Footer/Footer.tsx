@@ -21,159 +21,163 @@ export function Footer() {
   const tCommon = useTranslations('common')
 
   return (
-    <footer id={styles.footer} className='layout-wrapper' role='contentinfo'>
-      <header className={styles.container}>
-        <h2 className={styles.infoHeading}>{tCommon('titleFullName')}</h2>
-        <Image
-          src={logoKnu}
-          alt={`${tCommon('titleFullName')} logo`}
-          width={80}
-          height={86}
-          priority
-        />
-      </header>
-
-      <hr className={styles.divider} role='separator' />
-
-      <nav
-        className={styles.navLinks}
-        role='navigation'
-        aria-label='Footer navigation'
-      >
-        <section className={styles.navContainer}>
-          <h3 className={styles.heading}>{tCommon('navigationHeading')}</h3>
-
-          <ul className={styles.list} role='list'>
-            {footerNavigation.map(({ key, link }) => (
-              <li key={key} role='listitem'>
-                <Link href={link} className='navLink'>
-                  {tFooter(`navigation.${key}`)}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className={styles.navContainer}>
-          <h3 className={styles.heading}>{tCommon('institutionsHeading')}</h3>
-
-          <ul className={styles.list} role='list'>
-            {institutionLinks.slice(0, 5).map(({ key, link }) => (
-              <li key={key} role='listitem'>
-                <a
-                  href={link}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  aria-label={`${tCommon(
-                    `institutions.${key}`,
-                  )} (opens in a new tab)`}
-                  className='navLink'
-                >
-                  {tCommon(`institutions.${key}`)}
-                </a>
-              </li>
-            ))}
-
-            <li role='listitem'>
-              <Hyperlink href={'/institutions'}>{tCommon('seeMore')}</Hyperlink>
-            </li>
-          </ul>
-        </section>
-
-        <section className={styles.navContainer}>
-          <h3 className={styles.heading}>{tCommon('facultiesHeading')}</h3>
-
-          <ul className={styles.list} role='list'>
-            {facultyLinks.slice(0, 5).map(({ key, link }) => (
-              <li key={key} role='listitem'>
-                <a
-                  href={link}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  aria-label={`${tCommon(
-                    `faculties.${key}`,
-                  )} (opens in a new tab)`}
-                  className='navLink'
-                >
-                  {tCommon(`faculties.${key}`)}
-                </a>
-              </li>
-            ))}
-
-            <li role='listitem'>
-              <Hyperlink href={'/faculties'}>{tCommon('seeMore')}</Hyperlink>
-            </li>
-          </ul>
-        </section>
-      </nav>
-
-      <hr className={styles.divider} role='separator' />
-
-      <address className={styles.container}>
-        <div className={styles.mailContainer}>
-          <Mail
-            aria-label='mailIcon'
-            role='img'
-            className={styles.contactImage}
+    <footer id={styles.footer} role='contentinfo'>
+      <div className='layout-wrapper'>
+        <header className={styles.container}>
+          <h2 className={styles.infoHeading}>{tCommon('titleFullName')}</h2>
+          <Image
+            src={logoKnu}
+            alt={`${tCommon('titleFullName')} logo`}
+            width={80}
+            height={86}
+            priority
           />
-          <a
-            href={`mailto:${contactInfo.email}`}
-            aria-label={tFooter('aria.sendEmail')}
-            className='supportLink'
-          >
-            {contactInfo.email}
-          </a>
-        </div>
+        </header>
 
-        <div
-          className={styles.socialMediaContainer}
-          role='group'
-          aria-label={tFooter('aria.socialMedia')}
+        <hr className={styles.divider} role='separator' />
+
+        <nav
+          className={styles.navLinks}
+          role='navigation'
+          aria-label='Footer navigation'
         >
-          <a
-            href={contactInfo.socialMedia.instagram}
-            target='_blank'
-            rel='noopener noreferrer'
-            aria-label={tFooter('aria.instagram')}
-            className='imgLink'
-          >
-            <InstagramIcon aria-label='instagramIcon' role='img' />
-          </a>
-          <a
-            href={contactInfo.socialMedia.facebook}
-            target='_blank'
-            rel='noopener noreferrer'
-            aria-label={tFooter('aria.facebook')}
-            className='imgLink'
-          >
-            <FacebookIcon aria-label='facebookIcon' role='img' />
-          </a>
-          <a
-            href={contactInfo.socialMedia.linkedin}
-            target='_blank'
-            rel='noopener noreferrer'
-            aria-label={tFooter('aria.linkedin')}
-            className='imgLink'
-          >
-            <LinkedInIcon aria-label='linkedinIcon' role='img' />
-          </a>
-        </div>
+          <section className={styles.navContainer}>
+            <h3 className={styles.heading}>{tCommon('navigationHeading')}</h3>
 
-        <div className={styles.telephoneContainer}>
-          <Telephone
-            aria-label='telephoneIcon'
-            role='img'
-            className={styles.contactImage}
-          />
-          <a
-            href={`tel:${contactInfo.phone.replace(/[^\d+]/g, '')}`}
-            aria-label={tFooter('aria.callPhone')}
-            className='supportLink'
+            <ul className={styles.list} role='list'>
+              {footerNavigation.map(({ key, link }) => (
+                <li key={key} role='listitem'>
+                  <Link href={link} className='navLink'>
+                    {tFooter(`navigation.${key}`)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className={styles.navContainer}>
+            <h3 className={styles.heading}>{tCommon('institutionsHeading')}</h3>
+
+            <ul className={styles.list} role='list'>
+              {institutionLinks.slice(0, 5).map(({ key, link }) => (
+                <li key={key} role='listitem'>
+                  <a
+                    href={link}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    aria-label={`${tCommon(
+                      `institutions.${key}`,
+                    )} (opens in a new tab)`}
+                    className='navLink'
+                  >
+                    {tCommon(`institutions.${key}`)}
+                  </a>
+                </li>
+              ))}
+
+              <li role='listitem'>
+                <Hyperlink href={'/institutions'}>
+                  {tCommon('seeMore')}
+                </Hyperlink>
+              </li>
+            </ul>
+          </section>
+
+          <section className={styles.navContainer}>
+            <h3 className={styles.heading}>{tCommon('facultiesHeading')}</h3>
+
+            <ul className={styles.list} role='list'>
+              {facultyLinks.slice(0, 5).map(({ key, link }) => (
+                <li key={key} role='listitem'>
+                  <a
+                    href={link}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    aria-label={`${tCommon(
+                      `faculties.${key}`,
+                    )} (opens in a new tab)`}
+                    className='navLink'
+                  >
+                    {tCommon(`faculties.${key}`)}
+                  </a>
+                </li>
+              ))}
+
+              <li role='listitem'>
+                <Hyperlink href={'/faculties'}>{tCommon('seeMore')}</Hyperlink>
+              </li>
+            </ul>
+          </section>
+        </nav>
+
+        <hr className={styles.divider} role='separator' />
+
+        <address className={styles.container}>
+          <div className={styles.mailContainer}>
+            <Mail
+              aria-label='mailIcon'
+              role='img'
+              className={styles.contactImage}
+            />
+            <a
+              href={`mailto:${contactInfo.email}`}
+              aria-label={tFooter('aria.sendEmail')}
+              className='supportLink'
+            >
+              {contactInfo.email}
+            </a>
+          </div>
+
+          <div
+            className={styles.socialMediaContainer}
+            role='group'
+            aria-label={tFooter('aria.socialMedia')}
           >
-            {contactInfo.phone}
-          </a>
-        </div>
-      </address>
+            <a
+              href={contactInfo.socialMedia.instagram}
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label={tFooter('aria.instagram')}
+              className='imgLink'
+            >
+              <InstagramIcon aria-label='instagramIcon' role='img' />
+            </a>
+            <a
+              href={contactInfo.socialMedia.facebook}
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label={tFooter('aria.facebook')}
+              className='imgLink'
+            >
+              <FacebookIcon aria-label='facebookIcon' role='img' />
+            </a>
+            <a
+              href={contactInfo.socialMedia.linkedin}
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label={tFooter('aria.linkedin')}
+              className='imgLink'
+            >
+              <LinkedInIcon aria-label='linkedinIcon' role='img' />
+            </a>
+          </div>
+
+          <div className={styles.telephoneContainer}>
+            <Telephone
+              aria-label='telephoneIcon'
+              role='img'
+              className={styles.contactImage}
+            />
+            <a
+              href={`tel:${contactInfo.phone.replace(/[^\d+]/g, '')}`}
+              aria-label={tFooter('aria.callPhone')}
+              className='supportLink'
+            >
+              {contactInfo.phone}
+            </a>
+          </div>
+        </address>
+      </div>
     </footer>
   )
 }
