@@ -1,0 +1,17 @@
+{
+  "pointHeaders": {
+    "request": "Ви надсилаєте заявку",
+    "trial": "Ми розглядаємо її",
+    "discussion": "Обговорюємо усі деталі виконання роботи",
+    "execution": "Виконуємо роботу",
+    "completed": "Робота виконана"
+  },
+
+  "pointTexts": {
+    "request": "Червоному корпусі університету, який сам по собі є частиною історії та культурної спадщини України. Однак за стінами цього класичного архітектурного ансамблю вирувало і продовжує вирувати сучасне життя: тут проходять тренінги з програмування",
+    "trial": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ligula consequat, pharetra elit in, finibus tellus. Suspendisse id nisi sollicitudin magna venenatis imperdiet. Fusce convallis, velit eu consectetur scelerisque, orci ex ultricies magna, vel bibendum quam leo quis lacus. Curabitur ac nisi neque. Fusce id pretium metus. Curabitur hendrerit tincidunt leo ac pharetra. Nullam hendrerit feugiat tortor rutrum feugiat. Duis accumsan at tortor a pellentesque. Nunc lobortis nisl eu dui suscipit consectetur. Nulla sit amet convallis nunc, sit amet elementum ante.",
+    "discussion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ligula consequat, pharetra elit in, finibus tellus. Suspendisse id nisi sollicitudin magna venenatis imperdiet. Fusce convallis, velit eu consectetur scelerisque, orci ex ultricies magna, vel bibendum quam leo quis lacus. Curabitur ac nisi neque. Fusce id pretium metus. Curabitur hendrerit tincidunt leo ac pharetra. Nullam hendrerit feugiat tortor rutrum feugiat. Duis accumsan at tortor a pellentesque. Nunc lobortis nisl eu dui suscipit consectetur. Nulla sit amet convallis nunc, sit amet elementum ante.",
+    "execution": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ligula consequat, pharetra elit in, finibus tellus. Suspendisse id nisi sollicitudin magna venenatis imperdiet. Fusce convallis, velit eu consectetur scelerisque, orci ex ultricies magna, vel bibendum quam leo quis lacus. Curabitur ac nisi neque. Fusce id pretium metus. Curabitur hendrerit tincidunt leo ac pharetra. Nullam hendrerit feugiat tortor rutrum feugiat. Duis accumsan at tortor a pellentesque. Nunc lobortis nisl eu dui suscipit consectetur. Nulla sit amet convallis nunc, sit amet elementum ante.",
+    "completed": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ligula consequat, pharetra elit in, finibus tellus. Suspendisse id nisi sollicitudin magna venenatis imperdiet. Fusce convallis, velit eu consectetur scelerisque, orci ex ultricies magna, vel bibendum quam leo quis lacus. Curabitur ac nisi neque. Fusce id pretium metus. Curabitur hendrerit tincidunt leo ac pharetra. Nullam hendrerit feugiat tortor rutrum feugiat. Duis accumsan at tortor a pellentesque. Nunc lobortis nisl eu dui suscipit consectetur. Nulla sit amet convallis nunc, sit amet elementum ante."
+  }
+}

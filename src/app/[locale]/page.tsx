@@ -1,4 +1,5 @@
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { Form } from "@/components/Form/Form";
 import { Footer } from "@/components/Footer/Footer";
 import { useTranslations } from "next-intl";
 
@@ -10,6 +11,8 @@ export default function HomePage() {
       <LanguageSwitcher />
       <h1>{tCommon("title")}</h1>
       <h2>{tHome("title")}</h2>
+
+      <Form />
 
       <Footer />
     </div>
