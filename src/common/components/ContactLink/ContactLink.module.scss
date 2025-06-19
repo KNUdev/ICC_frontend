@@ -1,0 +1,54 @@
+$primary-color: #3d3d3d;
+$hover-color: #ff525e;
+$active-color: #6d6d6d;
+
+.ContactLink {
+  text-decoration: none;
+  color: $primary-color;
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4375rem;
+  letter-spacing: 0.005rem;
+  position: relative;
+  transition: color 300ms ease-out;
+  display: flex;
+  margin: auto 0;
+  gap: 0.625rem;
+
+  & > svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    aspect-ratio: 1/1;
+    color: #ff525e;
+  }
+}
+
+.ContactLink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background-color: $hover-color;
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}
+
+.ContactLink:hover::after {
+  opacity: 1;
+}
+
+.ContactLink:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-color: $hover-color;
+  text-underline-offset: 0.313rem;
+  text-decoration-thickness: 1.8px;
+}
+
+.ContactLink:active {
+  color: $active-color;
+}

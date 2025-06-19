@@ -1,0 +1,28 @@
+$primary-color: #6d6d6d;
+$hover-color: #ff525e;
+$active-color: #a30e2c;
+
+.imgLink {
+  color: $primary-color;
+
+  & > svg {
+    width: 1.875rem;
+    height: 1.875rem;
+    aspect-ratio: 1/1;
+  }
+}
+
+.imgLink:hover {
+  color: $hover-color;
+}
+
+.imgLink:focus-visible {
+  outline: none;
+  color: $hover-color;
+  border-radius: 5px;
+  border: 1px solid $hover-color;
+}
+
+.imgLink:active {
+  color: $active-color;
+}

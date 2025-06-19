@@ -3,10 +3,10 @@ export const DEFAULT_LOCALE: (typeof SUPPORTED_LOCALES)[number] = 'uk'
 export const FALLBACK_LOCALE: (typeof SUPPORTED_LOCALES)[number] = 'en'
 
 export const LANGUAGE_LABELS = {
-	en: 'English',
-	uk: 'Українська',
+  en: 'English',
+  uk: 'Українська',
 } as const
 
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
 
-export const NAMESPACES = ['common', 'home']
+export const NAMESPACES = ['common', 'home', 'footer']

@@ -1,0 +1,37 @@
+$primary-color: #ff525e;
+$hover-color: #a30e2c;
+$active-color: #73252a;
+
+.hyperlink {
+  color: $primary-color;
+  display: inline-flex;
+  gap: 0.62rem;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.08px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+  transition: color 300ms ease-out, border 300ms ease-out;
+}
+
+.hyperlink:hover {
+  color: $hover-color;
+}
+
+.hyperlink:focus-visible {
+  color: $hover-color;
+  outline: none;
+  border: 2px solid $hover-color;
+  padding: 0.625rem;
+}
+
+.hyperlink:active {
+  color: $active-color;
+}

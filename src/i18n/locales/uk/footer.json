@@ -1,0 +1,21 @@
+{
+  "navigation": {
+    "home": "Головна",
+    "serviceRequest": "Запит на послугу",
+    "history": "Історія",
+    "photoGallery": "Фотогалерея",
+    "staff": "Штат",
+    "cic": "ЦОМ",
+    "documents": "Документи",
+    "faq": "Часті запитання"
+  },
+
+  "aria": {
+    "sendEmail": "Написати email",
+    "socialMedia": "Соціальні мережі",
+    "instagram": "Instagram (відкриється в новому вікні)",
+    "facebook": "Facebook (відкриється в новому вікні)",
+    "linkedin": "LinkedIn (відкриється в новому вікні)",
+    "callPhone": "Зателефонувати"
+  }
+}

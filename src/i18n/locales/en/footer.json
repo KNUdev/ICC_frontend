@@ -1,0 +1,21 @@
+{
+  "navigation": {
+    "home": "Home",
+    "serviceRequest": "Service Request",
+    "history": "History",
+    "photoGallery": "Photo Gallery",
+    "staff": "Staff",
+    "cic": "CIC",
+    "documents": "Documents",
+    "faq": "FAQ"
+  },
+
+  "aria": {
+    "sendEmail": "Send email",
+    "socialMedia": "Social media",
+    "instagram": "Instagram (opens in new window)",
+    "facebook": "Facebook (opens in new window)",
+    "linkedin": "LinkedIn (opens in new window)",
+    "callPhone": "Call phone number"
+  }
+}
