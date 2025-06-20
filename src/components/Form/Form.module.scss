@@ -1,0 +1,24 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  //temporary styles
+  margin-bottom: 2rem;
+}
+
+.container {
+  width: 93.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  align-self: stretch;
+}
+
+//temporary styles
+.formApplications {
+  width: 46.125rem;
+  height: 54.688rem;
+  background-color: rebeccapurple;
+}
