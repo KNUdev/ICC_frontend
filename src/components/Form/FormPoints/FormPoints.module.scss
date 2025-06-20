@@ -13,14 +13,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  gap: 0.938rem;
   align-self: stretch;
 
   border: 1px solid var(--border-nat-800, #d1d1d1);
   background: var(--bg-nat-1000, #fff);
-}
-
-.details[closed] {
+  cursor: pointer;
 }
 
 .details[open] {
@@ -34,9 +31,6 @@
 }
 
 .summary {
-  list-style: none;
-  cursor: pointer;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -51,32 +45,82 @@
   letter-spacing: 0.09px;
 }
 
-.timer {
+.loader {
   width: 1.563rem;
   height: 1.563rem;
-  aspect-ratio: 1 / 1;
-  border: 4px solid #ccc;
-  border-top-color: red;
-  border-right-color: red;
+  margin-bottom: 0.938rem;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+
+  filter: drop-shadow(0 0 2px rgba(255, 0, 0, 0.6));
+
+  --angle: 0deg;
+
+  background: conic-gradient(#ff0000 var(--angle), transparent 0deg);
+
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 4px),
+    black calc(100% - 4px)
+  );
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 4px),
+    black calc(100% - 4px)
+  );
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+.loaderActive {
+  animation: fillBorder 5s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+@keyframes fillBorder {
+  0% {
+    --angle: 0deg;
+  }
+  10% {
+    --angle: 36deg;
+  }
+  20% {
+    --angle: 72deg;
+  }
+  30% {
+    --angle: 108deg;
+  }
+  40% {
+    --angle: 144deg;
+  }
+  50% {
+    --angle: 180deg;
+  }
+  60% {
+    --angle: 216deg;
+  }
+  70% {
+    --angle: 252deg;
+  }
+  80% {
+    --angle: 288deg;
+  }
+  90% {
+    --angle: 324deg;
+  }
+  100% {
+    --angle: 360deg;
   }
 }
 
 .divider {
   width: 44.25rem;
-  height: 0.094rem;
-  background: var(--border-red-400, #ff525e);
+  border: none;
+  border-bottom: 1.5px solid var(--border-red-400, #ff525e);
 }
 
 .paragraph {
   align-self: stretch;
   color: var(--text-nat-300, #4f4f4f);
+  margin-top: 0.938rem;
 
   font-family: Inter;
   font-size: 16px;

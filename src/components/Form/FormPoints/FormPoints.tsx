@@ -1,9 +1,14 @@
+"use client";
+
 import { useTranslations } from "next-intl";
 import styles from "./FormPoints.module.scss";
+import { useState, useEffect } from "react";
 
 export function FormPoints() {
-  const tFormPoints = useTranslations("form/points");
+  const [open, isOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
+  const tFormPoints = useTranslations("form/points");
   const steps = [
     "request",
     "trial",
@@ -12,16 +17,48 @@ export function FormPoints() {
     "completed",
   ] as const;
 
+  useEffect(() => {
+    if (open) return;
+
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % steps.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [open, steps.length]);
+
+  const handleUserClick = (index: number) => {
+    isOpen(true);
+    setActiveIndex(index);
+  };
+
   return (
-    <article className={styles.formPoints}>
+    <article
+      className={styles.formPoints}
+      role="region"
+      aria-label="Form points"
+    >
       {steps.map((key, index) => (
-        <details key={key} className={styles.details}>
+        <details
+          key={key}
+          role="group"
+          className={styles.details}
+          open={index === activeIndex}
+          onClick={(e) => {
+            e.preventDefault();
+            handleUserClick(index);
+          }}
+        >
           <summary className={styles.summary}>
             {index + 1}. {tFormPoints(`pointHeaders.${key}`)}
-            <div className={styles.timer} />
+            <div
+              className={`${styles.loader} ${
+                !open && index === activeIndex ? styles.loaderActive : ""
+              }`}
+            />
           </summary>
 
-          <hr className={styles.divider} />
+          <hr className={styles.divider} role="separator" />
 
           <p className={styles.paragraph}>{tFormPoints(`pointTexts.${key}`)}</p>
         </details>
