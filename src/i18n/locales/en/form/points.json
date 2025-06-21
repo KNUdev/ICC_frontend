@@ -1,0 +1,17 @@
+{
+  "pointHeaders": {
+    "request": "You are submitting an application to",
+    "trial": "We are considering it",
+    "discussion": "We discuss all the details of the work",
+    "execution": "We do the work",
+    "completed": "The work is done"
+  },
+
+  "pointTexts": {
+    "request": "The Red Building of the University, which in itself is part of the history and cultural heritage of Ukraine. However, behind the walls of this classical architectural ensemble, modern life has been and continues to be turbulent: programming trainings are held here",
+    "trial": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ligula consequat, pharetra elit in, finibus tellus. Suspendisse id nisi sollicitudin magna venenatis imperdiet. Fusce convallis, velit eu consectetur scelerisque, orci ex ultricies magna, vel bibendum quam leo quis lacus. Curabitur ac nisi neque. Fusce id pretium metus. Curabitur hendrerit tincidunt leo ac pharetra. Nullam hendrerit feugiat tortor rutrum feugiat. Duis accumsan at tortor a pellentesque. Nunc lobortis nisl eu dui suscipit consectetur. Nulla sit amet convallis nunc, sit amet elementum ante.",
+    "discussion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ligula consequat, pharetra elit in, finibus tellus. Suspendisse id nisi sollicitudin magna venenatis imperdiet. Fusce convallis, velit eu consectetur scelerisque, orci ex ultricies magna, vel bibendum quam leo quis lacus. Curabitur ac nisi neque. Fusce id pretium metus. Curabitur hendrerit tincidunt leo ac pharetra. Nullam hendrerit feugiat tortor rutrum feugiat. Duis accumsan at tortor a pellentesque. Nunc lobortis nisl eu dui suscipit consectetur. Nulla sit amet convallis nunc, sit amet elementum ante.",
+    "execution": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ligula consequat, pharetra elit in, finibus tellus. Suspendisse id nisi sollicitudin magna venenatis imperdiet. Fusce convallis, velit eu consectetur scelerisque, orci ex ultricies magna, vel bibendum quam leo quis lacus. Curabitur ac nisi neque. Fusce id pretium metus. Curabitur hendrerit tincidunt leo ac pharetra. Nullam hendrerit feugiat tortor rutrum feugiat. Duis accumsan at tortor a pellentesque. Nunc lobortis nisl eu dui suscipit consectetur. Nulla sit amet convallis nunc, sit amet elementum ante.",
+    "completed": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ligula consequat, pharetra elit in, finibus tellus. Suspendisse id nisi sollicitudin magna venenatis imperdiet. Fusce convallis, velit eu consectetur scelerisque, orci ex ultricies magna, vel bibendum quam leo quis lacus. Curabitur ac nisi neque. Fusce id pretium metus. Curabitur hendrerit tincidunt leo ac pharetra. Nullam hendrerit feugiat tortor rutrum feugiat. Duis accumsan at tortor a pellentesque. Nunc lobortis nisl eu dui suscipit consectetur. Nulla sit amet convallis nunc, sit amet elementum ante."
+  }
+}
