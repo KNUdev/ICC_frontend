@@ -35,7 +35,7 @@ export const CircularProgressBar = ({
         cy={center}
         r={radius}
         fill='transparent'
-        stroke='#e6e6e6'
+        stroke='#D1D1D1'
         strokeWidth={size * 0.1}
       />
       <circle
@@ -43,7 +43,7 @@ export const CircularProgressBar = ({
         cy={center}
         r={radius}
         fill='transparent'
-        stroke='red'
+        stroke='#FF525E'
         strokeWidth={size * 0.1}
         strokeDasharray={circumference}
         strokeDashoffset={offset}
