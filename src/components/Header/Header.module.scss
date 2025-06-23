@@ -1,0 +1,161 @@
+#header {
+  font-family: Inter, sans-serif;
+  background: #fff;
+  padding: 1.5625rem 2.5rem;
+
+
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.headerLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nav {
+  flex-grow: 1;
+  margin: 0 2rem;
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: 1.5625rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navList > li {
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.loginButton {
+  display: flex;
+  background: #ff525e;
+  color: #fff;
+  text-decoration: none;
+  height: 3.125rem;
+  padding: 0.9375rem 1.25rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+
+  &:hover {
+    background: #e71735;
+  }
+
+  &::after {
+    background: #a30e2c;
+  }
+}
+
+.registerButton {
+  display: flex;
+  border: 1px solid #ff525e;
+  color: #6d6d6d;
+  text-decoration: none;
+  height: 3.125rem;
+  padding: 0.9375rem 1.25rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+
+  &:hover {
+    background: #ffa1a6;
+    color: #fff;
+  }
+
+  &::after {
+    background: #eb8288;
+    color: #fff;
+  }
+}
+
+.userPanel {
+  display: flex;
+  align-items: center;
+}
+
+.languageSwitcher {
+  position: relative;
+  display: inline-block;
+}
+
+.toggleButton {
+  display: flex;
+  width: 7rem;
+  padding: 0.625rem 0rem;
+  align-items: center;
+  gap: 0.625rem;
+  cursor: pointer;
+}
+
+.arrow {
+  font-size: 0.75rem;
+}
+
+.dropdown {
+  position: absolute;
+  display: flex;
+  width: 7rem;
+  padding: 0.9375rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.625rem;
+  background: #fff;
+  box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.divider {
+  width: 100%;
+  border: none;
+  border-top: 1px solid #d7d7d7;
+  margin: 0;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: #f6f6f6;
+  }
+
+  &::after {
+    background: #b0b0b0;
+  }
+}
+
+.active {
+  display: flex;
+  padding: 0.9375rem;
+  align-items: center;
+  gap: 0.625rem;
+}
