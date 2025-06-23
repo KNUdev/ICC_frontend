@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ComponentType, ReactNode } from 'react'
+import type { ComponentType, ReactNode } from 'react'
 import styles from './Hyperlink.module.scss'
 
 interface HyperlinkProps {
