@@ -5,6 +5,7 @@
   "institutionsHeading": "Institutes",
   "facultiesHeading": "Faculties",
   "seeMore": "See more",
+
   "institutions": {
     "geologyInst": "Educational and Scientific Institute 'Institute of Geology'",
     "militaryInst": "Military Institute",
@@ -12,11 +13,17 @@
     "postgraduateInst": "Institute of Postgraduate Education",
     "scientificInst": "Educational and Scientific Institute"
   },
+  
   "faculties": {
     "geographyFac": "Faculty of Geography",
     "economiscFac": "Faculty of Economics",
     "historyFac": "Faculty of History",
     "mechmathFac": "Faculty of Mechanics and Mathematics",
     "infotechFac": "Faculty of Information Technology"
-  }
+  },
+
+  "authentication": {
+    "login": "Sing in",
+    "register": "Sign up"
+  } 
 }
