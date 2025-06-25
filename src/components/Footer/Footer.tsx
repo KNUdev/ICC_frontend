@@ -11,7 +11,7 @@ import {
   facultyLinks,
   footerNavigation,
   institutionLinks,
-} from '@/lib/footerData'
+} from '@/shared/lib/footerData'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
