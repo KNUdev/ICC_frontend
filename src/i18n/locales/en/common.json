@@ -6,24 +6,35 @@
   "facultiesHeading": "Faculties",
   "seeMore": "See more",
 
-  "institutions": {
-    "geologyInst": "Educational and Scientific Institute 'Institute of Geology'",
-    "militaryInst": "Military Institute",
-    "securityInst": "Institute of State Security Administration",
-    "postgraduateInst": "Institute of Postgraduate Education",
-    "scientificInst": "Educational and Scientific Institute"
+  "navigation": {
+    "HOME": "Home",
+    "SERVICE_REQUEST": "Service Request",
+    "HISTORY": "History",
+    "PHOTO_GALLERY": "Photo Gallery",
+    "STAFF": "Staff",
+    "CIC": "CIC",
+    "DOCUMENTS": "Documents",
+    "FAQ": "FAQ"
   },
-  
+
+  "institutions": {
+    "GEOLOGY": "Educational and Scientific Institute 'Institute of Geology'",
+    "MILITARY": "Military Institute",
+    "SECURITY": "Institute of State Security Administration",
+    "POSTGRADUATE": "Institute of Postgraduate Education",
+    "SCIENTIFIC": "Educational and Scientific Institute"
+  },
+
   "faculties": {
-    "geographyFac": "Faculty of Geography",
-    "economiscFac": "Faculty of Economics",
-    "historyFac": "Faculty of History",
-    "mechmathFac": "Faculty of Mechanics and Mathematics",
-    "infotechFac": "Faculty of Information Technology"
+    "GEOGRAPHY": "Faculty of Geography",
+    "ECONOMICS": "Faculty of Economics",
+    "HISTORY": "Faculty of History",
+    "MECHMATH": "Faculty of Mechanics and Mathematics",
+    "INFOTECH": "Faculty of Information Technology"
   },
 
   "authentication": {
     "login": "Sing in",
     "register": "Sign up"
-  } 
+  }
 }

@@ -13,7 +13,6 @@ export const NAMESPACES = [
   'common',
   'home',
   'footer',
-  'header',
   'form/text',
   'form/points',
 ]
