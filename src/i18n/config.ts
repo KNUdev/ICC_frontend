@@ -9,4 +9,11 @@ export const LANGUAGE_LABELS: Record<Locale, string> = {
 
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
 
-export const NAMESPACES = ['common', 'home', 'footer', 'header']
+export const NAMESPACES = [
+  'common',
+  'home',
+  'footer',
+  'header',
+  'form/text',
+  'form/points',
+]
