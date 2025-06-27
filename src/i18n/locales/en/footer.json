@@ -1,15 +1,4 @@
 {
-  "navigation": {
-    "home": "Home",
-    "serviceRequest": "Service Request",
-    "history": "History",
-    "photoGallery": "Photo Gallery",
-    "staff": "Staff",
-    "cic": "CIC",
-    "documents": "Documents",
-    "faq": "FAQ"
-  },
-
   "aria": {
     "sendEmail": "Send email",
     "socialMedia": "Social media",

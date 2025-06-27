@@ -1,15 +1,4 @@
 {
-  "navigation": {
-    "home": "Головна",
-    "serviceRequest": "Запит на послугу",
-    "history": "Історія",
-    "photoGallery": "Фотогалерея",
-    "staff": "Штат",
-    "cic": "ЦОМ",
-    "documents": "Документи",
-    "faq": "Часті запитання"
-  },
-
   "aria": {
     "sendEmail": "Написати email",
     "socialMedia": "Соціальні мережі",
