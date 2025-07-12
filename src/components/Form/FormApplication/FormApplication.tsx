@@ -1,4 +1,5 @@
-import Hide from '@/assets/image/icons/hide.svg'
+'use client'
+
 import UploadFile from '@/assets/image/icons/file.svg'
 import ArrowRight from '@/assets/image/icons/arrow-right.svg'
 import ArrowDown from '@/assets/image/icons/arrow-down.svg'
@@ -24,12 +25,12 @@ export function FormApplication() {
           <p className={styles.labelText}>
             {tFormApplication(`labels.fullname`)}
           </p>
-          <span className={styles.labelSpan}>*</span>
+          <span className={styles.labelSpan} title='This field is required'>
+            *
+          </span>
         </label>
 
         <div className={styles.inputWrapper}>
-          <Hide />
-
           <input
             type='text'
             id='fullname'
@@ -44,12 +45,12 @@ export function FormApplication() {
       <div className={styles.smallFieldWrapper}>
         <label className={styles.label} htmlFor='email'>
           <p className={styles.labelText}>{tFormApplication(`labels.email`)}</p>
-          <span className={styles.labelSpan}>*</span>
+          <span className={styles.labelSpan} title='This field is required'>
+            *
+          </span>
         </label>
 
         <div className={styles.inputWrapper}>
-          <Hide />
-
           <input
             type='email'
             id='email'
@@ -66,7 +67,9 @@ export function FormApplication() {
           <p className={styles.labelText}>
             {tFormApplication(`labels.faculty`)}
           </p>
-          <span className={styles.labelSpan}>*</span>
+          <span className={styles.labelSpan} title='This field is required'>
+            *
+          </span>
         </label>
 
         <div className={styles.selectWrapper}>
@@ -95,7 +98,9 @@ export function FormApplication() {
           <p className={styles.labelText}>
             {tFormApplication(`labels.description`)}
           </p>
-          <span className={styles.labelSpan}>*</span>
+          <span className={styles.labelSpan} title='This field is required'>
+            *
+          </span>
         </label>
 
         <textarea
@@ -110,7 +115,9 @@ export function FormApplication() {
       <div className={styles.bigFieldWrapper}>
         <label className={styles.label} htmlFor='file' id='fileLabel'>
           <p className={styles.labelText}>{tFormApplication(`labels.photo`)}</p>
-          <span className={styles.labelSpan}>*</span>
+          <span className={styles.labelSpan} title='This field is required'>
+            *
+          </span>
         </label>
 
         <label className={styles.customFileUpload}>
@@ -131,7 +138,7 @@ export function FormApplication() {
         </label>
       </div>
 
-      <button type='submit' className={styles.buttonLeave}>
+      <button type='submit' className='mainBtn'>
         <p className={styles.buttonText}>{tFormApplication(`button`)}</p>
         <ArrowRight />
       </button>
