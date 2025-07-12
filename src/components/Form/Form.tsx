@@ -1,6 +1,7 @@
 import { FormPoints } from './FormPoints/FormPoints'
-import styles from './Form.module.scss'
+import { FormApplication } from './FormApplication/FormApplication'
 import { useTranslations } from 'next-intl'
+import styles from './Form.module.scss'
 
 export function Form() {
   const tFormText = useTranslations('form/text')
@@ -14,7 +15,7 @@ export function Form() {
         </div>
 
         <div className={styles.formContainer}>
-          <div className={styles.formApplications}></div>
+          <FormApplication />
           <FormPoints />
         </div>
       </section>
