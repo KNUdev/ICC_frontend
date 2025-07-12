@@ -1,0 +1,27 @@
+.sectionLines {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+}
+
+.formContainer {
+  display: flex;
+  width: 74.5625rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.1875rem;
+}
+
+.formHeading {
+  color: var(--text-nat-0, #272727);
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 1.875rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.00938rem;
+  text-transform: uppercase;
+}
