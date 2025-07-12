@@ -36,7 +36,7 @@ export function FormApplication() {
             id='fullname'
             name='fullname'
             placeholder={tFormApplication(`placeholders.fullname`)}
-            className={styles.inputTextEmail}
+            className='inputText'
             required
           />
         </div>
@@ -56,7 +56,7 @@ export function FormApplication() {
             id='email'
             name='email'
             placeholder={tFormApplication(`placeholders.email`)}
-            className={styles.inputTextEmail}
+            className='inputText'
             required
           />
         </div>
