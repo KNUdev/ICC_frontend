@@ -14,5 +14,6 @@ export const NAMESPACES = [
   'home',
   'footer',
   'form/text',
+  'form/application',
   'form/points',
 ]

@@ -3,13 +3,18 @@ import UploadFile from '@/assets/image/icons/file.svg'
 import ArrowRight from '@/assets/image/icons/arrow-right.svg'
 import ArrowDown from '@/assets/image/icons/arrow-down.svg'
 import styles from './FormApplication.module.scss'
+import { useTranslations } from 'next-intl'
 
 export function FormApplication() {
+  const tFormApplication = useTranslations('form/application')
+
   return (
     <form className={styles.formApp} role='form' aria-label='Leave a request'>
       <div className={styles.smallFieldWrapper}>
         <label className={styles.label} htmlFor='fullname'>
-          <p className={styles.labelText}>ПІБ</p>
+          <p className={styles.labelText}>
+            {tFormApplication(`labels.fullname`)}
+          </p>
           <span className={styles.labelSpan}>*</span>
         </label>
 
@@ -20,7 +25,7 @@ export function FormApplication() {
             type='text'
             id='fullname'
             name='fullname'
-            placeholder='Попов Богдан Віталійович'
+            placeholder={tFormApplication(`placeholders.fullname`)}
             className={styles.inputTextEmail}
             required
           />
@@ -29,7 +34,7 @@ export function FormApplication() {
 
       <div className={styles.smallFieldWrapper}>
         <label className={styles.label} htmlFor='email'>
-          <p className={styles.labelText}>Email</p>
+          <p className={styles.labelText}>{tFormApplication(`labels.email`)}</p>
           <span className={styles.labelSpan}>*</span>
         </label>
 
@@ -40,7 +45,7 @@ export function FormApplication() {
             type='email'
             id='email'
             name='email'
-            placeholder='example@gmail.com'
+            placeholder={tFormApplication(`placeholders.email`)}
             className={styles.inputTextEmail}
             required
           />
@@ -49,7 +54,9 @@ export function FormApplication() {
 
       <div className={styles.smallFieldWrapper}>
         <label className={styles.label} htmlFor='faculty'>
-          <p className={styles.labelText}>Факультет</p>
+          <p className={styles.labelText}>
+            {tFormApplication(`labels.faculty`)}
+          </p>
           <span className={styles.labelSpan}>*</span>
         </label>
 
@@ -61,7 +68,7 @@ export function FormApplication() {
             required
           >
             <option value='' disabled selected hidden>
-              Виберіть факультет
+              {tFormApplication(`placeholders.faculty`)}
             </option>
           </select>
 
@@ -71,12 +78,14 @@ export function FormApplication() {
 
       <div className={styles.bigFieldWrapper}>
         <label className={styles.label} htmlFor='description'>
-          <p className={styles.labelText}>Опис проблеми</p>
+          <p className={styles.labelText}>
+            {tFormApplication(`labels.description`)}
+          </p>
           <span className={styles.labelSpan}>*</span>
         </label>
 
         <textarea
-          placeholder='У мене проблеми з'
+          placeholder={tFormApplication(`placeholders.description`)}
           id='description'
           name='description'
           className={styles.textArea}
@@ -86,7 +95,7 @@ export function FormApplication() {
 
       <div className={styles.bigFieldWrapper}>
         <label className={styles.label} htmlFor='file' id='fileLabel'>
-          <p className={styles.labelText}>Фото проблеми</p>
+          <p className={styles.labelText}>{tFormApplication(`labels.photo`)}</p>
           <span className={styles.labelSpan}>*</span>
         </label>
 
@@ -102,14 +111,14 @@ export function FormApplication() {
           <div className={styles.uploadContent}>
             <UploadFile />
             <span className={styles.uploadText}>
-              Натисніть сюди, щоб прикріпити фото...
+              {tFormApplication(`placeholders.photo`)}
             </span>
           </div>
         </label>
       </div>
 
       <button type='submit' className={styles.buttonLeave}>
-        <p className={styles.buttonText}>Залишити заявку</p>
+        <p className={styles.buttonText}>{tFormApplication(`button`)}</p>
         <ArrowRight />
       </button>
     </form>

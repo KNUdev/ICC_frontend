@@ -1,0 +1,19 @@
+{
+  "labels": {
+    "fullname": "Fullname",
+    "email": "Email",
+    "faculty": "Faculty",
+    "description": "Description of the problem",
+    "photo": "Photo of the problem"
+  },
+
+  "placeholders": {
+    "fullname": "Popov Bohdan",
+    "email": "example@gmail.com",
+    "faculty": "Select a faculty",
+    "description": "I have problems with",
+    "photo": "Click here to attach a photo"
+  },
+
+  "button": "Leave a request"
+}

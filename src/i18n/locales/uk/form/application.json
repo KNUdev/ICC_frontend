@@ -1,0 +1,19 @@
+{
+  "labels": {
+    "fullname": "ПІБ",
+    "email": "Email",
+    "faculty": "Факультет",
+    "description": "Опис проблеми",
+    "photo": "Фото проблеми"
+  },
+
+  "placeholders": {
+    "fullname": "Попов Богдан Віталійович",
+    "email": "example@gmail.com",
+    "faculty": "Виберіть факультет",
+    "description": "У мене проблеми з",
+    "photo": "Натисніть сюди, щоб прикріпити фото..."
+  },
+
+  "button": "Залишити заявку"
+}
