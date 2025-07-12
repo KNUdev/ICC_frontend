@@ -3,12 +3,16 @@
 import UploadFile from '@/assets/image/icons/file.svg'
 import ArrowRight from '@/assets/image/icons/arrow-right.svg'
 import ArrowDown from '@/assets/image/icons/arrow-down.svg'
+import ArrowUp from '@/assets/image/icons/arrow-up.svg'
 import styles from './FormApplication.module.scss'
 import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 
 export function FormApplication() {
   const tFormApplication = useTranslations('form/application')
   const tCommon = useTranslations('common')
+
+  const [isSelectOpen, setIsSelectOpen] = useState(false)
 
   const FACULTIES = [
     'GEOGRAPHY',
@@ -74,9 +78,11 @@ export function FormApplication() {
 
         <div className={styles.selectWrapper}>
           <select
-            className={styles.select}
+            className='inputDrop'
             id='faculty'
             name='faculty'
+            onFocus={() => setIsSelectOpen(true)}
+            onBlur={() => setIsSelectOpen(false)}
             required
           >
             <option value='' disabled selected hidden>
@@ -89,7 +95,7 @@ export function FormApplication() {
             ))}
           </select>
 
-          <ArrowDown />
+          {isSelectOpen ? <ArrowUp /> : <ArrowDown />}
         </div>
       </div>
 
