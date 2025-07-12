@@ -7,6 +7,15 @@ import { useTranslations } from 'next-intl'
 
 export function FormApplication() {
   const tFormApplication = useTranslations('form/application')
+  const tCommon = useTranslations('common')
+
+  const FACULTIES = [
+    'GEOGRAPHY',
+    'ECONOMICS',
+    'HISTORY',
+    'MECHMATH',
+    'INFOTECH',
+  ] as const
 
   return (
     <form className={styles.formApp} role='form' aria-label='Leave a request'>
@@ -70,6 +79,11 @@ export function FormApplication() {
             <option value='' disabled selected hidden>
               {tFormApplication(`placeholders.faculty`)}
             </option>
+            {FACULTIES.map((key) => (
+              <option key={key} value={key}>
+                {tCommon(`faculties.${key}`)}
+              </option>
+            ))}
           </select>
 
           <ArrowDown />
