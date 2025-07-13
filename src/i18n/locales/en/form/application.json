@@ -10,10 +10,12 @@
   "placeholders": {
     "fullname": "Popov Bohdan",
     "email": "example@gmail.com",
-    "faculty": "Select a faculty",
+    "faculty": "Type name of your faculty",
     "description": "I have problems with",
     "photo": "Click here to attach a photo"
   },
 
-  "button": "Leave a request"
+  "button": "Leave a request",
+
+  "validation": "Please select your faculty"
 }

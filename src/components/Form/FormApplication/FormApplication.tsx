@@ -2,28 +2,54 @@
 
 import UploadFile from '@/assets/image/icons/file.svg'
 import ArrowRight from '@/assets/image/icons/arrow-right.svg'
-import ArrowDown from '@/assets/image/icons/arrow-down.svg'
-import ArrowUp from '@/assets/image/icons/arrow-up.svg'
 import styles from './FormApplication.module.scss'
 import { useTranslations } from 'next-intl'
+import DropDownInput from './DropDownInput/DropDownInput'
 import { useState } from 'react'
 
 export function FormApplication() {
+  const [selectedFaculty, setSelectedFaculty] = useState<string | null>(null)
+  const [isFacultyValid, setIsFacultyValid] = useState(false)
+
   const tFormApplication = useTranslations('form/application')
   const tCommon = useTranslations('common')
 
-  const [isSelectOpen, setIsSelectOpen] = useState(false)
-
-  const FACULTIES = [
+  const facultyKeys = [
     'GEOGRAPHY',
     'ECONOMICS',
     'HISTORY',
     'MECHMATH',
     'INFOTECH',
-  ] as const
+  ]
+
+  const options = facultyKeys.map((key) => ({
+    value: key,
+    label: tCommon(`faculties.${key}`),
+  }))
+
+  const handleSelect = (value: string) => {
+    setSelectedFaculty(value)
+    setIsFacultyValid(true)
+  }
+
+  const handleValidate = (isValid: boolean) => {
+    setIsFacultyValid(isValid)
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (!isFacultyValid) {
+      e.preventDefault()
+      alert(tFormApplication('validation'))
+    }
+  }
 
   return (
-    <form className={styles.formApp} role='form' aria-label='Leave a request'>
+    <form
+      className={styles.formApp}
+      role='form'
+      aria-label='Leave a request'
+      onSubmit={handleSubmit}
+    >
       <div className={styles.smallFieldWrapper}>
         <label className={styles.label} htmlFor='fullname'>
           <p className={styles.labelText}>
@@ -76,27 +102,12 @@ export function FormApplication() {
           </span>
         </label>
 
-        <div className={styles.selectWrapper}>
-          <select
-            className='inputDrop'
-            id='faculty'
-            name='faculty'
-            onFocus={() => setIsSelectOpen(true)}
-            onBlur={() => setIsSelectOpen(false)}
-            required
-          >
-            <option value='' disabled selected hidden>
-              {tFormApplication(`placeholders.faculty`)}
-            </option>
-            {FACULTIES.map((key) => (
-              <option key={key} value={key}>
-                {tCommon(`faculties.${key}`)}
-              </option>
-            ))}
-          </select>
-
-          {isSelectOpen ? <ArrowUp /> : <ArrowDown />}
-        </div>
+        <DropDownInput
+          options={options}
+          onSelect={handleSelect}
+          onValidate={handleValidate}
+          placeholder={tFormApplication('placeholders.faculty')}
+        />
       </div>
 
       <div className={styles.bigFieldWrapper}>

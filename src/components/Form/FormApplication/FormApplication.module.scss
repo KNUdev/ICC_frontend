@@ -74,24 +74,6 @@ $button-red-400: #ff525e;
   box-sizing: border-box;
 }
 
-.selectWrapper {
-  position: relative;
-  width: 100%;
-  background-color: #f7f7f7;
-  box-sizing: border-box;
-}
-
-.selectWrapper svg {
-  position: absolute;
-  top: 50%;
-  right: 0.75rem;
-  transform: translateY(-50%);
-  pointer-events: none;
-
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
 .textArea {
   display: flex;
   height: 9.375rem;
