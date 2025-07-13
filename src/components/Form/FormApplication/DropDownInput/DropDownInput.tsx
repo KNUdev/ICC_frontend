@@ -1,3 +1,5 @@
+'use client'
+
 import styles from './DropDownInput.module.scss'
 import ArrowDown from '@/assets/image/icons/arrow-down.svg'
 import ArrowUp from '@/assets/image/icons/arrow-up.svg'
