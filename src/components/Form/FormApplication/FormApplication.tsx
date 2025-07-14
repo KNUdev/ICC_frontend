@@ -5,10 +5,12 @@ import ArrowRight from '@/assets/image/icons/arrow-right.svg'
 import styles from './FormApplication.module.scss'
 import { useTranslations } from 'next-intl'
 import DropDownInput from './DropDownInput/DropDownInput'
+import ErrorIcon from '@/assets/image/icons/error.svg'
 import { useState } from 'react'
 
 export function FormApplication() {
   const [isFacultyValid, setIsFacultyValid] = useState(false)
+  const [showError, setShowError] = useState(false)
 
   const tFormApplication = useTranslations('form/application')
   const tCommon = useTranslations('common')
@@ -32,12 +34,15 @@ export function FormApplication() {
 
   const handleValidate = (isValid: boolean) => {
     setIsFacultyValid(isValid)
+    if (isValid) {
+      setShowError(false)
+    }
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (!isFacultyValid) {
       e.preventDefault()
-      alert(tFormApplication('validation'))
+      setShowError(true)
     }
   }
 
@@ -105,7 +110,15 @@ export function FormApplication() {
           onSelect={handleSelect}
           onValidate={handleValidate}
           placeholder={tFormApplication('placeholders.faculty')}
+          hasError={showError}
         />
+
+        {showError && (
+          <div className={styles.errorContainer}>
+            <ErrorIcon></ErrorIcon>
+            <p className={styles.errorText}>{tFormApplication('validation')}</p>
+          </div>
+        )}
       </div>
 
       <div className={styles.bigFieldWrapper}>

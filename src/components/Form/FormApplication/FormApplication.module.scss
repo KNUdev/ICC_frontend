@@ -6,6 +6,7 @@ $text-red-400: #ff525e;
 $text-nat-500: #6d6d6d;
 $text-nat-1000: #fff;
 $button-red-400: #ff525e;
+$error-text-800: #a30e2c;
 
 .formApp {
   display: flex;
@@ -160,4 +161,22 @@ $button-red-400: #ff525e;
   font-weight: 500;
   line-height: normal;
   letter-spacing: 0.005rem;
+}
+
+.errorContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: stretch;
+}
+
+.errorText {
+  color: $error-text-800;
+
+  font-family: Inter;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.00438rem;
 }

@@ -17,5 +17,5 @@
 
   "button": "Leave a request",
 
-  "validation": "Please select your faculty"
+  "validation": "Error: Please select your faculty"
 }

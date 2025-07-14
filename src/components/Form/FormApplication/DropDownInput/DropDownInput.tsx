@@ -15,6 +15,7 @@ interface SearchableDropdownProps {
   onSelect: (value: string) => void
   onValidate?: (isValid: boolean) => void
   placeholder?: string
+  hasError?: boolean
 }
 
 const DropDownInput: React.FC<SearchableDropdownProps> = ({
@@ -22,6 +23,7 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
   onSelect,
   placeholder,
   onValidate,
+  hasError,
 }) => {
   const [inputValue, setInputValue] = useState('')
   const [filteredOptions, setFilteredOptions] = useState<Option[]>([])
@@ -67,7 +69,9 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
           onFocus={() => setIsDropdownOpen(true)}
           onBlur={() => setTimeout(() => setIsDropdownOpen(false), 100)}
           placeholder={placeholder}
-          className={styles.searchInput}
+          className={`${styles.searchInput} ${
+            hasError ? styles.searchInputError : ''
+          }`}
         />
 
         <div className={styles.iconWrapper} onMouseDown={toggleDropdown}>
