@@ -8,7 +8,6 @@ import DropDownInput from './DropDownInput/DropDownInput'
 import { useState } from 'react'
 
 export function FormApplication() {
-  const [selectedFaculty, setSelectedFaculty] = useState<string | null>(null)
   const [isFacultyValid, setIsFacultyValid] = useState(false)
 
   const tFormApplication = useTranslations('form/application')
@@ -27,8 +26,7 @@ export function FormApplication() {
     label: tCommon(`faculties.${key}`),
   }))
 
-  const handleSelect = (value: string) => {
-    setSelectedFaculty(value)
+  const handleSelect = () => {
     setIsFacultyValid(true)
   }
 
