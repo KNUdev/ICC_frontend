@@ -6,7 +6,7 @@ import styles from './FormApplication.module.scss'
 import { useTranslations } from 'next-intl'
 import DropDownInput from './DropDownInput/DropDownInput'
 import ErrorIcon from '@/assets/image/icons/error.svg'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import type { Department } from '@/config/form.config'
 import { api } from '@/config/form.config'
 import { useLocale } from 'next-intl'
@@ -18,6 +18,8 @@ export function FormApplication() {
   const [departments, setDepartments] = useState<Department[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  const [file, setFile] = useState<File | null>(null)
 
   const tFormApplication = useTranslations('form/application')
 
@@ -76,6 +78,13 @@ export function FormApplication() {
       e.preventDefault()
       setShowError(true)
     }
+  }
+
+  const fileInput = useRef(null)
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0] || null
+    setFile(selectedFile)
   }
 
   if (loading) return <p>Loading...</p>
@@ -190,13 +199,19 @@ export function FormApplication() {
             name='file'
             accept='image/*'
             aria-labelledby='fileLabel'
+            ref={fileInput}
+            onChange={onChange}
             required
           />
           <div className={styles.uploadContent}>
             <UploadFile />
-            <span className={styles.uploadText}>
-              {tFormApplication(`placeholders.photo`)}
-            </span>
+            {file ? (
+              <span className={styles.uploadText}>{file.name}</span>
+            ) : (
+              <span className={styles.uploadText}>
+                {tFormApplication(`placeholders.photo`)}
+              </span>
+            )}
           </div>
         </label>
       </div>
