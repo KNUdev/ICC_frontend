@@ -6,12 +6,8 @@ import Mail from '@/assets/image/icons/social/mail.svg'
 import Telephone from '@/assets/image/icons/social/telephone.svg'
 import ContactLink from '@/common/components/ContactLink/ContactLink'
 import Hyperlink from '@/common/components/Hyperlink/Hyperlink'
-import {
-  contactInfo,
-  facultyLinks,
-  footerNavigation,
-  institutionLinks,
-} from '@/lib/footerData'
+import { FACULTY_LINKS, INSTITUTION_LINKS, PAGES } from '@/config/page.config'
+import { CONTACT_INFO } from '@/shared/data/footer.data'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -47,10 +43,10 @@ export function Footer() {
             <h3 className={styles.heading}>{tCommon('navigationHeading')}</h3>
 
             <ul className={styles.list} role='list'>
-              {footerNavigation.map(({ key, link }) => (
+              {Object.entries(PAGES).map(([key, link]) => (
                 <li key={key} role='listitem'>
                   <Link href={link} className='navLink'>
-                    {tFooter(`navigation.${key}`)}
+                    {tCommon(`navigation.${key}`)}
                   </Link>
                 </li>
               ))}
@@ -61,21 +57,23 @@ export function Footer() {
             <h3 className={styles.heading}>{tCommon('institutionsHeading')}</h3>
 
             <ul className={styles.list} role='list'>
-              {institutionLinks.slice(0, 5).map(({ key, link }) => (
-                <li key={key} role='listitem'>
-                  <a
-                    href={link}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    aria-label={`${tCommon(
-                      `institutions.${key}`,
-                    )} (opens in a new tab)`}
-                    className='navLink'
-                  >
-                    {tCommon(`institutions.${key}`)}
-                  </a>
-                </li>
-              ))}
+              {Object.entries(INSTITUTION_LINKS)
+                .slice(0, 5)
+                .map(([key, link]) => (
+                  <li key={key} role='listitem'>
+                    <a
+                      href={link}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      aria-label={`${tCommon(
+                        `institutions.${key}`,
+                      )} (opens in a new tab)`}
+                      className='navLink'
+                    >
+                      {tCommon(`institutions.${key}`)}
+                    </a>
+                  </li>
+                ))}
 
               <li role='listitem'>
                 <Hyperlink href={'/institutions'}>
@@ -89,21 +87,23 @@ export function Footer() {
             <h3 className={styles.heading}>{tCommon('facultiesHeading')}</h3>
 
             <ul className={styles.list} role='list'>
-              {facultyLinks.slice(0, 5).map(({ key, link }) => (
-                <li key={key} role='listitem'>
-                  <a
-                    href={link}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    aria-label={`${tCommon(
-                      `faculties.${key}`,
-                    )} (opens in a new tab)`}
-                    className='navLink'
-                  >
-                    {tCommon(`faculties.${key}`)}
-                  </a>
-                </li>
-              ))}
+              {Object.entries(FACULTY_LINKS)
+                .slice(0, 5)
+                .map(([key, link]) => (
+                  <li key={key} role='listitem'>
+                    <a
+                      href={link}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      aria-label={`${tCommon(
+                        `faculties.${key}`,
+                      )} (opens in a new tab)`}
+                      className='navLink'
+                    >
+                      {tCommon(`faculties.${key}`)}
+                    </a>
+                  </li>
+                ))}
 
               <li role='listitem'>
                 <Hyperlink href={'/faculties'}>{tCommon('seeMore')}</Hyperlink>
@@ -116,8 +116,8 @@ export function Footer() {
 
         <address className={styles.container}>
           <div className={styles.mailContainer}>
-            <ContactLink href={`mailto:${contactInfo.email}`} icon={Mail}>
-              {contactInfo.email}
+            <ContactLink href={`mailto:${CONTACT_INFO.email}`} icon={Mail}>
+              {CONTACT_INFO.email}
             </ContactLink>
           </div>
 
@@ -127,7 +127,7 @@ export function Footer() {
             aria-label={tFooter('aria.socialMedia')}
           >
             <a
-              href={contactInfo.socialMedia.instagram}
+              href={CONTACT_INFO.socialMedia.instagram}
               target='_blank'
               rel='noopener noreferrer'
               aria-label={tFooter('aria.instagram')}
@@ -136,7 +136,7 @@ export function Footer() {
               <InstagramIcon aria-label='instagramIcon' role='img' />
             </a>
             <a
-              href={contactInfo.socialMedia.facebook}
+              href={CONTACT_INFO.socialMedia.facebook}
               target='_blank'
               rel='noopener noreferrer'
               aria-label={tFooter('aria.facebook')}
@@ -145,7 +145,7 @@ export function Footer() {
               <FacebookIcon aria-label='facebookIcon' role='img' />
             </a>
             <a
-              href={contactInfo.socialMedia.linkedin}
+              href={CONTACT_INFO.socialMedia.linkedin}
               target='_blank'
               rel='noopener noreferrer'
               aria-label={tFooter('aria.linkedin')}
@@ -156,8 +156,8 @@ export function Footer() {
           </div>
 
           <div className={styles.telephoneContainer}>
-            <ContactLink href={`mailto:${contactInfo.phone}`} icon={Telephone}>
-              {contactInfo.phone}
+            <ContactLink href={`mailto:${CONTACT_INFO.phone}`} icon={Telephone}>
+              {CONTACT_INFO.phone}
             </ContactLink>
           </div>
         </address>
