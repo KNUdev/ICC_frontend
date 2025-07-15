@@ -10,7 +10,6 @@ export default function Layout({ children }: PropsWithChildren) {
       <Header customNav={<CustomHeaderNav />} />
       <AddPhoto />
       {children}
-      <Footer />
     </div>
   )
 }
