@@ -4,11 +4,10 @@ import UploadFile from '@/assets/image/icons/file.svg'
 import ArrowRight from '@/assets/image/icons/arrow-right.svg'
 import styles from './FormApplication.module.scss'
 import { useTranslations } from 'next-intl'
-import DropDownInput from './DropDownInput/DropDownInput'
+import DropDownInput from '../../../common/components/DropDownInput/DropDownInput'
 import ErrorIcon from '@/assets/image/icons/error.svg'
 import { useEffect, useState, useRef } from 'react'
 import type { Department } from '@/config/form.config'
-import { api } from '@/config/form.config'
 import { useLocale } from 'next-intl'
 
 export function FormApplication() {
@@ -33,9 +32,11 @@ export function FormApplication() {
 
   const tFormApplication = useTranslations('form/application')
 
+  const api = process.env.NEXT_PUBLIC_API_URL
+
   const fetchDepartments = async () => {
     try {
-      const response = await fetch(`${api}/department/all`, {
+      const response = await fetch(`${api}department/all`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +95,7 @@ export function FormApplication() {
     formData.append('status', 'IN_QUEUE')
 
     try {
-      const response = await fetch(`${api}/application/create`, {
+      const response = await fetch(`${api}application/create`, {
         method: 'POST',
         body: formData,
       })
