@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 import IconFile from '@/assets/image/icons/add-photo/icon-static.svg'
 
 export default function ImageUploadForm() {
-    const [image, setImage] = useState<File | null>(null);
+    const [, setImage] = useState<File | null>(null);
     const [imageURL, setImageURL] = useState<string | null>(null);
     const [title, setTitle] = useState<string>('');
     const tImageUploader = useTranslations('add-photo/imageUploader')
