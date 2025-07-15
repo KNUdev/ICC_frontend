@@ -6,26 +6,55 @@ import styles from './FormApplication.module.scss'
 import { useTranslations } from 'next-intl'
 import DropDownInput from './DropDownInput/DropDownInput'
 import ErrorIcon from '@/assets/image/icons/error.svg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import type { Department } from '@/config/form.config'
+import { api } from '@/config/form.config'
 
 export function FormApplication() {
   const [isFacultyValid, setIsFacultyValid] = useState(false)
   const [showError, setShowError] = useState(false)
 
+  const [departments, setDepartments] = useState<Department[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
   const tFormApplication = useTranslations('form/application')
-  const tCommon = useTranslations('common')
 
-  const facultyKeys = [
-    'GEOGRAPHY',
-    'ECONOMICS',
-    'HISTORY',
-    'MECHMATH',
-    'INFOTECH',
-  ]
+  const fetchDepartments = async () => {
+    try {
+      const response = await fetch(`${api}/department/all`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pageNumber: 0,
+          pageSize: 10,
+        }),
+      })
 
-  const options = facultyKeys.map((key) => ({
-    value: key,
-    label: tCommon(`faculties.${key}`),
+      if (!response.ok) {
+        throw new Error('Failed to fetch departments')
+      }
+
+      const data = await response.json()
+      setDepartments(data.content)
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message)
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchDepartments()
+  }, [])
+
+  const facultyOptions = departments.map((faculty) => ({
+    value: faculty.id,
+    label: faculty.name.uk,
   }))
 
   const handleSelect = () => {
@@ -45,6 +74,9 @@ export function FormApplication() {
       setShowError(true)
     }
   }
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error}</p>
 
   return (
     <form
@@ -106,7 +138,7 @@ export function FormApplication() {
         </label>
 
         <DropDownInput
-          options={options}
+          options={facultyOptions}
           onSelect={handleSelect}
           onValidate={handleValidate}
           placeholder={tFormApplication('placeholders.faculty')}
