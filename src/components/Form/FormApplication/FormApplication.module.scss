@@ -7,6 +7,12 @@ $text-nat-500: #6d6d6d;
 $text-nat-1000: #fff;
 $button-red-400: #ff525e;
 $error-text-800: #a30e2c;
+$failure-bg-color: #fff2f0;
+$failure-border-color: #ffccc7;
+$failure-text-color: #cf1322;
+$success-bg-color: #f6ffed;
+$success-border-color: #b7eb8f;
+$success-text-color: #389e0d;
 
 .formApp {
   display: flex;
@@ -179,4 +185,38 @@ $error-text-800: #a30e2c;
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.00438rem;
+}
+
+.formFailure,
+.formSuccess {
+  text-align: center;
+  padding: 0.5rem;
+  width: 100%;
+
+  color: $failure-text-color;
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+  letter-spacing: 0.005rem;
+}
+
+.formFailure {
+  border: 1px solid $failure-border-color;
+  background: $failure-bg-color;
+}
+
+.formSuccess {
+  border: 1px solid $success-border-color;
+  background: $success-bg-color;
+  color: $success-text-color;
+}
+
+.failureText {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }

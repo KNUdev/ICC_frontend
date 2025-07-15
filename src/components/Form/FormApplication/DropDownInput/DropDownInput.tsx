@@ -12,10 +12,11 @@ interface Option {
 
 interface SearchableDropdownProps {
   options: Option[]
-  onSelect: (value: string) => void
+  onSelect: (value: string | null) => void
   onValidate?: (isValid: boolean) => void
   placeholder?: string
   hasError?: boolean
+  value?: string | null
 }
 
 const DropDownInput: React.FC<SearchableDropdownProps> = ({
@@ -24,10 +25,22 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
   placeholder,
   onValidate,
   hasError,
+  value,
 }) => {
   const [inputValue, setInputValue] = useState('')
   const [filteredOptions, setFilteredOptions] = useState<Option[]>([])
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
+  useEffect(() => {
+    if (!isDropdownOpen) {
+      if (value === null || value === '') {
+        setInputValue('')
+      } else {
+        const selected = options.find((o) => o.value === value)
+        if (selected) setInputValue(selected.label)
+      }
+    }
+  }, [value, options, isDropdownOpen])
 
   useEffect(() => {
     setFilteredOptions(
@@ -45,8 +58,15 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
   }, [inputValue, options, onValidate])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
+    const val = e.target.value
+    setInputValue(val)
     setIsDropdownOpen(true)
+
+    const match = options.find(
+      (opt) => opt.label.toLowerCase() === val.toLowerCase(),
+    )
+
+    onSelect(match?.value ?? null)
   }
 
   const handleOptionClick = (option: Option) => {
