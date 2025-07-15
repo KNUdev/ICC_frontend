@@ -74,7 +74,7 @@ export function FormApplication() {
 
     formData.delete('applicantName')
 
-    const fullName = form.fullName.value.trim().split(' ')
+    const fullName = form.applicantName.value.trim().split(/\s+/)
     formData.append('applicantName.firstName', fullName[0] || '')
     formData.append('applicantName.lastName', fullName[1] || '')
     formData.append('applicantName.middleName', fullName[2] || '')
@@ -91,8 +91,6 @@ export function FormApplication() {
         method: 'POST',
         body: formData,
       })
-
-      console.log(response.status)
 
       if (response.ok) {
         setShowSubmissionSuccess(true)
@@ -186,7 +184,7 @@ export function FormApplication() {
         <div className={styles.inputWrapper}>
           <input
             type='text'
-            id='fullName'
+            id='applicantName'
             name='applicantName'
             placeholder={tFormApplication(`placeholders.fullname`)}
             className='inputText'
