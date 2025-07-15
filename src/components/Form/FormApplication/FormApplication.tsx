@@ -9,6 +9,7 @@ import ErrorIcon from '@/assets/image/icons/error.svg'
 import { useEffect, useState } from 'react'
 import type { Department } from '@/config/form.config'
 import { api } from '@/config/form.config'
+import { useLocale } from 'next-intl'
 
 export function FormApplication() {
   const [isFacultyValid, setIsFacultyValid] = useState(false)
@@ -52,9 +53,11 @@ export function FormApplication() {
     fetchDepartments()
   }, [])
 
+  const locale = useLocale()
+
   const facultyOptions = departments.map((faculty) => ({
     value: faculty.id,
-    label: faculty.name.uk,
+    label: faculty.name[locale as 'en' | 'uk'],
   }))
 
   const handleSelect = () => {
