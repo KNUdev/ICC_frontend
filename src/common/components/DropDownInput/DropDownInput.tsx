@@ -12,6 +12,7 @@ interface Option {
 
 interface SearchableDropdownProps {
   options: Option[]
+  onOpen: (value: string) => void
   onSelect: (value: string | null) => void
   onValidate?: (isValid: boolean) => void
   placeholder?: string
@@ -21,6 +22,7 @@ interface SearchableDropdownProps {
 
 const DropDownInput: React.FC<SearchableDropdownProps> = ({
   options,
+  onOpen,
   onSelect,
   placeholder,
   onValidate,
@@ -86,7 +88,12 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
           type='text'
           value={inputValue}
           onChange={handleInputChange}
-          onFocus={() => setIsDropdownOpen(true)}
+          onFocus={() => {
+            if (!isDropdownOpen) {
+              onOpen(inputValue)
+              setIsDropdownOpen(true)
+            }
+          }}
           onBlur={() => setTimeout(() => setIsDropdownOpen(false), 100)}
           placeholder={placeholder}
           className={`${styles.searchInput} ${

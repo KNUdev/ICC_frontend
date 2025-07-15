@@ -6,7 +6,7 @@ import styles from './FormApplication.module.scss'
 import { useTranslations } from 'next-intl'
 import DropDownInput from '../../../common/components/DropDownInput/DropDownInput'
 import ErrorIcon from '@/assets/image/icons/error.svg'
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import type { Department } from '@/config/form.config'
 import { useLocale } from 'next-intl'
 
@@ -18,8 +18,6 @@ export function FormApplication() {
   const [showError, setShowError] = useState(false)
 
   const [departments, setDepartments] = useState<Department[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
 
   const [file, setFile] = useState<File | null>(null)
 
@@ -55,16 +53,10 @@ export function FormApplication() {
       setDepartments(data.content)
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setError(err.message)
+        console.error(err.message)
       }
-    } finally {
-      setLoading(false)
     }
   }
-
-  useEffect(() => {
-    fetchDepartments()
-  }, [])
 
   const locale = useLocale()
 
@@ -174,9 +166,6 @@ export function FormApplication() {
     setFile(selectedFile)
   }
 
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error: {error}</p>
-
   return (
     <form
       className={styles.formApp}
@@ -239,6 +228,11 @@ export function FormApplication() {
         <DropDownInput
           options={facultyOptions}
           value={selectedFacultyId}
+          onOpen={() => {
+            if (departments.length === 0) {
+              fetchDepartments()
+            }
+          }}
           onSelect={(id: string | null) => {
             setSelectedFacultyId(id)
             handleSelect()
@@ -307,7 +301,7 @@ export function FormApplication() {
         </label>
       </div>
 
-      <button type='submit' className='mainBtn'>
+      <button type='submit' className='mainBtn' disabled={isSubmitting}>
         <p className={styles.buttonText}>
           {isSubmitting ? 'Loading...' : tFormApplication(`button`)}
         </p>
