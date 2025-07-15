@@ -5,7 +5,6 @@ import ArrowRight from '@/assets/image/icons/arrow-right.svg'
 import styles from './FormApplication.module.scss'
 import { useTranslations } from 'next-intl'
 import DropDownInput from '../../../common/components/DropDownInput/DropDownInput'
-import ErrorIcon from '@/assets/image/icons/error.svg'
 import { useState, useRef } from 'react'
 import type { Department } from '@/config/form.config'
 import { useLocale } from 'next-intl'
@@ -27,6 +26,8 @@ export function FormApplication() {
   const [submissionErrorMessage, setSubmissionErrorMessage] = useState<
     string | null
   >(null)
+
+  const [dropdownError, setDropdownError] = useState<string | null>(null)
 
   const tFormApplication = useTranslations('form/application')
 
@@ -51,9 +52,11 @@ export function FormApplication() {
 
       const data = await response.json()
       setDepartments(data.content)
+      setDropdownError(null)
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error(err.message)
+        setDropdownError(tFormApplication('error'))
       }
     }
   }
@@ -237,15 +240,9 @@ export function FormApplication() {
           }}
           onValidate={handleValidate}
           placeholder={tFormApplication('placeholders.faculty')}
-          hasError={showError}
+          hasError={showError || !!dropdownError}
+          errorMessage={dropdownError}
         />
-
-        {showError && (
-          <div className={styles.errorContainer}>
-            <ErrorIcon></ErrorIcon>
-            <p className={styles.errorText}>{tFormApplication('validation')}</p>
-          </div>
-        )}
       </div>
 
       <div className={styles.bigFieldWrapper}>

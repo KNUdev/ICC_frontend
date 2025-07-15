@@ -3,6 +3,7 @@
 import styles from './DropDownInput.module.scss'
 import ArrowDown from '@/assets/image/icons/arrow-down.svg'
 import ArrowUp from '@/assets/image/icons/arrow-up.svg'
+import ErrorIcon from '@/assets/image/icons/bigger-error.svg'
 import { useState, useEffect } from 'react'
 
 interface Option {
@@ -18,6 +19,7 @@ interface SearchableDropdownProps {
   placeholder?: string
   hasError?: boolean
   value?: string | null
+  errorMessage?: string | null
 }
 
 const DropDownInput: React.FC<SearchableDropdownProps> = ({
@@ -28,13 +30,14 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
   onValidate,
   hasError,
   value,
+  errorMessage,
 }) => {
   const [inputValue, setInputValue] = useState('')
   const [filteredOptions, setFilteredOptions] = useState<Option[]>([])
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
 
   useEffect(() => {
-    if (!isDropdownOpen) {
+    if (!isExpanded) {
       if (value === null || value === '') {
         setInputValue('')
       } else {
@@ -42,7 +45,7 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
         if (selected) setInputValue(selected.label)
       }
     }
-  }, [value, options, isDropdownOpen])
+  }, [value, options, isExpanded])
 
   useEffect(() => {
     setFilteredOptions(
@@ -62,7 +65,7 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value
     setInputValue(val)
-    setIsDropdownOpen(true)
+    setIsExpanded(true)
 
     const match = options.find(
       (opt) => opt.label.toLowerCase() === val.toLowerCase(),
@@ -74,11 +77,11 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
   const handleOptionClick = (option: Option) => {
     setInputValue(option.label)
     onSelect(option.value)
-    setIsDropdownOpen(false)
+    setIsExpanded(false)
   }
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev)
+  const toggleExpanded = () => {
+    setIsExpanded((prev) => !prev)
   }
 
   return (
@@ -89,24 +92,24 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
           value={inputValue}
           onChange={handleInputChange}
           onFocus={() => {
-            if (!isDropdownOpen) {
+            if (!isExpanded) {
               onOpen(inputValue)
-              setIsDropdownOpen(true)
+              setIsExpanded(true)
             }
           }}
-          onBlur={() => setTimeout(() => setIsDropdownOpen(false), 100)}
+          onBlur={() => setTimeout(() => setIsExpanded(false), 100)}
           placeholder={placeholder}
           className={`${styles.searchInput} ${
             hasError ? styles.searchInputError : ''
           }`}
         />
 
-        <div className={styles.iconWrapper} onMouseDown={toggleDropdown}>
-          {isDropdownOpen ? <ArrowUp /> : <ArrowDown />}
+        <div className={styles.iconWrapper} onMouseDown={toggleExpanded}>
+          {isExpanded ? <ArrowUp /> : <ArrowDown />}
         </div>
       </div>
 
-      {isDropdownOpen && filteredOptions.length > 0 && (
+      {isExpanded && filteredOptions.length > 0 && (
         <ul className={styles.list}>
           {filteredOptions.slice(0, 20).map((option) => {
             const regex = new RegExp(`(${inputValue})`, 'ig')
@@ -131,6 +134,13 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
             )
           })}
         </ul>
+      )}
+
+      {hasError && errorMessage && isExpanded && (
+        <div className={styles.errorBlock}>
+          <ErrorIcon />
+          <span className={styles.errorText}>{errorMessage}</span>
+        </div>
       )}
     </div>
   )
