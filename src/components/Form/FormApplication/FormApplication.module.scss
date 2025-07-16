@@ -3,6 +3,7 @@ $bg-nat-1000: #fff;
 $bg-nat-900: #f6f6f6;
 $text-nat-0: #272727;
 $text-red-400: #ff525e;
+$text-nat-250: #3d3d3d;
 $text-nat-500: #6d6d6d;
 $text-nat-1000: #fff;
 $button-red-400: #ff525e;
@@ -128,13 +129,6 @@ $success-text-color: #389e0d;
   gap: 0.94rem;
 }
 
-.uploadContent img {
-  width: 32px;
-  height: 32px;
-  margin-bottom: 8px;
-  opacity: 0.6;
-}
-
 .uploadText {
   color: $text-nat-500;
 
@@ -144,6 +138,63 @@ $success-text-color: #389e0d;
   font-weight: 400;
   line-height: 1.375rem;
   letter-spacing: 0.005rem;
+}
+
+.fileStatusContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fileStatusText {
+  color: $text-nat-250;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+  letter-spacing: 0.005rem;
+}
+
+.previewButton,
+.deleteButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 10.4375rem;
+
+  color: $text-red-400;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}
+
+.previewButton:hover,
+.deleteButton:hover {
+  color: $failure-text-color;
+}
+
+.divider {
+  width: 2.625rem;
+  height: 0.0625rem;
+  background: $border-nat-800;
 }
 
 .buttonLeave {

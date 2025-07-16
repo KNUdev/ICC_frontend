@@ -279,60 +279,69 @@ export function FormApplication() {
       <div className={styles.bigFieldWrapper}>
         <label className={styles.label} htmlFor='file' id='fileLabel'>
           <p className={styles.labelText}>{tFormApplication(`labels.photo`)}</p>
-          <span
-            className={styles.labelSpan}
-            title={tFormApplication('required')}
-          >
+          <span className={styles.labelSpan} title='This field is required'>
             *
           </span>
         </label>
 
-        {!file ? (
-          <label className={styles.customFileUpload}>
-            <input
-              type='file'
-              id='file'
-              name='problemPhoto'
-              accept='image/*'
-              aria-labelledby='fileLabel'
-              ref={fileInput}
-              onChange={onChange}
-              required
-            />
-            <div className={styles.uploadContent}>
-              <UploadFile />
+        <label className={styles.customFileUpload}>
+          <input
+            type='file'
+            id='file'
+            name='problemPhoto'
+            accept='image/*'
+            aria-labelledby='fileLabel'
+            ref={fileInput}
+            onChange={onChange}
+            disabled={!!file}
+            required
+          />
+          <div className={styles.uploadContent}>
+            <UploadFile />
+            {!file && (
               <span className={styles.uploadText}>
                 {tFormApplication(`placeholders.photo`)}
               </span>
-            </div>
-          </label>
-        ) : (
-          <div className={styles.fileStatusWrapper}>
-            <button
-              type='button'
-              className={styles.previewBtn}
-              onClick={() => {
-                const fileURL = URL.createObjectURL(file)
-                window.open(fileURL, '_blank')
-              }}
-            >
-              {tFormApplication('buttons.preview')}
-            </button>
-
-            <div className={styles.fileUploaded}>
-              <UploadFile />
-              <p>{tFormApplication('labels.uploaded')}</p>
-            </div>
-
-            <button
-              type='button'
-              className={styles.removeBtn}
-              onClick={() => setFile(null)}
-            >
-              {tFormApplication('buttons.remove')}
-            </button>
+            )}
           </div>
-        )}
+
+          {file && (
+            <div className={styles.fileStatusContainer}>
+              <button
+                type='button'
+                className={styles.previewButton}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+
+                  const fileURL = URL.createObjectURL(file)
+                  window.open(fileURL, '_blank')
+                }}
+              >
+                {tFormApplication('file.preview')}
+              </button>
+
+              <div className={styles.divider}></div>
+              <p className={styles.fileStatusText}>
+                {tFormApplication('file.uploaded')}
+              </p>
+              <div className={styles.divider}></div>
+
+              <button
+                type='button'
+                className={styles.deleteButton}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+
+                  setFile(null)
+                }}
+              >
+                {tFormApplication('file.delete')}
+              </button>
+            </div>
+          )}
+        </label>
       </div>
 
       <button type='submit' className='mainBtn' disabled={isSubmitting}>

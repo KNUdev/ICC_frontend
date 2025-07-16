@@ -15,6 +15,12 @@
     "photo": "Click here to attach a photo"
   },
 
+  "file": {
+    "uploaded": "The photo is uploaded",
+    "preview": "View the photo",
+    "delete": "Delete the photo"
+  },
+
   "required": "This field is required",
 
   "button": "Leave a request",
