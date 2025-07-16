@@ -179,7 +179,10 @@ export function FormApplication() {
           <p className={styles.labelText}>
             {tFormApplication(`labels.fullname`)}
           </p>
-          <span className={styles.labelSpan} title='This field is required'>
+          <span
+            className={styles.labelSpan}
+            title={tFormApplication('required')}
+          >
             *
           </span>
         </label>
@@ -199,7 +202,10 @@ export function FormApplication() {
       <div className={styles.smallFieldWrapper}>
         <label className={styles.label} htmlFor='email'>
           <p className={styles.labelText}>{tFormApplication(`labels.email`)}</p>
-          <span className={styles.labelSpan} title='This field is required'>
+          <span
+            className={styles.labelSpan}
+            title={tFormApplication('required')}
+          >
             *
           </span>
         </label>
@@ -221,7 +227,10 @@ export function FormApplication() {
           <p className={styles.labelText}>
             {tFormApplication(`labels.faculty`)}
           </p>
-          <span className={styles.labelSpan} title='This field is required'>
+          <span
+            className={styles.labelSpan}
+            title={tFormApplication('required')}
+          >
             *
           </span>
         </label>
@@ -250,7 +259,10 @@ export function FormApplication() {
           <p className={styles.labelText}>
             {tFormApplication(`labels.description`)}
           </p>
-          <span className={styles.labelSpan} title='This field is required'>
+          <span
+            className={styles.labelSpan}
+            title={tFormApplication('required')}
+          >
             *
           </span>
         </label>
@@ -267,33 +279,60 @@ export function FormApplication() {
       <div className={styles.bigFieldWrapper}>
         <label className={styles.label} htmlFor='file' id='fileLabel'>
           <p className={styles.labelText}>{tFormApplication(`labels.photo`)}</p>
-          <span className={styles.labelSpan} title='This field is required'>
+          <span
+            className={styles.labelSpan}
+            title={tFormApplication('required')}
+          >
             *
           </span>
         </label>
 
-        <label className={styles.customFileUpload}>
-          <input
-            type='file'
-            id='file'
-            name='problemPhoto'
-            accept='image/*'
-            aria-labelledby='fileLabel'
-            ref={fileInput}
-            onChange={onChange}
-            required
-          />
-          <div className={styles.uploadContent}>
-            <UploadFile />
-            {file ? (
-              <span className={styles.uploadText}>{file.name}</span>
-            ) : (
+        {!file ? (
+          <label className={styles.customFileUpload}>
+            <input
+              type='file'
+              id='file'
+              name='problemPhoto'
+              accept='image/*'
+              aria-labelledby='fileLabel'
+              ref={fileInput}
+              onChange={onChange}
+              required
+            />
+            <div className={styles.uploadContent}>
+              <UploadFile />
               <span className={styles.uploadText}>
                 {tFormApplication(`placeholders.photo`)}
               </span>
-            )}
+            </div>
+          </label>
+        ) : (
+          <div className={styles.fileStatusWrapper}>
+            <button
+              type='button'
+              className={styles.previewBtn}
+              onClick={() => {
+                const fileURL = URL.createObjectURL(file)
+                window.open(fileURL, '_blank')
+              }}
+            >
+              {tFormApplication('buttons.preview')}
+            </button>
+
+            <div className={styles.fileUploaded}>
+              <UploadFile />
+              <p>{tFormApplication('labels.uploaded')}</p>
+            </div>
+
+            <button
+              type='button'
+              className={styles.removeBtn}
+              onClick={() => setFile(null)}
+            >
+              {tFormApplication('buttons.remove')}
+            </button>
           </div>
-        </label>
+        )}
       </div>
 
       <button type='submit' className='mainBtn' disabled={isSubmitting}>
