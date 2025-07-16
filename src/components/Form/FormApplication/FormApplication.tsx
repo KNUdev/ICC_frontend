@@ -8,6 +8,13 @@ import DropDownInput from '../../../common/components/DropDownInput/DropDownInpu
 import { useState, useRef } from 'react'
 import type { Department } from '@/config/form.config'
 import { useLocale } from 'next-intl'
+import { Golos_Text } from 'next/font/google'
+
+const golos = Golos_Text({
+  subsets: ['latin', 'cyrillic', 'cyrillic-ext'],
+  variable: '--font-golos',
+  display: 'swap',
+})
 
 export function FormApplication() {
   const [isFacultyValid, setIsFacultyValid] = useState(false)
@@ -273,7 +280,7 @@ export function FormApplication() {
           placeholder={tFormApplication(`placeholders.description`)}
           id='description'
           name='problemDescription'
-          className={styles.textArea}
+          className={`${styles.textArea} ${golos.variable}`}
           required
         />
       </div>
