@@ -9,6 +9,7 @@ import { useState, useRef } from 'react'
 import type { Department } from '@/config/form.config'
 import { useLocale } from 'next-intl'
 import { Golos_Text } from 'next/font/google'
+import Form from 'next/form'
 
 const golos = Golos_Text({
   subsets: ['latin', 'cyrillic', 'cyrillic-ext'],
@@ -177,7 +178,8 @@ export function FormApplication() {
   }
 
   return (
-    <form
+    <Form
+      action='form'
       className={styles.formApp}
       role='form'
       aria-label='Leave a request'
@@ -374,6 +376,6 @@ export function FormApplication() {
           <p>{tFormApplication('success')}</p>
         </div>
       )}
-    </form>
+    </Form>
   )
 }
