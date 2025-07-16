@@ -34,7 +34,7 @@
   },
 
   "authentication": {
-    "login": "Sing in",
+    "login": "Sign in",
     "register": "Sign up"
   },
 
