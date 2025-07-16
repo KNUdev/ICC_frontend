@@ -78,8 +78,8 @@ export function FormApplication() {
     formData.delete('applicantName')
 
     const fullName = form.applicantName.value.trim().split(/\s+/)
-    formData.append('applicantName.firstName', fullName[0] || '')
-    formData.append('applicantName.lastName', fullName[1] || '')
+    formData.append('applicantName.firstName', fullName[1] || '')
+    formData.append('applicantName.lastName', fullName[0] || '')
     formData.append('applicantName.middleName', fullName[2] || '')
 
     if (file) {
@@ -140,6 +140,8 @@ export function FormApplication() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (isSubmitting) return
 
     if (!isFacultyValid) {
       setShowError(true)
