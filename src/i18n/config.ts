@@ -15,4 +15,6 @@ export const NAMESPACES = [
   'footer',
   'form/text',
   'form/points',
+  'add-photo/text',
+  'add-photo/imageUploader'
 ]
