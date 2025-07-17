@@ -1,5 +1,5 @@
-import { Form } from '@/components/Form/Form'
-import { FormLines } from '@/components/Form/FormApplication/FormLines/FormLines'
+import { Form } from '@/app/[locale]/(public)/(home)/components/Form/Form'
+import { FormLines } from '@/app/[locale]/(public)/(home)/components/Form/FormApplication/FormLines/FormLines'
 
 export default function HomePage() {
   return (

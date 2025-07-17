@@ -1,13 +1,13 @@
 'use client'
 
+import type { Department } from '@/app/[locale]/(public)/(home)/components/Form/form.interfaces'
 import ArrowRight from '@/assets/image/icons/arrow-right.svg'
 import UploadFile from '@/assets/image/icons/file.svg'
-import type { Department } from '@/config/form.config'
 import { useLocale, useTranslations } from 'next-intl'
 import { Golos_Text } from 'next/font/google'
 import Form from 'next/form'
 import { useRef, useState } from 'react'
-import DropDownInput from '../../../common/components/Input/DropDownInput/DropDownInput'
+import DropDownInput from '../../../../../../../common/components/Input/DropDownInput/DropDownInput'
 import styles from './FormApplication.module.scss'
 
 const golos = Golos_Text({
