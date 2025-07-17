@@ -297,7 +297,7 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
           id={`fileLabel-${formId}`}
         >
           <p className={styles.labelText}>{tFormApplication(`labels.photo`)}</p>
-          <span className={styles.labelSpan} title='This field is required'>
+          <span className={styles.labelSpan} title={tFormApplication('labels.required')}>
             *
           </span>
         </label>
