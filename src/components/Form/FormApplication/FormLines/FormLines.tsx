@@ -1,8 +1,8 @@
-import { FormApplication } from '../FormApplication'
 import LinesLeft from '@/assets/image/icons/lines-left.svg'
 import LinesRight from '@/assets/image/icons/lines-right.svg'
-import styles from './FormLines.module.scss'
 import { useTranslations } from 'next-intl'
+import { FormApplication } from '../FormApplication'
+import styles from './FormLines.module.scss'
 
 export function FormLines() {
   const tFormText = useTranslations('form/text')
@@ -13,7 +13,7 @@ export function FormLines() {
 
       <div className={styles.formContainer}>
         <h1 className={styles.formHeading}>{tFormText('linesHeading')}</h1>
-        <FormApplication />
+        <FormApplication formId='lines' />
       </div>
 
       <LinesRight className={styles.linesRight} />
