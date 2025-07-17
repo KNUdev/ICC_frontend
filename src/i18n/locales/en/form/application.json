@@ -23,6 +23,8 @@
 
   "required": "This field is required",
 
+  "loading": "Loading...",
+
   "button": "Leave a request",
 
   "validation": "Error: Please select your faculty",
