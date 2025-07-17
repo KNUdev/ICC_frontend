@@ -1,14 +1,13 @@
 'use client'
 
-import UploadFile from '@/assets/image/icons/file.svg'
 import ArrowRight from '@/assets/image/icons/arrow-right.svg'
-import styles from './FormApplication.module.scss'
-import { useTranslations } from 'next-intl'
-import DropDownInput from '../../../common/components/DropDownInput/DropDownInput'
-import { useState, useRef } from 'react'
+import UploadFile from '@/assets/image/icons/file.svg'
 import type { Department } from '@/config/form.config'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { Golos_Text } from 'next/font/google'
+import { useRef, useState } from 'react'
+import DropDownInput from '../../../common/components/Input/DropDownInput/DropDownInput'
+import styles from './FormApplication.module.scss'
 
 const golos = Golos_Text({
   subsets: ['latin', 'cyrillic', 'cyrillic-ext'],
@@ -16,7 +15,11 @@ const golos = Golos_Text({
   display: 'swap',
 })
 
-export function FormApplication() {
+interface FormApplicationProps {
+  formId?: string
+}
+
+export function FormApplication({ formId = 'default' }: FormApplicationProps) {
   const [isFacultyValid, setIsFacultyValid] = useState(false)
   const [selectedFacultyId, setSelectedFacultyId] = useState<string | null>(
     null,
@@ -184,7 +187,7 @@ export function FormApplication() {
       onSubmit={handleSubmit}
     >
       <div className={styles.smallFieldWrapper}>
-        <label className={styles.label} htmlFor='fullname'>
+        <label className={styles.label} htmlFor={`fullname-${formId}`}>
           <p className={styles.labelText}>
             {tFormApplication(`labels.fullname`)}
           </p>
@@ -199,7 +202,7 @@ export function FormApplication() {
         <div className={styles.inputWrapper}>
           <input
             type='text'
-            id='applicantName'
+            id={`applicantName-${formId}`}
             name='applicantName'
             placeholder={tFormApplication(`placeholders.fullname`)}
             className='inputText'
@@ -209,7 +212,7 @@ export function FormApplication() {
       </div>
 
       <div className={styles.smallFieldWrapper}>
-        <label className={styles.label} htmlFor='email'>
+        <label className={styles.label} htmlFor={`email-${formId}`}>
           <p className={styles.labelText}>{tFormApplication(`labels.email`)}</p>
           <span
             className={styles.labelSpan}
@@ -222,7 +225,7 @@ export function FormApplication() {
         <div className={styles.inputWrapper}>
           <input
             type='email'
-            id='email'
+            id={`email-${formId}`}
             name='applicantEmail'
             placeholder={tFormApplication(`placeholders.email`)}
             className='inputText'
@@ -232,7 +235,7 @@ export function FormApplication() {
       </div>
 
       <div className={styles.smallFieldWrapper}>
-        <label className={styles.label} htmlFor='faculty'>
+        <label className={styles.label} htmlFor={`faculty-${formId}`}>
           <p className={styles.labelText}>
             {tFormApplication(`labels.faculty`)}
           </p>
@@ -264,7 +267,7 @@ export function FormApplication() {
       </div>
 
       <div className={styles.bigFieldWrapper}>
-        <label className={styles.label} htmlFor='description'>
+        <label className={styles.label} htmlFor={`description-${formId}`}>
           <p className={styles.labelText}>
             {tFormApplication(`labels.description`)}
           </p>
@@ -278,7 +281,7 @@ export function FormApplication() {
 
         <textarea
           placeholder={tFormApplication(`placeholders.description`)}
-          id='description'
+          id={`description-${formId}`}
           name='problemDescription'
           className={`${styles.textArea} ${golos.variable}`}
           required
@@ -286,7 +289,11 @@ export function FormApplication() {
       </div>
 
       <div className={styles.bigFieldWrapper}>
-        <label className={styles.label} htmlFor='file' id='fileLabel'>
+        <label
+          className={styles.label}
+          htmlFor={`file-${formId}`}
+          id={`fileLabel-${formId}`}
+        >
           <p className={styles.labelText}>{tFormApplication(`labels.photo`)}</p>
           <span className={styles.labelSpan} title='This field is required'>
             *
@@ -296,10 +303,10 @@ export function FormApplication() {
         <label className={styles.customFileUpload}>
           <input
             type='file'
-            id='file'
+            id={`file-${formId}`}
             name='problemPhoto'
             accept='image/*'
-            aria-labelledby='fileLabel'
+            aria-labelledby={`fileLabel-${formId}`}
             ref={fileInput}
             onChange={onChange}
             disabled={!!file}
