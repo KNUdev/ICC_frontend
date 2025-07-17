@@ -8,7 +8,7 @@
   },
 
   "placeholders": {
-    "fullname": "Popov Bohdan",
+    "fullname": "Last name First name Middle name",
     "email": "example@gmail.com",
     "faculty": "Type name of your faculty",
     "description": "I have problems with",

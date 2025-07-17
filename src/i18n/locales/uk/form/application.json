@@ -8,7 +8,7 @@
   },
 
   "placeholders": {
-    "fullname": "Попов Богдан Віталійович",
+    "fullname": "Прізвище Ім'я По батькові",
     "email": "example@gmail.com",
     "faculty": "Введіть назву вашого факультету",
     "description": "У мене проблеми з",
