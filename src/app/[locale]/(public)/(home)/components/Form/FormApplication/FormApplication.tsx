@@ -364,7 +364,7 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
 
       <button type='submit' className='mainBtn' disabled={isSubmitting}>
         <p className={styles.buttonText}>
-          {isSubmitting ? 'Loading...' : tFormApplication(`button`)}
+          {isSubmitting ? tFormApplication('loading') : tFormApplication(`button`)}
         </p>
         <ArrowRight />
       </button>
