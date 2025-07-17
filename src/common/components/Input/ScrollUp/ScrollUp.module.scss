@@ -1,0 +1,29 @@
+.scrollUpButton {
+  display: inline-flex;
+  padding: 0.625rem;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-red-400, #ff525e);
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+  text-decoration: none;
+
+  gap: 0.625rem;
+
+  svg {
+    transition: transform 0.2s ease;
+  }
+}
