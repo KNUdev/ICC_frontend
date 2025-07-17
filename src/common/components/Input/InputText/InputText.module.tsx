@@ -7,6 +7,8 @@ interface InputTextProps {
   isRequired?: boolean
   IconComponentLeft?: React.ComponentType
   IconComponentRight?: React.ComponentType
+  value?: string
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const InputText = ({
@@ -16,6 +18,8 @@ const InputText = ({
   isRequired = false,
   IconComponentLeft,
   IconComponentRight,
+  value,
+  onChange,
 }: InputTextProps) => {
   return (
     <div className={styles.inputText}>
@@ -26,7 +30,12 @@ const InputText = ({
         </label>
         <div className={styles.inputWrapper}>
           {IconComponentLeft && <IconComponentLeft />}
-          <input type='text' placeholder={placeholder} />
+          <input 
+            type='text' 
+            placeholder={placeholder} 
+            value={value}
+            onChange={onChange}
+          />
           {IconComponentRight && <IconComponentRight />}
         </div>
       </div>
