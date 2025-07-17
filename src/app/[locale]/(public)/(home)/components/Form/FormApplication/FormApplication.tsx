@@ -89,9 +89,20 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
     formData.delete('applicantName')
 
     const fullName = form.applicantName.value.trim().split(/\s+/)
-    formData.append('applicantName.firstName', fullName[1] || '')
-    formData.append('applicantName.lastName', fullName[0] || '')
-    formData.append('applicantName.middleName', fullName[2] || '')
+    let lastName = '', firstName = '', middleName = ''
+    if (fullName.length === 1) {
+      lastName = fullName[0]
+    } else if (fullName.length === 2) {
+      lastName = fullName[0]
+      firstName = fullName[1]
+    } else if (fullName.length >= 3) {
+      lastName = fullName[0]
+      firstName = fullName[1]
+      middleName = fullName.slice(2).join(' ') // Handle cases with multiple middle names
+    }
+    formData.append('applicantName.firstName', firstName)
+    formData.append('applicantName.lastName', lastName)
+    formData.append('applicantName.middleName', middleName)
 
     if (file) {
       formData.append('problemPhotoName', file.name)
