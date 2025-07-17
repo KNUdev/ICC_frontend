@@ -1,0 +1,274 @@
+$border-nat-800: #d1d1d1;
+$bg-nat-1000: #fff;
+$bg-nat-900: #f6f6f6;
+$text-nat-0: #272727;
+$text-red-400: #ff525e;
+$text-nat-250: #3d3d3d;
+$text-nat-500: #6d6d6d;
+$text-nat-1000: #fff;
+$button-red-400: #ff525e;
+$error-text-800: #a30e2c;
+$failure-bg-color: #fff2f0;
+$failure-border-color: #ffccc7;
+$failure-text-color: #cf1322;
+$success-bg-color: #f6ffed;
+$success-border-color: #b7eb8f;
+$success-text-color: #389e0d;
+
+.formApp {
+  display: flex;
+  width: 100%;
+  flex: 1 1 0;
+  padding: 1.5625rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.1875rem;
+
+  border: 1px solid $border-nat-800;
+  background: $bg-nat-1000;
+}
+
+.smallFieldWrapper {
+  display: flex;
+  height: 5.5625rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9375rem;
+  align-self: stretch;
+}
+
+.bigFieldWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.9375rem;
+  align-self: stretch;
+}
+
+.label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.1875rem;
+}
+
+.labelText {
+  color: $text-nat-0;
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.labelSpan {
+  color: $text-red-400;
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  background-color: #f7f7f7;
+  box-sizing: border-box;
+}
+
+.textArea {
+  display: flex;
+  height: 9.375rem;
+  padding: 1.25rem;
+  align-items: flex-start;
+  gap: 0.625rem;
+  align-self: stretch;
+  resize: vertical;
+
+  border: 1px solid $border-nat-800;
+  color: $text-nat-500;
+
+  font-family: 'Golos Text', sans-serif;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.customFileUpload {
+  cursor: pointer;
+  display: flex;
+  height: 9.375rem;
+  padding: 0.9375rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.9375rem;
+  flex-shrink: 0;
+  align-self: stretch;
+
+  border: 1px solid $border-nat-800;
+}
+
+.customFileUpload input[type='file'] {
+  display: none;
+}
+
+.uploadContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.94rem;
+}
+
+.uploadText {
+  color: $text-nat-500;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+  letter-spacing: 0.005rem;
+}
+
+.fileStatusContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fileStatusText {
+  color: $text-nat-250;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+  letter-spacing: 0.005rem;
+}
+
+.previewButton,
+.deleteButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 10.4375rem;
+
+  color: $text-red-400;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}
+
+.previewButton:hover,
+.deleteButton:hover {
+  color: $failure-text-color;
+}
+
+.divider {
+  width: 2.625rem;
+  height: 0.0625rem;
+  background: $border-nat-800;
+}
+
+.buttonLeave {
+  cursor: pointer;
+  display: flex;
+  height: 3.4375rem;
+  padding: 0.9375rem 1.25rem;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border: none;
+
+  background: $button-red-400;
+}
+
+.buttonText {
+  color: $text-nat-1000;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.errorContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: stretch;
+}
+
+.errorText {
+  color: $error-text-800;
+
+  font-family: Inter;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.00438rem;
+}
+
+.formFailure,
+.formSuccess {
+  text-align: center;
+  padding: 0.5rem;
+  width: 100%;
+
+  color: $failure-text-color;
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+  letter-spacing: 0.005rem;
+}
+
+.formFailure {
+  border: 1px solid $failure-border-color;
+  background: $failure-bg-color;
+}
+
+.formSuccess {
+  border: 1px solid $success-border-color;
+  background: $success-bg-color;
+  color: $success-text-color;
+}
+
+.failureText {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
