@@ -1,0 +1,15 @@
+@keyframes fillInPulse {
+  0% {
+    fill: #ff7881;
+  }
+  50% {
+    fill: #ff525e;
+  }
+  100% {
+    fill: #ff7881;
+  }
+}
+
+.brainShape {
+  animation: fillInPulse 3s ease-in-out infinite;
+}
