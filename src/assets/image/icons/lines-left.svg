@@ -1,5 +1,5 @@
 <svg width="152" height="879" viewBox="0 0 152 879" fill="none" xmlns="http://www.w3.org/2000/svg">
-<line y1="455.914" x2="151.5" y2="455.914" stroke="url(#paint0_linear_559_2450)" stroke-width="2.5"/>
+<path d="M0 455.914 H151.5" stroke="url(#paint0_linear_559_2450)" stroke-width="2.5" />
 <path d="M0.000130562 1.77637L76.5918 1.77637L76.5918 456.894" stroke="url(#paint1_linear_559_2450)" stroke-width="2.5"/>
 <path d="M0.000130562 876.776H76.5918L76.5918 456.894" stroke="url(#paint2_linear_559_2450)" stroke-width="2.5"/>
 <defs>

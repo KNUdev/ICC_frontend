@@ -10,22 +10,6 @@
   z-index: 1;
 }
 
-svg.lines-left,
-svg.lines-right {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  z-index: 0;
-}
-
-svg.lines-left {
-  left: 0;
-}
-
-svg.lines-right {
-  right: 0;
-}
-
 .formHeading {
   color: var(--text-nat-0, #272727);
   text-align: center;
