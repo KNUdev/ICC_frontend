@@ -3,12 +3,17 @@
 import AnimatedLines from '../AnimatedLines/AnimatedLines'
 
 const paths = [
-  { d: 'M151.5 455.914 H0', id: 'gradient0' },
+  { d: 'M151.5 455.914 H0', id: 'leftGradient0', isMainLine: true },
   {
     d: 'M0.000130562 1.77637L76.5918 1.77637L76.5918 456.894',
-    id: 'gradient1',
+    id: 'leftGradient1',
+    isMainLine: false,
   },
-  { d: 'M0.000130562 876.776H76.5918L76.5918 456.894', id: 'gradient2' },
+  {
+    d: 'M0.000130562 876.776H76.5918L76.5918 456.894',
+    id: 'leftGradient2',
+    isMainLine: false,
+  },
 ]
 
 export default function FormLinesLeftWrapper() {
@@ -22,19 +27,19 @@ export default function FormLinesLeftWrapper() {
     >
       <defs>
         <linearGradient
-          id='gradient0'
+          id='leftGradient0'
           x1='151.5'
           y1='457.164'
           x2='0'
           y2='457.164'
           gradientUnits='userSpaceOnUse'
         >
-          <stop stopColor='#F6F6F6' />
-          <stop offset='0.0865385' stopColor='#DCDCDC' />
-          <stop offset='1' stopColor='#FF525E' />
+          <stop offset='0.490385' stopColor='#FF525E' />
+          <stop offset='0.759615' stopColor='#DCDCDC' />
+          <stop offset='1' stopColor='#F5F5F5' />
         </linearGradient>
         <linearGradient
-          id='gradient1'
+          id='leftGradient1'
           x1='76.5918'
           y1='229.335'
           x2='0.0001297'
@@ -46,7 +51,7 @@ export default function FormLinesLeftWrapper() {
           <stop offset='1' stopColor='#F5F5F5' />
         </linearGradient>
         <linearGradient
-          id='gradient2'
+          id='leftGradient2'
           x1='76.5918'
           y1='666.835'
           x2='0.0001297'
@@ -59,8 +64,8 @@ export default function FormLinesLeftWrapper() {
         </linearGradient>
       </defs>
 
-      {paths.map(({ d, id }, i) => (
-        <AnimatedLines key={i} d={d} strokeId={id} />
+      {paths.map(({ d, id, isMainLine }, i) => (
+        <AnimatedLines key={i} d={d} strokeId={id} isMainLine={isMainLine} />
       ))}
     </svg>
   )

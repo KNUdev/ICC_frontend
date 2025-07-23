@@ -1,18 +1,24 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
+import { useAnimationContext } from '../FormLines/AnimationContext'
 import styles from './AnimatedLines.module.scss'
 
 interface AnimatedLinesProps {
   d: string
   strokeId: string
+  isMainLine?: boolean
 }
 
-const getRandomDuration = () => 2000 + Math.random() * 1000
-
-export default function AnimatedLines({ d, strokeId }: AnimatedLinesProps) {
+export default function AnimatedLines({
+  d,
+  strokeId,
+  isMainLine = false,
+}: AnimatedLinesProps) {
   const pathRef = useRef<SVGPathElement>(null)
-  const [duration, setDuration] = useState(getRandomDuration())
   const [length, setLength] = useState(0)
+  const animationRef = useRef<Animation | null>(null)
+  const { isMainActive, isSecondaryActive, resetTrigger } =
+    useAnimationContext()
 
   useEffect(() => {
     const path = pathRef.current
@@ -21,33 +27,61 @@ export default function AnimatedLines({ d, strokeId }: AnimatedLinesProps) {
     const totalLength = path.getTotalLength()
     setLength(totalLength)
 
-    const animate = () => {
-      path.style.strokeDasharray = `${totalLength}`
-      path.style.strokeDashoffset = `${totalLength}`
+    path.style.strokeDasharray = `${totalLength}`
+    const initialOffset = isMainLine ? totalLength : -totalLength
+    path.style.strokeDashoffset = `${initialOffset}`
+  }, [isMainLine])
 
-      path.animate(
-        [
-          { strokeDashoffset: totalLength },
-          { strokeDashoffset: 0 },
-          { strokeDashoffset: -totalLength },
-        ],
-        {
-          duration,
-          easing: 'ease-in-out',
-          iterations: Infinity,
-          fill: 'forwards',
-        },
-      )
+  useEffect(() => {
+    const path = pathRef.current
+    if (!path) return
 
-      const timeout = setTimeout(() => {
-        setDuration(getRandomDuration())
-      }, duration)
-
-      return () => clearTimeout(timeout)
+    if (animationRef.current) {
+      animationRef.current.cancel()
+      animationRef.current = null
     }
 
-    animate()
-  }, [duration])
+    const resetOffset = isMainLine ? length : -length
+    path.style.strokeDashoffset = `${resetOffset}`
+  }, [resetTrigger, length, isMainLine])
+
+  useEffect(() => {
+    const path = pathRef.current
+    if (!path || length === 0 || !isMainLine || !isMainActive) return
+
+    if (animationRef.current) return
+
+    const keyframes = [
+      { strokeDashoffset: length },
+      { strokeDashoffset: 0 },
+      { strokeDashoffset: -length },
+    ]
+
+    animationRef.current = path.animate(keyframes, {
+      duration: 1500,
+      easing: 'ease-in-out',
+      fill: 'forwards',
+    })
+  }, [isMainActive, length, isMainLine])
+
+  useEffect(() => {
+    const path = pathRef.current
+    if (!path || length === 0 || isMainLine || !isSecondaryActive) return
+
+    if (animationRef.current) return
+
+    const keyframes = [
+      { strokeDashoffset: -length },
+      { strokeDashoffset: 0 },
+      { strokeDashoffset: length },
+    ]
+
+    animationRef.current = path.animate(keyframes, {
+      duration: 1500,
+      easing: 'ease-in-out',
+      fill: 'forwards',
+    })
+  }, [isSecondaryActive, length, isMainLine])
 
   return (
     <>
@@ -64,7 +98,7 @@ export default function AnimatedLines({ d, strokeId }: AnimatedLinesProps) {
         className={styles.path}
         style={{
           strokeDasharray: length,
-          strokeDashoffset: length / 2,
+          strokeDashoffset: isMainLine ? length : -length,
         }}
       />
     </>
