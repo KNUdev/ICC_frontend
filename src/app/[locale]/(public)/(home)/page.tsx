@@ -1,5 +1,6 @@
+import FAQ from '@/app/[locale]/(public)/(home)/components/FAQ/FAQ'
 import { Form } from '@/components/Form/Form'
-import FAQ from '@/components/FAQ/FAQ'
+
 
 export default function HomePage() {
   return (

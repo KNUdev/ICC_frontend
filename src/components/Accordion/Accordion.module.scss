@@ -1,18 +1,18 @@
 .accordion {
-  max-width: 78.125rem; 
+  max-width: 78.125rem;
   margin: 0 auto;
-  padding: 2.5rem 1.25rem; 
+  padding: 2.5rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem; 
+  gap: 1.25rem;
 }
 
 .accordionItem {
-  border: 1px solid #D9D9D9;
+  border: 1px solid #d9d9d9;
   background-color: #fff;
 
   &.open {
-    background-color: #FAFAFA;
+    background-color: #fafafa;
   }
 }
 
@@ -20,52 +20,52 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5625rem 1.25rem; 
+  padding: 1.5625rem 1.25rem;
   width: 100%;
   background: none;
   border: none;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
-  font-size: 1.125rem; 
+  font-size: 1.125rem;
   font-weight: 600;
 
   .title {
-    color: var(--text-nat-500, #6D6D6D);
+    color: #6d6d6d;
     flex: 1;
     text-align: left;
   }
 
   .icon {
-    margin-left: 1rem; 
+    margin-left: 1rem;
   }
 
   &.active {
     .title {
-      color: var(--text-nat-0, #272727);
+      color: #272727;
     }
   }
 
   &.collapsed {
     .title {
-      color: var(--text-nat-500, #6D6D6D);
+      color: #6d6d6d;
     }
   }
 
   @media (max-width: 48rem) {
-    padding: 1.25rem 1rem; 
-    font-size: 1rem; 
+    padding: 1.25rem 1rem;
+    font-size: 1rem;
   }
 }
 
 .accordionBody {
-  padding: 0 1.25rem 1.5625rem; 
+  padding: 0 1.25rem 1.5625rem;
   font-family: 'Inter', sans-serif;
-  font-size: 1rem; 
+  font-size: 1rem;
   font-weight: 400;
-  color: var(--text-nat-400, #454545);
-  line-height: 1.4375rem; 
+  color: #454545;
+  line-height: 1.4375rem;
 
   @media (max-width: 48rem) {
-    padding: 0 1rem 1.25rem; 
+    padding: 0 1rem 1.25rem;
   }
 }
