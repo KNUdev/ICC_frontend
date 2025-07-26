@@ -3,6 +3,8 @@
 @use '@/common/styles/buttons/iconbutton.scss';
 @use '@/common/styles/buttons/menunav.scss';
 @use '@/common/styles/buttons/textbutton.scss';
+@use '@/common/styles/buttons/mainbutton.scss';
+@use '@/common/styles/inputs/searchinput.scss';
 
 .container {
   background: #f6f6f6;
@@ -32,4 +34,3 @@
 html {
   scroll-behavior: smooth;
 }
-
