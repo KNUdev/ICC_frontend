@@ -1,54 +1,126 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react'
 
-export const CircularProgressBar = ({
-  triggerReset,
-}: {
+interface CircularProgressBarProps {
   triggerReset: number
-}) => {
-  const [loadingPercent, setLoadingPercent] = useState(0)
+  size?: number
+  duration?: number
+  strokeColor?: string
+  backgroundColor?: string
+  className?: string
+}
+
+export const CircularProgressBar = memo(function CircularProgressBar({
+  triggerReset,
+  size = 25,
+  duration = 5000,
+  strokeColor = '#FF525E',
+  backgroundColor = '#D1D1D1',
+  className = '',
+}: CircularProgressBarProps) {
+  const animationRef = useRef<Animation | null>(null)
+  const circleRef = useRef<SVGCircleElement | null>(null)
+
+  const geometry = useMemo(() => {
+    const center = size / 2
+    const radius = size * 0.4
+    const strokeWidth = size * 0.1
+    const circumference = 2 * Math.PI * radius
+
+    return {
+      center,
+      radius,
+      strokeWidth,
+      circumference,
+      viewBox: `0 0 ${size} ${size}`,
+      transform: `rotate(-90 ${center} ${center})`,
+    }
+  }, [size])
+
+  const startAnimation = useCallback(() => {
+    const circle = circleRef.current
+    if (!circle) return
+
+    if (animationRef.current) {
+      animationRef.current.cancel()
+    }
+
+    circle.style.strokeDashoffset = `${geometry.circumference}`
+
+    animationRef.current = circle.animate(
+      [{ strokeDashoffset: geometry.circumference }, { strokeDashoffset: 0 }],
+      {
+        duration,
+        easing: 'linear',
+        fill: 'forwards',
+      },
+    )
+  }, [geometry.circumference, duration])
 
   useEffect(() => {
-    const startTime = Date.now()
-    const duration = 5000
+    startAnimation()
 
-    const intervalId = setInterval(() => {
-      const elapsed = (Date.now() - startTime) % duration
-      const progress = (elapsed / duration) * 100
-      setLoadingPercent(progress)
-    }, 16)
+    return () => {
+      if (animationRef.current) {
+        animationRef.current.cancel()
+      }
+    }
+  }, [triggerReset, startAnimation])
 
-    return () => clearInterval(intervalId)
-  }, [triggerReset])
+  const svgStyle = useMemo(
+    () => ({
+      willChange: 'transform',
+      transform: 'translateZ(90)',
+      backfaceVisibility: 'hidden' as const,
+    }),
+    [],
+  )
 
-  const size = 25
-  const center = size / 2
-  const radius = size * 0.4
-  const circumference = 2 * Math.PI * radius
-  const offset = circumference - (loadingPercent / 100) * circumference
+  const progressCircleStyle = useMemo(
+    () => ({
+      willChange: 'stroke-dashoffset',
+      transform: 'translateZ(90)',
+      strokeDasharray: geometry.circumference,
+      strokeDashoffset: geometry.circumference,
+      transition: 'none',
+    }),
+    [geometry.circumference],
+  )
 
   return (
-    <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size}>
+    <svg
+      viewBox={geometry.viewBox}
+      width={size}
+      height={size}
+      className={`circular-progress ${className}`}
+      style={svgStyle}
+      aria-hidden='true'
+    >
       <circle
-        cx={center}
-        cy={center}
-        r={radius}
+        cx={geometry.center}
+        cy={geometry.center}
+        r={geometry.radius}
         fill='transparent'
-        stroke='#D1D1D1'
-        strokeWidth={size * 0.1}
+        stroke={backgroundColor}
+        strokeWidth={geometry.strokeWidth}
+        style={{
+          transform: 'translateZ(0)',
+        }}
       />
+
       <circle
-        cx={center}
-        cy={center}
-        r={radius}
+        ref={circleRef}
+        cx={geometry.center}
+        cy={geometry.center}
+        r={geometry.radius}
         fill='transparent'
-        stroke='#FF525E'
-        strokeWidth={size * 0.1}
-        strokeDasharray={circumference}
-        strokeDashoffset={offset}
-        transform={`rotate(-90 ${center} ${center})`}
+        stroke={strokeColor}
+        strokeWidth={geometry.strokeWidth}
+        strokeLinecap='round'
+        transform={geometry.transform}
+        style={progressCircleStyle}
       />
     </svg>
   )
-}
+})
