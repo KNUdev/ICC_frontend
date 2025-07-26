@@ -67,7 +67,6 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
       const totalLength = path.getTotalLength()
       const duration = getRandomDuration(baseDuration, durationVariation)
 
-      // Применяем стили
       Object.assign(path.style, defaultLineStyles)
       path.style.strokeDasharray = `${totalLength}`
       path.style.strokeDashoffset = `${totalLength}`
