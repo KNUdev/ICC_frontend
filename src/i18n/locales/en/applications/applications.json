@@ -1,0 +1,14 @@
+{
+  "header": {
+    "application": "Applications",
+    "search": "Find the application you need",
+    "filter": "Filters"
+  },
+
+  "buttons": {
+    "edit": "Edit application",
+    "delete": "Delete application"
+  },
+
+  "top": "Scroll up"
+}
