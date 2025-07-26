@@ -1,6 +1,6 @@
 import LogoIcc from '@/assets/image/icons/logo_icc.svg'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
-import { PAGES } from '@/config/page.config'
+import { PAGES } from '@/shared/config/page.config'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import styles from './Header.module.scss'

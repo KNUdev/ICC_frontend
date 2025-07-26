@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef } from 'react'
+import { useReducedMotion } from './useReducedMotion'
 
 export interface AnimatedPulseConfig {
   duration?: number
@@ -9,6 +10,7 @@ export interface AnimatedPulseConfig {
     from: string
     to: string
   }
+  forceDisable?: boolean
 }
 
 const defaultConfig: Required<AnimatedPulseConfig> = {
@@ -18,12 +20,29 @@ const defaultConfig: Required<AnimatedPulseConfig> = {
     from: '#ff7881',
     to: '#ff525e',
   },
+  forceDisable: false,
 }
 
 const createdKeyframes = new Set<string>()
 
 export function useAnimatedPulse(config: AnimatedPulseConfig = {}) {
-  const finalConfig = useMemo(() => ({ ...defaultConfig, ...config }), [config])
+  const { shouldReduceMotion } = useReducedMotion()
+  const finalConfig = useMemo(() => {
+    const baseConfig = { ...defaultConfig, ...config }
+
+    if (shouldReduceMotion) {
+      return {
+        ...baseConfig,
+        duration: baseConfig.duration * 2,
+        easing: 'linear',
+      }
+    }
+
+    return baseConfig
+  }, [config, shouldReduceMotion])
+
+  const shouldDisableAnimation = shouldReduceMotion || finalConfig.forceDisable
+
   const styleRef = useRef<HTMLStyleElement | null>(null)
 
   const keyframeName = useMemo(
@@ -31,22 +50,39 @@ export function useAnimatedPulse(config: AnimatedPulseConfig = {}) {
       `pulse-${finalConfig.colors.from.replace(
         '#',
         '',
-      )}-${finalConfig.colors.to.replace('#', '')}`,
-    [finalConfig.colors.from, finalConfig.colors.to],
+      )}-${finalConfig.colors.to.replace('#', '')}-${
+        shouldDisableAnimation ? 'reduced' : 'normal'
+      }`,
+    [finalConfig.colors.from, finalConfig.colors.to, shouldDisableAnimation],
   )
 
-  const pulseStyle = useMemo(
-    () =>
-      ({
-        animation: `${keyframeName} ${finalConfig.duration}ms ${finalConfig.easing} infinite`,
-        willChange: 'fill',
+  const pulseStyle = useMemo(() => {
+    if (shouldDisableAnimation) {
+      return {
+        fill: finalConfig.colors.from,
         transform: 'translateZ(0)',
-      } as React.CSSProperties),
-    [keyframeName, finalConfig.duration, finalConfig.easing],
-  )
+      } as React.CSSProperties
+    }
+
+    return {
+      animation: `${keyframeName} ${finalConfig.duration}ms ${finalConfig.easing} infinite`,
+      willChange: 'fill',
+      transform: 'translateZ(0)',
+    } as React.CSSProperties
+  }, [
+    keyframeName,
+    finalConfig.duration,
+    finalConfig.easing,
+    finalConfig.colors.from,
+    shouldDisableAnimation,
+  ])
 
   useEffect(() => {
-    if (typeof document === 'undefined' || createdKeyframes.has(keyframeName)) {
+    if (
+      typeof document === 'undefined' ||
+      createdKeyframes.has(keyframeName) ||
+      shouldDisableAnimation
+    ) {
       return
     }
 
@@ -75,7 +111,12 @@ export function useAnimatedPulse(config: AnimatedPulseConfig = {}) {
         createdKeyframes.delete(keyframeName)
       }
     }
-  }, [keyframeName, finalConfig.colors.from, finalConfig.colors.to])
+  }, [
+    keyframeName,
+    finalConfig.colors.from,
+    finalConfig.colors.to,
+    shouldDisableAnimation,
+  ])
 
   return { pulseStyle }
 }

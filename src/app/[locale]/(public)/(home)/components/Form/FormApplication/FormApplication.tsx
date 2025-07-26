@@ -3,18 +3,12 @@
 import type { Department } from '@/app/[locale]/(public)/(home)/components/Form/form.interfaces'
 import ArrowRight from '@/assets/image/icons/arrow-right.svg'
 import UploadFile from '@/assets/image/icons/file.svg'
+import { API } from '@/shared/config/api.config'
 import { useLocale, useTranslations } from 'next-intl'
-import { Golos_Text } from 'next/font/google'
 import Form from 'next/form'
 import { useRef, useState } from 'react'
 import DropDownInput from '../../../../../../../common/components/Input/DropDownInput/DropDownInput'
 import styles from './FormApplication.module.scss'
-
-const golos = Golos_Text({
-  subsets: ['latin', 'cyrillic', 'cyrillic-ext'],
-  variable: '--font-golos',
-  display: 'swap',
-})
 
 interface FormApplicationProps {
   formId?: string
@@ -42,11 +36,9 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
 
   const tFormApplication = useTranslations('form/application')
 
-  const api = process.env.NEXT_PUBLIC_API_URL
-
   const fetchDepartments = async () => {
     try {
-      const response = await fetch(`${api}department/all`, {
+      const response = await fetch(`${API}department/all`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +81,9 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
     formData.delete('applicantName')
 
     const fullName = form.applicantName.value.trim().split(/\s+/)
-    let lastName = '', firstName = '', middleName = ''
+    let lastName = '',
+      firstName = '',
+      middleName = ''
     if (fullName.length === 1) {
       lastName = fullName[0]
     } else if (fullName.length === 2) {
@@ -112,7 +106,7 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
     formData.append('status', 'IN_QUEUE')
 
     try {
-      const response = await fetch(`${api}application/create`, {
+      const response = await fetch(`${API}application/create`, {
         method: 'POST',
         body: formData,
       })
@@ -296,7 +290,7 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
           placeholder={tFormApplication(`placeholders.description`)}
           id={`description-${formId}`}
           name='problemDescription'
-          className={`${styles.textArea} ${golos.variable}`}
+          className={`${styles.textArea} `}
           required
         />
       </div>
@@ -308,7 +302,10 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
           id={`fileLabel-${formId}`}
         >
           <p className={styles.labelText}>{tFormApplication(`labels.photo`)}</p>
-          <span className={styles.labelSpan} title={tFormApplication('required')}>
+          <span
+            className={styles.labelSpan}
+            title={tFormApplication('required')}
+          >
             *
           </span>
         </label>
@@ -375,7 +372,9 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
 
       <button type='submit' className='mainBtn' disabled={isSubmitting}>
         <p className={styles.buttonText}>
-          {isSubmitting ? tFormApplication('loading') : tFormApplication(`button`)}
+          {isSubmitting
+            ? tFormApplication('loading')
+            : tFormApplication(`button`)}
         </p>
         <ArrowRight />
       </button>
