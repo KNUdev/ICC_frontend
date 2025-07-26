@@ -5,7 +5,11 @@ import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import styles from './Header.module.scss'
 
-export function Header() {
+type HeaderProps = {
+  customNav?: React.ReactNode
+}
+
+export function Header({ customNav }: HeaderProps) {
   const tCommon = useTranslations('common')
 
   return (
@@ -16,24 +20,24 @@ export function Header() {
           aria-label='iccIcon'
           role='img'
         />
-        <nav role='navigation' aria-label='Header navigation'>
-          <ul className={styles.navList} role='list'>
-            {Object.entries(PAGES).map(([key, link]) => (
-              <li key={key} role='listitem'>
-                <Link href={link} className='navLink'>
-                  {tCommon(`navigation.${key}`)}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {customNav ?? (
+          <nav role='navigation' aria-label='Header navigation'>
+            <ul className={styles.navList} role='list'>
+              {Object.entries(PAGES).map(([key, link]) => (
+                <li key={key} role='listitem'>
+                  <Link href={link} className='navLink'>
+                    {tCommon(`navigation.${key}`)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
         <div className={styles.userPanel}>
           <LanguageSwitcher />
           <div className={styles.authButtons}>
             <Link href='#' className={styles.loginButton}>
-              {tCommon('authentication.login')}
-            </Link>
-            <Link href='#' className={styles.registerButton}>
+              {tCommon('authentication.login')}/
               {tCommon('authentication.register')}
             </Link>
           </div>

@@ -36,5 +36,14 @@
   "authentication": {
     "login": "Sing in",
     "register": "Sign up"
+  },
+
+  "customNavigation": {
+    "addNewWorker": "Add a new employee",
+    "addSpecialty": "Add a specialty",
+    "allSectors": "All sectors",
+    "allWorkers": "All employees",
+    "jobApplications": "Job applications",
+    "creatingReports": "Creating reports"
   }
 }

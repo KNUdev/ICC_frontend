@@ -3,7 +3,6 @@
   background: #fff;
   padding: 1.5625rem 2.5rem;
 
-
   & > div {
     display: flex;
     justify-content: space-between;
@@ -20,6 +19,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 4.375rem;
+  height: 2.32606rem;
 }
 
 .nav {
@@ -44,10 +45,8 @@
   letter-spacing: 0.005rem;
 }
 
-.authButtons {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
+.customHeader .navList > li:nth-last-child(2) :global(.navLink) {
+  color: #ff525e;
 }
 
 .loginButton {
@@ -63,32 +62,12 @@
 
   &:hover {
     background: #e71735;
+    transition: all 0.3s ease;
   }
 
   &::after {
     background: #a30e2c;
-  }
-}
-
-.registerButton {
-  display: flex;
-  border: 1px solid #ff525e;
-  color: #6d6d6d;
-  text-decoration: none;
-  height: 3.125rem;
-  padding: 0.9375rem 1.25rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.625rem;
-
-  &:hover {
-    background: #ffa1a6;
-    color: #fff;
-  }
-
-  &::after {
-    background: #eb8288;
-    color: #fff;
+    transition: all 0.3s ease;
   }
 }
 
