@@ -1,0 +1,34 @@
+{
+  "labels": {
+    "fullname": "Full Name",
+    "email": "Email",
+    "faculty": "Faculty",
+    "description": "Description of the problem",
+    "photo": "Photo of the problem"
+  },
+
+  "placeholders": {
+    "fullname": "Last name First name Middle name",
+    "email": "example@gmail.com",
+    "faculty": "Type name of your faculty",
+    "description": "I have problems with",
+    "photo": "Click here to attach a photo"
+  },
+
+  "file": {
+    "uploaded": "The photo is uploaded",
+    "preview": "View the photo",
+    "delete": "Delete the photo"
+  },
+
+  "required": "This field is required",
+
+  "loading": "Loading...",
+
+  "button": "Leave a request",
+
+  "validation": "Error: Please select your faculty",
+
+  "error": "Something went wrong... ",
+  "success": "The form has been successfully submitted!"
+}

@@ -10,5 +10,7 @@
     "delete": "Delete application"
   },
 
+  "noResults": "No applications",
+
   "top": "Scroll up"
 }
