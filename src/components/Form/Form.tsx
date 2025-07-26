@@ -1,6 +1,6 @@
-import { FormPoints } from './FormPoints/FormPoints'
-import styles from './Form.module.scss'
 import { useTranslations } from 'next-intl'
+import styles from './Form.module.scss'
+import { FormPoints } from './FormPoints/FormPoints'
 
 export function Form() {
   const tFormText = useTranslations('form/text')

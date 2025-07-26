@@ -5,6 +5,7 @@ import type {
   LineConfig,
 } from '@/shared/hooks/useAnimatedLines'
 import { useAnimatedPulse } from '@/shared/hooks/useAnimatedPulse'
+import { memo, useMemo } from 'react'
 import { AnimatedLines } from '../AnimatedLines'
 
 const historyPath =
@@ -155,8 +156,60 @@ const historyGradients: GradientConfig[] = [
   },
 ]
 
-export function AnimatedHistory() {
+const FilterDefs = memo(() => (
+  <defs>
+    <filter
+      id='filter0_d_559_6348'
+      x='107'
+      y='100'
+      width='218.761'
+      height='198.517'
+      filterUnits='userSpaceOnUse'
+      colorInterpolationFilters='sRGB'
+    >
+      <feFlood floodOpacity='0' result='BackgroundImageFix' />
+      <feColorMatrix
+        in='SourceAlpha'
+        type='matrix'
+        values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
+        result='hardAlpha'
+      />
+      <feOffset dy='4' />
+      <feGaussianBlur stdDeviation='2' />
+      <feComposite in2='hardAlpha' operator='out' />
+      <feColorMatrix
+        type='matrix'
+        values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0'
+      />
+      <feBlend
+        mode='normal'
+        in2='BackgroundImageFix'
+        result='effect1_dropShadow_559_6348'
+      />
+      <feBlend
+        mode='normal'
+        in='SourceGraphic'
+        in2='effect1_dropShadow_559_6348'
+        result='shape'
+      />
+    </filter>
+  </defs>
+))
+FilterDefs.displayName = 'FilterDefs'
+
+export const AnimatedHistory = memo(function AnimatedHistory() {
   const { pulseStyle } = useAnimatedPulse()
+
+  const animationConfig = useMemo(
+    () => ({
+      lines: historyLines,
+      gradients: historyGradients,
+      baseDuration: 2000,
+      durationVariation: 1000,
+      easing: 'ease-in-out',
+    }),
+    [],
+  )
 
   return (
     <svg
@@ -165,51 +218,20 @@ export function AnimatedHistory() {
       viewBox='0 0 432 397'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
+      className='animated-svg'
+      style={{
+        willChange: 'transform',
+        backfaceVisibility: 'hidden',
+      }}
     >
-      <defs>
-        <filter
-          id='filter0_d_559_6348'
-          x='107'
-          y='100'
-          width='218.761'
-          height='198.517'
-          filterUnits='userSpaceOnUse'
-          colorInterpolationFilters='sRGB'
-        >
-          <feFlood floodOpacity='0' result='BackgroundImageFix' />
-          <feColorMatrix
-            in='SourceAlpha'
-            type='matrix'
-            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
-            result='hardAlpha'
-          />
-          <feOffset dy='4' />
-          <feGaussianBlur stdDeviation='2' />
-          <feComposite in2='hardAlpha' operator='out' />
-          <feColorMatrix
-            type='matrix'
-            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0'
-          />
-          <feBlend
-            mode='normal'
-            in2='BackgroundImageFix'
-            result='effect1_dropShadow_559_6348'
-          />
-          <feBlend
-            mode='normal'
-            in='SourceGraphic'
-            in2='effect1_dropShadow_559_6348'
-            result='shape'
-          />
-        </filter>
-      </defs>
+      <FilterDefs />
 
       <g filter='url(#filter0_d_559_6348)'>
-        <path d={historyPath} style={pulseStyle} />
-        <path d={connectedPath} style={pulseStyle} />
+        <path d={historyPath} style={pulseStyle} className='animated-pulse' />
+        <path d={connectedPath} style={pulseStyle} className='animated-pulse' />
       </g>
 
-      <AnimatedLines lines={historyLines} gradients={historyGradients} />
+      <AnimatedLines {...animationConfig} className='animated-path' />
     </svg>
   )
-}
+})

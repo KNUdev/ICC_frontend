@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 export interface LineConfig {
   d: string
@@ -36,6 +36,8 @@ const defaultLineStyles: React.CSSProperties = {
   fill: 'none',
   strokeLinecap: 'round',
   strokeLinejoin: 'round',
+  willChange: 'stroke-dashoffset',
+  transform: 'translateZ(0)',
 }
 
 export function useAnimatedLines(config: AnimatedLinesConfig) {
@@ -49,6 +51,17 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
   } = config
 
   const pathRefs = useRef<(SVGPathElement | null)[]>([])
+  const animationsRef = useRef<Animation[]>([])
+  const isInitializedRef = useRef(false)
+
+  const animationConfig = useMemo(
+    () => ({
+      baseDuration,
+      durationVariation,
+      easing,
+    }),
+    [baseDuration, durationVariation, easing],
+  )
 
   const setPathRef = useCallback(
     (index: number) => (ref: SVGPathElement | null) => {
@@ -57,41 +70,71 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
     [],
   )
 
-  useEffect(() => {
+  const createAnimations = useCallback(() => {
     const paths = pathRefs.current.filter(Boolean) as SVGPathElement[]
     if (paths.length === 0) return
 
-    const animations: Animation[] = []
+    animationsRef.current.forEach((animation) => animation.cancel())
+    animationsRef.current = []
 
-    paths.forEach((path) => {
-      const totalLength = path.getTotalLength()
-      const duration = getRandomDuration(baseDuration, durationVariation)
+    requestAnimationFrame(() => {
+      paths.forEach((path, index) => {
+        try {
+          const totalLength = path.getTotalLength()
+          const duration = getRandomDuration(
+            animationConfig.baseDuration,
+            animationConfig.durationVariation,
+          )
 
-      Object.assign(path.style, defaultLineStyles)
-      path.style.strokeDasharray = `${totalLength}`
-      path.style.strokeDashoffset = `${totalLength}`
+          Object.assign(path.style, defaultLineStyles)
+          path.style.strokeDasharray = `${totalLength}`
+          path.style.strokeDashoffset = `${totalLength}`
 
-      const animation = path.animate(
-        [
-          { strokeDashoffset: totalLength },
-          { strokeDashoffset: 0 },
-          { strokeDashoffset: -totalLength },
-        ],
-        {
-          duration,
-          easing,
-          iterations: Infinity,
-          fill: 'forwards',
-        },
-      )
+          const animation = path.animate(
+            [
+              { strokeDashoffset: totalLength },
+              { strokeDashoffset: 0 },
+              { strokeDashoffset: -totalLength },
+            ],
+            {
+              duration,
+              easing: animationConfig.easing,
+              iterations: Infinity,
+              fill: 'forwards',
+              composite: 'replace',
+            },
+          )
 
-      animations.push(animation)
+          animation.currentTime = (index * 200) % duration
+
+          animationsRef.current.push(animation)
+        } catch (error) {
+          console.warn('Failed to create animation for path:', error)
+        }
+      })
     })
+  }, [animationConfig])
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (!isInitializedRef.current && pathRefs.current.length > 0) {
+        createAnimations()
+        isInitializedRef.current = true
+      }
+    }, 100)
 
     return () => {
-      animations.forEach((animation) => animation.cancel())
+      clearTimeout(timeoutId)
     }
-  }, [baseDuration, durationVariation, easing, lines.length])
+  }, [createAnimations, lines.length])
+
+  useEffect(() => {
+    return () => {
+      animationsRef.current.forEach((animation) => animation.cancel())
+      animationsRef.current = []
+      isInitializedRef.current = false
+    }
+  }, [])
 
   return {
     setPathRef,
