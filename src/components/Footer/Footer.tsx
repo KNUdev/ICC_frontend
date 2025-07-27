@@ -161,6 +161,8 @@ export function Footer() {
             </ContactLink>
           </div>
         </address>
+
+        <p className={styles.designWatermark}>Designed by Bohdan Popov & ICC</p>
       </div>
     </footer>
   )
