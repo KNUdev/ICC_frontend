@@ -3,18 +3,23 @@
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import Form from 'next/form'
-import Search from '@/assets/image/icons/form/search.svg'
-import Close from '@/assets/image/icons/form/close.svg'
-import Filter from '@/assets/image/icons/form/filter.svg'
-import Edit from '@/assets/image/icons/form/edit.svg'
-import Delete from '@/assets/image/icons/form/delete.svg'
-import { useTranslations } from 'next-intl'
+import ArrowTopIcon from '@/assets/image/icons/align-arrow-up-line.svg'
+import SearchIcon from '@/assets/image/icons/form/search.svg'
+import CloseIcon from '@/assets/image/icons/form/close.svg'
+import FilterIcon from '@/assets/image/icons/form/filter.svg'
+import EditIcon from '@/assets/image/icons/form/edit.svg'
+import DeleteIcon from '@/assets/image/icons/form/delete.svg'
+import { useTranslations, useLocale } from 'next-intl'
 import { Golos_Text } from 'next/font/google'
 import styles from './ApplicationsPage.module.scss'
 
 interface Application {
   id: string
-  applicantName: string
+  applicantName: {
+    firstName: string
+    middleName: string
+    lastName: string
+  }
   applicantEmail: string
   receivedAt: number[]
   completedAt: string
@@ -44,9 +49,11 @@ export function ApplicationsPage({
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [applications, setApplications] = useState<Application[]>([])
+  const [departmentName, setDepartmentName] = useState<string>('')
 
   const tApplications = useTranslations('admin/applications')
   const tFormApplication = useTranslations('form/application')
+  const locale = useLocale()
 
   useEffect(() => {
     const postData = async () => {
@@ -69,22 +76,38 @@ export function ApplicationsPage({
         const result = await response.json()
         console.log('Success:', result)
 
+        const departmentId = result.content[0].departmentId
+
+        const secondResponse = await fetch(`${api}department/${departmentId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
         setApplications(result.content)
+
+        if (!secondResponse.ok) {
+          throw new Error(`HTTP error! status: ${secondResponse.status}`)
+        }
+
+        const secondResult = await secondResponse.json()
+        console.log('Second fetch success:', secondResult)
+
+        setDepartmentName(secondResult.name[locale])
       } catch (error) {
         console.error('Error:', error)
       }
     }
 
     postData()
-  }, [])
+  }, [locale])
 
   function formatDate(arr: number[]): string {
-    const [year, month, day, hours, minutes] = arr
+    const [year, month, day] = arr
     const paddedDay = String(day).padStart(2, '0')
     const paddedMonth = String(month).padStart(2, '0')
-    const paddedHours = String(hours).padStart(2, '0')
-    const paddedMinutes = String(minutes).padStart(2, '0')
-    return `${paddedDay}.${paddedMonth}.${year} ${paddedHours}:${paddedMinutes}`
+    return `${paddedDay}.${paddedMonth}.${year}`
   }
 
   const handleClear = () => {
@@ -93,7 +116,7 @@ export function ApplicationsPage({
   }
 
   return (
-    <section>
+    <section className={styles.applicationSection}>
       <div className={styles.headingContainer}>
         <h1 className={styles.heading}>
           {tApplications('header.application')}
@@ -101,7 +124,7 @@ export function ApplicationsPage({
 
         <div className={styles.searchFilterContainer}>
           <div className='searchContainer'>
-            <Search />
+            <SearchIcon />
 
             <input
               type='search'
@@ -114,164 +137,181 @@ export function ApplicationsPage({
 
             {searchValue && (
               <button type='button' className='clearBtn' onClick={handleClear}>
-                <Close />
+                <CloseIcon />
               </button>
             )}
           </div>
 
           <button className='mainBtn'>
-            <Filter />
+            <FilterIcon />
 
             {tApplications('header.filter')}
           </button>
         </div>
       </div>
 
-      <section className={styles.applicationsContainer}>
-        {applications.length === 0 ? (
-          <p>{tApplications('noResults')}</p>
-        ) : (
-          applications.map((app) => (
-            <article key={app.id} className={styles.applicationContainer}>
-              <div className={styles.applicationPhotoContainer}>
-                {/* <Image
-                  src={app.problemPhoto}
-                  alt='Фото проблемы'
-                  width={150}
-                  height={150}
-                /> */}
+      {applications.length === 0 ? (
+        <p>{tApplications('noResults')}</p>
+      ) : (
+        applications.map((app) => (
+          <article key={app.id} className={styles.applicationArticle}>
+            <div className={styles.applicationPhotoContainer}>
+              <Image
+                src={app.problemPhoto}
+                alt='Фото проблемы'
+                width={150}
+                height={150}
+                unoptimized
+                className={styles.problemPhoto}
+              />
 
-                <div className={styles.applicationPhotoDates}>
-                  <p>
-                    Created:
-                    <strong> {formatDate(app.receivedAt)}</strong>
-                  </p>
+              <div className={styles.applicationPhotoDates}>
+                <p className={styles.photoDate}>
+                  {tApplications('dateParas.create')}{' '}
+                  <span className={styles.photoDateSpan}>
+                    {formatDate(app.receivedAt)}
+                  </span>
+                </p>
 
-                  <p>
-                    Updated:
-                    <strong> {formatDate(app.receivedAt)}</strong>
-                  </p>
-                </div>
+                <p className={styles.photoDate}>
+                  {tApplications('dateParas.update')}{' '}
+                  <span className={styles.photoDateSpan}>
+                    {formatDate(app.receivedAt)}
+                  </span>
+                </p>
               </div>
+            </div>
 
-              <div className={styles.divider} />
+            <div className={styles.divider} />
 
-              <Form action='form' className={styles.applicationForm}>
-                <div className={styles.smallFieldWrapper}>
-                  <label
-                    className={styles.label}
-                    htmlFor={`fullname-${formId}`}
-                  >
-                    <p className={styles.labelText}>
-                      {tFormApplication(`labels.fullname`)}
-                    </p>
-                    <span className={styles.labelSpan}>*</span>
-                  </label>
-                </div>
+            <Form action='form' className={styles.applicationForm}>
+              <div className={styles.smallFieldWrapper}>
+                <label className={styles.label} htmlFor={`fullname-${formId}`}>
+                  <p className={styles.labelText}>
+                    {tFormApplication(`labels.fullname`)}
+                  </p>
+                  <span className={styles.labelSpan}>*</span>
+                </label>
 
                 <div className={styles.inputWrapper}>
                   <input
                     type='text'
                     id={`applicantName-${formId}`}
                     name='applicantName'
-                    placeholder='asdasdas' //TODO: change to {app.applicantName}
+                    className='inputText'
+                    value={[
+                      app.applicantName.firstName,
+                      app.applicantName.middleName,
+                      app.applicantName.lastName,
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    disabled
+                  />
+                </div>
+              </div>
+
+              <div className={styles.smallFieldWrapper}>
+                <label className={styles.label} htmlFor={`email-${formId}`}>
+                  <p className={styles.labelText}>
+                    {tFormApplication(`labels.email`)}
+                  </p>
+                  <span
+                    className={styles.labelSpan}
+                    title={tFormApplication('required')}
+                  >
+                    *
+                  </span>
+                </label>
+
+                <div className={styles.inputWrapper}>
+                  <input
+                    type='email'
+                    id={`email-${formId}`}
+                    name='applicantEmail'
+                    value={app.applicantEmail}
                     className='inputText'
                     disabled
                   />
                 </div>
+              </div>
 
-                <div className={styles.smallFieldWrapper}>
-                  <label className={styles.label} htmlFor={`email-${formId}`}>
-                    <p className={styles.labelText}>
-                      {tFormApplication(`labels.email`)}
-                    </p>
-                    <span
-                      className={styles.labelSpan}
-                      title={tFormApplication('required')}
-                    >
-                      *
-                    </span>
-                  </label>
-
-                  <div className={styles.inputWrapper}>
-                    <input
-                      type='email'
-                      id={`email-${formId}`}
-                      name='applicantEmail'
-                      placeholder='' //TODO: change to {app.applicantEmail}
-                      className='inputText'
-                      disabled
-                    />
-                  </div>
-                </div>
-
-                <div className={styles.smallFieldWrapper}>
-                  <label
-                    className={styles.label}
-                    htmlFor={`department-${formId}`}
+              <div className={styles.smallFieldWrapper}>
+                <label
+                  className={styles.label}
+                  htmlFor={`department-${formId}`}
+                >
+                  <p className={styles.labelText}>
+                    {tFormApplication(`labels.faculty`)}
+                  </p>
+                  <span
+                    className={styles.labelSpan}
+                    title={tFormApplication('required')}
                   >
-                    <p className={styles.labelText}>
-                      {tFormApplication(`labels.faculty`)}
-                    </p>
-                    <span
-                      className={styles.labelSpan}
-                      title={tFormApplication('required')}
-                    >
-                      *
-                    </span>
-                  </label>
+                    *
+                  </span>
+                </label>
 
+                <div className={styles.inputWrapper}>
                   <input
                     type='text'
                     id={`department-${formId}`}
                     name='departmentId'
-                    placeholder='' //TODO: for future, replace with faculty name which admin uses to see applications
+                    value={departmentName}
                     className='inputText'
                     disabled
                   />
                 </div>
+              </div>
 
-                <div className={styles.bigFieldWrapper}>
-                  <label
-                    className={styles.label}
-                    htmlFor={`description-${formId}`}
+              <div className={styles.bigFieldWrapper}>
+                <label
+                  className={styles.label}
+                  htmlFor={`description-${formId}`}
+                >
+                  <p className={styles.labelText}>
+                    {tFormApplication(`labels.description`)}
+                  </p>
+                  <span
+                    className={styles.labelSpan}
+                    title={tFormApplication('required')}
                   >
-                    <p className={styles.labelText}>
-                      {tFormApplication(`labels.description`)}
-                    </p>
-                    <span
-                      className={styles.labelSpan}
-                      title={tFormApplication('required')}
-                    >
-                      *
-                    </span>
-                  </label>
+                    *
+                  </span>
+                </label>
 
-                  <textarea
-                    placeholder='' //TODO: {app.problemDescription}
-                    id={`description-${formId}`}
-                    name='problemDescription'
-                    className={`${styles.textArea} ${golos.variable}`}
-                    disabled
-                  />
-                </div>
+                <textarea
+                  value={app.problemDescription}
+                  id={`description-${formId}`}
+                  name='problemDescription'
+                  className={`${styles.textArea} ${golos.variable}`}
+                  disabled
+                />
+              </div>
 
-                <div className={styles.buttonContainer}>
-                  <button className='mainBtn'>
-                    <Edit />
-                    {tApplications('buttons.edit')}
-                  </button>
+              <div className={styles.buttonContainer}>
+                <button className='mainBtn' type='button'>
+                  <EditIcon />
+                  {tApplications('buttons.edit')}
+                </button>
 
-                  <button className='//TODO: make white mainBtn, separate styles'>
-                    <Delete />
-                    {tApplications('buttons.delete')}
-                  </button>
-                </div>
-              </Form>
-            </article>
-          ))
-        )}
-      </section>
+                <button className='mainBtnWhite' type='button'>
+                  <DeleteIcon />
+                  {tApplications('buttons.delete')}
+                </button>
+              </div>
+            </Form>
+          </article>
+        ))
+      )}
+
+      <div
+        className={styles.toTopContainer}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      >
+        <ArrowTopIcon />
+        <p className={styles.toTopParagraph}>{tApplications('top')}</p>
+      </div>
     </section>
   )
 }

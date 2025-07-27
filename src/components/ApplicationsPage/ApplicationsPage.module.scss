@@ -4,8 +4,19 @@ $primary-button-color: #ff525e;
 $heading-text-color: #272727;
 $container-bg-color: #fff;
 $text-nat-0: #272727;
+$text-nat-150: #464646;
 $text-red-400: #ff525e;
 $text-nat-500: #6d6d6d;
+
+.applicationSection {
+  display: flex;
+  padding: 0 3.75rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.1875rem;
+  align-self: stretch;
+}
 
 .headingContainer {
   display: flex;
@@ -28,11 +39,88 @@ $text-nat-500: #6d6d6d;
 
 .searchFilterContainer {
   display: flex;
+  justify-content: space-between;
   padding: 0.9375rem;
   align-items: center;
   gap: 1.5625rem;
 
   background: $container-bg-color;
+}
+
+.searchFilterContainer > input {
+  flex: 0 0 80%;
+}
+
+.searchFilterContainer > button {
+  flex: 0 0 20%;
+}
+
+.applicationArticle {
+  display: flex;
+  padding: 1.5625rem;
+  align-items: flex-start;
+  gap: 2.8125rem;
+  align-self: stretch;
+
+  border: 1px solid $primary-border-color;
+  background: $container-bg-color;
+}
+
+.applicationPhotoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5625rem;
+  flex: 0 0 30%;
+}
+
+.problemPhoto {
+  width: 100%;
+  height: 100%;
+}
+
+.applicationPhotoDates {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+}
+
+.photoDate {
+  color: $text-nat-150;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4375rem;
+  letter-spacing: 0.005rem;
+}
+
+.photoDateSpan {
+  color: $text-nat-0;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.divider {
+  width: 0.0625rem;
+  align-self: stretch;
+
+  background: $primary-border-color;
+}
+
+.applicationForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.1875rem;
+  flex: 1;
 }
 
 .smallFieldWrapper {
@@ -48,9 +136,10 @@ $text-nat-500: #6d6d6d;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
   gap: 0.9375rem;
   align-self: stretch;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .label {
@@ -83,6 +172,13 @@ $text-nat-500: #6d6d6d;
   letter-spacing: 0.005rem;
 }
 
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  background-color: #f7f7f7;
+  box-sizing: border-box;
+}
+
 .textArea {
   display: flex;
   height: 9.375rem;
@@ -101,4 +197,48 @@ $text-nat-500: #6d6d6d;
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.005rem;
+}
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.1875rem;
+  align-self: stretch;
+}
+
+.buttonContainer > button {
+  flex: 1 1 50%;
+  max-width: 50%;
+}
+
+.toTopContainer {
+  display: flex;
+  padding: 0.625rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.toTopContainer > svg {
+  cursor: pointer;
+}
+
+.toTopParagraph {
+  cursor: pointer;
+  color: $primary-button-color;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
 }

@@ -10,6 +10,11 @@
     "delete": "Delete application"
   },
 
+  "dateParas": {
+    "create": "Created",
+    "update": "Updated"
+  },
+
   "noResults": "No applications",
 
   "top": "Scroll up"
