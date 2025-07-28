@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import Form from 'next/form'
 import { FocusTrap } from './FocusTrap/FocusTrap'
+import { ApplicationForm } from './ApplicationForm/ApplicationForm'
 import ArrowTopIcon from '@/assets/image/icons/align-arrow-up-line.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
 import CloseIcon from '@/assets/image/icons/form/close.svg'
@@ -55,6 +56,9 @@ export function ApplicationsPage({
   const [deletePanel, showDeletePanel] = useState(false)
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const deletePanelRef = FocusTrap(deletePanel)
+
+  const [editingApp, setEditingApp] = useState<Application | null>(null)
+  const editPanelRef = FocusTrap(Boolean(editingApp))
 
   const tApplications = useTranslations('admin/applications')
   const tFormApplication = useTranslations('form/application')
@@ -109,16 +113,16 @@ export function ApplicationsPage({
   }, [locale])
 
   useEffect(() => {
-    if (deletePanel) {
+    const previousOverflow = document.body.style.overflow
+
+    if (deletePanel || editingApp) {
       document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
     }
 
     return () => {
-      document.body.style.overflow = ''
+      document.body.style.overflow = previousOverflow
     }
-  }, [deletePanel])
+  }, [deletePanel, editingApp])
 
   function formatDate(arr: number[]): string {
     const [year, month, day] = arr
@@ -157,6 +161,34 @@ export function ApplicationsPage({
       setDeleteId(null)
     } catch (err) {
       console.error(err)
+    }
+  }
+
+  const handleUpdateApplication = async (updatedAppData: Application) => {
+    try {
+      const response = await fetch(`${api}admin/application/update`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedAppData),
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error('❌ Update failed:', response.status, errorText)
+        throw new Error(`Error updating: ${response.status}`)
+      }
+
+      setApplications((prev) =>
+        prev.map((app) =>
+          app.id === updatedAppData.id ? updatedAppData : app,
+        ),
+      )
+
+      setEditingApp(null)
+    } catch (err) {
+      console.error('Error while updating application', err)
     }
   }
 
@@ -241,7 +273,7 @@ export function ApplicationsPage({
                 <div className={styles.inputWrapper}>
                   <input
                     type='text'
-                    id={`applicantName-${formId}`}
+                    id={`fullname-${formId}`}
                     name='applicantName'
                     className='inputText'
                     value={[
@@ -335,7 +367,11 @@ export function ApplicationsPage({
               </div>
 
               <div className={styles.buttonContainer}>
-                <button className='mainBtn' type='button'>
+                <button
+                  className='mainBtn'
+                  type='button'
+                  onClick={() => setEditingApp(app)}
+                >
                   <EditIcon />
                   {tApplications('buttons.edit')}
                 </button>
@@ -403,6 +439,17 @@ export function ApplicationsPage({
             </div>
           </div>
         </div>
+      )}
+
+      {editingApp && (
+        <ApplicationForm
+          ref={editPanelRef}
+          heading={tApplications('editPanel.heading')}
+          buttonText={tApplications('editPanel.save')}
+          initialData={editingApp}
+          onClose={() => setEditingApp(null)}
+          onSubmit={handleUpdateApplication}
+        />
       )}
     </section>
   )

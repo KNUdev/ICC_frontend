@@ -21,6 +21,11 @@
     "keep": "No, I don't want to"
   },
 
+  "editPanel": {
+    "heading": "EDIT APPLICATION",
+    "save": "Save changes"
+  },
+
   "noResults": "No applications",
 
   "top": "Scroll up"
