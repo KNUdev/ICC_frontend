@@ -3,6 +3,7 @@ $primary-background-color: #f6f6f6;
 $primary-button-color: #ff525e;
 $heading-text-color: #272727;
 $container-bg-color: #fff;
+$wrapper-bg-color: #f7f7f7;
 $text-nat-0: #272727;
 $text-nat-150: #464646;
 $text-red-400: #ff525e;
@@ -175,7 +176,7 @@ $text-nat-500: #6d6d6d;
 .inputWrapper {
   position: relative;
   width: 100%;
-  background-color: #f7f7f7;
+  background-color: $wrapper-bg-color;
   box-sizing: border-box;
 }
 
@@ -241,4 +242,54 @@ $text-nat-500: #6d6d6d;
   text-decoration-thickness: auto;
   text-underline-offset: auto;
   text-underline-position: from-font;
+}
+
+.deletePanelContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.deletePanel {
+  display: flex;
+  width: 80%;
+  padding: 2.8125rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2.8125rem;
+
+  border: 1px solid $primary-border-color;
+  background: $container-bg-color;
+}
+
+.deletePanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+}
+
+.deletePanelHeading {
+  color: $heading-text-color;
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 1.875rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.00938rem;
+  text-transform: uppercase;
+}
+
+.centerText {
+  justify-content: center;
 }

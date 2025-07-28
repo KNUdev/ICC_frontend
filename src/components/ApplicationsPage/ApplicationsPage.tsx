@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import Form from 'next/form'
+import { FocusTrap } from './FocusTrap/FocusTrap'
 import ArrowTopIcon from '@/assets/image/icons/align-arrow-up-line.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
 import CloseIcon from '@/assets/image/icons/form/close.svg'
@@ -50,6 +51,10 @@ export function ApplicationsPage({
 
   const [applications, setApplications] = useState<Application[]>([])
   const [departmentName, setDepartmentName] = useState<string>('')
+
+  const [deletePanel, showDeletePanel] = useState(false)
+  const [deleteId, setDeleteId] = useState<string | null>(null)
+  const deletePanelRef = FocusTrap(deletePanel)
 
   const tApplications = useTranslations('admin/applications')
   const tFormApplication = useTranslations('form/application')
@@ -103,6 +108,18 @@ export function ApplicationsPage({
     postData()
   }, [locale])
 
+  useEffect(() => {
+    if (deletePanel) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [deletePanel])
+
   function formatDate(arr: number[]): string {
     const [year, month, day] = arr
     const paddedDay = String(day).padStart(2, '0')
@@ -113,6 +130,34 @@ export function ApplicationsPage({
   const handleClear = () => {
     setSearchValue('')
     inputRef.current?.focus()
+  }
+
+  const handleDeleteApplication = async () => {
+    if (!deleteId) return
+
+    try {
+      const response = await fetch(
+        `${api}admin/application/${deleteId}/delete`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+
+      const resultText = await response.text()
+      if (!response.ok) {
+        console.error('❌ Delete failed:', response.status, resultText)
+        throw new Error('Delete failed')
+      }
+
+      setApplications((prev) => prev.filter((app) => app.id !== deleteId))
+      showDeletePanel(false)
+      setDeleteId(null)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   return (
@@ -295,7 +340,14 @@ export function ApplicationsPage({
                   {tApplications('buttons.edit')}
                 </button>
 
-                <button className='mainBtnWhite' type='button'>
+                <button
+                  className='mainBtnWhite'
+                  type='button'
+                  onClick={() => {
+                    setDeleteId(app.id)
+                    showDeletePanel(true)
+                  }}
+                >
                   <DeleteIcon />
                   {tApplications('buttons.delete')}
                 </button>
@@ -312,6 +364,46 @@ export function ApplicationsPage({
         <ArrowTopIcon />
         <p className={styles.toTopParagraph}>{tApplications('top')}</p>
       </div>
+
+      {deletePanel && (
+        <div className={styles.deletePanelContainer} ref={deletePanelRef}>
+          <div className={styles.deletePanel}>
+            <div className={styles.deletePanelHeader}>
+              <h1 className={styles.deletePanelHeading}>
+                {tApplications('deletePanel.question')}
+              </h1>
+              <button
+                type='button'
+                className='closeBtn'
+                onClick={() => showDeletePanel(false)}
+              >
+                <CloseIcon />
+              </button>
+            </div>
+
+            <div className={styles.buttonContainer}>
+              <button
+                type='button'
+                className={`mainBtn ${styles.centerText}`}
+                onClick={handleDeleteApplication}
+              >
+                {tApplications('deletePanel.delete')}
+              </button>
+
+              <button
+                type='button'
+                className={`mainBtnWhite ${styles.centerText}`}
+                onClick={() => {
+                  showDeletePanel(false)
+                  setDeleteId(null)
+                }}
+              >
+                {tApplications('deletePanel.keep')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

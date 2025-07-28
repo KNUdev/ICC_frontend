@@ -15,6 +15,12 @@
     "update": "Updated"
   },
 
+  "deletePanel": {
+    "question": "DO YOU REALLY WANT TO DELETE THE APPLICATION?",
+    "delete": "Yes, I want to",
+    "keep": "No, I don't want to"
+  },
+
   "noResults": "No applications",
 
   "top": "Scroll up"
