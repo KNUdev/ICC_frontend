@@ -6,15 +6,13 @@ import { photos } from '@/shared/data/photos.data'
 import { useTranslations } from "next-intl"
 import { PAGES } from '@/config/page.config'
 import Link from 'next/link'
-import Image from 'next/image'
 import styles from './PhotoGallery.module.scss'
 import Hyperlink from '@/common/components/Hyperlink/Hyperlink'
 
 export function PhotoGallery() {
     const tCommon = useTranslations('common')
     const tAlt = useTranslations('photosAlt/alt')
-    const photoCount = 15
-
+    
     return (
         <section aria-label="Photo gallery" className="gallery">
             <div className={styles.mainContainer}>
