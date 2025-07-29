@@ -36,5 +36,8 @@
   "authentication": {
     "login": "Sing in",
     "register": "Sign up"
-  }
+  },
+
+  "backToHome": "Back to Home",
+  "backToTop": "Back to top"
 }
