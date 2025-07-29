@@ -35,5 +35,8 @@
   "authentication": {
     "login": "Увійти",
     "register": "Зареєструватися"
-  }
+  },
+
+  "backToHome": "Повернутись на головну",
+  "backToTop": "Прогорнути вгору"
 }
