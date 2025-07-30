@@ -10,8 +10,63 @@ import Modal from '@/common/components/Modal/Modal'
 import ModalActions from '@/common/components/Modal/ModalActions/ModalActions'
 import ModalButton from '@/common/components/Modal/ModalButton/ModalButton'
 import SuccessMessage from '@/common/components/SuccessMessage/SuccessMessage'
+import { API } from '@/shared/config/api.config'
 import { useEffect, useRef, useState } from 'react'
 import styles from './page.module.scss'
+
+interface Sector {
+  id: string
+  name: {
+    en: string
+    uk: string
+  }
+  specialties: string[]
+}
+
+interface CreateSectorRequest {
+  name: {
+    en: string
+    uk: string
+  }
+  specialties: string[]
+}
+
+interface GetSectorsRequest {
+  pageNumber: number
+  pageSize: number
+}
+
+const createSector = async (data: CreateSectorRequest) => {
+  const response = await fetch(`${API}admin/sector/create`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to create sector')
+  }
+
+  return response.json()
+}
+
+const getAllSectors = async (params: GetSectorsRequest) => {
+  const response = await fetch(`${API}admin/sector/all`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch sectors')
+  }
+
+  return response.json()
+}
 
 const EditIcon = () => (
   <svg
@@ -44,16 +99,14 @@ const DeleteIcon = () => (
 )
 
 const AllSectorsPage = () => {
-  const [sectorName, setSectorName] = useState('')
+  const [sectorNameUk, setSectorNameUk] = useState('')
+  const [sectorNameEn, setSectorNameEn] = useState('')
   const [speciality, setSpeciality] = useState('')
   const [addedSpecialities, setAddedSpecialities] = useState<string[]>([])
   const [searchTerm, setSearchTerm] = useState('')
-  const [sectors, setSectors] = useState<
-    Array<{
-      name: string
-      specialities: string[]
-    }>
-  >([])
+  const [sectors, setSectors] = useState<Sector[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   // Modal states
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -61,7 +114,8 @@ const AllSectorsPage = () => {
   const [selectedSectorIndex, setSelectedSectorIndex] = useState<number | null>(
     null,
   )
-  const [editingSectorName, setEditingSectorName] = useState('')
+  const [editingSectorNameUk, setEditingSectorNameUk] = useState('')
+  const [editingSectorNameEn, setEditingSectorNameEn] = useState('')
   const [editingSpecialities, setEditingSpecialities] = useState<string[]>([])
   const [editingSpeciality, setEditingSpeciality] = useState('')
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
@@ -80,11 +134,30 @@ const AllSectorsPage = () => {
 
   const filteredSectors = sectors.filter(
     (sector) =>
-      sector.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      sector.specialities.some((spec) =>
+      sector.name.uk.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      sector.name.en.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      sector.specialties.some((spec: string) =>
         spec.toLowerCase().includes(searchTerm.toLowerCase()),
       ),
   )
+
+  useEffect(() => {
+    const fetchSectors = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        const data = await getAllSectors({ pageNumber: 0, pageSize: 100 })
+        setSectors(data.content || data || [])
+      } catch (err) {
+        setError('Помилка при завантаженні секторів')
+        console.error('Error fetching sectors:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchSectors()
+  }, [])
 
   useEffect(() => {
     const updateScrollState = () => {
@@ -137,16 +210,38 @@ const AllSectorsPage = () => {
     )
   }
 
-  const handleSubmit = () => {
-    if (sectorName && addedSpecialities.length > 0) {
-      const newSector = {
-        name: sectorName,
-        specialities: addedSpecialities,
+  const handleSubmit = async () => {
+    if (sectorNameUk && sectorNameEn) {
+      try {
+        setLoading(true)
+        setError(null)
+
+        const createData: CreateSectorRequest = {
+          name: {
+            uk: sectorNameUk,
+            en: sectorNameEn,
+          },
+          specialties: addedSpecialities,
+        }
+
+        await createSector(createData)
+
+        const data = await getAllSectors({ pageNumber: 0, pageSize: 100 })
+        setSectors(data.content || data || [])
+
+        setSectorNameUk('')
+        setSectorNameEn('')
+        setSpeciality('')
+        setAddedSpecialities([])
+
+        setShowSuccessMessage(true)
+        setTimeout(() => setShowSuccessMessage(false), 5000)
+      } catch (err) {
+        setError('Помилка при створенні сектору')
+        console.error('Error creating sector:', err)
+      } finally {
+        setLoading(false)
       }
-      setSectors([...sectors, newSector])
-      setSectorName('')
-      setSpeciality('')
-      setAddedSpecialities([])
     }
   }
 
@@ -168,8 +263,9 @@ const AllSectorsPage = () => {
   const handleEditSector = (sectorIndex: number) => {
     const sector = sectors[sectorIndex]
     setSelectedSectorIndex(sectorIndex)
-    setEditingSectorName(sector.name)
-    setEditingSpecialities([...sector.specialities])
+    setEditingSectorNameUk(sector.name.uk)
+    setEditingSectorNameEn(sector.name.en)
+    setEditingSpecialities([...sector.specialties])
     setEditingSpeciality('')
     setShowEditModal(true)
   }
@@ -190,26 +286,32 @@ const AllSectorsPage = () => {
     )
   }
 
-  const confirmEdit = () => {
+  const confirmEdit = async () => {
     if (
       selectedSectorIndex !== null &&
-      editingSectorName &&
-      editingSpecialities.length > 0
+      editingSectorNameUk &&
+      editingSectorNameEn
     ) {
-      setSectors((prevSectors) =>
-        prevSectors.map((sector, index) =>
-          index === selectedSectorIndex
-            ? { name: editingSectorName, specialities: editingSpecialities }
-            : sector,
-        ),
-      )
+      try {
+        setLoading(true)
+        setError(null)
 
-      setShowSuccessMessage(true)
-      setTimeout(() => setShowSuccessMessage(false), 5000)
+        const data = await getAllSectors({ pageNumber: 0, pageSize: 100 })
+        setSectors(data.content || data || [])
+
+        setShowSuccessMessage(true)
+        setTimeout(() => setShowSuccessMessage(false), 5000)
+      } catch (err) {
+        setError('Помилка при редагуванні сектору')
+        console.error('Error updating sector:', err)
+      } finally {
+        setLoading(false)
+      }
     }
     setShowEditModal(false)
     setSelectedSectorIndex(null)
-    setEditingSectorName('')
+    setEditingSectorNameUk('')
+    setEditingSectorNameEn('')
     setEditingSpecialities([])
     setEditingSpeciality('')
   }
@@ -218,7 +320,8 @@ const AllSectorsPage = () => {
     setShowDeleteModal(false)
     setShowEditModal(false)
     setSelectedSectorIndex(null)
-    setEditingSectorName('')
+    setEditingSectorNameUk('')
+    setEditingSectorNameEn('')
     setEditingSpecialities([])
     setEditingSpeciality('')
   }
@@ -242,11 +345,19 @@ const AllSectorsPage = () => {
           <div className={styles.inputRow}>
             <div className={styles.inputColumn}>
               <InputText
-                title='Назва сектора'
+                title='Назва сектора uk'
                 placeholder='Оператор машинного відділу'
                 isRequired={true}
-                value={sectorName}
-                onChange={(e) => setSectorName(e.target.value)}
+                value={sectorNameUk}
+                onChange={(e) => setSectorNameUk(e.target.value)}
+              />
+
+              <InputText
+                title='Назва сектора en'
+                placeholder='Machine Operator Department'
+                isRequired={true}
+                value={sectorNameEn}
+                onChange={(e) => setSectorNameEn(e.target.value)}
               />
             </div>
           </div>
@@ -257,7 +368,7 @@ const AllSectorsPage = () => {
                 title='Спеціальності, які входять в сектор'
                 placeholder='Оператор машинного відділу'
                 options={specialityOptions}
-                isRequired={true}
+                isRequired={false}
                 value={speciality}
                 onChange={handleSpecialityChange}
               />
@@ -285,8 +396,12 @@ const AllSectorsPage = () => {
             )}
           </div>
 
-          <button className={styles.submitButton} onClick={handleSubmit}>
-            Додати сектор
+          <button
+            className={styles.submitButton}
+            onClick={handleSubmit}
+            disabled={loading || !sectorNameUk || !sectorNameEn}
+          >
+            {loading ? 'Додається...' : 'Додати сектор'}
           </button>
         </div>
       </div>
@@ -308,10 +423,12 @@ const AllSectorsPage = () => {
         </div>
 
         <SuccessMessage
-          message='Сектор успішно відредаговано!'
+          message='Сектор успішно створено!'
           isVisible={showSuccessMessage}
           onClose={() => setShowSuccessMessage(false)}
         />
+
+        {error && <div className={styles.errorMessage}>{error}</div>}
 
         <div className={styles.sectorsTable}>
           <div className={styles.tableHeader}>
@@ -328,9 +445,9 @@ const AllSectorsPage = () => {
               <div className={styles.tableBody}>
                 {filteredSectors.map((sector, index) => (
                   <div key={index} className={styles.tableRow}>
-                    <div className={styles.tableCell}>{sector.name}</div>
+                    <div className={styles.tableCell}>{sector.name.uk}</div>
                     <div className={styles.tableCell}>
-                      {sector.specialities.join(', ')}
+                      {sector.specialties.join(', ')}
                     </div>
                     <div className={styles.tableActions}>
                       <button
@@ -376,7 +493,7 @@ const AllSectorsPage = () => {
         confirmText='Так, видалити спеціальність'
         specialities={
           selectedSectorIndex !== null
-            ? sectors[selectedSectorIndex]?.specialities || []
+            ? sectors[selectedSectorIndex]?.specialties || []
             : []
         }
       />
@@ -390,11 +507,19 @@ const AllSectorsPage = () => {
           <div className={styles.inputRow}>
             <div className={styles.inputColumn}>
               <InputText
-                title='Назва сектора'
+                title='Назва сектора uk'
                 placeholder='Оператор машинного відділу'
                 isRequired={true}
-                value={editingSectorName}
-                onChange={(e) => setEditingSectorName(e.target.value)}
+                value={editingSectorNameUk}
+                onChange={(e) => setEditingSectorNameUk(e.target.value)}
+              />
+
+              <InputText
+                title='Назва сектора en'
+                placeholder='Machine Operator Department'
+                isRequired={true}
+                value={editingSectorNameEn}
+                onChange={(e) => setEditingSectorNameEn(e.target.value)}
               />
             </div>
           </div>
@@ -405,7 +530,7 @@ const AllSectorsPage = () => {
                 title='Спеціальності, які входять в сектор'
                 placeholder='Оператор машинного відділу'
                 options={specialityOptions}
-                isRequired={true}
+                isRequired={false}
                 value={editingSpeciality}
                 onChange={handleEditSpecialityChange}
               />
@@ -435,8 +560,12 @@ const AllSectorsPage = () => {
         </div>
 
         <ModalActions>
-          <ModalButton variant='primary' onClick={confirmEdit}>
-            Зберегти зміни
+          <ModalButton
+            variant='primary'
+            onClick={confirmEdit}
+            disabled={loading || !editingSectorNameUk || !editingSectorNameEn}
+          >
+            {loading ? 'Зберігається...' : 'Зберегти зміни'}
           </ModalButton>
         </ModalActions>
       </Modal>
