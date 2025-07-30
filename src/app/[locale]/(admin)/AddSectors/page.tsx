@@ -13,6 +13,7 @@ import SuccessMessage from '@/common/components/SuccessMessage/SuccessMessage'
 import { API } from '@/shared/config/api.config'
 import { useEffect, useRef, useState } from 'react'
 import styles from './page.module.scss'
+import { useTranslations } from 'next-intl'
 
 interface Sector {
   id: string
@@ -107,6 +108,7 @@ const AllSectorsPage = () => {
   const [sectors, setSectors] = useState<Sector[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const t = useTranslations('AddSpeciality/common')
 
   // Modal states
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -329,7 +331,7 @@ const AllSectorsPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.headerSection}>
-        <h1 className={styles.title}>ВСІ СЕКТОРИ</h1>
+        <h1 className={styles.title}>{t('title')}</h1>
         <p className={styles.subtitle}>
           На цій сторінці ви можете додати новий сектор до системи, вказавши
           його основні дані, спеціальності та за потребою — редагувати існуючі.

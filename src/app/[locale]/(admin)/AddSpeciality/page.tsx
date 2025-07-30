@@ -8,6 +8,7 @@ import Select from '@/common/components/Input/Select/Select'
 import DeleteConfirmModal from '@/common/components/Modal/DeleteConfirmModal/DeleteConfirmModal'
 import EditModal from '@/common/components/Modal/EditModal/EditModal'
 import SuccessMessage from '@/common/components/SuccessMessage/SuccessMessage'
+import { useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 import styles from './page.module.scss'
 
@@ -47,6 +48,7 @@ const AddSpecialityPage = () => {
   const [sector, setSector] = useState('')
   const [addedSectors, setAddedSectors] = useState<string[]>([])
   const [searchTerm, setSearchTerm] = useState('')
+  const t = useTranslations('AddSector/common')
   const [createdSpecialities, setCreatedSpecialities] = useState<
     Array<{
       name: string
@@ -237,7 +239,7 @@ const AddSpecialityPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.headerSection}>
-        <h1 className={styles.title}>ДОДАТИ СПЕЦІАЛЬНІСТЬ</h1>
+        <h1 className={styles.title}>{t('title')}</h1>
         <p className={styles.subtitle}>
           На цій сторінці ви можете додати нового працівника до системи,
           вказавши його основні дані, контактну інформацію, посаду та зв
