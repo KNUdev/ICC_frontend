@@ -65,6 +65,8 @@ export function ApplicationsPage() {
   const [filterPanel, showFilterPanel] = useState(false)
   const filterPanelRef = useFocusTrap(filterPanel)
 
+  const [editingAppData, setEditingAppData] = useState<Application | null>(null)
+
   const tApplications = useTranslations('admin/applications')
   const locale = useLocale()
 
@@ -151,13 +153,22 @@ export function ApplicationsPage() {
   }
 
   const handleUpdateApplication = async (updatedAppData: Application) => {
+    console.log('Updating with:', updatedAppData)
+
+    const formData = new FormData()
+
+    formData.append('id', updatedAppData.id)
+    formData.append('applicantEmail', updatedAppData.applicantEmail)
+    formData.append('firstName', updatedAppData.applicantName.firstName)
+    formData.append('middleName', updatedAppData.applicantName.middleName)
+    formData.append('lastName', updatedAppData.applicantName.lastName)
+    formData.append('departmentId', updatedAppData.departmentId)
+    formData.append('problemDescription', updatedAppData.problemDescription)
+
     try {
       const response = await fetch(`${api}admin/application/update`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedAppData),
+        body: formData,
       })
 
       if (!response.ok) {
@@ -259,7 +270,10 @@ export function ApplicationsPage() {
                 <button
                   className='mainBtn'
                   type='button'
-                  onClick={() => setEditingApp(app)}
+                  onClick={() => {
+                    setEditingApp(app)
+                    setEditingAppData(app)
+                  }}
                 >
                   <EditIcon />
                   {tApplications('buttons.edit')}
@@ -351,12 +365,15 @@ export function ApplicationsPage() {
               isDisabled={false}
               isDropDownInput={true}
               formId='edit-form'
+              onChange={(updated) => setEditingAppData(updated)}
             />
 
             <button
               className={`mainBtn ${styles.centerText}`}
               type='button'
-              onClick={() => editingApp && handleUpdateApplication(editingApp)}
+              onClick={() =>
+                editingAppData && handleUpdateApplication(editingAppData)
+              }
             >
               {tApplications('editPanel.save')}
             </button>

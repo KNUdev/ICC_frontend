@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo, useCallback } from 'react'
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { Golos_Text } from 'next/font/google'
 import { useTranslations, useLocale } from 'next-intl'
 import type { Department } from '@/app/[locale]/(public)/(home)/components/Form/form.interfaces'
@@ -34,6 +34,7 @@ interface ApplicationFormProps {
   formId?: string
   isDisabled: boolean
   isDropDownInput: boolean
+  onChange?: (updatedData: Application) => void
 }
 
 const api = process.env.NEXT_PUBLIC_API_URL
@@ -43,6 +44,7 @@ export const ApplicationForm = ({
   initialData,
   isDisabled,
   isDropDownInput,
+  onChange,
 }: ApplicationFormProps) => {
   const [formData, setFormData] = useState(initialData)
   const [departmentName, setDepartmentName] = useState('')
@@ -95,6 +97,17 @@ export const ApplicationForm = ({
   useEffect(() => {
     fetchDepartments()
   }, [fetchDepartments])
+
+  const isInitial = useRef(true)
+
+  useEffect(() => {
+    if (isInitial.current) {
+      isInitial.current = false
+      return
+    }
+
+    onChange?.(formData)
+  })
 
   useEffect(() => {
     if (initialData?.departmentId && departments.length > 0) {
