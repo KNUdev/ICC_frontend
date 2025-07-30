@@ -25,6 +25,7 @@ export interface AnimatedLinesConfig {
   durationVariation?: number
   easing?: string
   className?: string
+  forceDisable?: boolean
 }
 
 const getRandomDuration = (base: number, variation: number) =>
@@ -48,20 +49,21 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
     durationVariation = 1000,
     easing = 'ease-in-out',
     className = '',
+    forceDisable = false,
   } = config
 
   const pathRefs = useRef<(SVGPathElement | null)[]>([])
   const animationsRef = useRef<Animation[]>([])
   const isInitializedRef = useRef(false)
 
-  const animationConfig = useMemo(
-    () => ({
+  const animationConfig = useMemo(() => {
+    return {
       baseDuration,
       durationVariation,
       easing,
-    }),
-    [baseDuration, durationVariation, easing],
-  )
+      shouldAnimate: !forceDisable,
+    }
+  }, [baseDuration, durationVariation, easing, forceDisable])
 
   const setPathRef = useCallback(
     (index: number) => (ref: SVGPathElement | null) => {
@@ -77,14 +79,26 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
     animationsRef.current.forEach((animation) => animation.cancel())
     animationsRef.current = []
 
+    if (!animationConfig.shouldAnimate) {
+      paths.forEach((path) => {
+        Object.assign(path.style, defaultLineStyles)
+        path.style.strokeDasharray = 'none'
+        path.style.strokeDashoffset = '0'
+      })
+      return
+    }
+
     requestAnimationFrame(() => {
       paths.forEach((path, index) => {
         try {
           const totalLength = path.getTotalLength()
-          const duration = getRandomDuration(
-            animationConfig.baseDuration,
-            animationConfig.durationVariation,
-          )
+          const duration =
+            animationConfig.durationVariation > 0
+              ? getRandomDuration(
+                  animationConfig.baseDuration,
+                  animationConfig.durationVariation,
+                )
+              : animationConfig.baseDuration
 
           Object.assign(path.style, defaultLineStyles)
           path.style.strokeDasharray = `${totalLength}`
@@ -105,8 +119,12 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
             },
           )
 
-          animation.currentTime = (index * 200) % duration
+          const timeOffset =
+            animationConfig.durationVariation > 0
+              ? (index * 200) % duration
+              : index * 100
 
+          animation.currentTime = timeOffset
           animationsRef.current.push(animation)
         } catch (error) {
           console.warn('Failed to create animation for path:', error)
@@ -142,5 +160,6 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
     gradients,
     defaultLineStyles,
     className,
+    pathRefs: pathRefs.current,
   }
 }
