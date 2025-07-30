@@ -1,0 +1,60 @@
+{
+  "title": "ADD SPECIALITY",
+  "subtitle": "On this page you can add a new employee to the system by specifying their basic data, contact information, position and if needed — upload a photo. All required fields are marked, and entered data can be edited later.",
+  "form": {
+    "specialityName": {
+      "title": "Speciality Name",
+      "placeholder": "Machine Department Operator"
+    },
+    "category": {
+      "title": "Category (if needed)",
+      "placeholder": "Category 1"
+    },
+    "sector": {
+      "title": "Sector",
+      "placeholder": "Network Technologies Sector"
+    },
+    "addedSectors": {
+      "label": "Added sectors:",
+      "empty": "Nothing added yet :("
+    },
+    "submitButton": "Add Speciality"
+  },
+  "table": {
+    "title": "LIST OF CREATED SPECIALITIES",
+    "search": {
+      "placeholder": "Find the speciality you are looking for..."
+    },
+    "headers": {
+      "speciality": "Speciality",
+      "category": "Category",
+      "sector": "Sector"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "noResults": "No results found",
+    "empty": "Nothing added yet :("
+  },
+  "modals": {
+    "edit": {
+      "title": "Edit Speciality",
+      "button": "Complete Editing"
+    },
+    "delete": {
+      "title": "Delete Speciality",
+      "message": "Are you sure you want to delete this speciality? This action cannot be undone."
+    }
+  },
+  "messages": {
+    "success": "Speciality successfully edited!"
+  },
+  "sectors": [
+    "Network Technologies Sector",
+    "Web Development Sector",
+    "Mobile Technologies Sector",
+    "Artificial Intelligence Sector",
+    "Cybersecurity Sector"
+  ]
+}

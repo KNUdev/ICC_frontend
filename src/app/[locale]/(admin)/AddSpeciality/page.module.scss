@@ -173,7 +173,6 @@
     width: 100%;
   }
 
-  // Styles for search input text
   input {
     color: var(--text-nat-500, #6d6d6d);
     font-family: Inter;
@@ -208,7 +207,7 @@
 }
 
 .headerCell {
-  width: 24.4%;
+  width: 22%;
   min-width: 0;
   color: var(--text-nat-0, #272727);
   font-family: Inter;
@@ -227,8 +226,16 @@
     padding-left: 0;
   }
 
+  &:nth-child(2) {
+    width: 22%;
+  }
+
+  &:nth-child(3) {
+    width: 31%;
+  }
+
   &:last-child {
-    width: 15%;
+    width: 25%;
     min-width: 120px;
     border-left: 1px solid var(--border-nat-800, #d1d1d1);
     padding-left: 3.60438rem;
@@ -251,6 +258,7 @@
 .tableBodyContainer {
   max-height: 29.375rem;
   overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
 
   mask: none;
@@ -280,7 +288,6 @@
 
     &::-webkit-scrollbar {
       width: 0.25rem;
-      height: 5.625rem;
       background: transparent;
     }
 
@@ -300,9 +307,11 @@
     }
 
     &::-webkit-scrollbar-button {
-      background: #f6f6f6;
-      height: 0;
       width: 0;
+      height: 0;
+      background: transparent;
+      border: none;
+      color: transparent;
     }
 
     &::-webkit-scrollbar-corner {
@@ -334,7 +343,7 @@
 }
 
 .tableCell {
-  width: 25%;
+  width: 22%;
   min-width: 0;
   color: var(--text-nat-300, #4f4f4f);
   font-family: Inter;
@@ -352,10 +361,30 @@
     border-left: none;
     padding-left: 0;
   }
+
+  &:nth-child(2) {
+    width: 22%;
+  }
+
+  &:nth-child(3) {
+    width: 31%;
+  }
+
+  .scrollable & {
+    width: 21.2%;
+
+    &:nth-child(2) {
+      width: 21.2%;
+    }
+
+    &:nth-child(3) {
+      width: 29.6%;
+    }
+  }
 }
 
 .tableActions {
-  width: 15%;
+  width: 25%;
   min-width: 120px;
   display: flex;
   align-items: center;

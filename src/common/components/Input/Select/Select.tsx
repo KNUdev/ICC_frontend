@@ -34,34 +34,35 @@ const Select = ({
         {isRequired && <span>*</span>}
       </label>
       <div className={styles.selectWrapper}>
-        <div 
-          className={styles.selectInput}
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <span className={selectedValue ? styles.selectedValue : styles.placeholder}>
+        <div className={styles.selectInput} onClick={() => setIsOpen(!isOpen)}>
+          <span
+            className={
+              selectedValue ? styles.selectedValue : styles.placeholder
+            }
+          >
             {selectedValue || placeholder}
           </span>
-          <svg 
+          <svg
             className={`${styles.arrow} ${isOpen ? styles.arrowUp : ''}`}
-            width="24" 
-            height="24" 
-            viewBox="0 0 24 24" 
-            fill="none"
+            width='24'
+            height='24'
+            viewBox='0 0 24 24'
+            fill='none'
           >
-            <path 
-              d="M7 10L12 15L17 10" 
-              stroke="#6d6d6d" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
+            <path
+              d='M7 10L12 15L17 10'
+              stroke='#6d6d6d'
+              strokeWidth='2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
             />
           </svg>
         </div>
         {isOpen && (
           <div className={styles.dropdown}>
-            {options.map((option, index) => (
+            {options.map((option) => (
               <div
-                key={index}
+                key={option}
                 className={styles.option}
                 onClick={() => handleSelect(option)}
               >

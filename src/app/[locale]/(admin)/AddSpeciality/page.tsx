@@ -6,6 +6,9 @@ import Select from '@/common/components/Input/Select/Select'
 import CloseButton from '@/common/components/Input/CloseButton/CloseButton'
 import SearchInput from '@/common/components/Input/SearchInput/SearchInput'
 import ScrollUp from '@/common/components/Input/ScrollUp/ScrollUp'
+import EditModal from '@/common/components/Modal/EditModal/EditModal'
+import DeleteConfirmModal from '@/common/components/Modal/DeleteConfirmModal/DeleteConfirmModal'
+import SuccessMessage from '@/common/components/SuccessMessage/SuccessMessage'
 import styles from './page.module.scss'
 
 const EditIcon = () => (
@@ -52,8 +55,23 @@ const AddSpecialityPage = () => {
     }>
   >([])
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [editingSpeciality, setEditingSpeciality] = useState<{
+    name: string
+    category: string
+    sectors: string[]
+    index: number
+  } | null>(null)
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [deleteTarget, setDeleteTarget] = useState<{
+    specialityIndex: number
+    sectorIndex: number
+  } | null>(null)
+
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+
   const tableBodyContainerRef = useRef<HTMLDivElement>(null)
-  const [isScrollable, setIsScrollable] = useState(false)
 
   const filteredSpecialities = createdSpecialities
     .flatMap((speciality, specialityIndex) =>
@@ -78,7 +96,6 @@ const AddSpecialityPage = () => {
         const { scrollTop, scrollHeight, clientHeight } = container
 
         const scrollable = scrollHeight > clientHeight
-        setIsScrollable(scrollable)
 
         if (scrollable) {
           container.classList.add(styles.scrollable)
@@ -147,27 +164,77 @@ const AddSpecialityPage = () => {
   }
 
   const handleDeleteSector = (specialityIndex: number, sectorIndex: number) => {
-    setCreatedSpecialities(
-      (prevSpecialities) =>
-        prevSpecialities
-          .map((speciality, index) => {
-            if (index === specialityIndex) {
-              const updatedSectors = speciality.sectors.filter(
-                (_, i) => i !== sectorIndex,
-              )
-              if (updatedSectors.length === 0) {
-                return null
+    setDeleteTarget({ specialityIndex, sectorIndex })
+    setIsDeleteModalOpen(true)
+  }
+
+  const confirmDelete = () => {
+    if (deleteTarget) {
+      setCreatedSpecialities(
+        (prevSpecialities) =>
+          prevSpecialities
+            .map((speciality, index) => {
+              if (index === deleteTarget.specialityIndex) {
+                const updatedSectors = speciality.sectors.filter(
+                  (_, i) => i !== deleteTarget.sectorIndex,
+                )
+                if (updatedSectors.length === 0) {
+                  return null
+                }
+                return { ...speciality, sectors: updatedSectors }
               }
-              return { ...speciality, sectors: updatedSectors }
-            }
-            return speciality
-          })
-          .filter(Boolean) as Array<{
-          name: string
-          category: string
-          sectors: string[]
-        }>,
-    )
+              return speciality
+            })
+            .filter(Boolean) as Array<{
+            name: string
+            category: string
+            sectors: string[]
+          }>,
+      )
+    }
+    setIsDeleteModalOpen(false)
+    setDeleteTarget(null)
+  }
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+    setDeleteTarget(null)
+  }
+
+  const handleEditSpeciality = (
+    specialityIndex: number,
+    sectorIndex: number,
+  ) => {
+    const speciality = createdSpecialities[specialityIndex]
+    setEditingSpeciality({
+      ...speciality,
+      index: specialityIndex,
+    })
+    setIsModalOpen(true)
+  }
+
+  const handleSaveEditedSpeciality = (editedSpeciality: {
+    name: string
+    category: string
+    sectors: string[]
+  }) => {
+    if (editingSpeciality !== null) {
+      setCreatedSpecialities((prevSpecialities) =>
+        prevSpecialities.map((speciality, index) =>
+          index === editingSpeciality.index ? editedSpeciality : speciality,
+        ),
+      )
+
+      setShowSuccessMessage(true)
+      setTimeout(() => setShowSuccessMessage(false), 5000)
+    }
+    setIsModalOpen(false)
+    setEditingSpeciality(null)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setEditingSpeciality(null)
   }
 
   return (
@@ -223,8 +290,8 @@ const AddSpecialityPage = () => {
             <p className={styles.additionalLabel}>Додані сектори:</p>
             {addedSectors.length > 0 ? (
               <div className={styles.sectorTags}>
-                {addedSectors.map((addedSector, index) => (
-                  <div key={index} className={styles.sectorTag}>
+                {addedSectors.map((addedSector) => (
+                  <div key={addedSector} className={styles.sectorTag}>
                     <span>{addedSector}</span>
                     <div className={styles.divider}></div>
                     <CloseButton onClick={() => removeSector(addedSector)} />
@@ -262,6 +329,12 @@ const AddSpecialityPage = () => {
           </div>
         </div>
 
+        <SuccessMessage
+          message='Спеціальність успішно відредаговано!'
+          isVisible={showSuccessMessage}
+          onClose={() => setShowSuccessMessage(false)}
+        />
+
         <div className={styles.specialtiesTable}>
           <div className={styles.tableHeader}>
             <div className={styles.headerCell}>Спеціальність</div>
@@ -276,7 +349,7 @@ const AddSpecialityPage = () => {
               ref={tableBodyContainerRef}
             >
               <div className={styles.tableBody}>
-                {filteredSpecialities.map((item, index) => (
+                {filteredSpecialities.map((item) => (
                   <div
                     key={`${item.originalIndex}-${item.sectorIndex}`}
                     className={styles.tableRow}
@@ -287,7 +360,15 @@ const AddSpecialityPage = () => {
                     </div>
                     <div className={styles.tableCell}>{item.sector}</div>
                     <div className={styles.tableActions}>
-                      <button className={styles.editButton}>
+                      <button
+                        className={styles.editButton}
+                        onClick={() =>
+                          handleEditSpeciality(
+                            item.originalIndex,
+                            item.sectorIndex,
+                          )
+                        }
+                      >
                         <EditIcon />
                         Редагувати
                       </button>
@@ -320,7 +401,24 @@ const AddSpecialityPage = () => {
         </div>
       </div>
 
-      <div className={styles.scrollUpContainer}>{<ScrollUp />}</div>
+      <div className={styles.scrollUpContainer}>
+        <ScrollUp />
+      </div>
+
+      <EditModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSave={handleSaveEditedSpeciality}
+        speciality={editingSpeciality}
+      />
+
+      <DeleteConfirmModal
+        isOpen={isDeleteModalOpen}
+        onClose={handleCloseDeleteModal}
+        onConfirm={confirmDelete}
+        title='Видалити спеціальність'
+        message='Ви впевнені, що хочете видалити цю спеціальність? Цю дію неможливо скасувати.'
+      />
     </div>
   )
 }
