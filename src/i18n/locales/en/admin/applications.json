@@ -35,5 +35,10 @@
 
   "noResults": "No applications",
 
-  "top": "Scroll up"
+  "top": "Scroll up",
+
+  "aria-labels": {
+    "clearSearch": "Clear search",
+    "closeDialog": "Close dialog"
+  }
 }

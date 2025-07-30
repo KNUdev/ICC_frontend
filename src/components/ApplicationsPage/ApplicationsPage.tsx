@@ -1,16 +1,16 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
-import Image from 'next/image'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useFocusTrap } from './useFocusTrap/useFocusTrap'
+import { useTranslations, useLocale } from 'next-intl'
 import { ApplicationForm } from './ApplicationForm/ApplicationForm'
+import Image from 'next/image'
 import ArrowTopIcon from '@/assets/image/icons/align-arrow-up-line.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
 import CloseIcon from '@/assets/image/icons/form/close.svg'
 import FilterIcon from '@/assets/image/icons/form/filter.svg'
 import EditIcon from '@/assets/image/icons/form/edit.svg'
 import DeleteIcon from '@/assets/image/icons/form/delete.svg'
-import { useTranslations, useLocale } from 'next-intl'
 import styles from './ApplicationsPage.module.scss'
 
 interface Application {
@@ -74,6 +74,16 @@ export function ApplicationsPage() {
   const tApplications = useTranslations('admin/applications')
   const locale = useLocale()
 
+  const dialogIds = {
+    delete: 'delete-dialog',
+    deleteHeading: 'delete-dialog-title',
+    deleteDesc: 'delete-dialog-desc',
+    edit: 'edit-dialog',
+    editHeading: 'edit-dialog-title',
+    filter: 'filter-dialog',
+    filterHeading: 'filter-dialog-title',
+  }
+
   useEffect(() => {
     const postData = async () => {
       try {
@@ -114,6 +124,24 @@ export function ApplicationsPage() {
       document.body.style.overflow = previousOverflow
     }
   }, [deletePanel, editingApp, filterPanel])
+
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (deletePanel) showDeletePanel(false)
+        if (editingApp) setEditingApp(null)
+        if (filterPanel) showFilterPanel(false)
+      }
+    },
+    [deletePanel, editingApp, filterPanel],
+  )
+
+  useEffect(() => {
+    if (deletePanel || editingApp || filterPanel) {
+      window.addEventListener('keydown', onKeyDown)
+      return () => window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [deletePanel, editingApp, filterPanel, onKeyDown])
 
   useEffect(() => {
     const query = searchValue.toLowerCase()
@@ -302,8 +330,14 @@ export function ApplicationsPage() {
         </h1>
 
         <div className={styles.searchFilterContainer}>
-          <div className='searchContainer'>
-            <SearchIcon />
+          <div
+            className='searchContainer'
+            role='search'
+            aria-label={tApplications('header.search')}
+          >
+            <span aria-hidden='true'>
+              <SearchIcon />
+            </span>
 
             <input
               type='search'
@@ -312,17 +346,31 @@ export function ApplicationsPage() {
               ref={inputRef}
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
+              aria-label={tApplications('header.search')}
             />
 
             {searchValue && (
-              <button type='button' className='clearBtn' onClick={handleClear}>
-                <CloseIcon />
+              <button
+                type='button'
+                className='clearBtn'
+                onClick={handleClear}
+                aria-label={tApplications('aria-labels.clearSearch')}
+              >
+                <span aria-hidden='true'>
+                  <CloseIcon />
+                </span>
               </button>
             )}
           </div>
 
-          <button className='mainBtn' onClick={() => showFilterPanel(true)}>
-            <FilterIcon />
+          <button
+            className='mainBtn'
+            onClick={() => showFilterPanel(true)}
+            aria-controls={dialogIds.filter}
+          >
+            <span aria-hidden='true'>
+              <FilterIcon />
+            </span>
 
             {tApplications('header.filter')}
           </button>
@@ -330,7 +378,7 @@ export function ApplicationsPage() {
       </div>
 
       {applications.length === 0 ? (
-        <p>{tApplications('noResults')}</p>
+        <p role='status'>{tApplications('noResults')}</p>
       ) : (
         applications.map((app) => (
           <article key={app.id} className={styles.applicationArticle}>
@@ -379,8 +427,12 @@ export function ApplicationsPage() {
                     setEditingApp(app)
                     setEditingAppData(app)
                   }}
+                  aria-controls={dialogIds.edit}
+                  aria-haspopup='dialog'
                 >
-                  <EditIcon />
+                  <span aria-hidden='true'>
+                    <EditIcon />
+                  </span>
                   {tApplications('buttons.edit')}
                 </button>
 
@@ -391,8 +443,12 @@ export function ApplicationsPage() {
                     setDeleteId(app.id)
                     showDeletePanel(true)
                   }}
+                  aria-controls={dialogIds.delete}
+                  aria-haspopup='dialog'
                 >
-                  <DeleteIcon />
+                  <span aria-hidden='true'>
+                    <DeleteIcon />
+                  </span>
                   {tApplications('buttons.delete')}
                 </button>
               </div>
@@ -401,29 +457,54 @@ export function ApplicationsPage() {
         ))
       )}
 
-      <div
-        className={styles.toTopContainer}
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      >
-        <ArrowTopIcon />
-        <p className={styles.toTopParagraph}>{tApplications('top')}</p>
+      <div className={styles.toTopContainer}>
+        <button
+          type='button'
+          className={styles.toTopParagraph}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label={tApplications('top')}
+        >
+          <span aria-hidden='true'>
+            <ArrowTopIcon />
+          </span>
+          <span>{tApplications('top')}</span>
+        </button>
       </div>
 
       {deletePanel && (
-        <div className={styles.deletePanelContainer} ref={deletePanelRef}>
+        <div
+          className={styles.deletePanelContainer}
+          ref={deletePanelRef}
+          role='dialog'
+          aria-modal='true'
+          id={dialogIds.delete}
+          aria-labelledby={dialogIds.deleteHeading}
+          aria-describedby={dialogIds.deleteDesc}
+        >
           <div className={styles.deletePanel}>
             <div className={styles.deletePanelHeader}>
-              <h1 className={styles.deletePanelHeading}>
+              <h2
+                className={styles.deletePanelHeading}
+                id={dialogIds.deleteHeading}
+              >
                 {tApplications('deletePanel.question')}
-              </h1>
+              </h2>
               <button
                 type='button'
                 className='closeBtn'
                 onClick={() => showDeletePanel(false)}
+                aria-label={tApplications('aria-labels.closeDialog')}
               >
-                <CloseIcon />
+                <span aria-hidden='true'>
+                  <CloseIcon />
+                </span>
               </button>
             </div>
+
+            <p id={dialogIds.deleteDesc} className='sr-only'>
+              {tApplications('a11y.deleteDialogDesc') ||
+                'Confirm deletion of the selected application.'}
+            </p>
 
             <div className={styles.buttonContainer}>
               <button
@@ -450,18 +531,28 @@ export function ApplicationsPage() {
       )}
 
       {editingApp && (
-        <div className={styles.editPanelContainer} ref={editPanelRef}>
+        <div
+          className={styles.editPanelContainer}
+          ref={editPanelRef}
+          role='dialog'
+          aria-modal='true'
+          id={dialogIds.edit}
+          aria-labelledby={dialogIds.editHeading}
+        >
           <div className={styles.editPanel}>
             <div className={styles.header}>
-              <h1 className={styles.heading}>
+              <h2 className={styles.heading} id={dialogIds.editHeading}>
                 {tApplications('editPanel.heading')}
-              </h1>
+              </h2>
               <button
                 type='button'
                 className='closeBtn'
                 onClick={() => setEditingApp(null)}
+                aria-label={tApplications('aria-labels.closeDialog')}
               >
-                <CloseIcon />
+                <span aria-hidden='true'>
+                  <CloseIcon />
+                </span>
               </button>
             </div>
 
@@ -487,18 +578,28 @@ export function ApplicationsPage() {
       )}
 
       {filterPanel && (
-        <div className={styles.editPanelContainer} ref={filterPanelRef}>
+        <div
+          className={styles.editPanelContainer}
+          ref={filterPanelRef}
+          role='dialog'
+          aria-modal='true'
+          id={dialogIds.filter}
+          aria-labelledby={dialogIds.filterHeading}
+        >
           <div className={styles.editPanel}>
             <div className={styles.header}>
-              <h1 className={styles.heading}>
+              <h2 className={styles.heading} id={dialogIds.filterHeading}>
                 {tApplications('filterPanel.heading')}
-              </h1>
+              </h2>
               <button
                 type='button'
                 className='closeBtn'
                 onClick={() => showFilterPanel(false)}
+                aria-label={tApplications('aria-labels.closeDialog')}
               >
-                <CloseIcon />
+                <span aria-hidden='true'>
+                  <CloseIcon />
+                </span>
               </button>
             </div>
 

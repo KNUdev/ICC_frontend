@@ -219,15 +219,18 @@ $text-nat-500: #6d6d6d;
   padding: 0.625rem;
   justify-content: center;
   align-items: center;
-  gap: 0.625rem;
-}
-
-.toTopContainer > svg {
-  cursor: pointer;
 }
 
 .toTopParagraph {
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+
+  background: transparent;
+  border: none;
   color: $primary-button-color;
 
   font-family: Inter;
