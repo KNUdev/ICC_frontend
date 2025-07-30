@@ -107,15 +107,13 @@ export function ApplicationsPage() {
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
-
-    if (deletePanel || editingApp) {
+    if (deletePanel || editingApp || filterPanel) {
       document.body.style.overflow = 'hidden'
     }
-
     return () => {
       document.body.style.overflow = previousOverflow
     }
-  }, [deletePanel, editingApp])
+  }, [deletePanel, editingApp, filterPanel])
 
   useEffect(() => {
     const query = searchValue.toLowerCase()
