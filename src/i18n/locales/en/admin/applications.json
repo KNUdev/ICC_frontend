@@ -23,6 +23,11 @@
     "keep": "No, I don't want to"
   },
 
+  "filterPanel": {
+    "heading": "LIST OF FILTERS",
+    "apply": "Apply filters"
+  },
+
   "editPanel": {
     "heading": "EDIT APPLICATION",
     "save": "Save changes"

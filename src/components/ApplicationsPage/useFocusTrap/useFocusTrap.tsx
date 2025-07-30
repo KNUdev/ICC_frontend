@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 
-export function FocusTrap(active: boolean) {
+export function useFocusTrap(active: boolean) {
   const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {

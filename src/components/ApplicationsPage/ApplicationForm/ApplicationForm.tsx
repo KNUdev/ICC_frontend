@@ -121,6 +121,7 @@ export const ApplicationForm = ({
             type='text'
             id={`fullname-${formId}`}
             name='applicantName'
+            placeholder={tFormApplication('placeholders.fullname')}
             value={`${formData.applicantName.firstName} ${formData.applicantName.middleName} ${formData.applicantName.lastName}`.trim()}
             onChange={(e) => {
               const [firstName = '', middleName = '', lastName = ''] =
@@ -153,6 +154,7 @@ export const ApplicationForm = ({
             type='email'
             id={`email-${formId}`}
             name='applicantEmail'
+            placeholder={tFormApplication('placeholders.email')}
             value={formData.applicantEmail}
             onChange={handleChange}
             className='inputText'
@@ -179,6 +181,7 @@ export const ApplicationForm = ({
             type='text'
             id={`department-${formId}`}
             name='departmentId'
+            placeholder={tFormApplication('placeholders.faculty')}
             value={departmentName}
             className='inputText'
             readOnly
@@ -204,6 +207,7 @@ export const ApplicationForm = ({
         <textarea
           name='problemDescription'
           id={`description-${formId}`}
+          placeholder={tFormApplication('placeholders.description')}
           value={formData.problemDescription}
           onChange={handleChange}
           className={`${styles.textArea} ${golos.variable}`}

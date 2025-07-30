@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
-import { FocusTrap } from './FocusTrap/FocusTrap'
+import { useFocusTrap } from './useFocusTrap/useFocusTrap'
 import { ApplicationForm } from './ApplicationForm/ApplicationForm'
 import ArrowTopIcon from '@/assets/image/icons/align-arrow-up-line.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
@@ -30,6 +30,23 @@ interface Application {
   assignedEmployeeIds: string[]
 }
 
+const emptyApplication: Application = {
+  id: '',
+  applicantName: {
+    firstName: '',
+    middleName: '',
+    lastName: '',
+  },
+  applicantEmail: '',
+  receivedAt: [],
+  completedAt: new Date().toISOString(),
+  problemDescription: '',
+  problemPhoto: '',
+  status: 'IN_PROGRESS',
+  departmentId: '',
+  assignedEmployeeIds: [],
+}
+
 const api = process.env.NEXT_PUBLIC_API_URL
 
 export function ApplicationsPage() {
@@ -40,10 +57,13 @@ export function ApplicationsPage() {
 
   const [deletePanel, showDeletePanel] = useState(false)
   const [deleteId, setDeleteId] = useState<string | null>(null)
-  const deletePanelRef = FocusTrap(deletePanel)
+  const deletePanelRef = useFocusTrap(deletePanel)
 
   const [editingApp, setEditingApp] = useState<Application | null>(null)
-  const editPanelRef = FocusTrap(Boolean(editingApp))
+  const editPanelRef = useFocusTrap(Boolean(editingApp))
+
+  const [filterPanel, showFilterPanel] = useState(false)
+  const filterPanelRef = useFocusTrap(filterPanel)
 
   const tApplications = useTranslations('admin/applications')
   const locale = useLocale()
@@ -185,7 +205,7 @@ export function ApplicationsPage() {
             )}
           </div>
 
-          <button className='mainBtn'>
+          <button className='mainBtn' onClick={() => showFilterPanel(true)}>
             <FilterIcon />
 
             {tApplications('header.filter')}
@@ -337,6 +357,35 @@ export function ApplicationsPage() {
               onClick={() => editingApp && handleUpdateApplication(editingApp)}
             >
               {tApplications('editPanel.save')}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {filterPanel && (
+        <div className={styles.editPanelContainer} ref={filterPanelRef}>
+          <div className={styles.editPanel}>
+            <div className={styles.header}>
+              <h1 className={styles.heading}>
+                {tApplications('filterPanel.heading')}
+              </h1>
+              <button
+                type='button'
+                className='closeBtn'
+                onClick={() => showFilterPanel(false)}
+              >
+                <CloseIcon />
+              </button>
+            </div>
+
+            <ApplicationForm
+              initialData={emptyApplication}
+              isDisabled={false}
+              formId='filter-form'
+            />
+
+            <button className={`mainBtn ${styles.centerText}`} type='button'>
+              {tApplications('filterPanel.apply')}
             </button>
           </div>
         </div>
