@@ -189,6 +189,88 @@ export function ApplicationsPage() {
     }
   }
 
+  const handleApplyFilter = async () => {
+    const form = document.querySelector('.' + styles.editPanel + ' form')
+    if (!form) return
+
+    const fullName = (
+      form.querySelector('[name="applicantName"]') as HTMLInputElement
+    )?.value
+      .trim()
+      .toLowerCase()
+    const [firstName = '', middleName = '', lastName = ''] = fullName.split(' ')
+
+    const email = (
+      form.querySelector('[name="applicantEmail"]') as HTMLInputElement
+    )?.value
+      .trim()
+      .toLowerCase()
+
+    const description = (
+      form.querySelector('[name="problemDescription"]') as HTMLTextAreaElement
+    )?.value
+      .trim()
+      .toLowerCase()
+
+    const departmentText = (
+      form.querySelector(
+        'input[type="text"][placeholder*="faculty"]',
+      ) as HTMLInputElement
+    )?.value
+      .trim()
+      .toLowerCase()
+
+    // 🔁 Получаем список факультетов с API
+    let departments: { id: string; name: Record<string, string> }[] = []
+
+    try {
+      const res = await fetch(`${api}department/all`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ pageNumber: 0, pageSize: 100 }),
+      })
+
+      if (!res.ok) throw new Error('Не удалось получить список факультетов')
+      const data = await res.json()
+      departments = data.content
+    } catch (error) {
+      console.error('Ошибка получения факультетов:', error)
+    }
+
+    const locale = document.documentElement.lang || 'en'
+
+    const matchingDepartment = departments.find((dep) =>
+      dep.name[locale]?.toLowerCase().includes(departmentText),
+    )
+
+    const matchingDepartmentId = matchingDepartment?.id || null
+
+    const filtered = applications.filter((app) => {
+      const matchesName =
+        app.applicantName.firstName.toLowerCase().includes(firstName) &&
+        app.applicantName.middleName.toLowerCase().includes(middleName) &&
+        app.applicantName.lastName.toLowerCase().includes(lastName)
+
+      const matchesEmail = app.applicantEmail.toLowerCase().includes(email)
+      const matchesDescription = app.problemDescription
+        .toLowerCase()
+        .includes(description)
+
+      const matchesDepartment = matchingDepartmentId
+        ? app.departmentId === matchingDepartmentId
+        : true
+
+      return (
+        matchesName && matchesEmail && matchesDescription && matchesDepartment
+      )
+    })
+
+    setApplications(filtered)
+    showFilterPanel(false)
+  }
+
   return (
     <section className={styles.applicationSection}>
       <div className={styles.headingContainer}>
@@ -404,7 +486,11 @@ export function ApplicationsPage() {
               formId='filter-form'
             />
 
-            <button className={`mainBtn ${styles.centerText}`} type='button'>
+            <button
+              className={`mainBtn ${styles.centerText}`}
+              type='button'
+              onClick={handleApplyFilter}
+            >
               {tApplications('filterPanel.apply')}
             </button>
           </div>
