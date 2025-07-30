@@ -3,7 +3,7 @@
 import ArrowDown from '@/assets/image/icons/arrow-down.svg'
 import ArrowUp from '@/assets/image/icons/arrow-up.svg'
 import ErrorIcon from '@/assets/image/icons/bigger-error.svg'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './DropDownInput.module.scss'
 
 interface Option {
@@ -35,6 +35,8 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
   const [inputValue, setInputValue] = useState('')
   const [filteredOptions, setFilteredOptions] = useState<Option[]>([])
   const [isExpanded, setIsExpanded] = useState(false)
+  const [isMouseDown, setIsMouseDown] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!isExpanded) {
@@ -62,6 +64,25 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
     onValidate?.(isValid)
   }, [inputValue, options, onValidate])
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsExpanded(false)
+        setIsMouseDown(false)
+      }
+    }
+
+    if (isExpanded) {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside)
+      }
+    }
+  }, [isExpanded])
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value
     setInputValue(val)
@@ -78,6 +99,7 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
     setInputValue(option.label)
     onSelect(option.value)
     setIsExpanded(false)
+    setIsMouseDown(false)
   }
 
   const toggleExpanded = () => {
@@ -87,14 +109,23 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
     setIsExpanded((prev) => !prev)
   }
 
-  const handleInputBlur = () => {
+  const handleInputBlur = (e: React.FocusEvent) => {
+    const relatedTarget = e.relatedTarget as HTMLElement
+    if (containerRef.current?.contains(relatedTarget)) {
+      return
+    }
+
+    if (isMouseDown) {
+      return
+    }
+
     setTimeout(() => {
       setIsExpanded(false)
     }, 150)
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={containerRef}>
       <div className={styles.inputContainer}>
         <input
           type='text'
@@ -115,10 +146,14 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
 
         <div
           className={styles.iconWrapper}
+          onMouseDown={() => setIsMouseDown(true)}
+          onMouseUp={() => setIsMouseDown(false)}
+          onMouseLeave={() => setIsMouseDown(false)}
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
             toggleExpanded()
+            setIsMouseDown(false)
           }}
         >
           {isExpanded ? <ArrowUp /> : <ArrowDown />}
@@ -126,7 +161,12 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
       </div>
 
       {isExpanded && filteredOptions.length > 0 && (
-        <ul className={styles.list}>
+        <ul
+          className={styles.list}
+          onMouseDown={() => setIsMouseDown(true)}
+          onMouseUp={() => setIsMouseDown(false)}
+          onMouseLeave={() => setIsMouseDown(false)}
+        >
           {filteredOptions.slice(0, 20).map((option) => {
             const regex = new RegExp(`(${inputValue})`, 'ig')
             const parts = option.label.split(regex)
@@ -135,10 +175,14 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
               <li
                 className={styles.listItem}
                 key={option.value}
+                onMouseDown={() => setIsMouseDown(true)}
+                onMouseUp={() => setIsMouseDown(false)}
+                onMouseLeave={() => setIsMouseDown(false)}
                 onClick={(e) => {
                   e.preventDefault()
                   e.stopPropagation()
                   handleOptionClick(option)
+                  setIsMouseDown(false)
                 }}
               >
                 {parts.map((part, index) =>
