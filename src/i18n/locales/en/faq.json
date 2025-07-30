@@ -1,0 +1,25 @@
+{
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "title": "What services do you offer?",
+        "content": "The center is located in a symbolic place — the Red Building of the university, which is itself a part of Ukraine's history and cultural heritage. However, behind the walls of this classical architectural ensemble, modern life has thrived and continues to thrive..."
+      },
+      {
+        "title": "How can I contact you?",
+        "content": "Answer to the second question."
+      },
+      {
+        "title": "How secure is my data?",
+        "content": "Answer to the third question."
+      },
+      {
+        "title": "How can I contact you?",
+        "content": "Answer to the second question."
+      },
+      {
+        "title": "How secure is my data?",
+        "content": "Answer to the third question."
+      }
+    ]
+}
