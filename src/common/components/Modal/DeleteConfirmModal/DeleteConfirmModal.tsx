@@ -1,4 +1,3 @@
-import React from 'react'
 import Modal from '../Modal'
 import ModalActions from '../ModalActions/ModalActions'
 import ModalButton from '../ModalButton/ModalButton'
@@ -22,7 +21,6 @@ const DeleteConfirmModal = ({
   title = 'Видалити елемент',
   message = 'Ви впевнені, що хочете видалити цей елемент? Цю дію неможливо скасувати.',
   confirmText = 'Так, видалити спеціальність',
-  cancelText = 'Скасувати',
   specialities = [],
 }: DeleteConfirmModalProps) => {
   return (

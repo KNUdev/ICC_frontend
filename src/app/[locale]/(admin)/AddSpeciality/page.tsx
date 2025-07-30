@@ -1,14 +1,14 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
-import InputText from '@/common/components/Input/InputText/InputText.module'
-import Select from '@/common/components/Input/Select/Select'
 import CloseButton from '@/common/components/Input/CloseButton/CloseButton'
-import SearchInput from '@/common/components/Input/SearchInput/SearchInput'
+import InputText from '@/common/components/Input/InputText/InputText.module'
 import ScrollUp from '@/common/components/Input/ScrollUp/ScrollUp'
-import EditModal from '@/common/components/Modal/EditModal/EditModal'
+import SearchInput from '@/common/components/Input/SearchInput/SearchInput'
+import Select from '@/common/components/Input/Select/Select'
 import DeleteConfirmModal from '@/common/components/Modal/DeleteConfirmModal/DeleteConfirmModal'
+import EditModal from '@/common/components/Modal/EditModal/EditModal'
 import SuccessMessage from '@/common/components/SuccessMessage/SuccessMessage'
+import { useEffect, useRef, useState } from 'react'
 import styles from './page.module.scss'
 
 const EditIcon = () => (
@@ -201,10 +201,7 @@ const AddSpecialityPage = () => {
     setDeleteTarget(null)
   }
 
-  const handleEditSpeciality = (
-    specialityIndex: number,
-    sectorIndex: number,
-  ) => {
+  const handleEditSpeciality = (specialityIndex: number) => {
     const speciality = createdSpecialities[specialityIndex]
     setEditingSpeciality({
       ...speciality,
@@ -244,8 +241,8 @@ const AddSpecialityPage = () => {
         <p className={styles.subtitle}>
           На цій сторінці ви можете додати нового працівника до системи,
           вказавши його основні дані, контактну інформацію, посаду та зв
-          потребою — завантажити фотографію. Усі обов'язкові поля позначені, а
-          введені дані можна редагувати пізніше.
+          потребою — завантажити фотографію. Усі обов&aposязкові поля позначені,
+          а введені дані можна редагувати пізніше.
         </p>
       </div>
 
@@ -362,12 +359,7 @@ const AddSpecialityPage = () => {
                     <div className={styles.tableActions}>
                       <button
                         className={styles.editButton}
-                        onClick={() =>
-                          handleEditSpeciality(
-                            item.originalIndex,
-                            item.sectorIndex,
-                          )
-                        }
+                        onClick={() => handleEditSpeciality(item.originalIndex)}
                       >
                         <EditIcon />
                         Редагувати

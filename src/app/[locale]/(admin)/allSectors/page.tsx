@@ -1,16 +1,16 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
-import InputText from '@/common/components/Input/InputText/InputText.module'
-import Select from '@/common/components/Input/Select/Select'
 import CloseButton from '@/common/components/Input/CloseButton/CloseButton'
-import SearchInput from '@/common/components/Input/SearchInput/SearchInput'
+import InputText from '@/common/components/Input/InputText/InputText.module'
 import ScrollUp from '@/common/components/Input/ScrollUp/ScrollUp'
+import SearchInput from '@/common/components/Input/SearchInput/SearchInput'
+import Select from '@/common/components/Input/Select/Select'
+import DeleteConfirmModal from '@/common/components/Modal/DeleteConfirmModal/DeleteConfirmModal'
 import Modal from '@/common/components/Modal/Modal'
 import ModalActions from '@/common/components/Modal/ModalActions/ModalActions'
 import ModalButton from '@/common/components/Modal/ModalButton/ModalButton'
-import DeleteConfirmModal from '@/common/components/Modal/DeleteConfirmModal/DeleteConfirmModal'
 import SuccessMessage from '@/common/components/SuccessMessage/SuccessMessage'
+import { useEffect, useRef, useState } from 'react'
 import styles from './page.module.scss'
 
 const EditIcon = () => (
@@ -230,7 +230,7 @@ const AllSectorsPage = () => {
         <p className={styles.subtitle}>
           На цій сторінці ви можете додати новий сектор до системи, вказавши
           його основні дані, спеціальності та за потребою — редагувати існуючі.
-          Усі обов'язкові поля позначені, а введені дані можна редагувати
+          Усі обов&aposязкові поля позначені, а введені дані можна редагувати
           пізніше.
         </p>
       </div>
