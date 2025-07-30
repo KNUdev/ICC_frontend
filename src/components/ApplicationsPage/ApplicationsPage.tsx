@@ -67,6 +67,10 @@ export function ApplicationsPage() {
 
   const [editingAppData, setEditingAppData] = useState<Application | null>(null)
 
+  const [originalApplications, setOriginalApplications] = useState<
+    Application[]
+  >([])
+
   const tApplications = useTranslations('admin/applications')
   const locale = useLocale()
 
@@ -92,6 +96,7 @@ export function ApplicationsPage() {
         console.log('Success:', result)
 
         setApplications(result.content)
+        setOriginalApplications(result.content)
       } catch (error) {
         console.error('Error:', error)
       }
@@ -111,6 +116,27 @@ export function ApplicationsPage() {
       document.body.style.overflow = previousOverflow
     }
   }, [deletePanel, editingApp])
+
+  useEffect(() => {
+    const query = searchValue.toLowerCase()
+
+    const filtered = originalApplications.filter((app) => {
+      const fullName =
+        `${app.applicantName.firstName} ${app.applicantName.middleName} ${app.applicantName.lastName}`.toLowerCase()
+      const email = app.applicantEmail.toLowerCase()
+      const description = app.problemDescription.toLowerCase()
+      const departmentId = app.departmentId.toLowerCase()
+
+      return (
+        fullName.includes(query) ||
+        email.includes(query) ||
+        description.includes(query) ||
+        departmentId.includes(query)
+      )
+    })
+
+    setApplications(filtered)
+  }, [searchValue, originalApplications])
 
   function formatDate(arr: number[]): string {
     const [year, month, day] = arr
@@ -220,7 +246,6 @@ export function ApplicationsPage() {
       .trim()
       .toLowerCase()
 
-    // 🔁 Получаем список факультетов с API
     let departments: { id: string; name: Record<string, string> }[] = []
 
     try {
@@ -232,11 +257,11 @@ export function ApplicationsPage() {
         body: JSON.stringify({ pageNumber: 0, pageSize: 100 }),
       })
 
-      if (!res.ok) throw new Error('Не удалось получить список факультетов')
+      if (!res.ok) throw new Error('Unable to retrieve list of faculties')
       const data = await res.json()
       departments = data.content
     } catch (error) {
-      console.error('Ошибка получения факультетов:', error)
+      console.error('Faculty retrieval error:', error)
     }
 
     const locale = document.documentElement.lang || 'en'
