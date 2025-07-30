@@ -1,10 +1,10 @@
 'use client'
 
-import styles from './DropDownInput.module.scss'
 import ArrowDown from '@/assets/image/icons/arrow-down.svg'
 import ArrowUp from '@/assets/image/icons/arrow-up.svg'
 import ErrorIcon from '@/assets/image/icons/bigger-error.svg'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import styles from './DropDownInput.module.scss'
 
 interface Option {
   value: string
@@ -81,7 +81,16 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
   }
 
   const toggleExpanded = () => {
+    if (!isExpanded) {
+      onOpen(inputValue)
+    }
     setIsExpanded((prev) => !prev)
+  }
+
+  const handleInputBlur = () => {
+    setTimeout(() => {
+      setIsExpanded(false)
+    }, 150)
   }
 
   return (
@@ -97,14 +106,21 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
               setIsExpanded(true)
             }
           }}
-          onBlur={() => setTimeout(() => setIsExpanded(false), 100)}
+          onBlur={handleInputBlur}
           placeholder={placeholder}
           className={`${styles.searchInput} ${
             hasError ? styles.searchInputError : ''
           }`}
         />
 
-        <div className={styles.iconWrapper} onMouseDown={toggleExpanded}>
+        <div
+          className={styles.iconWrapper}
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            toggleExpanded()
+          }}
+        >
           {isExpanded ? <ArrowUp /> : <ArrowDown />}
         </div>
       </div>
@@ -119,7 +135,11 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
               <li
                 className={styles.listItem}
                 key={option.value}
-                onMouseDown={() => handleOptionClick(option)}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  handleOptionClick(option)
+                }}
               >
                 {parts.map((part, index) =>
                   part.toLowerCase() === inputValue.toLowerCase() ? (

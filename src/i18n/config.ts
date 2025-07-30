@@ -16,5 +16,6 @@ export const NAMESPACES = [
   'form/text',
   'form/application',
   'form/points',
+  'form/success',
   'faq',
 ]

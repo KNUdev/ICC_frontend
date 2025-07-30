@@ -23,12 +23,25 @@
 
   "required": "This field is required",
 
+  "validation": {
+    "fullname": "Please enter your full name",
+    "email": "Please enter a valid email",
+    "faculty": "Please select your faculty",
+    "description": "Please describe the problem",
+    "photo": "Please attach a photo of the problem"
+  },
+
   "loading": "Loading...",
 
   "button": "Leave a request",
 
-  "validation": "Error: Please select your faculty",
-
   "error": "Something went wrong... ",
-  "success": "The form has been successfully submitted!"
+  "success": "The form has been successfully submitted!",
+
+  "cooldown": {
+    "title": "Form already submitted",
+    "message": "You have already submitted a form less than 5 minutes ago. Please wait {minutes} min {seconds} sec before next submission.",
+    "confirmButton": "Submit anyway",
+    "cancelButton": "Wait"
+  }
 }

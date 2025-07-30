@@ -3,11 +3,14 @@
 import type { Department } from '@/app/[locale]/(public)/(home)/components/Form/form.interfaces'
 import ArrowRight from '@/assets/image/icons/arrow-right.svg'
 import UploadFile from '@/assets/image/icons/file.svg'
+import { FieldError } from '@/common/components/FieldError/FieldError'
+import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
+import { useRouter } from '@/i18n/navigation'
 import { API } from '@/shared/config/api.config'
 import { useLocale, useTranslations } from 'next-intl'
 import Form from 'next/form'
 import { useCallback, useMemo, useRef, useState } from 'react'
-import DropDownInput from '../../../../../../../common/components/Input/DropDownInput/DropDownInput'
+import { CooldownModal } from './CooldownModal/CooldownModal'
 import styles from './FormApplication.module.scss'
 
 interface FormApplicationProps {
@@ -26,9 +29,21 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
     string | null
   >(null)
   const [dropdownError, setDropdownError] = useState<string | null>(null)
+  const [showCooldownModal, setShowCooldownModal] = useState(false)
+  const [cooldownRemainingTime, setCooldownRemainingTime] = useState(0)
+  const [formErrors, setFormErrors] = useState<{
+    fullname?: string
+    email?: string
+    faculty?: string
+    description?: string
+    photo?: string
+  }>({})
 
   const tFormApplication = useTranslations('form/application')
   const locale = useLocale()
+  const router = useRouter()
+
+  const COOLDOWN_DURATION = 5 * 60 * 1000
 
   const facultyOptions = useMemo(
     () =>
@@ -41,6 +56,66 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
 
   const showSubmissionMessage = useCallback(() => {
     setTimeout(() => setShowSubmission(null), 3000)
+  }, [])
+
+  const checkCooldown = useCallback(() => {
+    const lastSubmissionTime = localStorage.getItem('lastFormSubmission')
+    if (!lastSubmissionTime) return { canSubmit: true, remainingTime: 0 }
+
+    const timeSinceLastSubmission = Date.now() - parseInt(lastSubmissionTime)
+    const remainingTime = COOLDOWN_DURATION - timeSinceLastSubmission
+
+    if (remainingTime > 0) {
+      return { canSubmit: false, remainingTime }
+    }
+
+    return { canSubmit: true, remainingTime: 0 }
+  }, [COOLDOWN_DURATION])
+
+  const setLastSubmissionTime = useCallback(() => {
+    localStorage.setItem('lastFormSubmission', Date.now().toString())
+  }, [])
+
+  const validateForm = useCallback(
+    (form: HTMLFormElement) => {
+      const errors: typeof formErrors = {}
+
+      const fullname = form.applicantName.value.trim()
+      if (!fullname) {
+        errors.fullname = tFormApplication('validation.fullname')
+      }
+
+      const email = form.applicantEmail.value.trim()
+      if (!email) {
+        errors.email = tFormApplication('validation.email')
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errors.email = tFormApplication('validation.email')
+      }
+
+      if (!selectedFacultyId) {
+        errors.faculty = tFormApplication('validation.faculty')
+      }
+
+      const description = form.problemDescription.value.trim()
+      if (!description) {
+        errors.description = tFormApplication('validation.description')
+      }
+
+      if (!file) {
+        errors.photo = tFormApplication('validation.photo')
+      }
+
+      return errors
+    },
+    [tFormApplication, selectedFacultyId, file],
+  )
+
+  const clearFieldError = useCallback((fieldName: keyof typeof formErrors) => {
+    setFormErrors((prev) => {
+      const newErrors = { ...prev }
+      delete newErrors[fieldName]
+      return newErrors
+    })
   }, [])
 
   const fetchDepartments = useCallback(async () => {
@@ -111,12 +186,12 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
         })
 
         if (response.ok) {
-          setShowSubmission(true)
+          setLastSubmissionTime()
           form.reset()
           setFile(null)
           setSelectedFacultyId(null)
-          setShowSubmission(null)
           setSubmissionErrorMessage(null)
+          router.push('/success')
         } else {
           const errorText = await response.text()
           setSubmissionErrorMessage(errorText || 'Unknown error')
@@ -132,21 +207,47 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
         setIsSubmitting(false)
       }
     },
-    [selectedFacultyId, file, parseFullName, showSubmissionMessage],
+    [
+      selectedFacultyId,
+      file,
+      parseFullName,
+      showSubmissionMessage,
+      router,
+      setLastSubmissionTime,
+    ],
   )
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
 
-      if (isSubmitting || !selectedFacultyId) {
+      if (isSubmitting) {
+        return
+      }
+
+      const form = e.currentTarget
+
+      setFormErrors({})
+
+      const errors = validateForm(form)
+
+      if (Object.keys(errors).length > 0) {
+        setFormErrors(errors)
+        return
+      }
+
+      const { canSubmit, remainingTime } = checkCooldown()
+
+      if (!canSubmit) {
+        setCooldownRemainingTime(remainingTime)
+        setShowCooldownModal(true)
         return
       }
 
       setIsSubmitting(true)
-      fetchForm(e.currentTarget)
+      fetchForm(form)
     },
-    [isSubmitting, selectedFacultyId, fetchForm],
+    [isSubmitting, validateForm, checkCooldown, fetchForm],
   )
 
   const fileInput = useRef<HTMLInputElement>(null)
@@ -154,8 +255,9 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setFile(event.target.files?.[0] || null)
+      clearFieldError('photo')
     },
-    [],
+    [clearFieldError],
   )
 
   const handleFilePreview = useCallback(
@@ -174,6 +276,19 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
     e.preventDefault()
     e.stopPropagation()
     setFile(null)
+  }, [])
+
+  const handleCooldownConfirm = useCallback(() => {
+    setShowCooldownModal(false)
+    setIsSubmitting(true)
+    const form = document.querySelector('form') as HTMLFormElement
+    if (form) {
+      fetchForm(form)
+    }
+  }, [fetchForm])
+
+  const handleCooldownCancel = useCallback(() => {
+    setShowCooldownModal(false)
   }, [])
 
   return (
@@ -204,9 +319,11 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
             name='applicantName'
             placeholder={tFormApplication(`placeholders.fullname`)}
             className='inputText'
-            required
+            onChange={() => clearFieldError('fullname')}
           />
         </div>
+
+        <FieldError error={formErrors.fullname} />
       </div>
 
       <div className={`${styles.fieldWrapper} ${styles.small}`}>
@@ -227,9 +344,11 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
             name='applicantEmail'
             placeholder={tFormApplication(`placeholders.email`)}
             className='inputText'
-            required
+            onChange={() => clearFieldError('email')}
           />
         </div>
+
+        <FieldError error={formErrors.email} />
       </div>
 
       <div className={`${styles.fieldWrapper} ${styles.small}`}>
@@ -253,11 +372,16 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
               fetchDepartments()
             }
           }}
-          onSelect={setSelectedFacultyId}
+          onSelect={(value) => {
+            setSelectedFacultyId(value)
+            clearFieldError('faculty')
+          }}
           placeholder={tFormApplication('placeholders.faculty')}
-          hasError={!!dropdownError}
-          errorMessage={dropdownError}
+          hasError={!!dropdownError || !!formErrors.faculty}
+          errorMessage={dropdownError || formErrors.faculty}
         />
+
+        <FieldError error={formErrors.faculty} />
       </div>
 
       <div className={`${styles.fieldWrapper} ${styles.big}`}>
@@ -278,8 +402,10 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
           id={`description-${formId}`}
           name='problemDescription'
           className={`${styles.textArea} `}
-          required
+          onChange={() => clearFieldError('description')}
         />
+
+        <FieldError error={formErrors.description} />
       </div>
 
       <div className={`${styles.fieldWrapper} ${styles.big}`}>
@@ -307,7 +433,6 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
             ref={fileInput}
             onChange={handleFileChange}
             disabled={!!file}
-            required
           />
           <div className={styles.uploadContent}>
             <UploadFile />
@@ -344,6 +469,8 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
             </div>
           )}
         </label>
+
+        <FieldError error={formErrors.photo} />
       </div>
 
       <button type='submit' className='mainBtn' disabled={isSubmitting}>
@@ -364,11 +491,12 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
         </div>
       )}
 
-      {showSubmission === true && (
-        <div className={`${styles.formMessage} ${styles.success}`}>
-          <p>{tFormApplication('success')}</p>
-        </div>
-      )}
+      <CooldownModal
+        isOpen={showCooldownModal}
+        remainingTime={cooldownRemainingTime}
+        onConfirm={handleCooldownConfirm}
+        onCancel={handleCooldownCancel}
+      />
     </Form>
   )
 }
