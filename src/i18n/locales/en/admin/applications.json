@@ -10,6 +10,8 @@
     "delete": "Delete application"
   },
 
+  "problemPhotoName": "problem photo",
+
   "dateParas": {
     "create": "Created",
     "update": "Updated"

@@ -6,52 +6,13 @@ $text-nat-0: #272727;
 $text-red-400: #ff525e;
 $text-nat-500: #6d6d6d;
 
-.editPanelContainer {
-  position: fixed;
-  top: 0;
-  left: 0;
+.formPanel {
   width: 100%;
-  height: 100%;
-  backdrop-filter: blur(5px);
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.editPanel {
-  display: flex;
-  width: 90%;
-  max-width: 95rem;
-  padding: 2.8125rem;
   flex-direction: column;
-  justify-content: center;
   align-items: flex-start;
-  gap: 1.5625rem;
-
-  border: 1px solid $primary-border-color;
-  background: $container-bg-color;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-self: stretch;
-}
-
-.heading {
-  color: $heading-text-color;
-  text-align: center;
-
-  font-family: Inter;
-  font-size: 1.875rem;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
-  letter-spacing: 0.00938rem;
-  text-transform: uppercase;
+  gap: 2.1875rem;
+  flex: 1;
 }
 
 .smallFieldWrapper {
