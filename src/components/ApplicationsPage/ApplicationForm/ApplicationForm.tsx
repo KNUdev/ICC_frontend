@@ -46,6 +46,8 @@ export const ApplicationForm = ({
   isDropDownInput,
   onChange,
 }: ApplicationFormProps) => {
+  const safeFormId = formId ?? 'application-form'
+
   const [formData, setFormData] = useState(initialData)
   const [departmentName, setDepartmentName] = useState('')
 
@@ -171,8 +173,12 @@ export const ApplicationForm = ({
     }
   }
 
+  const facultyErrorId = dropdownError
+    ? `faculty-error-${safeFormId}`
+    : undefined
+
   return (
-    <form className={styles.formPanel}>
+    <form className={styles.formPanel} aria-describedby={facultyErrorId}>
       <div className={styles.smallFieldWrapper}>
         <label className={styles.label} htmlFor={`fullname-${formId}`}>
           <p className={styles.labelText}>
@@ -181,6 +187,7 @@ export const ApplicationForm = ({
 
           <span
             className={styles.labelSpan}
+            aria-hidden='true'
             title={tFormApplication('required')}
           >
             *
@@ -204,6 +211,8 @@ export const ApplicationForm = ({
             }}
             className='inputText'
             disabled={isDisabled}
+            autoComplete='name'
+            inputMode='text'
           />
         </div>
       </div>
@@ -214,6 +223,7 @@ export const ApplicationForm = ({
 
           <span
             className={styles.labelSpan}
+            aria-hidden='true'
             title={tFormApplication('required')}
           >
             *
@@ -230,6 +240,8 @@ export const ApplicationForm = ({
             onChange={handleChange}
             className='inputText'
             disabled={isDisabled}
+            autoComplete='email'
+            inputMode='email'
           />
         </div>
       </div>
@@ -241,6 +253,7 @@ export const ApplicationForm = ({
           </p>
           <span
             className={styles.labelSpan}
+            aria-hidden='true'
             title={tFormApplication('required')}
           >
             *
@@ -287,6 +300,7 @@ export const ApplicationForm = ({
 
           <span
             className={styles.labelSpan}
+            aria-hidden='true'
             title={tFormApplication('required')}
           >
             *
