@@ -9,18 +9,14 @@ export function FormLines() {
 
   return (
     <section className={styles.sectionLines}>
-      <div>
-        <FormLinesLeftWrapper />
-      </div>
+      <FormLinesLeftWrapper />
 
       <div className={styles.formContainer}>
         <h1 className={styles.formHeading}>{tFormText('linesHeading')}</h1>
         <FormApplication formId='lines' />
       </div>
 
-      <div>
-        <FormLinesRightWrapper />
-      </div>
+      <FormLinesRightWrapper />
     </section>
   )
 }

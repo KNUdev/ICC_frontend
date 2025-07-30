@@ -6,7 +6,7 @@ import UploadFile from '@/assets/image/icons/file.svg'
 import { API } from '@/shared/config/api.config'
 import { useLocale, useTranslations } from 'next-intl'
 import Form from 'next/form'
-import { useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import DropDownInput from '../../../../../../../common/components/Input/DropDownInput/DropDownInput'
 import styles from './FormApplication.module.scss'
 
@@ -15,28 +15,35 @@ interface FormApplicationProps {
 }
 
 export function FormApplication({ formId = 'default' }: FormApplicationProps) {
-  const [isFacultyValid, setIsFacultyValid] = useState(false)
   const [selectedFacultyId, setSelectedFacultyId] = useState<string | null>(
     null,
   )
-  const [showError, setShowError] = useState(false)
-
   const [departments, setDepartments] = useState<Department[]>([])
-
   const [file, setFile] = useState<File | null>(null)
-
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [showSubmissionSuccess, setShowSubmissionSuccess] = useState(false)
-  const [showSubmissionError, setShowSubmissionError] = useState(false)
+  const [showSubmission, setShowSubmission] = useState<boolean | null>(null)
   const [submissionErrorMessage, setSubmissionErrorMessage] = useState<
     string | null
   >(null)
-
   const [dropdownError, setDropdownError] = useState<string | null>(null)
 
   const tFormApplication = useTranslations('form/application')
+  const locale = useLocale()
 
-  const fetchDepartments = async () => {
+  const facultyOptions = useMemo(
+    () =>
+      departments.map((faculty) => ({
+        value: faculty.id,
+        label: faculty.name[locale as 'en' | 'uk'],
+      })),
+    [departments, locale],
+  )
+
+  const showSubmissionMessage = useCallback(() => {
+    setTimeout(() => setShowSubmission(null), 3000)
+  }, [])
+
+  const fetchDepartments = useCallback(async () => {
     try {
       const response = await fetch(`${API}department/all`, {
         method: 'POST',
@@ -62,128 +69,112 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
         setDropdownError(tFormApplication('error'))
       }
     }
-  }
+  }, [tFormApplication])
 
-  const locale = useLocale()
-
-  const facultyOptions = departments.map((faculty) => ({
-    value: faculty.id,
-    label: faculty.name[locale as 'en' | 'uk'],
-  }))
-
-  const fetchForm = async (form: HTMLFormElement) => {
-    const formData = new FormData(form)
-
-    if (selectedFacultyId) {
-      formData.append('departmentId', selectedFacultyId)
+  const parseFullName = useCallback((fullName: string) => {
+    const parts = fullName.trim().split(/\s+/)
+    return {
+      lastName: parts[0] || '',
+      firstName: parts[1] || '',
+      middleName: parts.slice(2).join(' ') || '',
     }
+  }, [])
 
-    formData.delete('applicantName')
+  const fetchForm = useCallback(
+    async (form: HTMLFormElement) => {
+      const formData = new FormData(form)
 
-    const fullName = form.applicantName.value.trim().split(/\s+/)
-    let lastName = '',
-      firstName = '',
-      middleName = ''
-    if (fullName.length === 1) {
-      lastName = fullName[0]
-    } else if (fullName.length === 2) {
-      lastName = fullName[0]
-      firstName = fullName[1]
-    } else if (fullName.length >= 3) {
-      lastName = fullName[0]
-      firstName = fullName[1]
-      middleName = fullName.slice(2).join(' ') // Handle cases with multiple middle names
-    }
-    formData.append('applicantName.firstName', firstName)
-    formData.append('applicantName.lastName', lastName)
-    formData.append('applicantName.middleName', middleName)
-
-    if (file) {
-      formData.append('problemPhotoName', file.name)
-      formData.set('problemPhoto', file)
-    }
-
-    formData.append('status', 'IN_QUEUE')
-
-    try {
-      const response = await fetch(`${API}application/create`, {
-        method: 'POST',
-        body: formData,
-      })
-
-      if (response.ok) {
-        setShowSubmissionSuccess(true)
-        setShowSubmissionError(false)
-        clearForm(form)
-
-        setTimeout(() => {
-          setShowSubmissionSuccess(false)
-        }, 3000)
-      } else {
-        const errorText = await response.text()
-        setSubmissionErrorMessage(errorText || 'Unknown error')
-
-        setShowSubmissionError(true)
-        setShowSubmissionSuccess(false)
-
-        setTimeout(() => {
-          setShowSubmissionError(false)
-        }, 3000)
+      if (selectedFacultyId) {
+        formData.append('departmentId', selectedFacultyId)
       }
-    } catch (err) {
-      console.error('Error while sending: ', err)
-      setShowSubmissionError(true)
-      setShowSubmissionSuccess(false)
 
-      setTimeout(() => {
-        setShowSubmissionError(false)
-      }, 3000)
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
+      formData.delete('applicantName')
 
-  const handleSelect = () => {
-    setIsFacultyValid(true)
-  }
+      const { lastName, firstName, middleName } = parseFullName(
+        form.applicantName.value,
+      )
+      formData.append('applicantName.firstName', firstName)
+      formData.append('applicantName.lastName', lastName)
+      formData.append('applicantName.middleName', middleName)
 
-  const handleValidate = (isValid: boolean) => {
-    setIsFacultyValid(isValid)
-    if (isValid) {
-      setShowError(false)
-    }
-  }
+      if (file) {
+        formData.append('problemPhotoName', file.name)
+        formData.set('problemPhoto', file)
+      }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+      formData.append('status', 'IN_QUEUE')
+
+      try {
+        const response = await fetch(`${API}application/create`, {
+          method: 'POST',
+          body: formData,
+        })
+
+        if (response.ok) {
+          setShowSubmission(true)
+          form.reset()
+          setFile(null)
+          setSelectedFacultyId(null)
+          setShowSubmission(null)
+          setSubmissionErrorMessage(null)
+        } else {
+          const errorText = await response.text()
+          setSubmissionErrorMessage(errorText || 'Unknown error')
+          setShowSubmission(false)
+        }
+
+        showSubmissionMessage()
+      } catch (err) {
+        console.error('Error while sending: ', err)
+        setShowSubmission(false)
+        showSubmissionMessage()
+      } finally {
+        setIsSubmitting(false)
+      }
+    },
+    [selectedFacultyId, file, parseFullName, showSubmissionMessage],
+  )
+
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+
+      if (isSubmitting || !selectedFacultyId) {
+        return
+      }
+
+      setIsSubmitting(true)
+      fetchForm(e.currentTarget)
+    },
+    [isSubmitting, selectedFacultyId, fetchForm],
+  )
+
+  const fileInput = useRef<HTMLInputElement>(null)
+
+  const handleFileChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFile(event.target.files?.[0] || null)
+    },
+    [],
+  )
+
+  const handleFilePreview = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      if (file) {
+        const fileURL = URL.createObjectURL(file)
+        window.open(fileURL, '_blank')
+      }
+    },
+    [file],
+  )
+
+  const handleFileDelete = useCallback((e: React.MouseEvent) => {
     e.preventDefault()
-
-    if (isSubmitting) return
-
-    if (!isFacultyValid) {
-      setShowError(true)
-      return
-    }
-
-    setIsSubmitting(true)
-
-    fetchForm(e.currentTarget)
-  }
-
-  const clearForm = (form: HTMLFormElement) => {
-    form.reset()
-
+    e.stopPropagation()
     setFile(null)
-    setIsFacultyValid(false)
-    setShowError(false)
-    setSelectedFacultyId(null)
-  }
-
-  const fileInput = useRef(null)
-
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0] || null
-    setFile(selectedFile)
-  }
+  }, [])
 
   return (
     <Form
@@ -193,7 +184,7 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
       aria-label='Leave a request'
       onSubmit={handleSubmit}
     >
-      <div className={styles.smallFieldWrapper}>
+      <div className={`${styles.fieldWrapper} ${styles.small}`}>
         <label className={styles.label} htmlFor={`fullname-${formId}`}>
           <p className={styles.labelText}>
             {tFormApplication(`labels.fullname`)}
@@ -218,7 +209,7 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
         </div>
       </div>
 
-      <div className={styles.smallFieldWrapper}>
+      <div className={`${styles.fieldWrapper} ${styles.small}`}>
         <label className={styles.label} htmlFor={`email-${formId}`}>
           <p className={styles.labelText}>{tFormApplication(`labels.email`)}</p>
           <span
@@ -241,7 +232,7 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
         </div>
       </div>
 
-      <div className={styles.smallFieldWrapper}>
+      <div className={`${styles.fieldWrapper} ${styles.small}`}>
         <label className={styles.label} htmlFor={`faculty-${formId}`}>
           <p className={styles.labelText}>
             {tFormApplication(`labels.faculty`)}
@@ -262,18 +253,14 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
               fetchDepartments()
             }
           }}
-          onSelect={(id: string | null) => {
-            setSelectedFacultyId(id)
-            handleSelect()
-          }}
-          onValidate={handleValidate}
+          onSelect={setSelectedFacultyId}
           placeholder={tFormApplication('placeholders.faculty')}
-          hasError={showError || !!dropdownError}
+          hasError={!!dropdownError}
           errorMessage={dropdownError}
         />
       </div>
 
-      <div className={styles.bigFieldWrapper}>
+      <div className={`${styles.fieldWrapper} ${styles.big}`}>
         <label className={styles.label} htmlFor={`description-${formId}`}>
           <p className={styles.labelText}>
             {tFormApplication(`labels.description`)}
@@ -295,7 +282,7 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
         />
       </div>
 
-      <div className={styles.bigFieldWrapper}>
+      <div className={`${styles.fieldWrapper} ${styles.big}`}>
         <label
           className={styles.label}
           htmlFor={`file-${formId}`}
@@ -318,7 +305,7 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
             accept='image/*'
             aria-labelledby={`fileLabel-${formId}`}
             ref={fileInput}
-            onChange={onChange}
+            onChange={handleFileChange}
             disabled={!!file}
             required
           />
@@ -335,14 +322,8 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
             <div className={styles.fileStatusContainer}>
               <button
                 type='button'
-                className={styles.previewButton}
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-
-                  const fileURL = URL.createObjectURL(file)
-                  window.open(fileURL, '_blank')
-                }}
+                className={styles.fileButton}
+                onClick={handleFilePreview}
               >
                 {tFormApplication('file.preview')}
               </button>
@@ -355,13 +336,8 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
 
               <button
                 type='button'
-                className={styles.deleteButton}
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-
-                  setFile(null)
-                }}
+                className={styles.fileButton}
+                onClick={handleFileDelete}
               >
                 {tFormApplication('file.delete')}
               </button>
@@ -379,8 +355,8 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
         <ArrowRight />
       </button>
 
-      {showSubmissionError && (
-        <div className={styles.formFailure}>
+      {showSubmission === false && (
+        <div className={`${styles.formMessage} ${styles.failure}`}>
           <p className={styles.failureText}>
             {tFormApplication('error')}
             {submissionErrorMessage}
@@ -388,8 +364,8 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
         </div>
       )}
 
-      {showSubmissionSuccess && (
-        <div className={styles.formSuccess}>
+      {showSubmission === true && (
+        <div className={`${styles.formMessage} ${styles.success}`}>
           <p>{tFormApplication('success')}</p>
         </div>
       )}
