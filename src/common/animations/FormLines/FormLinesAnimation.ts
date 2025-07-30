@@ -4,7 +4,6 @@ import {
   type GradientConfig,
   type LineConfig,
 } from '@/shared/hooks/useAnimatedLines'
-import { useReducedMotion } from '@/shared/hooks/useReducedMotion'
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 
 export interface FormLineConfig {
@@ -46,8 +45,6 @@ export function useFormLinesAnimation(
     forceDisable = false,
   } = config
 
-  const { shouldReduceMotion } = useReducedMotion()
-
   const formAnimationsRef = useRef<Animation[]>([])
   const cycleTimeoutRef = useRef<number | null>(null)
   const isFormInitializedRef = useRef(false)
@@ -78,7 +75,7 @@ export function useFormLinesAnimation(
 
     if (paths.length === 0) return
 
-    const shouldDisableAnimation = shouldReduceMotion || forceDisable
+    const shouldDisableAnimation = forceDisable
     if (shouldDisableAnimation) {
       paths.forEach((path) => {
         Object.assign(path.style, baseAnimation.defaultLineStyles)
@@ -88,12 +85,9 @@ export function useFormLinesAnimation(
       return
     }
 
-    const speedMultiplier = shouldReduceMotion ? 0.3 : 1
-    const adaptedMainDuration = mainLineDuration * speedMultiplier
-    const adaptedSideDuration = sideLineDuration * speedMultiplier
-    const simplifiedEasing = shouldReduceMotion
-      ? 'linear'
-      : 'cubic-bezier(0.4, 0.0, 0.2, 1)'
+    const adaptedMainDuration = mainLineDuration
+    const adaptedSideDuration = sideLineDuration
+    const simplifiedEasing = 'cubic-bezier(0.4, 0.0, 0.2, 1)'
 
     requestAnimationFrame(() => {
       const pathData = paths.map((path, index) => {
@@ -131,9 +125,7 @@ export function useFormLinesAnimation(
         )
         formAnimationsRef.current.push(mainAnimation)
 
-        const sideLineDelay = shouldReduceMotion
-          ? adaptedMainDuration / 2
-          : adaptedMainDuration / 2.55
+        const sideLineDelay = adaptedMainDuration / 2.55
 
         setTimeout(() => {
           const sideAnimations = pathData
@@ -163,7 +155,6 @@ export function useFormLinesAnimation(
     lines,
     mainLineDuration,
     sideLineDuration,
-    shouldReduceMotion,
     forceDisable,
     baseAnimation.pathRefs,
     baseAnimation.defaultLineStyles,
@@ -176,22 +167,15 @@ export function useFormLinesAnimation(
       clearTimeout(cycleTimeoutRef.current)
     }
 
-    const shouldDisableAnimation = shouldReduceMotion || forceDisable
+    const shouldDisableAnimation = forceDisable
     if (!shouldDisableAnimation) {
-      const adaptedCycleDuration = shouldReduceMotion
-        ? cycleDuration * 0.3
-        : cycleDuration
+      const adaptedCycleDuration = cycleDuration
 
       cycleTimeoutRef.current = window.setTimeout(() => {
         startFormAnimationCycle()
       }, adaptedCycleDuration)
     }
-  }, [
-    createSynchronizedFormAnimation,
-    cycleDuration,
-    shouldReduceMotion,
-    forceDisable,
-  ])
+  }, [createSynchronizedFormAnimation, cycleDuration, forceDisable])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {

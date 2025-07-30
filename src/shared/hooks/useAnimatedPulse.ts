@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useMemo, useRef } from 'react'
-import { useReducedMotion } from './useReducedMotion'
 
 export interface AnimatedPulseConfig {
   duration?: number
@@ -26,22 +25,11 @@ const defaultConfig: Required<AnimatedPulseConfig> = {
 const createdKeyframes = new Set<string>()
 
 export function useAnimatedPulse(config: AnimatedPulseConfig = {}) {
-  const { shouldReduceMotion } = useReducedMotion()
   const finalConfig = useMemo(() => {
-    const baseConfig = { ...defaultConfig, ...config }
+    return { ...defaultConfig, ...config }
+  }, [config])
 
-    if (shouldReduceMotion) {
-      return {
-        ...baseConfig,
-        duration: baseConfig.duration * 2,
-        easing: 'linear',
-      }
-    }
-
-    return baseConfig
-  }, [config, shouldReduceMotion])
-
-  const shouldDisableAnimation = shouldReduceMotion || finalConfig.forceDisable
+  const shouldDisableAnimation = finalConfig.forceDisable
 
   const styleRef = useRef<HTMLStyleElement | null>(null)
 
@@ -50,10 +38,8 @@ export function useAnimatedPulse(config: AnimatedPulseConfig = {}) {
       `pulse-${finalConfig.colors.from.replace(
         '#',
         '',
-      )}-${finalConfig.colors.to.replace('#', '')}-${
-        shouldDisableAnimation ? 'reduced' : 'normal'
-      }`,
-    [finalConfig.colors.from, finalConfig.colors.to, shouldDisableAnimation],
+      )}-${finalConfig.colors.to.replace('#', '')}-normal`,
+    [finalConfig.colors.from, finalConfig.colors.to],
   )
 
   const pulseStyle = useMemo(() => {

@@ -1,6 +1,5 @@
 'use client'
 import { useCallback, useEffect, useMemo, useRef } from 'react'
-import { useReducedMotion } from './useReducedMotion'
 
 export interface LineConfig {
   d: string
@@ -53,30 +52,18 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
     forceDisable = false,
   } = config
 
-  const { shouldReduceMotion } = useReducedMotion()
   const pathRefs = useRef<(SVGPathElement | null)[]>([])
   const animationsRef = useRef<Animation[]>([])
   const isInitializedRef = useRef(false)
 
   const animationConfig = useMemo(() => {
-    const shouldDisableAnimation = shouldReduceMotion || forceDisable
-
-    const speedMultiplier = shouldReduceMotion ? 0.3 : 1
-    const simplifiedEasing = shouldReduceMotion ? 'linear' : easing
-
     return {
-      baseDuration: baseDuration * speedMultiplier,
-      durationVariation: shouldReduceMotion ? 0 : durationVariation,
-      easing: simplifiedEasing,
-      shouldAnimate: !shouldDisableAnimation,
+      baseDuration,
+      durationVariation,
+      easing,
+      shouldAnimate: !forceDisable,
     }
-  }, [
-    baseDuration,
-    durationVariation,
-    easing,
-    shouldReduceMotion,
-    forceDisable,
-  ])
+  }, [baseDuration, durationVariation, easing, forceDisable])
 
   const setPathRef = useCallback(
     (index: number) => (ref: SVGPathElement | null) => {
