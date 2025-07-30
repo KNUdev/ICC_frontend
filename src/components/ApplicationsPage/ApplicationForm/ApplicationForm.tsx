@@ -1,8 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { Golos_Text } from 'next/font/google'
 import { useTranslations, useLocale } from 'next-intl'
+import type { Department } from '@/app/[locale]/(public)/(home)/components/Form/form.interfaces'
+import DropDownInput from '@/common/components/Input/DropDownInput'
 import styles from './ApplicationForm.module.scss'
 
 const golos = Golos_Text({
@@ -31,6 +33,7 @@ interface ApplicationFormProps {
   initialData: Application
   formId?: string
   isDisabled: boolean
+  isDropDownInput: boolean
 }
 
 const api = process.env.NEXT_PUBLIC_API_URL
@@ -39,19 +42,74 @@ export const ApplicationForm = ({
   formId,
   initialData,
   isDisabled,
+  isDropDownInput,
 }: ApplicationFormProps) => {
   const [formData, setFormData] = useState(initialData)
   const [departmentName, setDepartmentName] = useState('')
+
+  const [selectedFacultyId, setSelectedFacultyId] = useState<string | null>(
+    null,
+  )
+  const [departments, setDepartments] = useState<Department[]>([])
+  const [dropdownError, setDropdownError] = useState<string | null>(null)
+
+  const tFormApplication = useTranslations('form/application')
+
+  const locale = useLocale()
+
+  const facultyOptions = useMemo(
+    () =>
+      departments.map((faculty) => ({
+        value: faculty.id,
+        label: faculty.name[locale as 'en' | 'uk'],
+      })),
+    [departments, locale],
+  )
+
+  const fetchDepartments = useCallback(async () => {
+    try {
+      const response = await fetch(`${api}department/all`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pageNumber: 0,
+          pageSize: 10,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch departments')
+      }
+
+      const data = await response.json()
+      setDepartments(data.content)
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err.message)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchDepartments()
+  }, [fetchDepartments])
+
+  useEffect(() => {
+    if (initialData?.departmentId && departments.length > 0) {
+      const exists = departments.some((d) => d.id === initialData.departmentId)
+      if (exists) {
+        setSelectedFacultyId(initialData.departmentId)
+      }
+    }
+  }, [initialData, departments])
 
   useEffect(() => {
     if (!initialData) return
 
     setFormData(initialData)
   }, [initialData])
-
-  const tFormApplication = useTranslations('form/application')
-
-  const locale = useLocale()
 
   useEffect(() => {
     async function fetchDepartmentName() {
@@ -176,18 +234,36 @@ export const ApplicationForm = ({
           </span>
         </label>
 
-        <div className={styles.inputWrapper}>
-          <input
-            type='text'
-            id={`department-${formId}`}
-            name='departmentId'
+        {isDropDownInput ? (
+          <DropDownInput
+            options={facultyOptions}
+            value={selectedFacultyId}
+            onOpen={() => {
+              if (departments.length === 0) {
+                fetchDepartments()
+              }
+            }}
+            onSelect={(value) => {
+              setSelectedFacultyId(value)
+              setDropdownError(null)
+            }}
             placeholder={tFormApplication('placeholders.faculty')}
-            value={departmentName}
-            className='inputText'
-            readOnly
-            disabled={isDisabled}
+            hasError={!!dropdownError}
+            errorMessage={dropdownError}
           />
-        </div>
+        ) : (
+          <div className={styles.inputWrapper}>
+            <input
+              type='text'
+              id={`department-${formId}`}
+              name='departmentId'
+              value={departmentName}
+              className='inputText'
+              readOnly
+              disabled={isDisabled}
+            />
+          </div>
+        )}
       </div>
 
       <div className={styles.bigFieldWrapper}>

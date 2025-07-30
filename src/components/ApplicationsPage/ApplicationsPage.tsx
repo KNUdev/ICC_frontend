@@ -252,6 +252,7 @@ export function ApplicationsPage() {
                 initialData={app}
                 formId={'default-form'}
                 isDisabled={true}
+                isDropDownInput={false}
               />
 
               <div className={styles.buttonContainer}>
@@ -348,6 +349,7 @@ export function ApplicationsPage() {
             <ApplicationForm
               initialData={editingApp}
               isDisabled={false}
+              isDropDownInput={true}
               formId='edit-form'
             />
 
@@ -381,6 +383,7 @@ export function ApplicationsPage() {
             <ApplicationForm
               initialData={emptyApplication}
               isDisabled={false}
+              isDropDownInput={true}
               formId='filter-form'
             />
 
