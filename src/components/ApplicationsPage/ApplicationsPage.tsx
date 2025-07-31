@@ -475,6 +475,9 @@ export function ApplicationsPage() {
                   }}
                   placeholder={tApplications('status.placeholder')}
                   hasError={false}
+                  status={
+                    app.status as 'DONE' | 'REJECTED' | 'IN_WORK' | 'IN_QUEUE'
+                  }
                 />
               </div>
 

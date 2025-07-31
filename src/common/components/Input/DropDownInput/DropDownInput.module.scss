@@ -144,3 +144,19 @@ $error-border-color: #a30e2c;
   line-height: 1.375rem;
   letter-spacing: 0.005rem;
 }
+
+.statusDONE {
+  background-color: #d4f6e3;
+}
+
+.statusREJECTED {
+  background-color: #fddddd;
+}
+
+.statusIN_WORK {
+  background-color: #fffacc;
+}
+
+.statusIN_QUEUE {
+  background-color: #ede7f6;
+}

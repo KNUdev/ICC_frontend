@@ -45,8 +45,8 @@
   },
 
   "status": {
-    "IN_QUEUE": "In Queue",
-    "IN_WORK": "In Work",
+    "IN_QUEUE": "In_Queue",
+    "IN_WORK": "In_Work",
     "REJECTED": "Rejected",
     "DONE": "Done",
 
