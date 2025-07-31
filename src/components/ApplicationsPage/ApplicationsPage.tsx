@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { useFocusTrap } from './useFocusTrap/useFocusTrap'
 import { useTranslations, useLocale } from 'next-intl'
 import { ApplicationForm } from './ApplicationForm/ApplicationForm'
+import HelpBubble from './HelpBubble/HelpBubble'
 import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
 import Image from 'next/image'
 import ArrowTopIcon from '@/assets/image/icons/align-arrow-up-line.svg'
@@ -378,6 +379,12 @@ export function ApplicationsPage() {
         </h1>
 
         <div className={styles.searchFilterContainer}>
+          <HelpBubble
+            helpText={tApplications('searchHelpText')}
+            ariaLabel={tApplications('aria-labels.searchHelp')}
+            position='left'
+          />
+
           <div
             className='searchContainer'
             role='search'

@@ -1,0 +1,72 @@
+.helpWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+}
+
+.helpText {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+.helpButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: none;
+  background-color: #ff525e;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  svg {
+    width: 60%;
+    height: 60%;
+    fill: #fff;
+  }
+}
+
+.helpTooltip {
+  position: absolute;
+  background: #333;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  z-index: 10;
+  opacity: 0;
+  transition: all 0.3s ease;
+
+  white-space: normal;
+  max-width: 18rem;
+  width: max-content;
+  word-break: break-word;
+
+  &.bottom {
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &.left {
+    top: 50%;
+    right: calc(100% + 0.5rem);
+    transform: translateY(-50%);
+  }
+
+  &.open {
+    opacity: 1;
+  }
+}
