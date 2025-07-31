@@ -41,5 +41,14 @@
     "clearSearch": "Очистити пошук",
     "closeDialog": "Закрити діалог",
     "deleteDialogDesc": "Підтвердіть видалення вибраної програми"
+  },
+
+  "status": {
+    "IN_QUEUE": "У черзі",
+    "IN_WORK": "В роботі",
+    "REJECTED": "Відхилено",
+    "DONE": "Виконано",
+
+    "placeholder": "Оберіть статус"
   }
 }

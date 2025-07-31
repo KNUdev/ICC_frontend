@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { useFocusTrap } from './useFocusTrap/useFocusTrap'
 import { useTranslations, useLocale } from 'next-intl'
 import { ApplicationForm } from './ApplicationForm/ApplicationForm'
+import DropDownInput from '@/common/components/Input/DropDownInput'
 import Image from 'next/image'
 import ArrowTopIcon from '@/assets/image/icons/align-arrow-up-line.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
@@ -73,6 +74,13 @@ export function ApplicationsPage() {
 
   const tApplications = useTranslations('admin/applications')
   const locale = useLocale()
+
+  const statusOptions = [
+    { value: 'IN_QUEUE', label: tApplications('status.IN_QUEUE') },
+    { value: 'IN_WORK', label: tApplications('status.IN_WORK') },
+    { value: 'REJECTED', label: tApplications('status.REJECTED') },
+    { value: 'DONE', label: tApplications('status.DONE') },
+  ]
 
   const dialogIds = {
     delete: 'delete-dialog',
@@ -238,6 +246,45 @@ export function ApplicationsPage() {
       setEditingApp(null)
     } catch (err) {
       console.error('Error while updating application', err)
+    }
+  }
+
+  const handleStatusChange = async (
+    applicationId: string,
+    newStatus: string,
+  ) => {
+    try {
+      const targetApp = applications.find((app) => app.id === applicationId)
+      if (!targetApp) return
+
+      const updatedApp = { ...targetApp, status: newStatus }
+
+      const formData = new FormData()
+      formData.append('id', updatedApp.id)
+      formData.append('applicantEmail', updatedApp.applicantEmail)
+      formData.append('firstName', updatedApp.applicantName.firstName)
+      formData.append('middleName', updatedApp.applicantName.middleName)
+      formData.append('lastName', updatedApp.applicantName.lastName)
+      formData.append('departmentId', updatedApp.departmentId)
+      formData.append('problemDescription', updatedApp.problemDescription)
+      formData.append('status', updatedApp.status)
+
+      const response = await fetch(`${api}admin/application/update`, {
+        method: 'PATCH',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        const errText = await response.text()
+        console.error('Status update failed:', errText)
+        return
+      }
+
+      setApplications((prev) =>
+        prev.map((app) => (app.id === applicationId ? updatedApp : app)),
+      )
+    } catch (error) {
+      console.error('Failed to update status:', error)
     }
   }
 
@@ -407,6 +454,19 @@ export function ApplicationsPage() {
                   </span>
                 </p>
               </div>
+
+              <DropDownInput
+                options={statusOptions}
+                value={app.status}
+                onOpen={() => {}}
+                onSelect={(newStatus) => {
+                  if (newStatus !== null) {
+                    handleStatusChange(app.id, newStatus)
+                  }
+                }}
+                placeholder={tApplications('status.placeholder')}
+                hasError={false}
+              />
             </div>
 
             <div className={styles.divider} />

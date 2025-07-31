@@ -41,5 +41,14 @@
     "clearSearch": "Clear search",
     "closeDialog": "Close dialog",
     "deleteDialogDesc": "Confirm deletion of the selected application"
+  },
+
+  "status": {
+    "IN_QUEUE": "In Queue",
+    "IN_WORK": "In Work",
+    "REJECTED": "Rejected",
+    "DONE": "Done",
+
+    "placeholder": "Select status"
   }
 }
