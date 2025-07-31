@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import { Golos_Text } from 'next/font/google'
 import { useTranslations, useLocale } from 'next-intl'
 import type { Department } from '@/app/[locale]/(public)/(home)/components/Form/form.interfaces'
-import DropDownInput from '@/common/components/Input/DropDownInput'
+import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
 import styles from './ApplicationForm.module.scss'
 
 const golos = Golos_Text({

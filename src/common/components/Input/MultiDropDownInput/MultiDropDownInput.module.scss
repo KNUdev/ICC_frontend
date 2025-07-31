@@ -1,0 +1,111 @@
+$unselected-bg: #f0f0f0;
+$selected-bg: #ff4d4f;
+$unselected-text: #000;
+$selected-text: #fff;
+$input-bg: #f6f6f6;
+$border-color: #d1d1d1;
+$list-bg: $unselected-bg;
+
+.container {
+  width: 100%;
+}
+
+.inputContainer {
+  position: relative;
+  width: 100%;
+}
+
+.searchInput {
+  width: 100%;
+  height: 3.4375rem;
+  padding: 0.9375rem;
+  border: 1px solid $border-color;
+  background-color: $input-bg;
+  cursor: pointer;
+  color: $unselected-text;
+  font-size: 1rem;
+
+  &:focus {
+    outline: none;
+    border-color: $selected-bg;
+  }
+}
+
+.searchInputError {
+  border-color: $selected-bg;
+  background-color: lighten($selected-bg, 42%);
+}
+
+.iconWrapper {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.list {
+  border: 1px solid $border-color;
+  border-top: none;
+  background-color: $list-bg;
+  max-height: calc(3.4375rem * 5);
+  overflow-y: auto;
+  margin-top: 0;
+}
+
+.listItem {
+  padding: 0.9375rem 0.625rem;
+  cursor: pointer;
+  background-color: $unselected-bg;
+  color: $unselected-text;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover {
+    background-color: darken($unselected-bg, 5%);
+  }
+}
+
+.selected {
+  background-color: $selected-bg;
+  color: $selected-text;
+  font-weight: 500;
+}
+
+.submitButton {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: $selected-bg;
+  color: $selected-text;
+  border: none;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  font-weight: 500;
+
+  &:hover {
+    background-color: darken($selected-bg, 10%);
+  }
+}
+
+.centerText {
+  justify-content: center;
+  display: flex;
+}
+
+.errorBlock {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: $selected-bg;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+.errorText {
+  line-height: 1.2;
+}
