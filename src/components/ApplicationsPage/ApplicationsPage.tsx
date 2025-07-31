@@ -502,8 +502,7 @@ export function ApplicationsPage() {
             </div>
 
             <p id={dialogIds.deleteDesc} className='sr-only'>
-              {tApplications('a11y.deleteDialogDesc') ||
-                'Confirm deletion of the selected application.'}
+              {tApplications('aria-labels.deleteDialogDesc')}
             </p>
 
             <div className={styles.buttonContainer}>

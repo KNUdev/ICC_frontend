@@ -39,6 +39,7 @@
 
   "aria-labels": {
     "clearSearch": "Очистити пошук",
-    "closeDialog": "Закрити діалог"
+    "closeDialog": "Закрити діалог",
+    "deleteDialogDesc": "Підтвердіть видалення вибраної програми"
   }
 }

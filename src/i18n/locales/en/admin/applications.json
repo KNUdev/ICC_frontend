@@ -39,6 +39,7 @@
 
   "aria-labels": {
     "clearSearch": "Clear search",
-    "closeDialog": "Close dialog"
+    "closeDialog": "Close dialog",
+    "deleteDialogDesc": "Confirm deletion of the selected application"
   }
 }
