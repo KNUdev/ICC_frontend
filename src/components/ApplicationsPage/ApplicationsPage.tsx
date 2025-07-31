@@ -13,6 +13,7 @@ import FilterIcon from '@/assets/image/icons/form/filter.svg'
 import EditIcon from '@/assets/image/icons/form/edit.svg'
 import DeleteIcon from '@/assets/image/icons/form/delete.svg'
 import styles from './ApplicationsPage.module.scss'
+import MultiDropDownInput from '@/common/components/Input/MultiDropDownInput/MultiDropDownInput'
 
 interface Application {
   id: string
@@ -429,90 +430,108 @@ export function ApplicationsPage() {
       ) : (
         applications.map((app) => (
           <article key={app.id} className={styles.applicationArticle}>
-            <div className={styles.applicationPhotoContainer}>
-              <Image
-                src={app.problemPhoto}
-                alt={tApplications('problemPhotoName')}
-                width={150}
-                height={150}
-                unoptimized
-                className={styles.problemPhoto}
-              />
+            <section className={styles.applicationFormData}>
+              <div className={styles.applicationPhotoContainer}>
+                <Image
+                  src={app.problemPhoto}
+                  alt={tApplications('problemPhotoName')}
+                  width={150}
+                  height={150}
+                  unoptimized
+                  className={styles.problemPhoto}
+                />
 
-              <div className={styles.applicationPhotoDates}>
-                <p className={styles.photoDate}>
-                  {tApplications('dateParas.create')}{' '}
-                  <span className={styles.photoDateSpan}>
-                    {formatDate(app.receivedAt)}
-                  </span>
-                </p>
+                <div className={styles.applicationPhotoDates}>
+                  <p className={styles.photoDate}>
+                    {tApplications('dateParas.create')}{' '}
+                    <span className={styles.photoDateSpan}>
+                      {formatDate(app.receivedAt)}
+                    </span>
+                  </p>
 
-                <p className={styles.photoDate}>
-                  {tApplications('dateParas.update')}{' '}
-                  <span className={styles.photoDateSpan}>
-                    {formatDate(app.receivedAt)}
-                  </span>
-                </p>
+                  <p className={styles.photoDate}>
+                    {tApplications('dateParas.update')}{' '}
+                    <span className={styles.photoDateSpan}>
+                      {formatDate(app.receivedAt)}
+                    </span>
+                  </p>
+                </div>
+
+                <DropDownInput
+                  options={statusOptions}
+                  value={app.status}
+                  onOpen={() => {}}
+                  onSelect={(newStatus) => {
+                    if (newStatus !== null) {
+                      handleStatusChange(app.id, newStatus)
+                    }
+                  }}
+                  placeholder={tApplications('status.placeholder')}
+                  hasError={false}
+                />
               </div>
 
-              <DropDownInput
-                options={statusOptions}
-                value={app.status}
-                onOpen={() => {}}
-                onSelect={(newStatus) => {
-                  if (newStatus !== null) {
-                    handleStatusChange(app.id, newStatus)
-                  }
+              <div className={styles.divider} />
+
+              <div className={styles.applicationFormContainer}>
+                <ApplicationForm
+                  initialData={app}
+                  formId={'default-form'}
+                  isDisabled={true}
+                  isDropDownInput={false}
+                />
+
+                <div className={styles.buttonContainer}>
+                  <button
+                    className='mainBtn'
+                    type='button'
+                    onClick={() => {
+                      setEditingApp(app)
+                      setEditingAppData(app)
+                    }}
+                    aria-controls={dialogIds.edit}
+                    aria-haspopup='dialog'
+                  >
+                    <span aria-hidden='true'>
+                      <EditIcon />
+                    </span>
+                    {tApplications('buttons.edit')}
+                  </button>
+
+                  <button
+                    className='mainBtnWhite'
+                    type='button'
+                    onClick={() => {
+                      setDeleteId(app.id)
+                      showDeletePanel(true)
+                    }}
+                    aria-controls={dialogIds.delete}
+                    aria-haspopup='dialog'
+                  >
+                    <span aria-hidden='true'>
+                      <DeleteIcon />
+                    </span>
+                    {tApplications('buttons.delete')}
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <section className={styles.assignSection}>
+              <MultiDropDownInput
+                options={[
+                  { value: '1', label: 'Иван Иванов' },
+                  { value: '2', label: 'Петр Петров' },
+                  { value: '3', label: 'Сидор Сидоров' },
+                ]}
+                initialSelected={app.assignedEmployeeIds}
+                onSubmit={(selected) => {
+                  const updatedApp = { ...app, assignedEmployeeIds: selected }
+                  handleUpdateApplication(updatedApp)
                 }}
-                placeholder={tApplications('status.placeholder')}
-                hasError={false}
+                placeholder={tApplications('assign')}
               />
-            </div>
-
-            <div className={styles.divider} />
-
-            <div className={styles.applicationFormContainer}>
-              <ApplicationForm
-                initialData={app}
-                formId={'default-form'}
-                isDisabled={true}
-                isDropDownInput={false}
-              />
-
-              <div className={styles.buttonContainer}>
-                <button
-                  className='mainBtn'
-                  type='button'
-                  onClick={() => {
-                    setEditingApp(app)
-                    setEditingAppData(app)
-                  }}
-                  aria-controls={dialogIds.edit}
-                  aria-haspopup='dialog'
-                >
-                  <span aria-hidden='true'>
-                    <EditIcon />
-                  </span>
-                  {tApplications('buttons.edit')}
-                </button>
-
-                <button
-                  className='mainBtnWhite'
-                  type='button'
-                  onClick={() => {
-                    setDeleteId(app.id)
-                    showDeletePanel(true)
-                  }}
-                  aria-controls={dialogIds.delete}
-                  aria-haspopup='dialog'
-                >
-                  <span aria-hidden='true'>
-                    <DeleteIcon />
-                  </span>
-                  {tApplications('buttons.delete')}
-                </button>
-              </div>
-            </div>
+            </section>
           </article>
         ))
       )}

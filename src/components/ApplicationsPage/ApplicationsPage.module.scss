@@ -8,6 +8,7 @@ $text-nat-0: #272727;
 $text-nat-150: #464646;
 $text-red-400: #ff525e;
 $text-nat-500: #6d6d6d;
+$border-red-400: #ff525e;
 
 .applicationSection {
   display: flex;
@@ -58,13 +59,44 @@ $text-nat-500: #6d6d6d;
 
 .applicationArticle {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  border: 1px solid $primary-border-color;
+  background: $container-bg-color;
+}
+
+.applicationFormData {
+  display: flex;
   padding: 1.5625rem;
   align-items: flex-start;
   gap: 2.8125rem;
   align-self: stretch;
+}
 
-  border: 1px solid $primary-border-color;
-  background: $container-bg-color;
+.assignSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: 100%;
+
+  padding: 1rem;
+  margin-top: 1rem;
+
+  background-color: rgba($primary-button-color, 0.025);
+
+  border: none;
+  box-shadow: 0 0 20px 8px rgba($border-red-400, 0.2);
+
+  border-radius: 0.75rem;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0 24px 12px rgba($border-red-400, 0.3);
+  }
 }
 
 .applicationPhotoContainer {
@@ -113,6 +145,15 @@ $text-nat-500: #6d6d6d;
   width: 0.0625rem;
   align-self: stretch;
 
+  background: $primary-border-color;
+}
+
+.dividerHorizontal {
+  align-self: stretch;
+  width: 100%;
+  border: none;
+
+  border-bottom: 1.5px solid $border-red-400;
   background: $primary-border-color;
 }
 

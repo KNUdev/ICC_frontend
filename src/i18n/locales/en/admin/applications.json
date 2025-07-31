@@ -50,5 +50,7 @@
     "DONE": "Done",
 
     "placeholder": "Select status"
-  }
+  },
+
+  "assign": "Assign employees to the application"
 }
