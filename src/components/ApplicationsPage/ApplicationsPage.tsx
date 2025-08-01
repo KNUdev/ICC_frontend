@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { useFocusTrap } from './useFocusTrap/useFocusTrap'
 import { useTranslations, useLocale } from 'next-intl'
 import { ApplicationForm } from './ApplicationForm/ApplicationForm'
+import { AssignToApplication } from './AssignToApplication/AssignToApplication'
 import HelpBubble from './HelpBubble/HelpBubble'
 import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
 import Image from 'next/image'
@@ -14,7 +15,6 @@ import FilterIcon from '@/assets/image/icons/form/filter.svg'
 import EditIcon from '@/assets/image/icons/form/edit.svg'
 import DeleteIcon from '@/assets/image/icons/form/delete.svg'
 import styles from './ApplicationsPage.module.scss'
-import MultiDropDownInput from '@/common/components/Input/MultiDropDownInput/MultiDropDownInput'
 
 interface Application {
   id: string
@@ -528,14 +528,9 @@ export function ApplicationsPage() {
             </section>
 
             <section className={styles.assignSection}>
-              <MultiDropDownInput
-                options={[
-                  { value: '1', label: 'Иван Иванов' },
-                  { value: '2', label: 'Петр Петров' },
-                  { value: '3', label: 'Сидор Сидоров' },
-                ]}
-                initialSelected={app.assignedEmployeeIds}
-                onSubmit={(selected) => {
+              <AssignToApplication
+                selectedEmployeeIds={app.assignedEmployeeIds}
+                onAssign={(selected) => {
                   const updatedApp = { ...app, assignedEmployeeIds: selected }
                   handleUpdateApplication(updatedApp)
                 }}
