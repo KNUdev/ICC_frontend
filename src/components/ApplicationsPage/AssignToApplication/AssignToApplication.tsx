@@ -61,6 +61,7 @@ export function AssignToApplication({
       initialSelected={selectedEmployeeIds}
       onSubmit={onAssign}
       placeholder={placeholder}
+      optionalStyle={true}
     />
   )
 }

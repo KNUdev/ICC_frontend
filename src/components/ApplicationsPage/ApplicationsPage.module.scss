@@ -85,18 +85,6 @@ $border-red-400: #ff525e;
 
   padding: 1rem;
   margin-top: 1rem;
-
-  background-color: rgba($primary-button-color, 0.025);
-
-  border: none;
-  box-shadow: 0 0 20px 8px rgba($border-red-400, 0.2);
-
-  border-radius: 0.75rem;
-  transition: box-shadow 0.3s ease;
-
-  &:hover {
-    box-shadow: 0 0 24px 12px rgba($border-red-400, 0.3);
-  }
 }
 
 .applicationPhotoContainer {
@@ -146,6 +134,12 @@ $border-red-400: #ff525e;
   align-self: stretch;
 
   background: $primary-border-color;
+}
+
+.horizontalDivider {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid $primary-border-color;
 }
 
 .dividerHorizontal {

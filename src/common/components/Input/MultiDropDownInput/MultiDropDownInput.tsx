@@ -19,6 +19,7 @@ interface MultiDropDownInputProps {
   initialSelected?: string[]
   hasError?: boolean
   errorMessage?: string | null
+  optionalStyle?: boolean
 }
 
 const MultiDropDownInput: React.FC<MultiDropDownInputProps> = ({
@@ -29,6 +30,7 @@ const MultiDropDownInput: React.FC<MultiDropDownInputProps> = ({
   initialSelected = [],
   hasError = false,
   errorMessage = null,
+  optionalStyle,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [selectedValues, setSelectedValues] =
@@ -99,7 +101,12 @@ const MultiDropDownInput: React.FC<MultiDropDownInputProps> = ({
 
   return (
     <div className={styles.container} ref={containerRef}>
-      <div className={styles.inputContainer}>
+      <div
+        className={`
+    ${styles.inputContainer}
+    ${optionalStyle ? styles.optionalStyle : ''}
+  `}
+      >
         <input
           type='text'
           readOnly

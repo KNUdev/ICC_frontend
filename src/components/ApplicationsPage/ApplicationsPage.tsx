@@ -527,6 +527,8 @@ export function ApplicationsPage() {
               </div>
             </section>
 
+            <div className={styles.horizontalDivider} />
+
             <section className={styles.assignSection}>
               <AssignToApplication
                 selectedEmployeeIds={app.assignedEmployeeIds}
