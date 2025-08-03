@@ -1,11 +1,11 @@
 'use client'
 
-import InputText from '@/common/components/Input/InputText/InputText.module'
-import UploadForm from '@/common/components/UploadForm/UploadForm'
+import { useTranslations } from 'next-intl'
 import { useState } from 'react'
 import styles from './page.module.scss'
 
 const AddNewWorker = () => {
+  const t = useTranslations('AddNewWorker/common')
   const [hasPhoto, setHasPhoto] = useState(false)
 
   const handlePhotoUpload = () => {
@@ -21,13 +21,8 @@ const AddNewWorker = () => {
       <div className={styles.mainWrapper}>
         <div className={styles.startpage}>
           <div className={styles.content}>
-            <h1 className={styles.title}>ДОДАТИ ПРАЦІВНИКА</h1>
-            <p className={styles.description}>
-              На цій сторінці ви можете додати нового працівника до системи,
-              вказавши його основні дані, контактну інформацію, посаду та за
-              потреби — завантажити фотографію. Усі обов&apos;язкові поля
-              позначені, а введені дані можна редагувати пізніше.
-            </p>
+            <h1 className={styles.title}>{t('title')}</h1>
+            <p className={styles.description}>{t('description')}</p>
           </div>
         </div>
 
@@ -37,7 +32,7 @@ const AddNewWorker = () => {
               <div className={styles.formSection}>
                 <div className={styles.sectionContent}>
                   <div className={styles.photoSection}>
-                    <h3>ФОТО ПРАЦІВНИКА (ОПЦІОНАЛЬНО)</h3>
+                    <h3>{t('photo.title')}</h3>
                     <div className={styles.photoUpload}>
                       <div className={styles.photoPlaceholder}>
                         <svg
@@ -53,7 +48,6 @@ const AddNewWorker = () => {
                           />
                         </svg>
                       </div>
-                      <UploadForm />
                       <button
                         type='button'
                         className={styles.uploadBtn}
@@ -89,8 +83,8 @@ const AddNewWorker = () => {
                           </svg>
                         )}
                         {hasPhoto
-                          ? 'Змінити фото працівника'
-                          : 'Завантажити фото працівника'}
+                          ? t('photo.changeButton')
+                          : t('photo.uploadButton')}
                       </button>
                       {hasPhoto && (
                         <button
@@ -111,7 +105,7 @@ const AddNewWorker = () => {
                               fill='#D32F2F'
                             />
                           </svg>
-                          Видалити існуюче фото
+                          {t('photo.deleteButton')}
                         </button>
                       )}
                     </div>
@@ -120,24 +114,21 @@ const AddNewWorker = () => {
                   <div className={styles.sectionDivider}></div>
 
                   <div className={styles.generalInfo}>
-                    <h3>ЗАГАЛЬНА ІНФОРМАЦІЯ</h3>
+                    <h3>{t('generalInfo.title')}</h3>
                     <div className={styles.inputsContainer}>
                       <div className={styles.inputGroup}>
                         <div className={styles.inputRow}>
-                          <InputText
-                            title='Ім’я'
-                            placeholder='Введіть ім’я...'
-                            isRequired
+                          <input
+                            placeholder={t('generalInfo.firstName')}
+                            required
                           />
-                          <InputText
-                            title='Прізвище'
-                            placeholder='Введіть прізвище...'
-                            isRequired
+                          <input
+                            placeholder={t('generalInfo.lastName')}
+                            required
                           />
-                          <InputText
-                            title='По батькові'
-                            placeholder='Введіть по батькові...'
-                            isRequired
+                          <input
+                            placeholder={t('generalInfo.middleName')}
+                            required
                           />
                         </div>
                       </div>
@@ -153,25 +144,24 @@ const AddNewWorker = () => {
                               htmlFor='isStudent'
                               className={styles.checkboxLabel}
                             >
-                              Є студентом
+                              {t('generalInfo.isStudent')}
                             </label>
                           </div>
                         </div>
                       </div>
                       <div className={styles.inputGroup}>
                         <div className={styles.inputRow}>
-                          <InputText
-                            title='По батькові'
-                            placeholder='Введіть по батькові...'
-                            isRequired
+                          <input
+                            placeholder={t('generalInfo.email')}
+                            required
                           />
                         </div>
                         <div className={styles.inputRow}>
                           <div className={styles.inputGroup}>
-                            <label>Номер телефону *</label>
+                            <label>{t('generalInfo.phoneLabel')}</label>
                             <input
                               type='tel'
-                              placeholder='+380(786)376-36-52'
+                              placeholder={t('generalInfo.phonePlaceholder')}
                             />
                           </div>
                         </div>
@@ -186,11 +176,14 @@ const AddNewWorker = () => {
               <div className={styles.formSection}>
                 <div className={styles.sectionContent}>
                   <div className={styles.salarySection}>
-                    <h3>ЗАРПЛАТНЯ</h3>
+                    <h3>{t('salary.title')}</h3>
                     <div className={styles.inputRow}>
                       <div className={styles.inputGroup}>
-                        <label>Сума в гривнях *</label>
-                        <input type='number' placeholder='10 000' />
+                        <label>{t('salary.label')}</label>
+                        <input
+                          type='number'
+                          placeholder={t('salary.placeholder')}
+                        />
                       </div>
                     </div>
                   </div>
@@ -198,18 +191,18 @@ const AddNewWorker = () => {
                   <div className={styles.sectionDivider}></div>
 
                   <div className={styles.specialtySection}>
-                    <h3>ІНФОРМАЦІЯ ПРО СПЕЦІАЛЬНІСТЬ</h3>
+                    <h3>{t('specialty.title')}</h3>
                     <div className={styles.inputRow}>
                       <div className={styles.inputGroup}>
-                        <label>Спеціальність *</label>
+                        <label>{t('specialty.specialtyLabel')}</label>
                         <select>
-                          <option>Оператор машинного відділу</option>
+                          <option>{t('specialty.specialtyPlaceholder')}</option>
                         </select>
                       </div>
                       <div className={styles.inputGroup}>
-                        <label>Категорія *</label>
+                        <label>{t('specialty.categoryLabel')}</label>
                         <select>
-                          <option>1 категорія</option>
+                          <option>{t('specialty.categoryPlaceholder')}</option>
                         </select>
                       </div>
                     </div>
@@ -222,14 +215,18 @@ const AddNewWorker = () => {
               <div className={styles.formSection}>
                 <div className={`${styles.sectionContent} ${styles.fullWidth}`}>
                   <div className={styles.workingHours}>
-                    <h3>РОБОЧИЙ ЧАС</h3>
+                    <h3>{t('workingHours.title')}</h3>
                     <div className={styles.inputRow}>
                       <div className={styles.inputField}>
-                        <div className={styles.fieldLabel}>Від *</div>
+                        <div className={styles.fieldLabel}>
+                          {t('workingHours.fromLabel')}
+                        </div>
                         <input type='time' defaultValue='16:00' />
                       </div>
                       <div className={styles.inputField}>
-                        <div className={styles.fieldLabel}>До *</div>
+                        <div className={styles.fieldLabel}>
+                          {t('workingHours.toLabel')}
+                        </div>
                         <input type='time' defaultValue='20:00' />
                       </div>
                     </div>
@@ -242,11 +239,11 @@ const AddNewWorker = () => {
               <div className={`${styles.formSection} ${styles.withButton}`}>
                 <div className={`${styles.sectionContent} ${styles.fullWidth}`}>
                   <div className={styles.contractInfo}>
-                    <h3>ІНФОРМАЦІЯ ПРО КОНТРАКТ</h3>
+                    <h3>{t('contract.title')}</h3>
                     <div className={styles.inputRow}>
                       <div className={styles.inputField}>
                         <div className={styles.fieldLabel}>
-                          Дата початку контракту *
+                          {t('contract.startDateLabel')}
                         </div>
                         <div className={styles.dateInputWrapper}>
                           <svg
@@ -267,7 +264,7 @@ const AddNewWorker = () => {
                       </div>
                       <div className={styles.inputField}>
                         <div className={styles.fieldLabel}>
-                          Дата кінця контракту *
+                          {t('contract.endDateLabel')}
                         </div>
                         <div className={styles.dateInputWrapper}>
                           <svg
@@ -291,7 +288,7 @@ const AddNewWorker = () => {
                 </div>
                 <div className={styles.formActions}>
                   <button type='submit' className={styles.submitBtn}>
-                    Додати працівника
+                    {t('actions.submit')}
                   </button>
                 </div>
               </div>
@@ -316,7 +313,7 @@ const AddNewWorker = () => {
               fill='#FF525E'
             />
           </svg>
-          <span className={styles.scrollText}>Прогорнути вгору</span>
+          <span className={styles.scrollText}>{t('actions.scrollToTop')}</span>
         </div>
       </div>
     </div>
