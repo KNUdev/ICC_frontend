@@ -1,0 +1,41 @@
+{
+  "homepage": "Home",
+  "historypage": "History",
+  "title": "History of the ICC",
+  "back": "Back to homepage",
+  "sections": {
+    "section1": {
+      "title": "INFRASTRUCTURE AND STAFF DEVELOPMENT (1976–1990)",
+      "text": "In 1978, the construction of a separate administrative building on Volodymyrska Street was completed, featuring modern computing halls and reading rooms. This enabled the number of simultaneously connected users to increase from 30 to 200. The Center actively implemented the ES EOM operating system, developed local networks based on the 'Universal-1' computer, and organized the first programming courses for lecturers and students."
+    },
+    "section2": {
+      "title": "FOUNDING AND EARLY YEARS (1965–1975)",
+      "text": "In 1965, the first university computing center in the USSR was established at the Faculty of Cybernetics of Taras Shevchenko Kyiv University. The aim of the new unit was to consolidate computer resources to solve scientific and applied problems: from mathematical modeling to automating diploma research. The Center's first machine was the 'Minsk-22', on which students and lecturers performed manual computations using magnetic tapes."
+    },
+    "section3": {
+      "title": "INFRASTRUCTURE AND STAFF DEVELOPMENT (1976–1990)",
+      "text": "In 1978, the construction of a separate administrative building on Volodymyrska Street was completed, featuring modern computing halls and reading rooms. This enabled the number of simultaneously connected users to increase from 30 to 200. The Center actively implemented the ES EOM operating system, developed local networks based on the 'Universal-1' computer, and organized the first programming courses for lecturers and students."
+    },
+    "section4": {
+      "title": "TRANSITION TO CLIENT–SERVER SOLUTIONS (1991–2005)",
+      "text": "After the revival of independent Ukraine, the Center expanded its services: establishing labs for network administration and databases. In 1995, the first UNIX server was installed, enabling the implementation of client–server architectures for scientific projects in geophysics and computational linguistics. Simultaneously, courses in C/C++, Java, and later Python were launched, opening access to international programming standards."
+    },
+    "section5": {
+      "title": "INFRASTRUCTURE DEVELOPMENT (1976–1990)",
+      "text": "In 1978, the construction of a separate administrative building on Volodymyrska Street was completed, featuring modern computing halls and reading rooms. This enabled the number of simultaneously connected users to increase from 30 to 200. The Center actively implemented the ES EOM operating system, developed local networks based on the 'Universal-1' computer, and organized the first programming courses for lecturers and students."
+    },
+    "section6": {
+      "title": "INFRASTRUCTURE DEVELOPMENT (1976–1990)",
+      "text": "In 1978, the construction of a separate administrative building on Volodymyrska Street was completed, featuring modern computing halls and reading rooms. This enabled the number of simultaneously connected users to increase from 30 to 200. The Center actively implemented the ES EOM operating system, developed local networks based on the 'Universal-1' computer, and organized the first programming courses for lecturers and students."
+    },
+    "section7": {
+      "title": "FOUNDING AND EARLY YEARS (1965–1975)",
+      "text": "In 1965, the first university computing center in the USSR was established at the Faculty of Cybernetics of Taras Shevchenko Kyiv University. The aim of the new unit was to consolidate computer resources to solve scientific and applied problems: from mathematical modeling to automating diploma research. The Center's first machine was the 'Minsk-22', on which students and lecturers performed manual computations using magnetic tapes."
+    },
+    "section8": {
+      "title": "TRANSITION TO CLIENT–SERVER SOLUTIONS (1991–2005)",
+      "text": "After the revival of independent Ukraine, the Center expanded its services: establishing labs for network administration and databases. In 1995, the first UNIX server was installed, enabling the implementation of client–server architectures for scientific projects in geophysics and computational linguistics. Simultaneously, courses in C/C++, Java, and later Python were launched, opening access to international programming standards."
+    }
+  },
+  "scrollTop": "Scroll to top"
+}

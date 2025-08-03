@@ -4,6 +4,7 @@ import { FormLines } from '@/app/[locale]/(public)/(home)/components/Form/FormAp
 import { AnimatedBrain } from '@/common/animations/AnimatedBrain/AnimatedBrain'
 import { AnimatedHistory } from '@/common/animations/AnimatedHistory/AnimatedHistory'
 
+
 export default function HomePage() {
   return (
     <>
