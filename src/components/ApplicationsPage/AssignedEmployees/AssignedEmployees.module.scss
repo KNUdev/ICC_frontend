@@ -17,8 +17,8 @@ $border-red-400: #ff525e;
   position: relative;
   align-self: stretch;
 
-  background-color: rgba($border-red-400, 0.025);
-  box-shadow: 0 0 20px 8px rgba($border-red-400, 0.2);
+  border: 1px solid $border-red-400;
+  background: #f6f6f6;
   border-radius: 0.5rem;
   transition: box-shadow 0.3s ease;
 
