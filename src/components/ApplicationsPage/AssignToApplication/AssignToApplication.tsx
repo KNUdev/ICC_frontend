@@ -26,10 +26,13 @@ export function AssignToApplication({
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
+        const formData = new FormData()
+        formData.append('pageNumber', '0')
+        formData.append('pageSize', '10')
+
         const response = await fetch(`${api}admin/employee/all`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pageNumber: 0, pageSize: 10 }),
+          body: formData,
         })
 
         if (!response.ok) {
@@ -41,7 +44,17 @@ export function AssignToApplication({
         const result = await response.json()
         console.log('Got employees:', result.content)
 
-        setEmployees(result.content)
+        const simplified: Employee[] = result.content.map(
+          (emp: {
+            id: string
+            name: { firstName: string; lastName: string; middleName: string }
+          }) => ({
+            id: emp.id,
+            fullName: `${emp.name.firstName} ${emp.name.middleName} ${emp.name.lastName}`,
+          }),
+        )
+
+        setEmployees(simplified)
       } catch (err) {
         console.error('Error while loading employees:', err)
       }
