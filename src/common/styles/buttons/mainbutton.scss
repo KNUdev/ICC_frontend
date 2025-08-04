@@ -1,0 +1,31 @@
+$primary-color: #ff525e;
+$hover-focus-color: #e71735;
+$active-color: #a30e2c;
+
+.mainBtn {
+  display: inline-flex;
+  height: 3.125rem;
+  padding: 0.9375rem 1.25rem;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  gap: 0.625rem;
+  flex-shrink: 0;
+  border: none;
+  cursor: pointer;
+
+  background: $primary-color;
+}
+
+.mainBtn:hover {
+  background: $hover-focus-color;
+}
+
+.mainBtn:focus {
+  border: 2px solid $primary-color;
+  background: $hover-focus-color;
+}
+
+.mainBtn:active {
+  background: $active-color;
+}
