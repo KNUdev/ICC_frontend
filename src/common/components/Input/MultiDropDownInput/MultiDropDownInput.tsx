@@ -72,6 +72,10 @@ const MultiDropDownInput: React.FC<MultiDropDownInputProps> = ({
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [isExpanded, selectedValues, onSubmit])
 
+  useEffect(() => {
+    setSelectedValues(initialSelected)
+  }, [initialSelected])
+
   const toggleSelect = (value: string) => {
     setSelectedValues((prev) =>
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value],

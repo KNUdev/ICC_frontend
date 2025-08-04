@@ -11,13 +11,11 @@ interface Employee {
 }
 
 interface AssignToApplicationProps {
-  selectedEmployeeIds: string[]
-  onAssign: (selected: string[]) => void
+  onAssign: (selected: { id: string; fullName: string }[]) => void
   placeholder?: string
 }
 
 export function AssignToApplication({
-  selectedEmployeeIds,
   onAssign,
   placeholder = 'Назначить сотрудников',
 }: AssignToApplicationProps) {
@@ -41,9 +39,8 @@ export function AssignToApplication({
             `Error fetching employees: ${response.status} ${response.statusText}\nServer responded: ${errorText}`,
           )
         }
-        const result = await response.json()
-        console.log('Got employees:', result.content)
 
+        const result = await response.json()
         const simplified: Employee[] = result.content.map(
           (emp: {
             id: string
@@ -71,8 +68,13 @@ export function AssignToApplication({
   return (
     <MultiDropDownInput
       options={options}
-      initialSelected={selectedEmployeeIds}
-      onSubmit={onAssign}
+      initialSelected={[]}
+      onSubmit={(selectedIds) => {
+        const selectedEmployees = employees.filter((emp) =>
+          selectedIds.includes(emp.id),
+        )
+        onAssign(selectedEmployees)
+      }}
       placeholder={placeholder}
       optionalStyle={true}
     />

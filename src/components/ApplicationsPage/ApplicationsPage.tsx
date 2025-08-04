@@ -290,6 +290,55 @@ export function ApplicationsPage() {
     }
   }
 
+  const handleUpdateAssignedEmployees = async (
+    applicationId: string,
+    employeeIds: string[],
+  ) => {
+    try {
+      const results = await Promise.allSettled(
+        employeeIds.map(async (employeeId) => {
+          const formData = new FormData()
+          formData.append('applicationId', applicationId)
+          formData.append('employeeId', employeeId)
+
+          const response = await fetch(
+            `${api}admin/application/assign-employee`,
+            {
+              method: 'POST',
+              body: formData,
+            },
+          )
+
+          if (!response.ok) {
+            const errorText = await response.text()
+            throw new Error(
+              `Failed to assign employee ${employeeId}: ${errorText}`,
+            )
+          }
+
+          return await response.text()
+        }),
+      )
+
+      const rejected = results.filter((r) => r.status === 'rejected')
+      if (rejected.length > 0) {
+        console.error('Some assignments failed:', rejected)
+      } else {
+        console.log('All employees assigned successfully')
+      }
+
+      setApplications((prevApps) =>
+        prevApps.map((app) =>
+          app.id === applicationId
+            ? { ...app, assignedEmployeeIds: employeeIds }
+            : app,
+        ),
+      )
+    } catch (err) {
+      console.error('Error assigning employees:', err)
+    }
+  }
+
   const handleApplyFilter = async () => {
     const form = document.querySelector('.' + styles.editPanel + ' form')
     if (!form) return
@@ -531,10 +580,11 @@ export function ApplicationsPage() {
 
             <section className={styles.assignSection}>
               <AssignToApplication
-                selectedEmployeeIds={app.assignedEmployeeIds}
                 onAssign={(selected) => {
-                  const updatedApp = { ...app, assignedEmployeeIds: selected }
-                  handleUpdateApplication(updatedApp)
+                  handleUpdateAssignedEmployees(
+                    app.id,
+                    selected.map((emp) => emp.id),
+                  )
                 }}
                 placeholder={tApplications('assign')}
               />
