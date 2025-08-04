@@ -121,7 +121,6 @@ export function ApplicationsPage() {
         }
 
         const result = await response.json()
-        console.log('Success:', result)
 
         setApplications(result.content)
         setOriginalApplications(result.content)
@@ -258,8 +257,6 @@ export function ApplicationsPage() {
   }
 
   const handleUpdateApplication = async (updatedAppData: Application) => {
-    console.log('Updating with:', updatedAppData)
-
     const formData = new FormData()
 
     formData.append('id', updatedAppData.id)
@@ -366,8 +363,6 @@ export function ApplicationsPage() {
       const rejected = results.filter((r) => r.status === 'rejected')
       if (rejected.length > 0) {
         console.error('Some assignments failed:', rejected)
-      } else {
-        console.log('All employees assigned successfully')
       }
 
       setApplications((prevApps) =>
