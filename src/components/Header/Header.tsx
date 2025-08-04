@@ -30,10 +30,10 @@ export function Header() {
         <div className={styles.userPanel}>
           <LanguageSwitcher />
           <div className={styles.authButtons}>
-            <Link href='#' className={styles.loginButton}>
+            <Link href='/Auth/SingIn' className={styles.loginButton}>
               {tCommon('authentication.login')}
             </Link>
-            <Link href='#' className={styles.registerButton}>
+            <Link href='/Auth/SingUp' className={styles.registerButton}>
               {tCommon('authentication.register')}
             </Link>
           </div>
