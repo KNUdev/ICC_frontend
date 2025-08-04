@@ -141,8 +141,9 @@ const MultiDropDownInput: React.FC<MultiDropDownInputProps> = ({
           <button
             className={`mainBtn ${styles.submitButton} ${styles.centerText}`}
             onClick={() => {
-              setIsExpanded(false)
               onSubmit(selectedValues)
+              setSelectedValues([])
+              setIsExpanded(false)
             }}
           >
             Submit
