@@ -9,6 +9,15 @@ export const PAGES = {
   FAQ: '/faq',
 }
 
+export const USER_PAGES = {
+  addNewWorker: '/add-new-worker',
+  addSpecialty: '/add-specialty',
+  allSectors: '/sectors',
+  allWorkers: '/workers',
+  jobApplications: '/applications',
+  creatingReports: '/reports',
+}
+
 export const INSTITUTION_LINKS = {
   GEOLOGY: 'https://geo.knu.ua/',
   MILITARY: 'https://military.knu.ua/',
