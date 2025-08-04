@@ -55,5 +55,10 @@
 
   "assign": "Assign employees to the application",
 
-  "searchHelpText": "The search works by matching letters in one of the four form fields. The 'Filters' button uses the values from one or more fields to find matching applications on the page."
+  "searchHelpText": "The search works by matching letters in one of the four form fields. The 'Filters' button uses the values from one or more fields to find matching applications on the page.",
+
+  "assignedEmployees": {
+    "heading": "Assigned Employees",
+    "noEmployees": "There are no employees assigned to this task currently."
+  }
 }

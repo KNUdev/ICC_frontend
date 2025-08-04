@@ -5,6 +5,7 @@ import { useFocusTrap } from './useFocusTrap/useFocusTrap'
 import { useTranslations, useLocale } from 'next-intl'
 import { ApplicationForm } from './ApplicationForm/ApplicationForm'
 import { AssignToApplication } from './AssignToApplication/AssignToApplication'
+import { AssignedEmployees } from './AssignedEmployees/AssignedEmployees'
 import HelpBubble from './HelpBubble/HelpBubble'
 import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
 import Image from 'next/image'
@@ -50,6 +51,11 @@ const emptyApplication: Application = {
   assignedEmployeeIds: [],
 }
 
+interface Employee {
+  id: string
+  fullName: string
+}
+
 const api = process.env.NEXT_PUBLIC_API_URL
 
 export function ApplicationsPage() {
@@ -73,6 +79,8 @@ export function ApplicationsPage() {
   const [originalApplications, setOriginalApplications] = useState<
     Application[]
   >([])
+
+  const [allEmployees, setAllEmployees] = useState<Employee[]>([])
 
   const tApplications = useTranslations('admin/applications')
   const locale = useLocale()
@@ -124,6 +132,41 @@ export function ApplicationsPage() {
 
     postData()
   }, [locale])
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const formData = new FormData()
+        formData.append('pageNumber', '0')
+        formData.append('pageSize', '10')
+
+        const response = await fetch(`${api}admin/employee/all`, {
+          method: 'POST',
+          body: formData,
+        })
+
+        if (!response.ok) throw new Error('Error fetching employees')
+
+        const result = await response.json()
+
+        const simplified = result.content.map(
+          (emp: {
+            id: string
+            name: { firstName: string; middleName: string; lastName: string }
+          }) => ({
+            id: emp.id,
+            fullName: `${emp.name.firstName} ${emp.name.middleName} ${emp.name.lastName}`,
+          }),
+        )
+
+        setAllEmployees(simplified)
+      } catch (err) {
+        console.error('Failed to fetch employees', err)
+      }
+    }
+
+    fetchEmployees()
+  }, [])
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow
@@ -336,6 +379,43 @@ export function ApplicationsPage() {
       )
     } catch (err) {
       console.error('Error assigning employees:', err)
+    }
+  }
+
+  const handleRemoveEmployee = async (
+    applicationId: string,
+    employeeId: string,
+  ) => {
+    try {
+      const formData = new FormData()
+      formData.append('applicationId', applicationId)
+      formData.append('employeeId', employeeId)
+
+      const response = await fetch(`${api}admin/application/remove-employee`, {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error('Failed response:', errorText)
+        throw new Error('Failed to unassign employee')
+      }
+
+      setApplications((prev) =>
+        prev.map((app) =>
+          app.id === applicationId
+            ? {
+                ...app,
+                assignedEmployeeIds: app.assignedEmployeeIds.filter(
+                  (id) => id !== employeeId,
+                ),
+              }
+            : app,
+        ),
+      )
+    } catch (error) {
+      console.error('Error removing assigned employee:', error)
     }
   }
 
@@ -588,6 +668,18 @@ export function ApplicationsPage() {
                 }}
                 placeholder={tApplications('assign')}
               />
+
+              <h2 className={styles.heading}>
+                {tApplications('assignedEmployees.heading')}
+              </h2>
+
+              <div className={styles.assignedEmployeesContainer}>
+                <AssignedEmployees
+                  app={app}
+                  allEmployees={allEmployees}
+                  onRemoveEmployee={handleRemoveEmployee}
+                />
+              </div>
             </section>
           </article>
         ))

@@ -78,13 +78,24 @@ $border-red-400: #ff525e;
 
 .assignSection {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   align-self: stretch;
   width: 100%;
+  gap: 1.5625rem;
 
   padding: 1rem;
   margin-top: 1rem;
+}
+
+.assignedEmployeesContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .applicationPhotoContainer {
