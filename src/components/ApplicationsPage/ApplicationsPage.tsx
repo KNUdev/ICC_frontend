@@ -103,33 +103,7 @@ export function ApplicationsPage() {
   }
 
   useEffect(() => {
-    const postData = async () => {
-      try {
-        const response = await fetch(`${api}admin/application/all`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            pageNumber: 0,
-            pageSize: 10,
-          }),
-        })
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`)
-        }
-
-        const result = await response.json()
-
-        setApplications(result.content)
-        setOriginalApplications(result.content)
-      } catch (error) {
-        console.error('Error:', error)
-      }
-    }
-
-    postData()
+    fetchApplications()
   }, [locale])
 
   useEffect(() => {
@@ -216,6 +190,32 @@ export function ApplicationsPage() {
     setApplications(filtered)
   }, [searchValue, originalApplications])
 
+  const fetchApplications = async () => {
+    try {
+      const response = await fetch(`${api}admin/application/all`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pageNumber: 0,
+          pageSize: 10,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const result = await response.json()
+
+      setApplications(result.content)
+      setOriginalApplications(result.content)
+    } catch (error) {
+      console.error('Error fetching applications:', error)
+    }
+  }
+
   function formatDate(arr: number[]): string {
     const [year, month, day] = arr
     const paddedDay = String(day).padStart(2, '0')
@@ -260,12 +260,13 @@ export function ApplicationsPage() {
     const formData = new FormData()
 
     formData.append('id', updatedAppData.id)
-    formData.append('applicantEmail', updatedAppData.applicantEmail)
-    formData.append('firstName', updatedAppData.applicantName.firstName)
-    formData.append('middleName', updatedAppData.applicantName.middleName)
-    formData.append('lastName', updatedAppData.applicantName.lastName)
+    formData.append('applicantEmail', updatedAppData.applicantEmail ?? '')
+    formData.append('firstName', updatedAppData.applicantName.firstName ?? '')
+    formData.append('middleName', updatedAppData.applicantName.middleName ?? '')
+    formData.append('lastName', updatedAppData.applicantName.lastName ?? '')
     formData.append('departmentId', updatedAppData.departmentId)
     formData.append('problemDescription', updatedAppData.problemDescription)
+    formData.append('status', updatedAppData.status)
 
     try {
       const response = await fetch(`${api}admin/application/update`, {
@@ -275,15 +276,11 @@ export function ApplicationsPage() {
 
       if (!response.ok) {
         const errorText = await response.text()
-        console.error('❌ Update failed:', response.status, errorText)
+        console.error('Update failed:', response.status, errorText)
         throw new Error(`Error updating: ${response.status}`)
       }
 
-      setApplications((prev) =>
-        prev.map((app) =>
-          app.id === updatedAppData.id ? updatedAppData : app,
-        ),
-      )
+      await fetchApplications()
 
       setEditingApp(null)
     } catch (err) {

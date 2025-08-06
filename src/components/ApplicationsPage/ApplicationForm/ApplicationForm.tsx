@@ -57,6 +57,8 @@ export const ApplicationForm = ({
   const [departments, setDepartments] = useState<Department[]>([])
   const [dropdownError, setDropdownError] = useState<string | null>(null)
 
+  const [fullName, setFullName] = useState('')
+
   const tFormApplication = useTranslations('form/application')
 
   const locale = useLocale()
@@ -100,6 +102,14 @@ export const ApplicationForm = ({
     fetchDepartments()
   }, [fetchDepartments])
 
+  useEffect(() => {
+    const { firstName, middleName, lastName } = formData.applicantName
+    const nameString = [firstName, middleName, lastName]
+      .filter(Boolean)
+      .join(' ')
+    setFullName(nameString)
+  }, [formData.applicantName])
+
   const isInitial = useRef(true)
 
   useEffect(() => {
@@ -109,7 +119,7 @@ export const ApplicationForm = ({
     }
 
     onChange?.(formData)
-  })
+  }, [formData, onChange])
 
   useEffect(() => {
     if (initialData?.departmentId && departments.length > 0) {
@@ -200,10 +210,13 @@ export const ApplicationForm = ({
             id={`fullname-${formId}`}
             name='applicantName'
             placeholder={tFormApplication('placeholders.fullname')}
-            value={`${formData.applicantName.firstName} ${formData.applicantName.middleName} ${formData.applicantName.lastName}`.trim()}
+            value={fullName}
             onChange={(e) => {
+              const inputValue = e.target.value
+              setFullName(inputValue)
+
               const [firstName = '', middleName = '', lastName = ''] =
-                e.target.value.trim().split(' ')
+                inputValue.trim().split(' ')
               setFormData((prev) => ({
                 ...prev,
                 applicantName: { firstName, middleName, lastName },
