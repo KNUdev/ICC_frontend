@@ -2,7 +2,7 @@
   "title": "ICC",
   "titleFullName": "Information and Computing Center",
   "navigationHeading": "Navigation",
-  "institutionsHeading": "Institutes",
+  "institutionsHeading": "Institutions",
   "facultiesHeading": "Faculties",
   "seeMore": "See more",
 
@@ -22,7 +22,13 @@
     "MILITARY": "Military Institute",
     "SECURITY": "Institute of State Security Administration",
     "POSTGRADUATE": "Institute of Postgraduate Education",
-    "SCIENTIFIC": "Educational and Scientific Institute"
+    "JOURNALISM": "Educational and Scientific Institute of Journalism",
+    "HIGHTECH": "Educational and Scientific Institute of High Technologies",
+    "INTRELATIONS": "Educational and Scientific Institute of International Relations",
+    "LAW": "Educational and Scientific Institute of Law",
+    "PHILOLOGY": "Educational and Scientific Institute of Philology",
+    "CIVILADMIN": "Educational and Scientific Institute of Public Administration and Civil Service",
+    "MEDICINE": "Educational and Scientific Center “Institute of Biology and Medicine”"
   },
 
   "faculties": {

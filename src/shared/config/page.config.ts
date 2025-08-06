@@ -14,7 +14,13 @@ export const INSTITUTION_LINKS = {
   MILITARY: 'https://mil.knu.ua/',
   SECURITY: 'https://institute.do.gov.ua/',
   POSTGRADUATE: 'https://ipe.knu.ua/',
-  SCIENTIFIC: 'https://www.science.knu.ua/',
+  JOURNALISM: 'https://journ.knu.ua/',
+  HIGHTECH: 'https://iht.knu.ua/',
+  INTRELATIONS: 'https://www.iir.edu.ua/',
+  LAW: 'https://law.knu.ua/',
+  PHILOLOGY: 'https://philology.knu.ua/',
+  CIVILADMIN: 'https://ipacs.knu.ua/',
+  MEDICINE: 'https://biomed.knu.ua/',
 }
 
 export const FACULTY_LINKS = {
@@ -23,20 +29,6 @@ export const FACULTY_LINKS = {
   HISTORY: 'https://history.knu.ua/',
   MECHMATH: 'https://mmf.knu.ua/',
   INFOTECH: 'https://it.knu.ua/',
-}
-
-export const INSTITUTIONS_PAGE_LINKS = {
-  MILITARY: 'https://mil.knu.ua/',
-  POSTGRADUATE: 'https://ipe.knu.ua/',
-  SECURITY: 'https://institute.do.gov.ua/',
-  HIGHTECH: 'https://iht.knu.ua/',
-  GEOLOGY: 'https://geology.knu.ua/',
-  JOURNALISM: 'https://journ.knu.ua/',
-  INTRELATIONS: 'https://www.iir.edu.ua/',
-  LAW: 'https://law.knu.ua/',
-  PHILOLOGY: 'https://philology.knu.ua/',
-  CIVILADMIN: 'https://ipacs.knu.ua/',
-  MEDICINE: 'https://biomed.knu.ua/',
 }
 
 export const FACULTIES_PAGE_LINKS = {
