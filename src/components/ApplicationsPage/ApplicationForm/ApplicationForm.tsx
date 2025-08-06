@@ -284,6 +284,14 @@ export const ApplicationForm = ({
             }}
             onSelect={(value) => {
               setSelectedFacultyId(value)
+
+              if (value !== null) {
+                setFormData((prev) => ({
+                  ...prev,
+                  departmentId: value,
+                }))
+              }
+
               setDropdownError(null)
             }}
             placeholder={tFormApplication('placeholders.faculty')}
