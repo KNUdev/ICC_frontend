@@ -11,9 +11,9 @@ export const PAGES = {
 
 export const INSTITUTION_LINKS = {
   GEOLOGY: 'https://geo.knu.ua/',
-  MILITARY: 'https://military.knu.ua/',
-  SECURITY: 'https://www.igov.gov.ua/',
-  POSTGRADUATE: 'https://ippo.knu.ua/',
+  MILITARY: 'https://mil.knu.ua/',
+  SECURITY: 'https://institute.do.gov.ua/',
+  POSTGRADUATE: 'https://ipe.knu.ua/',
   SCIENTIFIC: 'https://www.science.knu.ua/',
 }
 
