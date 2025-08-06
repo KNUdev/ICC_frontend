@@ -38,3 +38,18 @@ export const INSTITUTIONS_PAGE_LINKS = {
   CIVILADMIN: 'https://ipacs.knu.ua/',
   MEDICINE: 'https://biomed.knu.ua/',
 }
+
+export const FACULTIES_PAGE_LINKS = {
+  GEOGRAPHY: 'https://geo.knu.ua/',
+  ECONOMY: 'https://econom.knu.ua/',
+  HISTORY: 'http://www.history.univ.kiev.ua/',
+  MECHMATH: 'https://mechmat.knu.ua/',
+  INFOTECH: 'https://fit.knu.ua/',
+  CYBERNETICS: 'https://csc.knu.ua/en/',
+  PSYCHOLOGY: 'https://psy.knu.ua/',
+  RADIOPHYSICS: 'https://rex.knu.ua/',
+  SOCIOLOGY: 'https://sociology.knu.ua/',
+  PHYSICS: 'https://phys.knu.ua/',
+  PHILOSOPHY: 'https://www.philosophy.knu.ua/',
+  CHEMISTRY: 'https://chem.knu.ua/',
+}
