@@ -26,14 +26,6 @@ export const INSTITUTION_LINKS = {
 export const FACULTY_LINKS = {
   GEOGRAPHY: 'https://geo.knu.ua/',
   ECONOMICS: 'https://econom.knu.ua/',
-  HISTORY: 'https://history.knu.ua/',
-  MECHMATH: 'https://mmf.knu.ua/',
-  INFOTECH: 'https://it.knu.ua/',
-}
-
-export const FACULTIES_PAGE_LINKS = {
-  GEOGRAPHY: 'https://geo.knu.ua/',
-  ECONOMY: 'https://econom.knu.ua/',
   HISTORY: 'http://www.history.univ.kiev.ua/',
   MECHMATH: 'https://mechmat.knu.ua/',
   INFOTECH: 'https://fit.knu.ua/',

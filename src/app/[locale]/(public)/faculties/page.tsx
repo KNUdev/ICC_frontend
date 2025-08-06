@@ -1,27 +1,25 @@
 import { useTranslations } from 'next-intl'
-import { FACULTIES_PAGE_LINKS } from '@/shared/config/page.config'
+import { FACULTY_LINKS } from '@/shared/config/page.config'
 import styles from './page.module.scss'
 
 export default function ApplicationsPage() {
-  const tFaculties = useTranslations('faculties-page')
+  const tCommon = useTranslations('common')
 
   return (
     <div className={styles.institutionsContainer}>
-      <h1 className={styles.heading}>{tFaculties('heading')}</h1>
+      <h1 className={styles.heading}>{tCommon('facultiesHeading')}</h1>
 
       <ul className={styles.list} role='list'>
-        {Object.entries(FACULTIES_PAGE_LINKS).map(([key, link]) => (
+        {Object.entries(FACULTY_LINKS).map(([key, link]) => (
           <li key={key} role='listitem'>
             <a
               href={link}
               target='_blank'
               rel='noopener noreferrer'
-              aria-label={`${tFaculties(
-                `faculties.${key}`,
-              )} (opens in a new tab)`}
+              aria-label={`${tCommon(`faculties.${key}`)} (opens in a new tab)`}
               className='navLink'
             >
-              {tFaculties(`faculties.${key}`)}
+              {tCommon(`faculties.${key}`)}
             </a>
           </li>
         ))}
