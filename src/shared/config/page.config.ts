@@ -10,10 +10,10 @@ export const PAGES = {
 }
 
 export const INSTITUTION_LINKS = {
-  GEOLOGY: 'https://geo.knu.ua/',
   MILITARY: 'https://mil.knu.ua/',
   SECURITY: 'https://institute.do.gov.ua/',
   POSTGRADUATE: 'https://ipe.knu.ua/',
+  GEOLOGY: 'https://geo.knu.ua/',
   JOURNALISM: 'https://journ.knu.ua/',
   HIGHTECH: 'https://iht.knu.ua/',
   INTRELATIONS: 'https://www.iir.edu.ua/',

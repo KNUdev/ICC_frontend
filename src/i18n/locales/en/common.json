@@ -18,10 +18,10 @@
   },
 
   "institutions": {
-    "GEOLOGY": "Educational and Scientific Institute 'Institute of Geology'",
     "MILITARY": "Military Institute",
     "SECURITY": "Institute of State Security Administration",
     "POSTGRADUATE": "Institute of Postgraduate Education",
+    "GEOLOGY": "Educational and Scientific Institute 'Institute of Geology'",
     "JOURNALISM": "Educational and Scientific Institute of Journalism",
     "HIGHTECH": "Educational and Scientific Institute of High Technologies",
     "INTRELATIONS": "Educational and Scientific Institute of International Relations",
