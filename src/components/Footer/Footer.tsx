@@ -166,7 +166,11 @@ export function Footer() {
           </div>
         </address>
 
-        <p className={styles.designWatermark}>Designed by Bohdan Popov & ICC</p>
+        <div className={styles.watermarkContainer}>
+          <p className={styles.designWatermark}>Developed by KNUdev</p>
+
+          <p className={styles.designWatermark}>Designed by Bohdan Popov</p>
+        </div>
       </div>
     </footer>
   )

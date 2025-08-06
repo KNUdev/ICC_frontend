@@ -111,6 +111,13 @@
   gap: 3.125rem;
 }
 
+.watermarkContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .designWatermark {
   text-align: center;
   color: var(--text-nat-250, #3d3d3d);
