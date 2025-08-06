@@ -24,3 +24,17 @@ export const FACULTY_LINKS = {
   MECHMATH: 'https://mmf.knu.ua/',
   INFOTECH: 'https://it.knu.ua/',
 }
+
+export const INSTITUTIONS_PAGE_LINKS = {
+  MILITARY: 'https://military.knu.ua/',
+  POSTGRADUATE: 'https://ipe.knu.ua/',
+  SECURITY: 'https://institute.do.gov.ua/',
+  HIGHTECH: 'https://iht.knu.ua/',
+  GEOLOGY: 'https://geology.knu.ua/',
+  JOURNALISM: 'https://journ.knu.ua/',
+  INTRELATIONS: 'https://www.iir.edu.ua/',
+  LAW: 'https://law.knu.ua/',
+  PHILOLOGY: 'https://philology.knu.ua/',
+  CIVILADMIN: 'https://ipacs.knu.ua/',
+  MEDICINE: 'https://biomed.knu.ua/',
+}
