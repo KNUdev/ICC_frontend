@@ -9,7 +9,7 @@ $active-color: #6d6d6d;
   position: relative;
   transition: color 300ms ease-out;
   display: inline-block;
-  line-height: 1;
+  line-height: normal;
 }
 
 .navLink::after {
