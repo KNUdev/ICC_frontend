@@ -26,7 +26,7 @@ export const FACULTY_LINKS = {
 }
 
 export const INSTITUTIONS_PAGE_LINKS = {
-  MILITARY: 'https://military.knu.ua/',
+  MILITARY: 'https://mil.knu.ua/',
   POSTGRADUATE: 'https://ipe.knu.ua/',
   SECURITY: 'https://institute.do.gov.ua/',
   HIGHTECH: 'https://iht.knu.ua/',
