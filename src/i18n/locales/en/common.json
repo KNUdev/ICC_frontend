@@ -2,7 +2,7 @@
   "title": "ICC",
   "titleFullName": "Information and Computing Center",
   "navigationHeading": "Navigation",
-  "institutionsHeading": "Institutes",
+  "institutionsHeading": "Institutions",
   "facultiesHeading": "Faculties",
   "seeMore": "See more",
 
@@ -18,11 +18,17 @@
   },
 
   "institutions": {
-    "GEOLOGY": "Educational and Scientific Institute 'Institute of Geology'",
     "MILITARY": "Military Institute",
     "SECURITY": "Institute of State Security Administration",
     "POSTGRADUATE": "Institute of Postgraduate Education",
-    "SCIENTIFIC": "Educational and Scientific Institute"
+    "GEOLOGY": "Educational and Scientific Institute 'Institute of Geology'",
+    "JOURNALISM": "Educational and Scientific Institute of Journalism",
+    "HIGHTECH": "Educational and Scientific Institute of High Technologies",
+    "INTRELATIONS": "Educational and Scientific Institute of International Relations",
+    "LAW": "Educational and Scientific Institute of Law",
+    "PHILOLOGY": "Educational and Scientific Institute of Philology",
+    "CIVILADMIN": "Educational and Scientific Institute of Public Administration and Civil Service",
+    "MEDICINE": "Educational and Scientific Center “Institute of Biology and Medicine”"
   },
 
   "faculties": {
@@ -30,7 +36,14 @@
     "ECONOMICS": "Faculty of Economics",
     "HISTORY": "Faculty of History",
     "MECHMATH": "Faculty of Mechanics and Mathematics",
-    "INFOTECH": "Faculty of Information Technology"
+    "INFOTECH": "Faculty of Information Technology",
+    "CYBERNETICS": "Computer Science and Cybernetics Department",
+    "PSYCHOLOGY": "Psychology Department",
+    "RADIOPHYSICS": "Radiophysics, Electronics, and Computer Systems Department",
+    "SOCIOLOGY": "Sociology Department",
+    "PHYSICS": "Department of Physics",
+    "PHILOSOPHY": "Department of Philosophy",
+    "CHEMISTRY": "Department of Chemistry"
   },
 
   "authentication": {
