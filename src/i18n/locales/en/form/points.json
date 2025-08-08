@@ -4,14 +4,14 @@
     "trial": "We are considering it",
     "discussion": "We discuss all the details of the work",
     "execution": "We do the work",
-    "completed": "The work is done"
+    "completed": "The work is done, you can continue to work without problems"
   },
 
   "pointTexts": {
-    "request": "The Red Building of the University, which in itself is part of the history and cultural heritage of Ukraine. However, behind the walls of this classical architectural ensemble, modern life has been and continues to be turbulent: programming trainings are held here",
-    "trial": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ligula consequat, pharetra elit in, finibus tellus. Suspendisse id nisi sollicitudin magna venenatis imperdiet. Fusce convallis, velit eu consectetur scelerisque, orci ex ultricies magna, vel bibendum quam leo quis lacus. Curabitur ac nisi neque. Fusce id pretium metus. Curabitur hendrerit tincidunt leo ac pharetra. Nullam hendrerit feugiat tortor rutrum feugiat. Duis accumsan at tortor a pellentesque. Nunc lobortis nisl eu dui suscipit consectetur. Nulla sit amet convallis nunc, sit amet elementum ante.",
-    "discussion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ligula consequat, pharetra elit in, finibus tellus. Suspendisse id nisi sollicitudin magna venenatis imperdiet. Fusce convallis, velit eu consectetur scelerisque, orci ex ultricies magna, vel bibendum quam leo quis lacus. Curabitur ac nisi neque. Fusce id pretium metus. Curabitur hendrerit tincidunt leo ac pharetra. Nullam hendrerit feugiat tortor rutrum feugiat. Duis accumsan at tortor a pellentesque. Nunc lobortis nisl eu dui suscipit consectetur. Nulla sit amet convallis nunc, sit amet elementum ante.",
-    "execution": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ligula consequat, pharetra elit in, finibus tellus. Suspendisse id nisi sollicitudin magna venenatis imperdiet. Fusce convallis, velit eu consectetur scelerisque, orci ex ultricies magna, vel bibendum quam leo quis lacus. Curabitur ac nisi neque. Fusce id pretium metus. Curabitur hendrerit tincidunt leo ac pharetra. Nullam hendrerit feugiat tortor rutrum feugiat. Duis accumsan at tortor a pellentesque. Nunc lobortis nisl eu dui suscipit consectetur. Nulla sit amet convallis nunc, sit amet elementum ante.",
-    "completed": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ligula consequat, pharetra elit in, finibus tellus. Suspendisse id nisi sollicitudin magna venenatis imperdiet. Fusce convallis, velit eu consectetur scelerisque, orci ex ultricies magna, vel bibendum quam leo quis lacus. Curabitur ac nisi neque. Fusce id pretium metus. Curabitur hendrerit tincidunt leo ac pharetra. Nullam hendrerit feugiat tortor rutrum feugiat. Duis accumsan at tortor a pellentesque. Nunc lobortis nisl eu dui suscipit consectetur. Nulla sit amet convallis nunc, sit amet elementum ante."
+    "request": "Fill out a short form indicating your name, email, faculty, description of the malfunction and a photo of the malfunction. Once submitted, we will receive your application in the system.",
+    "trial": "Our specialists review the information provided. If necessary, we contact you to clarify the details.",
+    "discussion": "We clarify the nature of the breakdown, the necessary actions, timing and, if necessary, the cost of parts. We agree on further steps.",
+    "execution": "We diagnose and repair or maintain the device. We comply with the agreed terms and conditions.",
+    "completed": "We notify you of the completion of the work. We hand over the repaired device and provide a report on what has been done.)"
   }
 }

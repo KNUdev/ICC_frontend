@@ -3,23 +3,23 @@
     "items": [
       {
         "title": "What services do you offer?",
-        "content": "The center is located in a symbolic place — the Red Building of the university, which is itself a part of Ukraine's history and cultural heritage. However, behind the walls of this classical architectural ensemble, modern life has thrived and continues to thrive..."
+        "content": "We diagnose, repair and configure computers, laptops, peripherals and network equipment. We also help with software and system updates."
       },
       {
         "title": "How can I contact you?",
-        "content": "Answer to the second question."
+        "content": "After filling out the application, we will contact you ourselves at the specified e-mail. You can also write to us by email or through the internal portal."
       },
       {
         "title": "How secure is my data?",
-        "content": "Answer to the third question."
+        "content": "Your personal data is only used to process the application. They are stored securely and are not shared with third parties."
       },
       {
-        "title": "How can I contact you?",
-        "content": "Answer to the second question."
+        "title": "How long does it take to renovate?",
+        "content": "The lead time depends on the complexity of the problem, usually between 3 and 7 business days. In difficult cases, the terms are agreed individually."
       },
       {
-        "title": "How secure is my data?",
-        "content": "Answer to the third question."
+        "title": "Can I cancel my application?",
+        "content": "Yes, just let us know via email or in response to a message from our employee."
       }
     ]
 }

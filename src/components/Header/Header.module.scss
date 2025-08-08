@@ -1,8 +1,7 @@
 #header {
   font-family: Inter, sans-serif;
   background: #fff;
-  padding: 1.5625rem 2.5rem;
-
+  padding: 1.5625rem 0;
 
   & > div {
     display: flex;
@@ -11,20 +10,11 @@
   }
 }
 
-.logoContainer {
+.navLogoWrapper {
   display: flex;
   align-items: center;
-}
-
-.headerLogo {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.nav {
+  gap: 3.125rem;
   flex-grow: 1;
-  margin: 0 2rem;
 }
 
 .navList {
@@ -34,6 +24,13 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  color: #6d6d6d;
+
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .navList > li {
@@ -42,24 +39,38 @@
   font-weight: 500;
   line-height: normal;
   letter-spacing: 0.005rem;
+  flex-shrink: 0;
+}
+
+.userPanel {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
 }
 
 .authButtons {
   display: flex;
   align-items: center;
   gap: 0.625rem;
+  width: 100%;
 }
 
-.loginButton {
+.loginButton,
+.registerButton {
+  flex: 1;
+  box-sizing: border-box;
+
   display: flex;
-  background: #ff525e;
-  color: #fff;
   text-decoration: none;
-  height: 3.125rem;
   padding: 0.9375rem 1.25rem;
   justify-content: center;
   align-items: center;
   gap: 0.625rem;
+}
+
+.loginButton {
+  background: #ff525e;
+  color: #fff;
 
   &:hover {
     background: #e71735;
@@ -71,15 +82,8 @@
 }
 
 .registerButton {
-  display: flex;
   border: 1px solid #ff525e;
   color: #6d6d6d;
-  text-decoration: none;
-  height: 3.125rem;
-  padding: 0.9375rem 1.25rem;
-  justify-content: center;
-  align-items: center;
-  gap: 0.625rem;
 
   &:hover {
     background: #ffa1a6;
@@ -92,11 +96,6 @@
   }
 }
 
-.userPanel {
-  display: flex;
-  align-items: center;
-}
-
 .languageSwitcher {
   position: relative;
   display: inline-block;
@@ -104,8 +103,8 @@
 
 .toggleButton {
   display: flex;
-  width: 7rem;
-  padding: 0.625rem 0rem;
+  max-width: 7.75rem;
+  padding: 0.9375rem 1.25rem;
   align-items: center;
   gap: 0.625rem;
   cursor: pointer;
@@ -118,11 +117,11 @@
 .dropdown {
   position: absolute;
   display: flex;
-  width: 7rem;
+  max-width: 7rem;
   padding: 0.9375rem;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.625rem;
   background: #fff;
   box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.15);
@@ -136,14 +135,19 @@
   margin: 0;
 }
 
-.option {
+.option,
+.active {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
+  justify-content: space-between;
+  width: 100%;
   cursor: pointer;
+  padding: 0.5rem;
   transition: background 0.2s ease;
+  gap: 0.5rem;
+}
 
+.option {
   &:hover {
     background: #f6f6f6;
   }
@@ -153,9 +157,8 @@
   }
 }
 
-.active {
+.flagTextContainer {
   display: flex;
-  padding: 0.9375rem;
   align-items: center;
   gap: 0.625rem;
 }
