@@ -1,7 +1,7 @@
 #header {
   font-family: Inter, sans-serif;
   background: #fff;
-  padding: 1.5625rem 2rem;
+  padding: 1.5625rem 0;
 
   & > div {
     display: flex;
@@ -161,5 +161,5 @@
 .flagTextContainer {
   display: flex;
   align-items: center;
-  gap: 0.3125rem;
+  gap: 0.625rem;
 }

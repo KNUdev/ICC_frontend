@@ -1,5 +1,8 @@
 {
-  "title": "Hello!",
+  "heading": "<span>Information and Computing Center</span> of Taras Shevchenko National University of Kyiv",
+  "subheading": "<span>“</span> The Information and Computing Center of Taras Shevchenko National University of Kyiv provides a reliable IT infrastructure for the educational, scientific, and administrative needs of the university. We implement modern technologies to support digital development and continuous improvement of university services <span>”</span>",
+  "historyHeading": "History of ICC",
+  "historySubheading": "The Information and Computing Center (ICC) was established as a structural unit of the university in the 1970s to implement computing technology in scientific and educational activities. Initially, the center served only a few faculties, using mainframes and punch cards. In the 1990s, ICC adapted to the rapid development of personal computers and local networks. In the 2000s, the center became the foundation for the digitalization of the university, implementing electronic journals, internal portals, and web services. Today, ICC is a modern IT infrastructure center that supports education, science, and management at the university.",
   "faq": {
     "title": "Frequently Asked Questions"
   }
