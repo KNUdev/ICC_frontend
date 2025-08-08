@@ -19,9 +19,9 @@
 }
 
 .layout-wrapper {
-  background: #fff;
   max-width: 115rem;
-  margin: 0 auto;
+  padding: 0 2rem;
+  justify-content: center;
   width: 100%;
 }
 
@@ -34,4 +34,3 @@
 html {
   scroll-behavior: smooth;
 }
-
