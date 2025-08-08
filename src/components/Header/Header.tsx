@@ -12,7 +12,14 @@ export function Header() {
     <header id={styles.header} role='contentinfo'>
       <div className='layout-wrapper'>
         <div className={styles.navLogoWrapper}>
-          <LogoIcc aria-label='iccIcon' role='img' />
+          <LogoIcc
+            aria-label='iccIcon'
+            role='img'
+            alt={`${tCommon('titleFullName')} logo`}
+            width={70}
+            height={37}
+            priority
+          />
 
           <nav role='navigation' aria-label='Header navigation'>
             <ul className={styles.navList} role='list'>

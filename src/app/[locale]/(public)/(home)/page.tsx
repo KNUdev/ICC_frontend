@@ -13,7 +13,7 @@ export default function HomePage() {
   const tCommon = useTranslations('common')
 
   return (
-    <div className={style.homePage + ' layout-wrapper'}>
+    <div className={style.homePage + ' main-wrapper'}>
       <div className={style.into}>
         <div>
           <h1>
