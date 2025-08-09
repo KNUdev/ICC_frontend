@@ -1,0 +1,10 @@
+@import '../../../styles/variables.scss';
+
+.modalActions {
+  display: block;
+  margin-top: 1.5rem;
+
+  @include mobile {
+    flex-direction: column;
+  }
+}
