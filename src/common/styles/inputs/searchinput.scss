@@ -1,0 +1,113 @@
+$primary-border-color: #d1d1d1;
+$primary-background-color: #f6f6f6;
+$primary-text-color: #6d6d6d;
+$hover-border-color: #888;
+$focus-border-color: #ff525e;
+$typed-text-color: #3d3d3d;
+
+.searchContainer {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  gap: 0.625rem;
+
+  flex: 1;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.9375rem;
+
+  &:has(input:focus:not(:placeholder-shown)) {
+    border: 1px solid $focus-border-color;
+    background: $primary-background-color;
+  }
+}
+
+.searchInput {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  flex: 1;
+
+  background-color: transparent;
+  color: $primary-text-color;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.375rem;
+  letter-spacing: 0.005rem;
+
+  &:not(:focus):not(:placeholder-shown) {
+    color: $typed-text-color;
+  }
+
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+.searchInput:focus:not(:placeholder-shown) {
+  border: none;
+  background-color: transparent;
+  caret-color: $focus-border-color;
+  color: $typed-text-color;
+}
+
+.searchContainer:hover {
+  border: 1px solid $hover-border-color;
+  background: $primary-background-color;
+}
+
+.searchContainer:has(input:focus) {
+  border: 1px solid $focus-border-color;
+  background-color: $primary-background-color;
+}
+
+.searchContainer:active {
+  border: 1px solid $focus-border-color;
+  background: $primary-background-color;
+}
+
+.searchContainer > svg {
+  fill: #888;
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+
+.clearBtn {
+  border: none;
+  background: transparent;
+
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #3d3d3d;
+
+  &:hover {
+    color: #ff525e;
+  }
+
+  &:active {
+    color: #a30e2c;
+  }
+}
+
+.clearBtn > svg {
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.2s ease, fill 0.2s ease;
+}

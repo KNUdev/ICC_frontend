@@ -1,0 +1,80 @@
+$text-primary-color: #3d3d3d;
+$label-primary-color: #272727;
+$border-primary-color: #d1d1d1;
+$background-primary-color: #fff;
+
+.staffSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: stretch;
+
+  gap: 6.25rem;
+}
+
+.filtersArticle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: stretch;
+
+  gap: 1.5625rem;
+  padding: 1.5625rem;
+
+  border: 1px solid $border-primary-color;
+  background: $background-primary-color;
+}
+
+.filterHeading {
+  color: $text-primary-color;
+
+  font-family: Geologica;
+  font-size: 1.5625rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.03125rem;
+  text-transform: uppercase;
+}
+
+.label {
+  color: $label-primary-color;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.searchFilterContainer {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+
+  gap: 3.75rem;
+}
+
+.searchTextContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: 100%;
+  max-width: 54.25rem;
+  gap: 0.9375rem;
+}
+
+.specialtyFilterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: 0.9375rem;
+  flex: 1 0 0;
+}
