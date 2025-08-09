@@ -1,15 +1,26 @@
 'use client'
 
+import { useState, useRef } from 'react'
 import AlignArrowUpIcon from '@/assets/image/icons/align-arrow-up-line.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
 import CloseIcon from '@/assets/image/icons/form/close.svg'
-import styles from './Staff.module.scss'
 import Hyperlink from '@/common/components/Hyperlink/Hyperlink'
-import { useState, useRef } from 'react'
+import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
+import styles from './Staff.module.scss'
 
 export function Staff() {
   const [searchValue, setSearchValue] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const [specialty, setSpecialty] = useState<string | null>(null)
+
+  const specialties = [
+    { value: 'engineer', label: 'Інженер' },
+    { value: 'teacher', label: 'Викладач' },
+    { value: 'doctor', label: 'Лікар' },
+    { value: 'designer', label: 'Дизайнер' },
+    { value: 'manager', label: 'Менеджер' },
+  ]
 
   const handleClear = () => {
     setSearchValue('')
@@ -52,8 +63,18 @@ export function Staff() {
             <div className={styles.specialtyFilterContainer}>
               <label className={styles.label}>Професія</label>
 
-              <input placeholder='Інженер' />
-              {/* //TODO: where input place DropDownInput with fetched specialties */}
+              <DropDownInput
+                options={specialties}
+                placeholder='Інженер'
+                value={specialty}
+                onOpen={() => {
+                  //TODO: fetch here when it will work
+                }}
+                onSelect={(val) => setSpecialty(val)}
+                onValidate={(isValid) => {
+                  console.log('Specialty valid?', isValid)
+                }}
+              />
             </div>
           </div>
         </article>
