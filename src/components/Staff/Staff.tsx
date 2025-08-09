@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { useLocale } from 'next-intl'
 import AlignArrowUpIcon from '@/assets/image/icons/align-arrow-up-line.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
@@ -33,10 +33,6 @@ export function Staff() {
   const [specialties, setSpecialties] = useState<SpecialtyOption[]>([])
 
   const locale = useLocale()
-
-  useEffect(() => {
-    fetchSpecialties()
-  }, [])
 
   const fetchSpecialties = async () => {
     try {
@@ -115,9 +111,7 @@ export function Staff() {
                 options={specialties}
                 placeholder='Інженер'
                 value={specialty}
-                onOpen={() => {
-                  //TODO: fetch here when it will work
-                }}
+                onOpen={fetchSpecialties}
                 onSelect={(val) => setSpecialty(val)}
                 onValidate={(isValid) => {
                   console.log('Specialty valid?', isValid)
