@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { useLocale } from 'next-intl'
 import AlignArrowUpIcon from '@/assets/image/icons/align-arrow-up-line.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
 import CloseIcon from '@/assets/image/icons/form/close.svg'
@@ -8,19 +9,66 @@ import Hyperlink from '@/common/components/Hyperlink/Hyperlink'
 import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
 import styles from './Staff.module.scss'
 
+const api = process.env.NEXT_PUBLIC_API_URL
+
+interface SpecialtyOption {
+  value: string
+  label: string
+}
+
+interface Specialty {
+  id: string
+  name: {
+    [key: string]: string | undefined
+    en?: string
+    uk?: string
+  }
+}
+
 export function Staff() {
   const [searchValue, setSearchValue] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [specialty, setSpecialty] = useState<string | null>(null)
+  const [specialties, setSpecialties] = useState<SpecialtyOption[]>([])
 
-  const specialties = [
-    { value: 'engineer', label: 'Інженер' },
-    { value: 'teacher', label: 'Викладач' },
-    { value: 'doctor', label: 'Лікар' },
-    { value: 'designer', label: 'Дизайнер' },
-    { value: 'manager', label: 'Менеджер' },
-  ]
+  const locale = useLocale()
+
+  useEffect(() => {
+    fetchSpecialties()
+  }, [])
+
+  const fetchSpecialties = async () => {
+    try {
+      const response = await fetch(`${api}specialty/getAll`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pageNumber: 0,
+          pageSize: 10,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const result = await response.json()
+      console.log(result)
+
+      const mapped: SpecialtyOption[] =
+        result?.content?.map((item: Specialty) => ({
+          value: item.id,
+          label: item.name?.[locale] || item.name?.en || '',
+        })) ?? []
+
+      setSpecialties(mapped)
+    } catch (error) {
+      console.error('Error fetching applications:', error)
+    }
+  }
 
   const handleClear = () => {
     setSearchValue('')
@@ -79,9 +127,7 @@ export function Staff() {
           </div>
         </article>
 
-        <article>
-          {/* //TODO: workers filter with quantity of workers on page at the moment */}
-        </article>
+        <article></article>
 
         <ul>
           {/* //TODO: fetch employees and place them in grid layout 3 in row li */}
