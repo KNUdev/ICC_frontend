@@ -493,61 +493,68 @@ const AddNewWorker = () => {
                     <div className={styles.inputsContainer}>
                       <div className={styles.inputGroup}>
                         <div className={styles.inputRow}>
-                          <div className={styles.fieldWrapper}>
-                            <div className={styles.inputWrapper}>
-                              <input
-                                type='text'
-                                name='firstName'
-                                placeholder={t('generalInfo.firstName')}
-                                className='inputText'
-                                onChange={() => clearFieldError('firstName')}
+                          <div className={styles.inputGroup}>
+                            <label>{t('generalInfo.firstNameLabel')}</label>
+                            <div className={styles.fieldWrapper}>
+                              <div className={styles.inputWrapper}>
+                                <input
+                                  type='text'
+                                  name='firstName'
+                                  placeholder={t('generalInfo.firstName')}
+                                  className='inputText'
+                                  onChange={() => clearFieldError('firstName')}
+                                />
+                              </div>
+                              <FieldError
+                                error={
+                                  hasSubmittedOnce
+                                    ? formErrors.firstName
+                                    : undefined
+                                }
                               />
                             </div>
-                            <FieldError
-                              error={
-                                hasSubmittedOnce
-                                  ? formErrors.firstName
-                                  : undefined
-                              }
-                            />
                           </div>
-
-                          <div className={styles.fieldWrapper}>
-                            <div className={styles.inputWrapper}>
-                              <input
-                                type='text'
-                                name='lastName'
-                                placeholder={t('generalInfo.lastName')}
-                                className='inputText'
-                                onChange={() => clearFieldError('lastName')}
+                          <div className={styles.inputGroup}>
+                            <label>{t('generalInfo.lastNameLabel')}</label>
+                            <div className={styles.fieldWrapper}>
+                              <div className={styles.inputWrapper}>
+                                <input
+                                  type='text'
+                                  name='lastName'
+                                  placeholder={t('generalInfo.lastName')}
+                                  className='inputText'
+                                  onChange={() => clearFieldError('lastName')}
+                                />
+                              </div>
+                              <FieldError
+                                error={
+                                  hasSubmittedOnce
+                                    ? formErrors.lastName
+                                    : undefined
+                                }
                               />
                             </div>
-                            <FieldError
-                              error={
-                                hasSubmittedOnce
-                                  ? formErrors.lastName
-                                  : undefined
-                              }
-                            />
                           </div>
-
-                          <div className={styles.fieldWrapper}>
-                            <div className={styles.inputWrapper}>
-                              <input
-                                type='text'
-                                name='middleName'
-                                placeholder={t('generalInfo.middleName')}
-                                className='inputText'
-                                onChange={() => clearFieldError('middleName')}
+                          <div className={styles.inputGroup}>
+                            <label>{t('generalInfo.middleNameLabel')}</label>
+                            <div className={styles.fieldWrapper}>
+                              <div className={styles.inputWrapper}>
+                                <input
+                                  type='text'
+                                  name='middleName'
+                                  placeholder={t('generalInfo.middleName')}
+                                  className='inputText'
+                                  onChange={() => clearFieldError('middleName')}
+                                />
+                              </div>
+                              <FieldError
+                                error={
+                                  hasSubmittedOnce
+                                    ? formErrors.middleName
+                                    : undefined
+                                }
                               />
                             </div>
-                            <FieldError
-                              error={
-                                hasSubmittedOnce
-                                  ? formErrors.middleName
-                                  : undefined
-                              }
-                            />
                           </div>
                         </div>
                       </div>
@@ -571,21 +578,26 @@ const AddNewWorker = () => {
                       </div>
                       <div className={styles.inputGroup}>
                         <div className={styles.inputRow}>
-                          <div className={styles.fieldWrapper}>
-                            <div className={styles.inputWrapper}>
-                              <input
-                                type='email'
-                                name='email'
-                                placeholder={t('generalInfo.email')}
-                                className='inputText'
-                                onChange={() => clearFieldError('email')}
+                          <div className={styles.inputGroup}>
+                            <label>{t('generalInfo.emailLabel')}</label>
+                            <div className={styles.fieldWrapper}>
+                              <div className={styles.inputWrapper}>
+                                <input
+                                  type='email'
+                                  name='email'
+                                  placeholder={t('generalInfo.email')}
+                                  className='inputText'
+                                  onChange={() => clearFieldError('email')}
+                                />
+                              </div>
+                              <FieldError
+                                error={
+                                  hasSubmittedOnce
+                                    ? formErrors.email
+                                    : undefined
+                                }
                               />
                             </div>
-                            <FieldError
-                              error={
-                                hasSubmittedOnce ? formErrors.email : undefined
-                              }
-                            />
                           </div>
                         </div>
                         <div className={styles.inputRow}>

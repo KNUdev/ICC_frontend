@@ -11,26 +11,30 @@
 
   "generalInfo": {
     "title": "ЗАГАЛЬНА ІНФОРМАЦІЯ",
+    "firstNameLabel": "Ім'я *",
     "firstName": "Введіть ім'я...",
+    "lastNameLabel": "Прізвище *",
     "lastName": "Введіть прізвище...",
+    "middleNameLabel": "По батькові *",
     "middleName": "Введіть по батькові...",
     "isStudent": "Є студентом",
+    "emailLabel": "Email *",
     "email": "Введіть номер email...",
     "phoneLabel": "Номер телефону *",
-    "phonePlaceholder": "+380(786)376-36-52"
+    "phonePlaceholder": "Введіть номер телефону..."
   },
 
   "salary": {
     "title": "ЗАРПЛАТНЯ",
     "label": "Сума в гривнях *",
-    "placeholder": "10 000"
+    "placeholder": "Введіть суму..."
   },
 
   "specialty": {
     "title": "ІНФОРМАЦІЯ ПРО СПЕЦІАЛЬНІСТЬ",
     "specialtyLabel": "Спеціальність *",
     "sectorLabel": "Сектор *",
-    "specialtyPlaceholder": "Оператор машинного відділу",
+    "specialtyPlaceholder": "Оберіть спеціальність",
     "sectorPlaceholder": "Оберіть сектор"
   },
 

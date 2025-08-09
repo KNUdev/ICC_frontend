@@ -15,7 +15,8 @@ $border-radius-small: 0px;
 $border-radius-tiny: 0px;
 @mixin label-style {
   display: flex;
-  width: 18.0625rem;
+  width: 100%;
+  max-width: 18.0625rem;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.9375rem;
@@ -41,7 +42,6 @@ $border-radius-tiny: 0px;
 @mixin input-row-base {
   display: flex;
   gap: 1.5625rem;
-  flex-wrap: wrap;
 }
 
 @mixin input-field-base {
@@ -67,7 +67,6 @@ $border-radius-tiny: 0px;
 
 @mixin input-group-base {
   flex: 1;
-  min-width: 200px;
   display: flex;
   flex-direction: column;
   gap: 0.9375rem;
@@ -160,7 +159,6 @@ $border-radius-tiny: 0px;
   gap: 2.8125rem;
 }
 
-// Field wrapper styles for form inputs
 .fieldWrapper {
   display: flex;
   flex-direction: column;
@@ -187,7 +185,7 @@ $border-radius-tiny: 0px;
 
 .mainWrapper {
   display: flex;
-  width: 93.5rem;
+  width: 100%;
   max-width: 93.5rem;
   flex-direction: column;
   justify-content: center;
@@ -196,7 +194,8 @@ $border-radius-tiny: 0px;
 }
 
 .startpage {
-  width: 93.5rem;
+  width: 100%;
+  max-width: 93.5rem;
   display: flex;
   flex-direction: column;
   gap: 2.1875rem;
@@ -235,7 +234,8 @@ $border-radius-tiny: 0px;
 }
 
 .pagecontin {
-  width: 93.5rem;
+  width: 100%;
+  max-width: 93.5rem;
   margin-bottom: 5rem;
 
   .form {
@@ -295,13 +295,13 @@ $border-radius-tiny: 0px;
         }
 
         .photoUpload {
-          width: 25rem;
+          width: 100%;
           max-width: 25rem;
           margin: 0;
           align-self: flex-start;
 
           .photoPlaceholder {
-            width: 25rem;
+            width: 100%;
             max-width: 25rem;
             height: 19.8125rem;
           }
@@ -573,12 +573,12 @@ $border-radius-tiny: 0px;
         }
 
         .inputRow {
-          width: 25rem;
+          width: 100%;
           max-width: 25rem;
           margin: 0;
 
           .inputGroup {
-            width: 25rem;
+            width: 100%;
             max-width: 25rem;
 
             input {
@@ -690,7 +690,6 @@ $border-radius-tiny: 0px;
     .contractInfo {
       flex: 1;
       width: 100%;
-      min-width: 250px;
       display: flex;
       flex-direction: column;
       gap: 1.5625rem;
@@ -1006,7 +1005,8 @@ $border-radius-tiny: 0px;
   gap: 0.625rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 93.5rem;
+  width: 100%;
+  max-width: 93.5rem;
 
   .scrollIcon {
     width: 20px;
