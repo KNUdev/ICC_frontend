@@ -76,12 +76,17 @@ export function Staff() {
 
   const [employees, setEmployees] = useState<Employee[]>([])
 
+  const [pageSize, setPageSize] = useState<number | 'all'>(10)
+
   const locale = useLocale()
 
   const fetchEmployees = useCallback(async () => {
     try {
       const formData = new FormData()
-      formData.append('pageSize', '10')
+      formData.append(
+        'pageSize',
+        pageSize === 'all' ? String(999) : String(pageSize),
+      )
 
       const response = await fetch(`${api}admin/employee/all`, {
         method: 'POST',
@@ -99,7 +104,7 @@ export function Staff() {
     } catch (error) {
       console.error('Error fetching employees:', error)
     }
-  }, [])
+  }, [pageSize])
 
   const fetchSectors = useCallback(async () => {
     try {
@@ -164,9 +169,12 @@ export function Staff() {
 
   useEffect(() => {
     fetchEmployees()
+  }, [fetchEmployees])
+
+  useEffect(() => {
     fetchSpecialties()
     fetchSectors()
-  }, [fetchEmployees, fetchSpecialties, fetchSectors])
+  }, [fetchSpecialties, fetchSectors])
 
   const getSpecialtyName = (specialtyId: string) => {
     const spec = specialties.find((s) => s.value === specialtyId)
@@ -234,15 +242,27 @@ export function Staff() {
           <h1 className={styles.workersHeading}>Робітників на сторінку</h1>
 
           <div className={styles.buttonsContainer}>
-            <button type='button' className='chooseBtn'>
+            <button
+              type='button'
+              className={`chooseBtn ${pageSize === 10 ? styles.active : ''}`}
+              onClick={() => setPageSize(10)}
+            >
               10
             </button>
 
-            <button type='button' className='chooseBtn'>
+            <button
+              type='button'
+              className={`chooseBtn ${pageSize === 20 ? styles.active : ''}`}
+              onClick={() => setPageSize(20)}
+            >
               20
             </button>
 
-            <button type='button' className='chooseBtn'>
+            <button
+              type='button'
+              className={`chooseBtn ${pageSize === 'all' ? styles.active : ''}`}
+              onClick={() => setPageSize('all')}
+            >
               УСІ
             </button>
           </div>
