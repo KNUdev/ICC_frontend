@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useLocale } from 'next-intl'
+import Image from 'next/image'
 import AlignArrowUpIcon from '@/assets/image/icons/align-arrow-up-line.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
 import CloseIcon from '@/assets/image/icons/form/close.svg'
@@ -25,6 +26,31 @@ interface Specialty {
   }
 }
 
+interface Employee {
+  avatarUrl: string
+  contractEndDate: [number, number, number]
+  createdAt: [number, number, number, number, number, number, number]
+  email: string
+  id: string
+  isStudent: boolean
+  name: {
+    firstName: string
+    middleName: string
+    lastName: string
+  }
+  phoneNumber: string
+  sector: {
+    id: string
+  }
+  specialty: {
+    id: string
+  }
+  workHours: {
+    startTime: string
+    endTime: string
+  }
+}
+
 export function Staff() {
   const [searchValue, setSearchValue] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -32,7 +58,36 @@ export function Staff() {
   const [specialty, setSpecialty] = useState<string | null>(null)
   const [specialties, setSpecialties] = useState<SpecialtyOption[]>([])
 
+  const [employees, setEmployees] = useState<Employee[]>([])
+
   const locale = useLocale()
+
+  useEffect(() => {
+    fetchEmployees()
+  }, [])
+
+  const fetchEmployees = async () => {
+    try {
+      const formData = new FormData()
+      formData.append('pageSize', '10')
+
+      const response = await fetch(`${api}admin/employee/all`, {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const result = await response.json()
+      console.log(result)
+
+      setEmployees(result.content)
+    } catch (error) {
+      console.error('Error fetching employees:', error)
+    }
+  }
 
   const fetchSpecialties = async () => {
     try {
@@ -62,7 +117,7 @@ export function Staff() {
 
       setSpecialties(mapped)
     } catch (error) {
-      console.error('Error fetching applications:', error)
+      console.error('Error fetching specialties:', error)
     }
   }
 
@@ -113,9 +168,6 @@ export function Staff() {
                 value={specialty}
                 onOpen={fetchSpecialties}
                 onSelect={(val) => setSpecialty(val)}
-                onValidate={(isValid) => {
-                  console.log('Specialty valid?', isValid)
-                }}
               />
             </div>
           </div>
@@ -139,8 +191,23 @@ export function Staff() {
           </div>
         </article>
 
-        <ul>
-          {/* //TODO: fetch employees and place them in grid layout 3 in row li */}
+        <ul className={styles.employeeList}>
+          {employees.length === 0 ? (
+            <p role='status'>No results</p>
+          ) : (
+            employees.map((employee) => (
+              <li key={employee.id} className={styles.employeeListItem}>
+                <Image
+                  src={employee.avatarUrl}
+                  alt='avatar'
+                  width={150}
+                  height={150}
+                  unoptimized
+                  className={styles.employeePhoto}
+                />
+              </li>
+            ))
+          )}
         </ul>
 
         <Hyperlink href='/staff' icon={AlignArrowUpIcon}>
