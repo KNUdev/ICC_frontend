@@ -18,4 +18,8 @@ export const NAMESPACES = [
   'form/points',
   'form/success',
   'faq',
+  'AddNewWorker/common',
+  'Auth/warning',
+  'Auth/singIn',
+  'Auth/singUp',
 ]
