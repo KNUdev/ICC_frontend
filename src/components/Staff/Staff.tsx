@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useLocale } from 'next-intl'
 import Image from 'next/image'
 import AlignArrowUpIcon from '@/assets/image/icons/align-arrow-up-line.svg'
@@ -62,11 +62,7 @@ export function Staff() {
 
   const locale = useLocale()
 
-  useEffect(() => {
-    fetchEmployees()
-  }, [])
-
-  const fetchEmployees = async () => {
+  const fetchEmployees = useCallback(async () => {
     try {
       const formData = new FormData()
       formData.append('pageSize', '10')
@@ -87,9 +83,9 @@ export function Staff() {
     } catch (error) {
       console.error('Error fetching employees:', error)
     }
-  }
+  }, [])
 
-  const fetchSpecialties = async () => {
+  const fetchSpecialties = useCallback(async () => {
     try {
       const response = await fetch(`${api}specialty/getAll`, {
         method: 'POST',
@@ -119,6 +115,16 @@ export function Staff() {
     } catch (error) {
       console.error('Error fetching specialties:', error)
     }
+  }, [locale])
+
+  useEffect(() => {
+    fetchEmployees()
+    fetchSpecialties()
+  }, [fetchEmployees, fetchSpecialties])
+
+  const getSpecialtyName = (specialtyId: string) => {
+    const spec = specialties.find((s) => s.value === specialtyId)
+    return spec ? spec.label : ''
   }
 
   const handleClear = () => {
@@ -196,7 +202,13 @@ export function Staff() {
             <p role='status'>No results</p>
           ) : (
             employees.map((employee) => (
-              <li key={employee.id} className={styles.employeeListItem}>
+              <li
+                key={employee.id}
+                className={styles.employeeListItem}
+                data-name={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
+                data-email={employee.email}
+                data-specialty={getSpecialtyName(employee.specialty.id)}
+              >
                 <Image
                   src={employee.avatarUrl}
                   alt='avatar'
