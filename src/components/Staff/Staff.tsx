@@ -12,6 +12,20 @@ import styles from './Staff.module.scss'
 
 const api = process.env.NEXT_PUBLIC_API_URL
 
+interface SectorOption {
+  value: string
+  label: string
+}
+
+interface SectorItem {
+  id: string
+  name: {
+    [key: string]: string | undefined
+    en?: string
+    uk?: string
+  }
+}
+
 interface SpecialtyOption {
   value: string
   label: string
@@ -55,6 +69,8 @@ export function Staff() {
   const [searchValue, setSearchValue] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const [sectors, setSectors] = useState<SectorOption[]>([])
+
   const [specialty, setSpecialty] = useState<string | null>(null)
   const [specialties, setSpecialties] = useState<SpecialtyOption[]>([])
 
@@ -84,6 +100,35 @@ export function Staff() {
       console.error('Error fetching employees:', error)
     }
   }, [])
+
+  const fetchSectors = useCallback(async () => {
+    try {
+      const response = await fetch(`${api}sector/all`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          pageNumber: 0,
+          pageSize: 10,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const result = await response.json()
+
+      const mapped: SectorOption[] =
+        (result?.content as SectorItem[])?.map((item) => ({
+          value: item.id,
+          label: item.name?.[locale] || item.name?.en || '',
+        })) ?? []
+
+      setSectors(mapped)
+    } catch (error) {
+      console.error('Error fetching sectors:', error)
+    }
+  }, [locale])
 
   const fetchSpecialties = useCallback(async () => {
     try {
@@ -120,11 +165,17 @@ export function Staff() {
   useEffect(() => {
     fetchEmployees()
     fetchSpecialties()
-  }, [fetchEmployees, fetchSpecialties])
+    fetchSectors()
+  }, [fetchEmployees, fetchSpecialties, fetchSectors])
 
   const getSpecialtyName = (specialtyId: string) => {
     const spec = specialties.find((s) => s.value === specialtyId)
     return spec ? spec.label : ''
+  }
+
+  const getSectorName = (sectorId: string) => {
+    const sec = sectors.find((s) => s.value === sectorId)
+    return sec ? sec.label : ''
   }
 
   const handleClear = () => {
@@ -208,10 +259,13 @@ export function Staff() {
                 data-name={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
                 data-email={employee.email}
                 data-specialty={getSpecialtyName(employee.specialty.id)}
+                data-phonenumber={employee.phoneNumber}
+                data-isstudent={employee.isStudent}
+                data-sector={getSectorName(employee.sector.id)}
               >
                 <Image
                   src={employee.avatarUrl}
-                  alt='avatar'
+                  alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
                   width={150}
                   height={150}
                   unoptimized
