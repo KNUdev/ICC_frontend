@@ -121,7 +121,23 @@ export function Staff() {
           </div>
         </article>
 
-        <article></article>
+        <article className={styles.workersArticle}>
+          <h1 className={styles.workersHeading}>Робітників на сторінку</h1>
+
+          <div className={styles.buttonsContainer}>
+            <button type='button' className='chooseBtn'>
+              10
+            </button>
+
+            <button type='button' className='chooseBtn'>
+              20
+            </button>
+
+            <button type='button' className='chooseBtn'>
+              УСІ
+            </button>
+          </div>
+        </article>
 
         <ul>
           {/* //TODO: fetch employees and place them in grid layout 3 in row li */}

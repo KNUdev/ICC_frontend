@@ -28,6 +28,7 @@ $background-primary-color: #fff;
 }
 
 .filterHeading {
+  text-transform: uppercase;
   color: $text-primary-color;
 
   font-family: Geologica;
@@ -77,4 +78,36 @@ $background-primary-color: #fff;
 
   gap: 0.9375rem;
   flex: 1 0 0;
+}
+
+.workersArticle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+
+  padding: 1.5625rem;
+
+  border: 1px solid $border-primary-color;
+  background: $background-primary-color;
+}
+
+.workersHeading {
+  text-transform: uppercase;
+  color: $text-primary-color;
+
+  font-family: Inter;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.00625rem;
+  text-transform: uppercase;
+}
+
+.buttonsContainer {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 1.5625rem;
 }
