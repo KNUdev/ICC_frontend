@@ -1,19 +1,360 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
-import { useState } from 'react'
+import { FieldError } from '@/common/components/FieldError/FieldError'
+import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
+import { API } from '@/shared/config/api.config'
+import { useLocale, useTranslations } from 'next-intl'
+import Image from 'next/image'
+import { useCallback, useMemo, useState } from 'react'
 import styles from './page.module.scss'
+
+interface Specialty {
+  id: string
+  name: {
+    en: string
+    uk: string
+  }
+}
+
+interface Sector {
+  id: string
+  name: {
+    en: string
+    uk: string
+  }
+}
 
 const AddNewWorker = () => {
   const t = useTranslations('AddNewWorker/common')
+  const locale = useLocale()
   const [hasPhoto, setHasPhoto] = useState(false)
+  const [photoFile, setPhotoFile] = useState<File | null>(null)
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null)
+  const [selectedSpecialtyId, setSelectedSpecialtyId] = useState<string | null>(
+    null,
+  )
+  const [selectedSectorId, setSelectedSectorId] = useState<string | null>(null)
+  const [specialties, setSpecialties] = useState<Specialty[]>([])
+  const [sectors, setSectors] = useState<Sector[]>([])
+  const [dropdownErrors, setDropdownErrors] = useState<{
+    specialty?: string
+    sector?: string
+  }>({})
+  const [formErrors, setFormErrors] = useState<{
+    firstName?: string
+    lastName?: string
+    middleName?: string
+    email?: string
+    phone?: string
+    phoneNumber?: string
+    salary?: string
+    salaryInUAH?: string
+    photo?: string
+    specialty?: string
+    sector?: string
+    role?: string
+    workHours?: string
+    startTime?: string
+    endTime?: string
+    contractEndDate?: string
+  }>({})
 
-  const handlePhotoUpload = () => {
-    setHasPhoto(true)
+  const [selectedRole, setSelectedRole] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [hasSubmittedOnce, setHasSubmittedOnce] = useState(false)
+
+  const roleOptions = [
+    { value: 'COMMON_USER', label: t('role.options.commonUser') },
+    { value: 'SECRETARY', label: t('role.options.secretary') },
+    { value: 'SITE_MANAGER', label: t('role.options.siteManager') },
+    { value: 'HEAD_MANAGER', label: t('role.options.headManager') },
+  ]
+
+  const specialtyOptions = useMemo(
+    () =>
+      specialties.map((specialty) => ({
+        value: specialty.id,
+        label: specialty.name[locale as 'en' | 'uk'],
+      })),
+    [specialties, locale],
+  )
+
+  const sectorOptions = useMemo(
+    () =>
+      sectors.map((sector) => ({
+        value: sector.id,
+        label: sector.name[locale as 'en' | 'uk'],
+      })),
+    [sectors, locale],
+  )
+
+  const clearFieldError = (fieldName: keyof typeof formErrors) => {
+    setFormErrors((prev) => {
+      const newErrors = { ...prev }
+      delete newErrors[fieldName]
+      return newErrors
+    })
+  }
+
+  const fetchSpecialties = useCallback(async () => {
+    try {
+      const response = await fetch(`${API}admin/specialty/getAll`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pageNumber: 0,
+          pageSize: 10,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch specialties')
+      }
+
+      const data = await response.json()
+      setSpecialties(data.content)
+      setDropdownErrors((prev) => ({ ...prev, specialty: undefined }))
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err.message)
+        setDropdownErrors((prev) => ({
+          ...prev,
+          specialty: 'Failed to load specialties',
+        }))
+      }
+    }
+  }, [])
+
+  const fetchSectors = useCallback(async () => {
+    try {
+      const response = await fetch(`${API}admin/sector/all`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          pageNumber: 0,
+          pageSize: 10,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch sectors')
+      }
+
+      const data = await response.json()
+      setSectors(data.content)
+      setDropdownErrors((prev) => ({ ...prev, sector: undefined }))
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err.message)
+        setDropdownErrors((prev) => ({
+          ...prev,
+          sector: 'Failed to load sectors',
+        }))
+      }
+    }
+  }, [])
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    if (isSubmitting) return
+
+    setHasSubmittedOnce(true)
+
+    const form = event.currentTarget
+    const formData = new FormData()
+
+    const firstName = (
+      form.querySelector('input[name="firstName"]') as HTMLInputElement
+    )?.value
+    const lastName = (
+      form.querySelector('input[name="lastName"]') as HTMLInputElement
+    )?.value
+    const middleName = (
+      form.querySelector('input[name="middleName"]') as HTMLInputElement
+    )?.value
+    const email = (
+      form.querySelector('input[name="email"]') as HTMLInputElement
+    )?.value
+    const phoneNumber = (
+      form.querySelector('input[name="phoneNumber"]') as HTMLInputElement
+    )?.value
+    const salaryInUAH = (
+      form.querySelector('input[name="salaryInUAH"]') as HTMLInputElement
+    )?.value
+    const isStudent = (
+      form.querySelector('input[name="isStudent"]') as HTMLInputElement
+    )?.checked
+    const startTime = (
+      form.querySelector('input[name="startTime"]') as HTMLInputElement
+    )?.value
+    const endTime = (
+      form.querySelector('input[name="endTime"]') as HTMLInputElement
+    )?.value
+    const contractEndDate = (
+      form.querySelector('input[name="contractEndDate"]') as HTMLInputElement
+    )?.value
+
+    const formatTimeToHHmmss = (timeValue: string) => {
+      if (!timeValue) return ''
+      const [hours, minutes] = timeValue.split(':')
+      return `${hours}:${minutes}:00`
+    }
+
+    const formattedStartTime = formatTimeToHHmmss(startTime || '')
+    const formattedEndTime = formatTimeToHHmmss(endTime || '')
+
+    const errors: typeof formErrors = {}
+    if (!firstName) errors.firstName = t('errors.firstName')
+    if (!lastName) errors.lastName = t('errors.lastName')
+    if (!middleName) errors.middleName = t('errors.middleName')
+    if (!email) {
+      errors.email = t('errors.email')
+    } else if (!email.endsWith('@knu.ua')) {
+      errors.email = t('errors.emailKnuOnly')
+    }
+    if (!photoFile) errors.photo = t('errors.photo')
+    if (!selectedSpecialtyId) errors.specialty = t('errors.specialty')
+    if (!selectedSectorId) errors.sector = t('errors.sector')
+    if (!selectedRole) errors.role = t('errors.role')
+    if (!contractEndDate) errors.contractEndDate = t('errors.contractEndDate')
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors)
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      formData.append('fullName.firstName', firstName || '')
+      formData.append('fullName.lastName', lastName || '')
+      formData.append('fullName.middleName', middleName || '')
+      formData.append('email', email || '')
+      formData.append('phoneNumber', phoneNumber || '')
+      formData.append('salaryInUAH', salaryInUAH || '0')
+      formData.append('isStudent', isStudent?.toString() || 'false')
+      formData.append('specialty.id', selectedSpecialtyId || '')
+      formData.append('sector.id', selectedSectorId || '')
+      formData.append('role', selectedRole || '')
+      formData.append('workHours.startTime', formattedStartTime)
+      formData.append('workHours.endTime', formattedEndTime)
+      formData.append('contractEndDate', contractEndDate || '')
+
+      if (photoFile) {
+        formData.append('avatarFile', photoFile)
+      }
+
+      const response = await fetch(`${API}admin/employee/create`, {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (response.ok) {
+        setShowSuccessModal(true)
+        form.reset()
+        setHasPhoto(false)
+        setPhotoFile(null)
+        setPhotoPreview(null)
+        setSelectedSpecialtyId(null)
+        setSelectedSectorId(null)
+        setSelectedRole(null)
+        setFormErrors({})
+        setHasSubmittedOnce(false)
+      } else {
+        const errorData = await response.json()
+
+        if (errorData.fieldErrors) {
+          const apiErrors: typeof formErrors = {}
+
+          const fieldMapping: Record<string, keyof typeof formErrors> = {
+            firstName: 'firstName',
+            lastName: 'lastName',
+            middleName: 'middleName',
+            email: 'email',
+            phoneNumber: 'phoneNumber',
+            salaryInUAH: 'salaryInUAH',
+            specialty: 'specialty',
+            sector: 'sector',
+            role: 'role',
+            'workHours.startTime': 'startTime',
+            'workHours.endTime': 'endTime',
+            contractEndDate: 'contractEndDate',
+          }
+
+          Object.entries(errorData.fieldErrors).forEach(
+            ([apiField, errorMessage]) => {
+              const formField = fieldMapping[apiField]
+              if (formField && typeof errorMessage === 'string') {
+                apiErrors[formField] = errorMessage
+              }
+            },
+          )
+
+          setFormErrors(apiErrors)
+        } else {
+          throw new Error(
+            errorData.message || t('errors.failedToCreateEmployee'),
+          )
+        }
+      }
+    } catch (error) {
+      console.error('Error creating employee:', error)
+      setFormErrors({
+        email:
+          error instanceof Error
+            ? error.message
+            : t('errors.failedToCreateEmployee'),
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleCloseModal = () => {
+    setShowSuccessModal(false)
+  }
+
+  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      setPhotoFile(file)
+      setHasPhoto(true)
+      clearFieldError('photo')
+
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setPhotoPreview(e.target?.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
   }
 
   const handleDeletePhoto = () => {
     setHasPhoto(false)
+    setPhotoFile(null)
+    setPhotoPreview(null)
+
+    const fileInput = document.getElementById(
+      'photo-upload',
+    ) as HTMLInputElement
+    if (fileInput) {
+      fileInput.value = ''
+    }
+  }
+
+  const handleChangePhoto = () => {
+    const fileInput = document.getElementById(
+      'photo-upload',
+    ) as HTMLInputElement
+    if (fileInput) {
+      fileInput.click()
+    }
   }
 
   return (
@@ -27,7 +368,7 @@ const AddNewWorker = () => {
         </div>
 
         <div className={styles.pagecontin}>
-          <div className={styles.form}>
+          <form className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.formContent}>
               <div className={styles.formSection}>
                 <div className={styles.sectionContent}>
@@ -35,23 +376,54 @@ const AddNewWorker = () => {
                     <h3>{t('photo.title')}</h3>
                     <div className={styles.photoUpload}>
                       <div className={styles.photoPlaceholder}>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          width='80'
-                          height='81'
-                          viewBox='0 0 80 81'
-                          fill='none'
-                        >
-                          <path
-                            d='M40 40.5C36.3333 40.5 33.1945 39.1945 30.5833 36.5833C27.9722 33.9722 26.6667 30.8333 26.6667 27.1667C26.6667 23.5 27.9722 20.3611 30.5833 17.75C33.1945 15.1389 36.3333 13.8333 40 13.8333C43.6667 13.8333 46.8056 15.1389 49.4167 17.75C52.0278 20.3611 53.3333 23.5 53.3333 27.1667C53.3333 30.8333 52.0278 33.9722 49.4167 36.5833C46.8056 39.1945 43.6667 40.5 40 40.5ZM13.3333 67.1667V57.8333C13.3333 55.9445 13.8195 54.2083 14.7917 52.625C15.7639 51.0417 17.0556 49.8333 18.6667 49C22.1111 47.2778 25.6111 45.9861 29.1667 45.125C32.7222 44.2639 36.3333 43.8333 40 43.8333C43.6667 43.8333 47.2778 44.2639 50.8333 45.125C54.3889 45.9861 57.8889 47.2778 61.3333 49C62.9445 49.8333 64.2361 51.0417 65.2083 52.625C66.1806 54.2083 66.6667 55.9445 66.6667 57.8333V67.1667H13.3333Z'
-                            fill='#6D6D6D'
+                        {hasPhoto && photoPreview ? (
+                          <Image
+                            src={photoPreview}
+                            alt='Photo preview'
+                            width={150}
+                            height={150}
+                            className={styles.photoPreviewImg}
+                            style={{ objectFit: 'cover' }}
                           />
-                        </svg>
+                        ) : (
+                          <svg
+                            xmlns='http://www.w3.org/2000/svg'
+                            width='80'
+                            height='81'
+                            viewBox='0 0 80 81'
+                            fill='none'
+                          >
+                            <path
+                              d='M40 40.5C36.3333 40.5 33.1945 39.1945 30.5833 36.5833C27.9722 33.9722 26.6667 30.8333 26.6667 27.1667C26.6667 23.5 27.9722 20.3611 30.5833 17.75C33.1945 15.1389 36.3333 13.8333 40 13.8333C43.6667 13.8333 46.8056 15.1389 49.4167 17.75C52.0278 20.3611 53.3333 23.5 53.3333 27.1667C53.3333 30.8333 52.0278 33.9722 49.4167 36.5833C46.8056 39.1945 43.6667 40.5 40 40.5ZM13.3333 67.1667V57.8333C13.3333 55.9445 13.8195 54.2083 14.7917 52.625C15.7639 51.0417 17.0556 49.8333 18.6667 49C22.1111 47.2778 25.6111 45.9861 29.1667 45.125C32.7222 44.2639 36.3333 43.8333 40 43.8333C43.6667 43.8333 47.2778 44.2639 50.8333 45.125C54.3889 45.9861 57.8889 47.2778 61.3333 49C62.9445 49.8333 64.2361 51.0417 65.2083 52.625C66.1806 54.2083 66.6667 55.9445 66.6667 57.8333V67.1667H13.3333Z'
+                              fill='#6D6D6D'
+                            />
+                          </svg>
+                        )}
                       </div>
+
+                      <input
+                        type='file'
+                        id='photo-upload'
+                        accept='image/*'
+                        style={{ display: 'none' }}
+                        onChange={handlePhotoUpload}
+                      />
+
                       <button
                         type='button'
                         className={styles.uploadBtn}
-                        onClick={handlePhotoUpload}
+                        onClick={
+                          hasPhoto
+                            ? handleChangePhoto
+                            : () => {
+                                const fileInput = document.getElementById(
+                                  'photo-upload',
+                                ) as HTMLInputElement
+                                if (fileInput) {
+                                  fileInput.click()
+                                }
+                              }
+                        }
                       >
                         {hasPhoto ? (
                           <svg
@@ -109,6 +481,9 @@ const AddNewWorker = () => {
                         </button>
                       )}
                     </div>
+                    <FieldError
+                      error={hasSubmittedOnce ? formErrors.photo : undefined}
+                    />
                   </div>
 
                   <div className={styles.sectionDivider}></div>
@@ -118,18 +493,62 @@ const AddNewWorker = () => {
                     <div className={styles.inputsContainer}>
                       <div className={styles.inputGroup}>
                         <div className={styles.inputRow}>
-                          <input
-                            placeholder={t('generalInfo.firstName')}
-                            required
-                          />
-                          <input
-                            placeholder={t('generalInfo.lastName')}
-                            required
-                          />
-                          <input
-                            placeholder={t('generalInfo.middleName')}
-                            required
-                          />
+                          <div className={styles.fieldWrapper}>
+                            <div className={styles.inputWrapper}>
+                              <input
+                                type='text'
+                                name='firstName'
+                                placeholder={t('generalInfo.firstName')}
+                                className='inputText'
+                                onChange={() => clearFieldError('firstName')}
+                              />
+                            </div>
+                            <FieldError
+                              error={
+                                hasSubmittedOnce
+                                  ? formErrors.firstName
+                                  : undefined
+                              }
+                            />
+                          </div>
+
+                          <div className={styles.fieldWrapper}>
+                            <div className={styles.inputWrapper}>
+                              <input
+                                type='text'
+                                name='lastName'
+                                placeholder={t('generalInfo.lastName')}
+                                className='inputText'
+                                onChange={() => clearFieldError('lastName')}
+                              />
+                            </div>
+                            <FieldError
+                              error={
+                                hasSubmittedOnce
+                                  ? formErrors.lastName
+                                  : undefined
+                              }
+                            />
+                          </div>
+
+                          <div className={styles.fieldWrapper}>
+                            <div className={styles.inputWrapper}>
+                              <input
+                                type='text'
+                                name='middleName'
+                                placeholder={t('generalInfo.middleName')}
+                                className='inputText'
+                                onChange={() => clearFieldError('middleName')}
+                              />
+                            </div>
+                            <FieldError
+                              error={
+                                hasSubmittedOnce
+                                  ? formErrors.middleName
+                                  : undefined
+                              }
+                            />
+                          </div>
                         </div>
                       </div>
                       <div className={styles.inputGroup}>
@@ -138,6 +557,7 @@ const AddNewWorker = () => {
                             <input
                               type='checkbox'
                               id='isStudent'
+                              name='isStudent'
                               className={styles.checkbox}
                             />
                             <label
@@ -151,18 +571,46 @@ const AddNewWorker = () => {
                       </div>
                       <div className={styles.inputGroup}>
                         <div className={styles.inputRow}>
-                          <input
-                            placeholder={t('generalInfo.email')}
-                            required
-                          />
+                          <div className={styles.fieldWrapper}>
+                            <div className={styles.inputWrapper}>
+                              <input
+                                type='email'
+                                name='email'
+                                placeholder={t('generalInfo.email')}
+                                className='inputText'
+                                onChange={() => clearFieldError('email')}
+                              />
+                            </div>
+                            <FieldError
+                              error={
+                                hasSubmittedOnce ? formErrors.email : undefined
+                              }
+                            />
+                          </div>
                         </div>
                         <div className={styles.inputRow}>
                           <div className={styles.inputGroup}>
                             <label>{t('generalInfo.phoneLabel')}</label>
-                            <input
-                              type='tel'
-                              placeholder={t('generalInfo.phonePlaceholder')}
-                            />
+                            <div className={styles.fieldWrapper}>
+                              <div className={styles.inputWrapper}>
+                                <input
+                                  type='tel'
+                                  name='phoneNumber'
+                                  placeholder={t(
+                                    'generalInfo.phonePlaceholder',
+                                  )}
+                                  className='inputText'
+                                  onChange={() => clearFieldError('phone')}
+                                />
+                              </div>
+                              <FieldError
+                                error={
+                                  hasSubmittedOnce
+                                    ? formErrors.phone || formErrors.phoneNumber
+                                    : undefined
+                                }
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -180,10 +628,24 @@ const AddNewWorker = () => {
                     <div className={styles.inputRow}>
                       <div className={styles.inputGroup}>
                         <label>{t('salary.label')}</label>
-                        <input
-                          type='number'
-                          placeholder={t('salary.placeholder')}
-                        />
+                        <div className={styles.fieldWrapper}>
+                          <div className={styles.inputWrapper}>
+                            <input
+                              type='number'
+                              name='salaryInUAH'
+                              placeholder={t('salary.placeholder')}
+                              className='inputText'
+                              onChange={() => clearFieldError('salary')}
+                            />
+                          </div>
+                          <FieldError
+                            error={
+                              hasSubmittedOnce
+                                ? formErrors.salary || formErrors.salaryInUAH
+                                : undefined
+                            }
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -195,15 +657,96 @@ const AddNewWorker = () => {
                     <div className={styles.inputRow}>
                       <div className={styles.inputGroup}>
                         <label>{t('specialty.specialtyLabel')}</label>
-                        <select>
-                          <option>{t('specialty.specialtyPlaceholder')}</option>
-                        </select>
+                        <div className={styles.fieldWrapper}>
+                          <DropDownInput
+                            options={specialtyOptions}
+                            value={selectedSpecialtyId}
+                            onOpen={() => {
+                              if (specialties.length === 0) {
+                                fetchSpecialties()
+                              }
+                            }}
+                            onSelect={(value) => {
+                              setSelectedSpecialtyId(value)
+                              clearFieldError('specialty')
+                            }}
+                            placeholder={t('specialty.specialtyPlaceholder')}
+                            hasError={
+                              !!dropdownErrors.specialty ||
+                              !!formErrors.specialty
+                            }
+                            errorMessage={
+                              dropdownErrors.specialty || formErrors.specialty
+                            }
+                          />
+                          <FieldError
+                            error={
+                              hasSubmittedOnce
+                                ? formErrors.specialty
+                                : undefined
+                            }
+                          />
+                        </div>
                       </div>
                       <div className={styles.inputGroup}>
-                        <label>{t('specialty.categoryLabel')}</label>
-                        <select>
-                          <option>{t('specialty.categoryPlaceholder')}</option>
-                        </select>
+                        <label>{t('specialty.sectorLabel')}</label>
+                        <div className={styles.fieldWrapper}>
+                          <DropDownInput
+                            options={sectorOptions}
+                            value={selectedSectorId}
+                            onOpen={() => {
+                              if (sectors.length === 0) {
+                                fetchSectors()
+                              }
+                            }}
+                            onSelect={(value) => {
+                              setSelectedSectorId(value)
+                              clearFieldError('sector')
+                            }}
+                            placeholder={t('specialty.sectorPlaceholder')}
+                            hasError={
+                              !!dropdownErrors.sector || !!formErrors.sector
+                            }
+                            errorMessage={
+                              dropdownErrors.sector || formErrors.sector
+                            }
+                          />
+                          <FieldError
+                            error={
+                              hasSubmittedOnce ? formErrors.sector : undefined
+                            }
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={styles.sectionDivider}></div>
+
+                    <div className={styles.roleSection}>
+                      <h3>{t('role.title')}</h3>
+                      <div className={styles.inputRow}>
+                        <div className={styles.inputGroup}>
+                          <label>{t('role.label')}</label>
+                          <div className={styles.fieldWrapper}>
+                            <DropDownInput
+                              options={roleOptions}
+                              value={selectedRole}
+                              onOpen={() => {}}
+                              onSelect={(value) => {
+                                setSelectedRole(value)
+                                clearFieldError('role')
+                              }}
+                              placeholder={t('role.placeholder')}
+                              hasError={!!formErrors.role}
+                              errorMessage={formErrors.role}
+                            />
+                            <FieldError
+                              error={
+                                hasSubmittedOnce ? formErrors.role : undefined
+                              }
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -221,13 +764,45 @@ const AddNewWorker = () => {
                         <div className={styles.fieldLabel}>
                           {t('workingHours.fromLabel')}
                         </div>
-                        <input type='time' defaultValue='16:00' />
+                        <div className={styles.fieldWrapper}>
+                          <div className={styles.inputWrapper}>
+                            <input
+                              type='time'
+                              name='startTime'
+                              defaultValue='16:00'
+                              className='inputText'
+                              onChange={() => clearFieldError('startTime')}
+                            />
+                          </div>
+                          <FieldError
+                            error={
+                              hasSubmittedOnce
+                                ? formErrors.startTime
+                                : undefined
+                            }
+                          />
+                        </div>
                       </div>
                       <div className={styles.inputField}>
                         <div className={styles.fieldLabel}>
                           {t('workingHours.toLabel')}
                         </div>
-                        <input type='time' defaultValue='20:00' />
+                        <div className={styles.fieldWrapper}>
+                          <div className={styles.inputWrapper}>
+                            <input
+                              type='time'
+                              name='endTime'
+                              defaultValue='20:00'
+                              className='inputText'
+                              onChange={() => clearFieldError('endTime')}
+                            />
+                          </div>
+                          <FieldError
+                            error={
+                              hasSubmittedOnce ? formErrors.endTime : undefined
+                            }
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -243,57 +818,60 @@ const AddNewWorker = () => {
                     <div className={styles.inputRow}>
                       <div className={styles.inputField}>
                         <div className={styles.fieldLabel}>
-                          {t('contract.startDateLabel')}
-                        </div>
-                        <div className={styles.dateInputWrapper}>
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            width='20'
-                            height='21'
-                            viewBox='0 0 20 21'
-                            fill='none'
-                            className={styles.calendarIcon}
-                          >
-                            <path
-                              d='M9.16667 12.1666V10.5H10.8333V12.1666H9.16667ZM5.83333 12.1666V10.5H7.5V12.1666H5.83333ZM12.5 12.1666V10.5H14.1667V12.1666H12.5ZM9.16667 15.5V13.8333H10.8333V15.5H9.16667ZM5.83333 15.5V13.8333H7.5V15.5H5.83333ZM12.5 15.5V13.8333H14.1667V15.5H12.5ZM2.5 18.8333V3.83329H5V2.16663H6.66667V3.83329H13.3333V2.16663H15V3.83329H17.5V18.8333H2.5ZM4.16667 17.1666H15.8333V8.83329H4.16667V17.1666Z'
-                              fill='#272727'
-                            />
-                          </svg>
-                          <input type='date' defaultValue='2022-06-25' />
-                        </div>
-                      </div>
-                      <div className={styles.inputField}>
-                        <div className={styles.fieldLabel}>
                           {t('contract.endDateLabel')}
                         </div>
-                        <div className={styles.dateInputWrapper}>
-                          <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            width='20'
-                            height='21'
-                            viewBox='0 0 20 21'
-                            fill='none'
-                            className={styles.calendarIcon}
-                          >
-                            <path
-                              d='M9.16667 12.1666V10.5H10.8333V12.1666H9.16667ZM5.83333 12.1666V10.5H7.5V12.1666H5.83333ZM12.5 12.1666V10.5H14.1667V12.1666H12.5ZM9.16667 15.5V13.8333H10.8333V15.5H9.16667ZM5.83333 15.5V13.8333H7.5V15.5H5.83333ZM12.5 15.5V13.8333H14.1667V15.5H12.5ZM2.5 18.8333V3.83329H5V2.16663H6.66667V3.83329H13.3333V2.16663H15V3.83329H17.5V18.8333H2.5ZM4.16667 17.1666H15.8333V8.83329H4.16667V17.1666Z'
-                              fill='#272727'
-                            />
-                          </svg>
-                          <input type='date' defaultValue='2023-06-25' />
+                        <div className={styles.fieldWrapper}>
+                          <div className={styles.dateInputWrapper}>
+                            <svg
+                              xmlns='http://www.w3.org/2000/svg'
+                              width='20'
+                              height='21'
+                              viewBox='0 0 20 21'
+                              fill='none'
+                              className={styles.calendarIcon}
+                            >
+                              <path
+                                d='M9.16667 12.1666V10.5H10.8333V12.1666H9.16667ZM5.83333 12.1666V10.5H7.5V12.1666H5.83333ZM12.5 12.1666V10.5H14.1667V12.1666H12.5ZM9.16667 15.5V13.8333H10.8333V15.5H9.16667ZM5.83333 15.5V13.8333H7.5V15.5H5.83333ZM12.5 15.5V13.8333H14.1667V15.5H12.5ZM2.5 18.8333V3.83329H5V2.16663H6.66667V3.83329H13.3333V2.16663H15V3.83329H17.5V18.8333H2.5ZM4.16667 17.1666H15.8333V8.83329H4.16667V17.1666Z'
+                                fill='#272727'
+                              />
+                            </svg>
+                            <div className={styles.inputWrapper}>
+                              <input
+                                type='date'
+                                name='contractEndDate'
+                                className='inputText'
+                                onChange={() =>
+                                  clearFieldError('contractEndDate')
+                                }
+                              />
+                            </div>
+                          </div>
+                          <FieldError
+                            error={
+                              hasSubmittedOnce
+                                ? formErrors.contractEndDate
+                                : undefined
+                            }
+                          />
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className={styles.formActions}>
-                  <button type='submit' className={styles.submitBtn}>
-                    {t('actions.submit')}
+                  <button
+                    type='submit'
+                    className={styles.submitBtn}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting
+                      ? t('actions.submitting')
+                      : t('actions.submit')}
                   </button>
                 </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
 
         <div
@@ -316,6 +894,41 @@ const AddNewWorker = () => {
           <span className={styles.scrollText}>{t('actions.scrollToTop')}</span>
         </div>
       </div>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className={styles.modalOverlay} onClick={handleCloseModal}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalContent}>
+              <div className={styles.modalIcon}>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='48'
+                  height='48'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  className={styles.successIcon}
+                >
+                  <polyline points='20,6 9,17 4,12'></polyline>
+                </svg>
+              </div>
+              <h3 className={styles.modalTitle}>{t('success.title')}</h3>
+              <p className={styles.modalMessage}>{t('success.message')}</p>
+              <button
+                type='button'
+                className={styles.modalButton}
+                onClick={handleCloseModal}
+              >
+                {t('success.button')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

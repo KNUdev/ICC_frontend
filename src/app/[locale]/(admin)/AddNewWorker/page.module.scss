@@ -1,3 +1,5 @@
+@use '@/common/styles/inputs/textinput.scss' as *;
+
 $primary-color: #ff525e;
 $primary-hover: #ff5252;
 $background-color: #f5f5f5;
@@ -76,6 +78,7 @@ $border-radius-tiny: 0px;
   .generalInfo,
   .salarySection,
   .specialtySection,
+  .roleSection,
   .workingHours,
   .contractInfo {
     width: 100%;
@@ -155,6 +158,21 @@ $border-radius-tiny: 0px;
   display: flex;
   flex-direction: column;
   gap: 2.8125rem;
+}
+
+// Field wrapper styles for form inputs
+.fieldWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  background-color: $bg-nat-900;
+  box-sizing: border-box;
 }
 
 .container {
@@ -296,7 +314,6 @@ $border-radius-tiny: 0px;
         align-items: stretch;
         gap: 1.5625rem;
         height: 100%;
-
         .photoPlaceholder {
           display: flex;
           height: 19.8125rem;
@@ -306,11 +323,19 @@ $border-radius-tiny: 0px;
           flex-shrink: 0;
           background: $bg-nat-900;
           width: 100%;
+          border-radius: $border-radius-tiny;
+          overflow: hidden;
 
           svg {
             width: 80px;
             height: 80px;
           }
+        }
+
+        .photoPreviewImg {
+          width: 100%;
+          height: 100%;
+          border-radius: $border-radius-tiny;
         }
 
         .uploadBtn {
@@ -772,6 +797,86 @@ $border-radius-tiny: 0px;
         flex: 1;
       }
     }
+  }
+}
+
+// Modal styles
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: 8px;
+  padding: 0;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modalContent {
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.modalIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #4caf50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.successIcon {
+  width: 32px;
+  height: 32px;
+  color: white;
+}
+
+.modalTitle {
+  font-family: Inter;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: $text-nat-0;
+  margin: 0;
+}
+
+.modalMessage {
+  font-family: Inter;
+  font-size: 1rem;
+  color: $text-nat-300;
+  margin: 0;
+}
+
+.modalButton {
+  background: $primary-color;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 2rem;
+  font-family: Inter;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: $primary-hover;
   }
 }
 
