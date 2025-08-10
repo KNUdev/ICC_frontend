@@ -269,10 +269,12 @@ export function Staff() {
         </article>
 
         <ul className={styles.employeeList}>
-          {employees.length === 0 ? (
-            <p role='status'>No results</p>
-          ) : (
-            employees.map((employee) => (
+          {employees
+            .filter((employee) => {
+              if (!specialty) return true
+              return employee.specialty.id === specialty
+            })
+            .map((employee) => (
               <li
                 key={employee.id}
                 className={styles.employeeListItem}
@@ -292,8 +294,7 @@ export function Staff() {
                   className={styles.employeePhoto}
                 />
               </li>
-            ))
-          )}
+            ))}
         </ul>
 
         <Hyperlink href='/staff' icon={AlignArrowUpIcon}>
