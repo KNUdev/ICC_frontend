@@ -283,9 +283,9 @@ export function Staff() {
               role='region'
               aria-labelledby='pagination-heading'
             >
-              <h1 id='pagination-heading' className={styles.workersHeading}>
+              <h2 id='pagination-heading' className={styles.workersHeading}>
                 {tStaff('headings.pagination')}
-              </h1>
+              </h2>
 
               <div
                 className={styles.buttonsContainer}
@@ -298,6 +298,7 @@ export function Staff() {
                     pageSize === 10 ? styles.active : ''
                   }`}
                   onClick={() => setPageSize(10)}
+                  aria-pressed={pageSize === 10}
                 >
                   10
                 </button>
@@ -308,6 +309,7 @@ export function Staff() {
                     pageSize === 20 ? styles.active : ''
                   }`}
                   onClick={() => setPageSize(20)}
+                  aria-pressed={pageSize === 20}
                 >
                   20
                 </button>
@@ -318,6 +320,7 @@ export function Staff() {
                     pageSize === 'all' ? styles.active : ''
                   }`}
                   onClick={() => setPageSize('all')}
+                  aria-pressed={pageSize === 'all'}
                 >
                   {tStaff('buttons.all')}
                 </button>
@@ -371,23 +374,27 @@ export function Staff() {
                 />
 
                 <div className={styles.contacts}>
-                  <p className={styles.contactsHeader}>
+                  <h3 className={styles.contactsHeader}>
                     {tStaff('headings.contacts')}
-                  </p>
+                  </h3>
 
-                  <div className={styles.contactsDetails}>
+                  <address className={styles.contactsDetails}>
                     <div className={styles.contactsEmail}>
                       <AtLineIcon aria-hidden='true' />
-                      <p>{selectedEmployee.email}</p>
+                      <a href={`mailto:${selectedEmployee.email}`}>
+                        {selectedEmployee.email}
+                      </a>
                     </div>
 
                     <div className={styles.divider} />
 
                     <div className={styles.contactsNumber}>
                       <PhoneIcon aria-hidden='true' />
-                      <p>{selectedEmployee.phoneNumber}</p>
+                      <a href={`tel:${selectedEmployee.phoneNumber}`}>
+                        {selectedEmployee.phoneNumber}
+                      </a>
                     </div>
-                  </div>
+                  </address>
                 </div>
               </div>
 
@@ -445,9 +452,9 @@ export function Staff() {
             </div>
 
             <article className={styles.workersArticle}>
-              <h1 className={styles.workersHeading}>
+              <h2 className={styles.workersHeading}>
                 {tStaff('headings.workers')}
-              </h1>
+              </h2>
             </article>
 
             <ul
