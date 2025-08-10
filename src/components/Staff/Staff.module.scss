@@ -30,6 +30,14 @@ $button-hover-color: #ae302c;
   background: $background-primary-color;
 }
 
+.filterHeadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
 .filterHeading,
 .infoHeading {
   text-transform: uppercase;

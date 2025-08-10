@@ -10,6 +10,7 @@ import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import styles from './Staff.module.scss'
+import HelpBubble from '@/common/components/HelpBubble/HelpBubble'
 
 const api = process.env.NEXT_PUBLIC_API_URL
 
@@ -226,9 +227,17 @@ export function Staff() {
             aria-labelledby='filters-heading'
           >
             <article className={styles.filtersArticle}>
-              <h1 id='filters-heading' className={styles.filterHeading}>
-                {tStaff('headings.filter')}
-              </h1>
+              <div className={styles.filterHeadingContainer}>
+                <h1 id='filters-heading' className={styles.filterHeading}>
+                  {tStaff('headings.filter')}
+                </h1>
+
+                <HelpBubble
+                  helpText={tStaff('help')}
+                  position='left'
+                  ariaLabel={tStaff('aria-labels.help')}
+                />
+              </div>
 
               <div className={styles.searchFilterContainer} role='search'>
                 <div className={styles.searchTextContainer}>
