@@ -7,6 +7,8 @@ import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput
 import AlignArrowUpIcon from '@/assets/image/icons/align-arrow-up-line.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
 import CloseIcon from '@/assets/image/icons/form/close.svg'
+import AtLineIcon from '@/assets/image/icons/social/at_line.svg'
+import PhoneIcon from '@/assets/image/icons/social/telephone.svg'
 import styles from './Staff.module.scss'
 
 const api = process.env.NEXT_PUBLIC_API_URL
@@ -179,14 +181,14 @@ export function Staff() {
     fetchSectors()
   }, [fetchSpecialties, fetchSectors])
 
-  const getSpecialtyName = (specialtyId: string) => {
-    const spec = specialties.find((s) => s.value === specialtyId)
-    return spec ? spec.label : ''
-  }
-
   const getSectorName = (sectorId: string) => {
     const sec = sectors.find((s) => s.value === sectorId)
     return sec ? sec.label : ''
+  }
+
+  const getSpecialtyName = (specialtyId: string) => {
+    const spec = specialties.find((s) => s.value === specialtyId)
+    return spec ? spec.label : ''
   }
 
   const handleClear = () => {
@@ -215,120 +217,209 @@ export function Staff() {
 
   return (
     <div className='layout-wrapper'>
-      <section className={styles.staffSection}>
-        <article className={styles.filtersArticle}>
-          <h1 className={styles.filterHeading}>ФІЛЬТРИ</h1>
+      {!selectedEmployee ? (
+        <>
+          <section className={styles.staffSection}>
+            <article className={styles.filtersArticle}>
+              <h1 className={styles.filterHeading}>ФІЛЬТРИ</h1>
+              <div className={styles.searchFilterContainer}>
+                <div className={styles.searchTextContainer}>
+                  <label className={styles.label}>Пошук по ПІБ/Пошті</label>
+                  <div className='searchContainer'>
+                    <SearchIcon />
+                    <input
+                      className='searchInput'
+                      ref={inputRef}
+                      value={searchValue}
+                      onChange={(e) => setSearchValue(e.target.value)}
+                      placeholder='Попов Богдан Віталійович'
+                    />
+                    {searchValue && (
+                      <button
+                        type='button'
+                        className='clearBtn'
+                        onClick={handleClear}
+                      >
+                        <CloseIcon />
+                      </button>
+                    )}
+                  </div>
+                </div>
+                <div className={styles.specialtyFilterContainer}>
+                  <label className={styles.label}>Професія</label>
+                  <DropDownInput
+                    options={specialties}
+                    placeholder='Інженер'
+                    value={specialty}
+                    onOpen={fetchSpecialties}
+                    onSelect={(val) => setSpecialty(val)}
+                  />
+                </div>
+              </div>
+            </article>
 
-          <div className={styles.searchFilterContainer}>
-            <div className={styles.searchTextContainer}>
-              <label className={styles.label}>Пошук по ПІБ/Пошті</label>
+            <article className={styles.workersArticle}>
+              <h1 className={styles.workersHeading}>Робітників на сторінку</h1>
+              <div className={styles.buttonsContainer}>
+                <button
+                  type='button'
+                  className={`chooseBtn ${
+                    pageSize === 10 ? styles.active : ''
+                  }`}
+                  onClick={() => setPageSize(10)}
+                >
+                  10
+                </button>
+                <button
+                  type='button'
+                  className={`chooseBtn ${
+                    pageSize === 20 ? styles.active : ''
+                  }`}
+                  onClick={() => setPageSize(20)}
+                >
+                  20
+                </button>
+                <button
+                  type='button'
+                  className={`chooseBtn ${
+                    pageSize === 'all' ? styles.active : ''
+                  }`}
+                  onClick={() => setPageSize('all')}
+                >
+                  УСІ
+                </button>
+              </div>
+            </article>
 
-              <div className='searchContainer'>
-                <SearchIcon />
-
-                <input
-                  className='searchInput'
-                  ref={inputRef}
-                  value={searchValue}
-                  onChange={(e) => setSearchValue(e.target.value)}
-                  placeholder='Попов Богдан Віталійович'
+            <ul className={styles.employeeList}>
+              {filteredEmployees.map((employee) => (
+                <li
+                  key={employee.id}
+                  className={styles.employeeListItem}
+                  onClick={() => setSelectedEmployee(employee)}
+                >
+                  <Image
+                    src={employee.avatarUrl}
+                    alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
+                    width={150}
+                    height={150}
+                    unoptimized
+                    className={styles.employeePhoto}
+                  />
+                </li>
+              ))}
+            </ul>
+          </section>
+        </>
+      ) : (
+        <>
+          <section className={styles.detailSection}>
+            <div className={styles.detailHeader}>
+              <div className={styles.detailPhotoBlock}>
+                <Image
+                  src={selectedEmployee.avatarUrl}
+                  alt={`${selectedEmployee.name.firstName} ${selectedEmployee.name.middleName} ${selectedEmployee.name.lastName}`}
+                  width={300}
+                  height={300}
+                  unoptimized
                 />
 
-                {searchValue && (
-                  <button
-                    type='button'
-                    className='clearBtn'
-                    onClick={handleClear}
+                <div className={styles.contacts}>
+                  <p className={styles.contactsHeader}>Контакти</p>
+
+                  <div className={styles.contactsDetails}>
+                    <div className={styles.contactsEmail}>
+                      <AtLineIcon />
+                      <p>{selectedEmployee.email}</p>
+                    </div>
+
+                    <div className={styles.divider} />
+
+                    <div className={styles.contactsNumber}>
+                      <PhoneIcon />
+                      <p>{selectedEmployee.phoneNumber}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.detailInfoBlock}>
+                <div className={styles.infoMain}>
+                  <p className={styles.specialty}>
+                    {getSpecialtyName(selectedEmployee.specialty.id)}
+                  </p>
+
+                  <h2 className={styles.infoHeading}>
+                    {`${selectedEmployee.name.firstName} ${selectedEmployee.name.middleName} ${selectedEmployee.name.lastName}`}
+                  </h2>
+                </div>
+
+                <div className={styles.horizontalDivider} />
+
+                <div className={styles.infoOther}>
+                  <p>
+                    Сектор:{' '}
+                    <span className={styles.spanSector}>
+                      {getSectorName(selectedEmployee.sector.id)}
+                    </span>
+                  </p>
+
+                  <p
+                    className={
+                      selectedEmployee.isStudent
+                        ? styles.otherStudent
+                        : styles.otherNotStudent
+                    }
                   >
-                    <CloseIcon />
-                  </button>
-                )}
+                    {selectedEmployee.isStudent ? 'Студент' : 'Не студент'}
+                  </p>
+
+                  <p>
+                    Час роботи:{' '}
+                    <span className={styles.spanWorkingHours}>
+                      {selectedEmployee.workHours.startTime} -{' '}
+                      {selectedEmployee.workHours.endTime}
+                    </span>
+                  </p>
+                </div>
+
+                <button
+                  type='button'
+                  className={`mainBtn ${styles.centeredText}`}
+                  onClick={() => setSelectedEmployee(null)}
+                >
+                  Назад
+                </button>
               </div>
             </div>
 
-            <div className={styles.specialtyFilterContainer}>
-              <label className={styles.label}>Професія</label>
+            <article className={styles.workersArticle}>
+              <h1 className={styles.workersHeading}>
+                Робітники з тією ж професією
+              </h1>
+            </article>
 
-              <DropDownInput
-                options={specialties}
-                placeholder='Інженер'
-                value={specialty}
-                onOpen={fetchSpecialties}
-                onSelect={(val) => setSpecialty(val)}
-              />
-            </div>
-          </div>
-        </article>
-
-        <article className={styles.workersArticle}>
-          <h1 className={styles.workersHeading}>Робітників на сторінку</h1>
-
-          <div className={styles.buttonsContainer}>
-            <button
-              type='button'
-              className={`chooseBtn ${pageSize === 10 ? styles.active : ''}`}
-              onClick={() => setPageSize(10)}
-            >
-              10
-            </button>
-
-            <button
-              type='button'
-              className={`chooseBtn ${pageSize === 20 ? styles.active : ''}`}
-              onClick={() => setPageSize(20)}
-            >
-              20
-            </button>
-
-            <button
-              type='button'
-              className={`chooseBtn ${pageSize === 'all' ? styles.active : ''}`}
-              onClick={() => setPageSize('all')}
-            >
-              УСІ
-            </button>
-          </div>
-        </article>
-
-        <ul className={styles.employeeList}>
-          {employees
-            .filter((employee) => {
-              const matchesSpecialty =
-                !specialty || employee.specialty.id === specialty
-
-              const fullName =
-                `${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`.toLowerCase()
-              const email = employee.email.toLowerCase()
-              const matchesSearch =
-                !searchValue ||
-                fullName.includes(searchValue.toLowerCase()) ||
-                email.includes(searchValue.toLowerCase())
-
-              return matchesSpecialty && matchesSearch
-            })
-            .map((employee) => (
-              <li
-                key={employee.id}
-                className={styles.employeeListItem}
-                data-name={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
-                data-email={employee.email}
-                data-specialty={getSpecialtyName(employee.specialty.id)}
-                data-phonenumber={employee.phoneNumber}
-                data-isstudent={employee.isStudent}
-                data-sector={getSectorName(employee.sector.id)}
-              >
-                <Image
-                  src={employee.avatarUrl}
-                  alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
-                  width={150}
-                  height={150}
-                  unoptimized
-                  className={styles.employeePhoto}
-                />
-              </li>
-            ))}
-        </ul>
-      </section>
+            <ul className={styles.employeeList}>
+              {filteredEmployees.map((employee) => (
+                <li
+                  key={employee.id}
+                  className={styles.employeeListItem}
+                  onClick={() => setSelectedEmployee(employee)}
+                >
+                  <Image
+                    src={employee.avatarUrl}
+                    alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
+                    width={150}
+                    height={150}
+                    unoptimized
+                    className={styles.employeePhoto}
+                  />
+                </li>
+              ))}
+            </ul>
+          </section>
+        </>
+      )}
 
       <div className={styles.toTopContainer}>
         <button

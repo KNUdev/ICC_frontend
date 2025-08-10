@@ -5,7 +5,8 @@ $background-primary-color: #fff;
 $hover-color: #ff525e;
 $button-hover-color: #ae302c;
 
-.staffSection {
+.staffSection,
+.detailSection {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,7 +30,8 @@ $button-hover-color: #ae302c;
   background: $background-primary-color;
 }
 
-.filterHeading {
+.filterHeading,
+.infoHeading {
   text-transform: uppercase;
   color: $text-primary-color;
 
@@ -185,4 +187,169 @@ $button-hover-color: #ae302c;
 .toTopParagraph:focus {
   color: $button-hover-color;
   border: 1px solid $button-hover-color;
+}
+
+.detailSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: stretch;
+
+  gap: 1.5625rem;
+}
+
+.detailHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: stretch;
+
+  gap: 1.5625rem;
+}
+
+.detailPhotoBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding: 1.5625rem;
+  gap: 1.5625rem;
+
+  border: 1px solid $border-primary-color;
+  background: $background-primary-color;
+}
+
+.contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 0.9375rem;
+}
+
+.contactsHeader {
+  color: $text-primary-color;
+
+  font-family: Inter;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.00563rem;
+  text-transform: uppercase;
+}
+
+.contactsDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 1.5625rem;
+
+  color: $text-primary-color;
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4375rem;
+  letter-spacing: 0.005rem;
+}
+
+.divider {
+  background: $border-primary-color;
+
+  width: 0.0625rem;
+  align-self: stretch;
+}
+
+.horizontalDivider {
+  background: $border-primary-color;
+
+  height: 0.0625rem;
+  width: 100%;
+  align-self: stretch;
+}
+
+.contactsNumber,
+.contactsEmail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 0.3125rem;
+}
+
+.contactsNumber > svg,
+.contactsEmail > svg {
+  color: $hover-color;
+}
+
+.detailInfoBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  padding: 1.5625rem;
+  gap: 1.5625rem;
+  flex: 1 0 0;
+
+  border: 1px solid $border-primary-color;
+  background: $background-primary-color;
+}
+
+.infoMain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+
+  gap: 0.625rem;
+}
+
+.specialty {
+  color: $hover-color;
+
+  font-family: Inter;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.00563rem;
+}
+
+.infoOther {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: 0.625rem;
+}
+
+.infoOther > p {
+  color: $text-primary-color;
+
+  font-family: Inter;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.00563rem;
+}
+
+.spanSector,
+.spanWorkingHours,
+.otherNotStudent {
+  color: $hover-color !important;
+}
+
+.otherStudent {
+  color: green !important;
+}
+
+.centeredText {
+  text-align: center;
+  justify-content: center;
 }
