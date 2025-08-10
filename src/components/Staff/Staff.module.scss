@@ -55,6 +55,16 @@ $button-hover-color: #ae302c;
   letter-spacing: 0.005rem;
 }
 
+.labelDropDown {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  width: 100%;
+  gap: 0.94rem;
+}
+
 .searchFilterContainer {
   display: flex;
   align-items: flex-start;
@@ -126,10 +136,15 @@ $button-hover-color: #ae302c;
   gap: 1.25rem;
 }
 
-.employeeItem {
+.employeeListItem {
   display: flex;
   flex-direction: column;
   align-items: center;
+  align-self: stretch;
+  flex: 1 0 0;
+
+  border: none;
+  background: transparent;
 }
 
 .employeePhoto {

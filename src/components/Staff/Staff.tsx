@@ -1,14 +1,14 @@
 'use client'
 
-import { useState, useRef, useEffect, useCallback } from 'react'
-import { useLocale } from 'next-intl'
-import Image from 'next/image'
-import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
 import AlignArrowUpIcon from '@/assets/image/icons/align-arrow-up-line.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
 import CloseIcon from '@/assets/image/icons/form/close.svg'
 import AtLineIcon from '@/assets/image/icons/social/at_line.svg'
 import PhoneIcon from '@/assets/image/icons/social/telephone.svg'
+import Image from 'next/image'
+import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
+import { useState, useRef, useEffect, useCallback } from 'react'
+import { useLocale } from 'next-intl'
 import styles from './Staff.module.scss'
 
 const api = process.env.NEXT_PUBLIC_API_URL
@@ -216,51 +216,81 @@ export function Staff() {
       })
 
   return (
-    <div className='layout-wrapper'>
+    <div className='layout-wrapper' role='main'>
       {!selectedEmployee ? (
         <>
-          <section className={styles.staffSection}>
+          <section
+            className={styles.staffSection}
+            role='region'
+            aria-labelledby='filters-heading'
+          >
             <article className={styles.filtersArticle}>
-              <h1 className={styles.filterHeading}>ФІЛЬТРИ</h1>
-              <div className={styles.searchFilterContainer}>
+              <h1 id='filters-heading' className={styles.filterHeading}>
+                ФІЛЬТРИ
+              </h1>
+
+              <div className={styles.searchFilterContainer} role='search'>
                 <div className={styles.searchTextContainer}>
-                  <label className={styles.label}>Пошук по ПІБ/Пошті</label>
+                  <label className={styles.label} htmlFor='employee-search'>
+                    Пошук по ПІБ/Пошті
+                  </label>
+
                   <div className='searchContainer'>
-                    <SearchIcon />
+                    <SearchIcon aria-hidden='true' />
+
                     <input
+                      id='employee-search'
                       className='searchInput'
                       ref={inputRef}
                       value={searchValue}
                       onChange={(e) => setSearchValue(e.target.value)}
                       placeholder='Попов Богдан Віталійович'
                     />
+
                     {searchValue && (
                       <button
                         type='button'
                         className='clearBtn'
                         onClick={handleClear}
+                        aria-label='Очистити пошук'
                       >
-                        <CloseIcon />
+                        <CloseIcon aria-hidden='true' />
                       </button>
                     )}
                   </div>
                 </div>
+
                 <div className={styles.specialtyFilterContainer}>
-                  <label className={styles.label}>Професія</label>
-                  <DropDownInput
-                    options={specialties}
-                    placeholder='Інженер'
-                    value={specialty}
-                    onOpen={fetchSpecialties}
-                    onSelect={(val) => setSpecialty(val)}
-                  />
+                  <label className={`${styles.label} ${styles.labelDropDown}`}>
+                    <span>Професія</span>
+
+                    <DropDownInput
+                      options={specialties}
+                      placeholder='Інженер'
+                      value={specialty}
+                      onOpen={fetchSpecialties}
+                      onSelect={(val) => setSpecialty(val)}
+                      aria-label='Фільтр за професією'
+                    />
+                  </label>
                 </div>
               </div>
             </article>
 
-            <article className={styles.workersArticle}>
-              <h1 className={styles.workersHeading}>Робітників на сторінку</h1>
-              <div className={styles.buttonsContainer}>
+            <article
+              className={styles.workersArticle}
+              role='region'
+              aria-labelledby='pagination-heading'
+            >
+              <h1 id='pagination-heading' className={styles.workersHeading}>
+                Робітників на сторінку
+              </h1>
+
+              <div
+                className={styles.buttonsContainer}
+                role='group'
+                aria-label='Кількість робітників на сторінку'
+              >
                 <button
                   type='button'
                   className={`chooseBtn ${
@@ -270,6 +300,7 @@ export function Staff() {
                 >
                   10
                 </button>
+
                 <button
                   type='button'
                   className={`chooseBtn ${
@@ -279,6 +310,7 @@ export function Staff() {
                 >
                   20
                 </button>
+
                 <button
                   type='button'
                   className={`chooseBtn ${
@@ -291,21 +323,28 @@ export function Staff() {
               </div>
             </article>
 
-            <ul className={styles.employeeList}>
+            <ul
+              className={styles.employeeList}
+              role='list'
+              aria-label='Список робітників'
+            >
               {filteredEmployees.map((employee) => (
-                <li
-                  key={employee.id}
-                  className={styles.employeeListItem}
-                  onClick={() => setSelectedEmployee(employee)}
-                >
-                  <Image
-                    src={employee.avatarUrl}
-                    alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
-                    width={150}
-                    height={150}
-                    unoptimized
-                    className={styles.employeePhoto}
-                  />
+                <li key={employee.id} role='listitem'>
+                  <button
+                    type='button'
+                    className={styles.employeeListItem}
+                    onClick={() => setSelectedEmployee(employee)}
+                    aria-label={`Відкрити деталі робітника ${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
+                  >
+                    <Image
+                      src={employee.avatarUrl}
+                      alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
+                      width={150}
+                      height={150}
+                      unoptimized
+                      className={styles.employeePhoto}
+                    />
+                  </button>
                 </li>
               ))}
             </ul>
@@ -313,7 +352,11 @@ export function Staff() {
         </>
       ) : (
         <>
-          <section className={styles.detailSection}>
+          <section
+            className={styles.detailSection}
+            role='region'
+            aria-labelledby='employee-detail-heading'
+          >
             <div className={styles.detailHeader}>
               <div className={styles.detailPhotoBlock}>
                 <Image
@@ -329,14 +372,14 @@ export function Staff() {
 
                   <div className={styles.contactsDetails}>
                     <div className={styles.contactsEmail}>
-                      <AtLineIcon />
+                      <AtLineIcon aria-hidden='true' />
                       <p>{selectedEmployee.email}</p>
                     </div>
 
                     <div className={styles.divider} />
 
                     <div className={styles.contactsNumber}>
-                      <PhoneIcon />
+                      <PhoneIcon aria-hidden='true' />
                       <p>{selectedEmployee.phoneNumber}</p>
                     </div>
                   </div>
@@ -387,6 +430,7 @@ export function Staff() {
                   type='button'
                   className={`mainBtn ${styles.centeredText}`}
                   onClick={() => setSelectedEmployee(null)}
+                  aria-label='Повернутися до списку робітників'
                 >
                   Назад
                 </button>
@@ -399,21 +443,28 @@ export function Staff() {
               </h1>
             </article>
 
-            <ul className={styles.employeeList}>
+            <ul
+              className={styles.employeeList}
+              role='list'
+              aria-label='Список робітників з тією ж професією'
+            >
               {filteredEmployees.map((employee) => (
-                <li
-                  key={employee.id}
-                  className={styles.employeeListItem}
-                  onClick={() => setSelectedEmployee(employee)}
-                >
-                  <Image
-                    src={employee.avatarUrl}
-                    alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
-                    width={150}
-                    height={150}
-                    unoptimized
-                    className={styles.employeePhoto}
-                  />
+                <li key={employee.id} role='listitem'>
+                  <button
+                    type='button'
+                    className={styles.employeeListItem}
+                    onClick={() => setSelectedEmployee(employee)}
+                    aria-label={`Відкрити деталі робітника ${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
+                  >
+                    <Image
+                      src={employee.avatarUrl}
+                      alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
+                      width={150}
+                      height={150}
+                      unoptimized
+                      className={styles.employeePhoto}
+                    />
+                  </button>
                 </li>
               ))}
             </ul>
@@ -426,8 +477,9 @@ export function Staff() {
           type='button'
           className={styles.toTopParagraph}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label='Прогорнути сторінку вгору'
         >
-          <AlignArrowUpIcon />
+          <AlignArrowUpIcon aria-hidden='true' />
           Прогорнути вгору
         </button>
       </div>
