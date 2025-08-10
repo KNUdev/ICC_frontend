@@ -3,11 +3,10 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useLocale } from 'next-intl'
 import Image from 'next/image'
+import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
 import AlignArrowUpIcon from '@/assets/image/icons/align-arrow-up-line.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
 import CloseIcon from '@/assets/image/icons/form/close.svg'
-import Hyperlink from '@/common/components/Hyperlink/Hyperlink'
-import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
 import styles from './Staff.module.scss'
 
 const api = process.env.NEXT_PUBLIC_API_URL
@@ -306,11 +305,18 @@ export function Staff() {
               </li>
             ))}
         </ul>
-
-        <Hyperlink href='/staff' icon={AlignArrowUpIcon}>
-          Прогорнути вгору
-        </Hyperlink>
       </section>
+
+      <div className={styles.toTopContainer}>
+        <button
+          type='button'
+          className={styles.toTopParagraph}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          <AlignArrowUpIcon />
+          Прогорнути вгору
+        </button>
+      </div>
     </div>
   )
 }

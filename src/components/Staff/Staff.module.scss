@@ -2,6 +2,8 @@ $text-primary-color: #3d3d3d;
 $label-primary-color: #272727;
 $border-primary-color: #d1d1d1;
 $background-primary-color: #fff;
+$hover-color: #ff525e;
+$button-hover-color: #ae302c;
 
 .staffSection {
   display: flex;
@@ -138,7 +140,49 @@ $background-primary-color: #fff;
 }
 
 .active {
-  background: #ff525e;
-  border-color: #ff525e;
+  background: $hover-color;
+  border-color: $hover-color;
   color: white;
+}
+
+.toTopContainer {
+  display: flex;
+  padding: 0.625rem;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.toTopParagraph {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+
+  background: transparent;
+  border: none;
+  color: $hover-color;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}
+
+.toTopParagraph:hover {
+  color: $button-hover-color;
+}
+
+.toTopParagraph:focus {
+  color: $button-hover-color;
+  border: 1px solid $button-hover-color;
 }
