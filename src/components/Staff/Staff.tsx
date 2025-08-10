@@ -271,8 +271,18 @@ export function Staff() {
         <ul className={styles.employeeList}>
           {employees
             .filter((employee) => {
-              if (!specialty) return true
-              return employee.specialty.id === specialty
+              const matchesSpecialty =
+                !specialty || employee.specialty.id === specialty
+
+              const fullName =
+                `${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`.toLowerCase()
+              const email = employee.email.toLowerCase()
+              const matchesSearch =
+                !searchValue ||
+                fullName.includes(searchValue.toLowerCase()) ||
+                email.includes(searchValue.toLowerCase())
+
+              return matchesSpecialty && matchesSearch
             })
             .map((employee) => (
               <li
