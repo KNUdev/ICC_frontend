@@ -77,6 +77,10 @@ export function Staff() {
 
   const [pageSize, setPageSize] = useState<number | 'all'>(10)
 
+  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(
+    null,
+  )
+
   const locale = useLocale()
 
   const fetchEmployees = useCallback(async () => {
@@ -189,6 +193,25 @@ export function Staff() {
     setSearchValue('')
     inputRef.current?.focus()
   }
+
+  const filteredEmployees = selectedEmployee
+    ? employees.filter(
+        (e) =>
+          e.specialty.id === selectedEmployee.specialty.id &&
+          e.id !== selectedEmployee.id,
+      )
+    : employees.filter((employee) => {
+        const matchesSpecialty =
+          !specialty || employee.specialty.id === specialty
+        const fullName =
+          `${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`.toLowerCase()
+        const email = employee.email.toLowerCase()
+        const matchesSearch =
+          !searchValue ||
+          fullName.includes(searchValue.toLowerCase()) ||
+          email.includes(searchValue.toLowerCase())
+        return matchesSpecialty && matchesSearch
+      })
 
   return (
     <div className='layout-wrapper'>
