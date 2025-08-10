@@ -6,11 +6,12 @@ import CloseIcon from '@/assets/image/icons/form/close.svg'
 import AtLineIcon from '@/assets/image/icons/social/at_line.svg'
 import PhoneIcon from '@/assets/image/icons/social/telephone.svg'
 import Image from 'next/image'
+import ContactLink from '@/common/components/ContactLink/ContactLink'
 import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
+import HelpBubble from '@/common/components/HelpBubble/HelpBubble'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import styles from './Staff.module.scss'
-import HelpBubble from '@/common/components/HelpBubble/HelpBubble'
 
 const api = process.env.NEXT_PUBLIC_API_URL
 
@@ -389,19 +390,23 @@ export function Staff() {
 
                   <address className={styles.contactsDetails}>
                     <div className={styles.contactsEmail}>
-                      <AtLineIcon aria-hidden='true' />
-                      <a href={`mailto:${selectedEmployee.email}`}>
+                      <ContactLink
+                        href={`mailto:${selectedEmployee.email}`}
+                        icon={AtLineIcon}
+                      >
                         {selectedEmployee.email}
-                      </a>
+                      </ContactLink>
                     </div>
 
                     <div className={styles.divider} />
 
                     <div className={styles.contactsNumber}>
-                      <PhoneIcon aria-hidden='true' />
-                      <a href={`tel:${selectedEmployee.phoneNumber}`}>
+                      <ContactLink
+                        href={`tel:${selectedEmployee.phoneNumber}`}
+                        icon={PhoneIcon}
+                      >
                         {selectedEmployee.phoneNumber}
-                      </a>
+                      </ContactLink>
                     </div>
                   </address>
                 </div>
