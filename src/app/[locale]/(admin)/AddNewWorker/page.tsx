@@ -386,12 +386,10 @@ const AddNewWorker = () => {
     }
   }
 
-  // Time change handlers to enforce proper ranges live
   const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     setStartTime(value)
     clearFieldError('startTime')
-    // Ensure endTime stays strictly after startTime
     if (endTime && value && endTime <= value) {
       setEndTime(addMinutes(value, 1))
     }
