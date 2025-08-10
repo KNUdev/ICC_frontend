@@ -64,6 +64,28 @@ const AddNewWorker = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [hasSubmittedOnce, setHasSubmittedOnce] = useState(false)
 
+  const [startTime, setStartTime] = useState<string>('09:00')
+  const [endTime, setEndTime] = useState<string>('18:00')
+
+  const addMinutes = useCallback((time: string, minutes: number) => {
+    if (!time) return time
+    const [h, m] = time.split(':').map((n) => parseInt(n || '0', 10))
+    const d = new Date(2000, 0, 1, h || 0, m || 0, 0)
+    d.setMinutes(d.getMinutes() + minutes)
+    const hh = String(d.getHours()).padStart(2, '0')
+    const mm = String(d.getMinutes()).padStart(2, '0')
+    return `${hh}:${mm}`
+  }, [])
+
+  const getTomorrowLocalDate = () => {
+    const d = new Date()
+    d.setDate(d.getDate() + 1)
+    const y = d.getFullYear()
+    const m = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
+    return `${y}-${m}-${day}`
+  }
+
   const roleOptions = [
     { value: 'COMMON_USER', label: t('role.options.commonUser') },
     { value: 'SECRETARY', label: t('role.options.secretary') },
@@ -190,10 +212,10 @@ const AddNewWorker = () => {
     const isStudent = (
       form.querySelector('input[name="isStudent"]') as HTMLInputElement
     )?.checked
-    const startTime = (
+    const formStartTime = (
       form.querySelector('input[name="startTime"]') as HTMLInputElement
     )?.value
-    const endTime = (
+    const formEndTime = (
       form.querySelector('input[name="endTime"]') as HTMLInputElement
     )?.value
     const contractEndDate = (
@@ -206,8 +228,10 @@ const AddNewWorker = () => {
       return `${hours}:${minutes}:00`
     }
 
-    const formattedStartTime = formatTimeToHHmmss(startTime || '')
-    const formattedEndTime = formatTimeToHHmmss(endTime || '')
+    const chosenStart = (formStartTime || startTime || '').slice(0, 5)
+    const chosenEnd = (formEndTime || endTime || '').slice(0, 5)
+    const formattedStartTime = formatTimeToHHmmss(chosenStart)
+    const formattedEndTime = formatTimeToHHmmss(chosenEnd)
 
     const errors: typeof formErrors = {}
     if (!firstName) errors.firstName = t('errors.firstName')
@@ -224,6 +248,10 @@ const AddNewWorker = () => {
     if (!selectedRole) errors.role = t('errors.role')
     if (!contractEndDate) errors.contractEndDate = t('errors.contractEndDate')
 
+    if (chosenStart && chosenEnd && chosenEnd <= chosenStart) {
+      errors.endTime = 'End time must be after start time'
+    }
+
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors)
       return
@@ -236,7 +264,8 @@ const AddNewWorker = () => {
       formData.append('fullName.lastName', lastName || '')
       formData.append('fullName.middleName', middleName || '')
       formData.append('email', email || '')
-      formData.append('phoneNumber', phoneNumber || '')
+      const sanitizedPhone = (phoneNumber || '').trim().replace(/^\+/, '')
+      formData.append('phoneNumber', sanitizedPhone)
       formData.append('salaryInUAH', salaryInUAH || '0')
       formData.append('isStudent', isStudent?.toString() || 'false')
       formData.append('specialty.id', selectedSpecialtyId || '')
@@ -354,6 +383,27 @@ const AddNewWorker = () => {
     ) as HTMLInputElement
     if (fileInput) {
       fileInput.click()
+    }
+  }
+
+  // Time change handlers to enforce proper ranges live
+  const handleStartTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setStartTime(value)
+    clearFieldError('startTime')
+    // Ensure endTime stays strictly after startTime
+    if (endTime && value && endTime <= value) {
+      setEndTime(addMinutes(value, 1))
+    }
+  }
+
+  const handleEndTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    clearFieldError('endTime')
+    if (startTime && value && value <= startTime) {
+      setEndTime(addMinutes(startTime, 1))
+    } else {
+      setEndTime(value)
     }
   }
 
@@ -612,7 +662,11 @@ const AddNewWorker = () => {
                                     'generalInfo.phonePlaceholder',
                                   )}
                                   className='inputText'
-                                  onChange={() => clearFieldError('phone')}
+                                  inputMode='tel'
+                                  pattern='\+?\d*'
+                                  onChange={() =>
+                                    clearFieldError('phoneNumber')
+                                  }
                                 />
                               </div>
                               <FieldError
@@ -781,9 +835,12 @@ const AddNewWorker = () => {
                             <input
                               type='time'
                               name='startTime'
-                              defaultValue='16:00'
+                              value={startTime}
+                              max={
+                                endTime ? addMinutes(endTime, -1) : undefined
+                              }
                               className='inputText'
-                              onChange={() => clearFieldError('startTime')}
+                              onChange={handleStartTimeChange}
                             />
                           </div>
                           <FieldError
@@ -804,9 +861,12 @@ const AddNewWorker = () => {
                             <input
                               type='time'
                               name='endTime'
-                              defaultValue='20:00'
+                              value={endTime}
+                              min={
+                                startTime ? addMinutes(startTime, 1) : undefined
+                              }
                               className='inputText'
-                              onChange={() => clearFieldError('endTime')}
+                              onChange={handleEndTimeChange}
                             />
                           </div>
                           <FieldError
@@ -851,6 +911,7 @@ const AddNewWorker = () => {
                               <input
                                 type='date'
                                 name='contractEndDate'
+                                min={getTomorrowLocalDate()}
                                 className='inputText'
                                 onChange={() =>
                                   clearFieldError('contractEndDate')
@@ -907,7 +968,6 @@ const AddNewWorker = () => {
         </div>
       </div>
 
-      {/* Success Modal */}
       {showSuccessModal && (
         <div className={styles.modalOverlay} onClick={handleCloseModal}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
