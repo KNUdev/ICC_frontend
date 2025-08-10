@@ -353,6 +353,19 @@ const AddNewWorker = () => {
     }
   }
 
+  const withStars = (text: string) => {
+    if (!text || !text.includes('*')) return text
+    const parts = text.split('*')
+    return parts.map((part, idx) => (
+      <span key={idx}>
+        {part}
+        {idx < parts.length - 1 && (
+          <span className={styles.requiredStar}>*</span>
+        )}
+      </span>
+    ))
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.mainWrapper}>
@@ -369,7 +382,7 @@ const AddNewWorker = () => {
               <div className={styles.formSection}>
                 <div className={styles.sectionContent}>
                   <div className={styles.photoSection}>
-                    <h3>{t('photo.title')}</h3>
+                    <h3>{withStars(t('photo.title'))}</h3>
                     <div className={styles.photoUpload}>
                       <div className={styles.photoPlaceholder}>
                         {hasPhoto && photoPreview ? (
@@ -490,7 +503,9 @@ const AddNewWorker = () => {
                       <div className={styles.inputGroup}>
                         <div className={styles.inputRow}>
                           <div className={styles.inputGroup}>
-                            <label>{t('generalInfo.firstNameLabel')}</label>
+                            <label>
+                              {withStars(t('generalInfo.firstNameLabel'))}
+                            </label>
                             <div className={styles.fieldWrapper}>
                               <div className={styles.inputWrapper}>
                                 <input
@@ -511,7 +526,9 @@ const AddNewWorker = () => {
                             </div>
                           </div>
                           <div className={styles.inputGroup}>
-                            <label>{t('generalInfo.lastNameLabel')}</label>
+                            <label>
+                              {withStars(t('generalInfo.lastNameLabel'))}
+                            </label>
                             <div className={styles.fieldWrapper}>
                               <div className={styles.inputWrapper}>
                                 <input
@@ -532,7 +549,9 @@ const AddNewWorker = () => {
                             </div>
                           </div>
                           <div className={styles.inputGroup}>
-                            <label>{t('generalInfo.middleNameLabel')}</label>
+                            <label>
+                              {withStars(t('generalInfo.middleNameLabel'))}
+                            </label>
                             <div className={styles.fieldWrapper}>
                               <div className={styles.inputWrapper}>
                                 <input
@@ -575,7 +594,9 @@ const AddNewWorker = () => {
                       <div className={styles.inputGroup}>
                         <div className={styles.inputRow}>
                           <div className={styles.inputGroup}>
-                            <label>{t('generalInfo.emailLabel')}</label>
+                            <label>
+                              {withStars(t('generalInfo.emailLabel'))}
+                            </label>
                             <div className={styles.fieldWrapper}>
                               <div className={styles.inputWrapper}>
                                 <input
@@ -598,7 +619,9 @@ const AddNewWorker = () => {
                         </div>
                         <div className={styles.inputRow}>
                           <div className={styles.inputGroup}>
-                            <label>{t('generalInfo.phoneLabel')}</label>
+                            <label>
+                              {withStars(t('generalInfo.phoneLabel'))}
+                            </label>
                             <div className={styles.fieldWrapper}>
                               <div className={styles.inputWrapper}>
                                 <input
@@ -639,7 +662,7 @@ const AddNewWorker = () => {
                     <h3>{t('salary.title')}</h3>
                     <div className={styles.inputRow}>
                       <div className={styles.inputGroup}>
-                        <label>{t('salary.label')}</label>
+                        <label>{withStars(t('salary.label'))}</label>
                         <div className={styles.fieldWrapper}>
                           <div className={styles.inputWrapper}>
                             <input
@@ -664,81 +687,83 @@ const AddNewWorker = () => {
 
                   <div className={styles.sectionDivider}></div>
 
-                  <div className={styles.specialtySection}>
-                    <h3>{t('specialty.title')}</h3>
-                    <div className={styles.inputRow}>
-                      <div className={styles.inputGroup}>
-                        <label>{t('specialty.specialtyLabel')}</label>
-                        <div className={styles.fieldWrapper}>
-                          <DropDownInput
-                            options={specialtyOptions}
-                            value={selectedSpecialtyId}
-                            onOpen={() => {
-                              if (specialties.length === 0) {
-                                fetchSpecialties()
+                  <div className={styles.inputsContainer}>
+                    <div className={styles.specialtySection}>
+                      <h3>{t('specialty.title')}</h3>
+                      <div className={styles.inputRow}>
+                        <div className={styles.inputGroup}>
+                          <label>
+                            {withStars(t('specialty.specialtyLabel'))}
+                          </label>
+                          <div className={styles.fieldWrapper}>
+                            <DropDownInput
+                              options={specialtyOptions}
+                              value={selectedSpecialtyId}
+                              onOpen={() => {
+                                if (specialties.length === 0) {
+                                  fetchSpecialties()
+                                }
+                              }}
+                              onSelect={(value) => {
+                                setSelectedSpecialtyId(value)
+                                clearFieldError('specialty')
+                              }}
+                              placeholder={t('specialty.specialtyPlaceholder')}
+                              hasError={
+                                !!dropdownErrors.specialty ||
+                                !!formErrors.specialty
                               }
-                            }}
-                            onSelect={(value) => {
-                              setSelectedSpecialtyId(value)
-                              clearFieldError('specialty')
-                            }}
-                            placeholder={t('specialty.specialtyPlaceholder')}
-                            hasError={
-                              !!dropdownErrors.specialty ||
-                              !!formErrors.specialty
-                            }
-                            errorMessage={
-                              dropdownErrors.specialty || formErrors.specialty
-                            }
-                          />
-                          <FieldError
-                            error={
-                              hasSubmittedOnce
-                                ? formErrors.specialty
-                                : undefined
-                            }
-                          />
+                              errorMessage={
+                                dropdownErrors.specialty || formErrors.specialty
+                              }
+                            />
+                            <FieldError
+                              error={
+                                hasSubmittedOnce
+                                  ? formErrors.specialty
+                                  : undefined
+                              }
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div className={styles.inputGroup}>
-                        <label>{t('specialty.sectorLabel')}</label>
-                        <div className={styles.fieldWrapper}>
-                          <DropDownInput
-                            options={sectorOptions}
-                            value={selectedSectorId}
-                            onOpen={() => {
-                              if (sectors.length === 0) {
-                                fetchSectors()
+                        <div className={styles.inputGroup}>
+                          <label>{withStars(t('specialty.sectorLabel'))}</label>
+                          <div className={styles.fieldWrapper}>
+                            <DropDownInput
+                              options={sectorOptions}
+                              value={selectedSectorId}
+                              onOpen={() => {
+                                if (sectors.length === 0) {
+                                  fetchSectors()
+                                }
+                              }}
+                              onSelect={(value) => {
+                                setSelectedSectorId(value)
+                                clearFieldError('sector')
+                              }}
+                              placeholder={t('specialty.sectorPlaceholder')}
+                              hasError={
+                                !!dropdownErrors.sector || !!formErrors.sector
                               }
-                            }}
-                            onSelect={(value) => {
-                              setSelectedSectorId(value)
-                              clearFieldError('sector')
-                            }}
-                            placeholder={t('specialty.sectorPlaceholder')}
-                            hasError={
-                              !!dropdownErrors.sector || !!formErrors.sector
-                            }
-                            errorMessage={
-                              dropdownErrors.sector || formErrors.sector
-                            }
-                          />
-                          <FieldError
-                            error={
-                              hasSubmittedOnce ? formErrors.sector : undefined
-                            }
-                          />
+                              errorMessage={
+                                dropdownErrors.sector || formErrors.sector
+                              }
+                            />
+                            <FieldError
+                              error={
+                                hasSubmittedOnce ? formErrors.sector : undefined
+                              }
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
-
-                    <div className={styles.sectionDivider}></div>
 
                     <div className={styles.roleSection}>
                       <h3>{t('role.title')}</h3>
                       <div className={styles.inputRow}>
                         <div className={styles.inputGroup}>
-                          <label>{t('role.label')}</label>
+                          <label>{withStars(t('role.label'))}</label>
                           <div className={styles.fieldWrapper}>
                             <DropDownInput
                               options={roleOptions}
@@ -774,7 +799,7 @@ const AddNewWorker = () => {
                     <div className={styles.inputRow}>
                       <div className={styles.inputField}>
                         <div className={styles.fieldLabel}>
-                          {t('workingHours.fromLabel')}
+                          {withStars(t('workingHours.fromLabel'))}
                         </div>
                         <div className={styles.fieldWrapper}>
                           <div className={styles.inputWrapper}>
@@ -800,7 +825,7 @@ const AddNewWorker = () => {
                       </div>
                       <div className={styles.inputField}>
                         <div className={styles.fieldLabel}>
-                          {t('workingHours.toLabel')}
+                          {withStars(t('workingHours.toLabel'))}
                         </div>
                         <div className={styles.fieldWrapper}>
                           <div className={styles.inputWrapper}>
@@ -836,7 +861,7 @@ const AddNewWorker = () => {
                     <div className={styles.inputRow}>
                       <div className={styles.inputField}>
                         <div className={styles.fieldLabel}>
-                          {t('contract.endDateLabel')}
+                          {withStars(t('contract.endDateLabel'))}
                         </div>
                         <div className={styles.fieldWrapper}>
                           <div className={styles.dateInputWrapper}>
