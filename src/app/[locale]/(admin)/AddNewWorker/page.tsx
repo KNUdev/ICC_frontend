@@ -2,27 +2,16 @@
 
 import { FieldError } from '@/common/components/FieldError/FieldError'
 import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
-import { API } from '@/shared/config/api.config'
+import type { Sector, Specialty } from '@/shared/api/adminEmployees'
+import {
+  createEmployee,
+  getSectors,
+  getSpecialties,
+} from '@/shared/api/adminEmployees'
 import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { useCallback, useMemo, useState } from 'react'
 import styles from './page.module.scss'
-
-interface Specialty {
-  id: string
-  name: {
-    en: string
-    uk: string
-  }
-}
-
-interface Sector {
-  id: string
-  name: {
-    en: string
-    uk: string
-  }
-}
 
 const AddNewWorker = () => {
   const t = useTranslations('AddNewWorker/common')
@@ -121,22 +110,7 @@ const AddNewWorker = () => {
 
   const fetchSpecialties = useCallback(async () => {
     try {
-      const response = await fetch(`${API}admin/specialty/getAll`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          pageNumber: 0,
-          pageSize: 10,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch specialties')
-      }
-
-      const data = await response.json()
+      const data = await getSpecialties(0, 10)
       setSpecialties(data.content)
       setDropdownErrors((prev) => ({ ...prev, specialty: undefined }))
     } catch (err: unknown) {
@@ -152,22 +126,7 @@ const AddNewWorker = () => {
 
   const fetchSectors = useCallback(async () => {
     try {
-      const response = await fetch(`${API}admin/sector/all`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          pageNumber: 0,
-          pageSize: 10,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch sectors')
-      }
-
-      const data = await response.json()
+      const data = await getSectors(0, 10)
       setSectors(data.content)
       setDropdownErrors((prev) => ({ ...prev, sector: undefined }))
     } catch (err: unknown) {
@@ -189,7 +148,6 @@ const AddNewWorker = () => {
     setHasSubmittedOnce(true)
 
     const form = event.currentTarget
-    const formData = new FormData()
 
     const firstName = (
       form.querySelector('input[name="firstName"]') as HTMLInputElement
@@ -260,86 +218,76 @@ const AddNewWorker = () => {
     setIsSubmitting(true)
 
     try {
-      formData.append('fullName.firstName', firstName || '')
-      formData.append('fullName.lastName', lastName || '')
-      formData.append('fullName.middleName', middleName || '')
-      formData.append('email', email || '')
-      const sanitizedPhone = (phoneNumber || '').trim().replace(/^\+/, '')
-      formData.append('phoneNumber', sanitizedPhone)
-      formData.append('salaryInUAH', salaryInUAH || '0')
-      formData.append('isStudent', isStudent?.toString() || 'false')
-      formData.append('specialty.id', selectedSpecialtyId || '')
-      formData.append('sector.id', selectedSectorId || '')
-      formData.append('role', selectedRole || '')
-      formData.append('workHours.startTime', formattedStartTime)
-      formData.append('workHours.endTime', formattedEndTime)
-      formData.append('contractEndDate', contractEndDate || '')
-
-      if (photoFile) {
-        formData.append('avatarFile', photoFile)
-      }
-
-      const response = await fetch(`${API}admin/employee/create`, {
-        method: 'POST',
-        body: formData,
+      await createEmployee({
+        firstName: firstName || '',
+        lastName: lastName || '',
+        middleName: middleName || '',
+        email: email || '',
+        phoneNumber: phoneNumber || '',
+        salaryInUAH: salaryInUAH || '0',
+        isStudent: !!isStudent,
+        specialtyId: selectedSpecialtyId || '',
+        sectorId: selectedSectorId || '',
+        role: selectedRole || '',
+        startTime: formattedStartTime,
+        endTime: formattedEndTime,
+        contractEndDate: contractEndDate || '',
+        avatarFile: photoFile || undefined,
       })
 
-      if (response.ok) {
-        setShowSuccessModal(true)
-        form.reset()
-        setHasPhoto(false)
-        setPhotoFile(null)
-        setPhotoPreview(null)
-        setSelectedSpecialtyId(null)
-        setSelectedSectorId(null)
-        setSelectedRole(null)
-        setFormErrors({})
-        setHasSubmittedOnce(false)
-      } else {
-        const errorData = await response.json()
-
-        if (errorData.fieldErrors) {
-          const apiErrors: typeof formErrors = {}
-
-          const fieldMapping: Record<string, keyof typeof formErrors> = {
-            firstName: 'firstName',
-            lastName: 'lastName',
-            middleName: 'middleName',
-            email: 'email',
-            phoneNumber: 'phoneNumber',
-            salaryInUAH: 'salaryInUAH',
-            specialty: 'specialty',
-            sector: 'sector',
-            role: 'role',
-            'workHours.startTime': 'startTime',
-            'workHours.endTime': 'endTime',
-            contractEndDate: 'contractEndDate',
-          }
-
-          Object.entries(errorData.fieldErrors).forEach(
-            ([apiField, errorMessage]) => {
-              const formField = fieldMapping[apiField]
-              if (formField && typeof errorMessage === 'string') {
-                apiErrors[formField] = errorMessage
-              }
-            },
-          )
-
-          setFormErrors(apiErrors)
-        } else {
-          throw new Error(
-            errorData.message || t('errors.failedToCreateEmployee'),
-          )
-        }
-      }
+      setShowSuccessModal(true)
+      form.reset()
+      setHasPhoto(false)
+      setPhotoFile(null)
+      setPhotoPreview(null)
+      setSelectedSpecialtyId(null)
+      setSelectedSectorId(null)
+      setSelectedRole(null)
+      setFormErrors({})
+      setHasSubmittedOnce(false)
     } catch (error) {
       console.error('Error creating employee:', error)
-      setFormErrors({
-        email:
-          error instanceof Error
-            ? error.message
-            : t('errors.failedToCreateEmployee'),
-      })
+
+      const fieldMapping: Record<string, keyof typeof formErrors> = {
+        firstName: 'firstName',
+        lastName: 'lastName',
+        middleName: 'middleName',
+        email: 'email',
+        phoneNumber: 'phoneNumber',
+        salaryInUAH: 'salaryInUAH',
+        specialty: 'specialty',
+        sector: 'sector',
+        role: 'role',
+        'workHours.startTime': 'startTime',
+        'workHours.endTime': 'endTime',
+        contractEndDate: 'contractEndDate',
+      }
+
+      if (
+        error &&
+        typeof error === 'object' &&
+        'fieldErrors' in error &&
+        error.fieldErrors &&
+        typeof error.fieldErrors === 'object'
+      ) {
+        const apiErrors: typeof formErrors = {}
+        Object.entries(error.fieldErrors as Record<string, unknown>).forEach(
+          ([apiField, errorMessage]) => {
+            const formField = fieldMapping[apiField]
+            if (formField && typeof errorMessage === 'string') {
+              apiErrors[formField] = errorMessage
+            }
+          },
+        )
+        setFormErrors(apiErrors)
+      } else {
+        setFormErrors({
+          email:
+            error instanceof Error
+              ? error.message
+              : t('errors.failedToCreateEmployee'),
+        })
+      }
     } finally {
       setIsSubmitting(false)
     }
