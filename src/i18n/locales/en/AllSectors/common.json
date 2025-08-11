@@ -1,0 +1,76 @@
+{
+  "title": "ALL SECTORS",
+  "subtitle": "On this page you can add a new sector to the system by specifying its basic data, specialities and if needed — edit existing ones. All required fields are marked, and entered data can be edited later.",
+  "form": {
+    "sectorName": {
+      "title": "Sector Name",
+      "placeholder": "Machine Department Operator"
+    },
+    "specialities": {
+      "title": "Specialities included in the sector",
+      "placeholder": "Machine Department Operator"
+    },
+    "addedSpecialities": {
+      "label": "Added specialities:",
+      "empty": "Nothing added yet :("
+    },
+    "submitButton": "Add Sector"
+  },
+  "table": {
+    "title": "LIST OF CREATED SECTORS",
+    "search": {
+      "placeholder": "Find the sector or speciality you are looking for..."
+    },
+    "headers": {
+      "sectorName": "Sector Name",
+      "specialities": "Specialities"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "noResults": "No results found",
+    "empty": "Nothing added yet :("
+  },
+  "modals": {
+    "edit": {
+      "title": "Edit Sector",
+      "button": "Save Changes",
+      "cancel": "Cancel",
+      "form": {
+        "sectorName": {
+          "title": "Sector Name",
+          "placeholder": "Machine Department Operator"
+        },
+        "specialities": {
+          "title": "Specialities included in the sector",
+          "placeholder": "Machine Department Operator"
+        },
+        "addedSpecialities": {
+          "label": "Added specialities:",
+          "empty": "Nothing added yet :("
+        }
+      }
+    },
+    "delete": {
+      "title": "Are you sure you want to delete the sector?",
+      "message": "This action cannot be undone. All specialities in this sector will also be deleted.",
+      "specialitiesLabel": "Currently, the sector includes the following specialities:",
+      "confirmText": "Yes, delete sector",
+      "confirm": "Yes, delete",
+      "cancel": "Cancel"
+    }
+  },
+  "messages": {
+    "success": "Sector successfully edited!"
+  },
+  "specialityOptions": [
+    "Machine Department Operator",
+    "Frontend Developer",
+    "Backend Developer",
+    "iOS Developer",
+    "Android Developer",
+    "Data Scientist",
+    "Cybersecurity Specialist"
+  ]
+}

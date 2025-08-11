@@ -21,21 +21,45 @@ interface EditModalProps {
     sectors: string[]
     index: number
   } | null
+  title?: string
+  saveText?: string
+  cancelText?: string
+  formLabels?: {
+    specialityName?: string
+    category?: string
+    sector?: string
+    addedSectors?: string
+  }
+  formPlaceholders?: {
+    specialityName?: string
+    category?: string
+    sector?: string
+    emptyMessage?: string
+  }
+  sectorOptions?: string[]
 }
 
-const EditModal = ({ isOpen, onClose, onSave, speciality }: EditModalProps) => {
-  const [name, setName] = useState('')
-  const [category, setCategory] = useState('')
-  const [sectors, setSectors] = useState<string[]>([])
-  const [selectedSector, setSelectedSector] = useState('')
-
-  const sectorOptions = [
+const EditModal = ({
+  isOpen,
+  onClose,
+  onSave,
+  speciality,
+  title = 'Редагувати спеціальність',
+  saveText = 'Завершити редагування',
+  formLabels = {},
+  formPlaceholders = {},
+  sectorOptions = [
     'Сектор мережевих технологій',
     'Сектор веб-розробки',
     'Сектор мобільних технологій',
     'Сектор штучного інтелекту',
     'Сектор кібербезпеки',
-  ]
+  ],
+}: EditModalProps) => {
+  const [name, setName] = useState('')
+  const [category, setCategory] = useState('')
+  const [sectors, setSectors] = useState<string[]>([])
+  const [selectedSector, setSelectedSector] = useState('')
 
   useEffect(() => {
     if (speciality) {
@@ -69,17 +93,15 @@ const EditModal = ({ isOpen, onClose, onSave, speciality }: EditModalProps) => {
   }
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={handleClose}
-      title='Редагувати спеціальність'
-    >
+    <Modal isOpen={isOpen} onClose={handleClose} title={title}>
       <div className={styles.formFields}>
         <div className={styles.inputRow}>
           <div className={styles.inputColumn}>
             <InputText
-              title='Назва спеціальності'
-              placeholder='Оператор машинного відділу'
+              title={formLabels.specialityName || 'Назва спеціальності'}
+              placeholder={
+                formPlaceholders.specialityName || 'Оператор машинного відділу'
+              }
               isRequired={true}
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -87,8 +109,10 @@ const EditModal = ({ isOpen, onClose, onSave, speciality }: EditModalProps) => {
           </div>
           <div className={styles.inputColumn}>
             <InputText
-              title='Категорія (якщо потрібно вказувати)'
-              placeholder='1 категорія'
+              title={
+                formLabels.category || 'Категорія (якщо потрібно вказувати)'
+              }
+              placeholder={formPlaceholders.category || '1 категорія'}
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             />
@@ -98,8 +122,10 @@ const EditModal = ({ isOpen, onClose, onSave, speciality }: EditModalProps) => {
         <div className={styles.inputRow}>
           <div className={styles.inputColumn}>
             <Select
-              title='Сектор'
-              placeholder='Сектор мережевих технологій'
+              title={formLabels.sector || 'Сектор'}
+              placeholder={
+                formPlaceholders.sector || 'Сектор мережевих технологій'
+              }
               options={sectorOptions}
               isRequired={true}
               value={selectedSector}
@@ -109,7 +135,9 @@ const EditModal = ({ isOpen, onClose, onSave, speciality }: EditModalProps) => {
         </div>
 
         <div className={styles.additionalSectors}>
-          <p className={styles.additionalLabel}>Додані сектори:</p>
+          <p className={styles.additionalLabel}>
+            {formLabels.addedSectors || 'Додані сектори:'}
+          </p>
           {sectors.length > 0 ? (
             <div className={styles.sectorTags}>
               {sectors.map((sector) => (
@@ -121,14 +149,16 @@ const EditModal = ({ isOpen, onClose, onSave, speciality }: EditModalProps) => {
               ))}
             </div>
           ) : (
-            <p className={styles.additionalText}>Поки що нічого не додано :(</p>
+            <p className={styles.additionalText}>
+              {formPlaceholders.emptyMessage || 'Поки що нічого не додано :('}
+            </p>
           )}
         </div>
       </div>
 
       <ModalActions>
         <ModalButton variant='primary' onClick={handleSave}>
-          Завершити редагування
+          {saveText}
         </ModalButton>
       </ModalActions>
     </Modal>

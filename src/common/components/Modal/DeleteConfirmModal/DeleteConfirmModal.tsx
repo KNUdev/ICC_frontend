@@ -10,6 +10,8 @@ interface DeleteConfirmModalProps {
   onConfirm: () => void
   title?: string
   message?: string
+  specialitiesLabel?: string
+  description?: string
   confirmText?: string
   cancelText?: string
   specialities?: string[]
@@ -21,8 +23,9 @@ const DeleteConfirmModal = ({
   onConfirm,
   title = 'Видалити елемент',
   message = 'Ви впевнені, що хочете видалити цей елемент? Цю дію неможливо скасувати.',
+  specialitiesLabel = 'Наразі, в сектор входять такі спеціальності:',
+  description,
   confirmText = 'Так, видалити спеціальність',
-  cancelText = 'Скасувати',
   specialities = [],
 }: DeleteConfirmModalProps) => {
   return (
@@ -32,7 +35,7 @@ const DeleteConfirmModal = ({
       {specialities.length > 0 && (
         <div className={styles.specialitiesSection}>
           <p className={styles.specialitiesLabel}>
-            Наразі, в сектор входять такі спеціальності:
+            {description || specialitiesLabel}
           </p>
           <div className={styles.specialityTags}>
             {specialities.map((speciality, index) => (

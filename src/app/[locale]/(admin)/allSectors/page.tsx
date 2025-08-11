@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
+import { useParams } from 'next/navigation'
 import InputText from '@/common/components/Input/InputText/InputText.module'
 import Select from '@/common/components/Input/Select/Select'
 import CloseButton from '@/common/components/Input/CloseButton/CloseButton'
@@ -12,6 +13,9 @@ import ModalButton from '@/common/components/Modal/ModalButton/ModalButton'
 import DeleteConfirmModal from '@/common/components/Modal/DeleteConfirmModal/DeleteConfirmModal'
 import SuccessMessage from '@/common/components/SuccessMessage/SuccessMessage'
 import styles from './page.module.scss'
+
+import enTranslations from '@/i18n/locales/en/AllSectors/common.json'
+import ukTranslations from '@/i18n/locales/uk/AllSectors/common.json'
 
 const EditIcon = () => (
   <svg
@@ -44,6 +48,20 @@ const DeleteIcon = () => (
 )
 
 const AllSectorsPage = () => {
+  const params = useParams()
+  const locale = params.locale as string
+
+  const translations = locale === 'en' ? enTranslations : ukTranslations
+
+  const t = (key: string) => {
+    const keys = key.split('.')
+    let value: any = translations
+    for (const k of keys) {
+      value = value?.[k]
+    }
+    return value || key
+  }
+
   const [sectorName, setSectorName] = useState('')
   const [speciality, setSpeciality] = useState('')
   const [addedSpecialities, setAddedSpecialities] = useState<string[]>([])
@@ -55,7 +73,6 @@ const AllSectorsPage = () => {
     }>
   >([])
 
-  // Modal states
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
   const [selectedSectorIndex, setSelectedSectorIndex] = useState<number | null>(
@@ -68,15 +85,7 @@ const AllSectorsPage = () => {
 
   const tableBodyContainerRef = useRef<HTMLDivElement>(null)
 
-  const specialityOptions = [
-    'Оператор машинного відділу',
-    'Frontend розробник',
-    'Backend розробник',
-    'iOS розробник',
-    'Android розробник',
-    'Data Scientist',
-    'Спеціаліст з кібербезпеки',
-  ]
+  const specialityOptions = translations.specialityOptions
 
   const filteredSectors = sectors.filter(
     (sector) =>
@@ -226,13 +235,8 @@ const AllSectorsPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.headerSection}>
-        <h1 className={styles.title}>ВСІ СЕКТОРИ</h1>
-        <p className={styles.subtitle}>
-          На цій сторінці ви можете додати новий сектор до системи, вказавши
-          його основні дані, спеціальності та за потребою — редагувати існуючі.
-          Усі обов'язкові поля позначені, а введені дані можна редагувати
-          пізніше.
-        </p>
+        <h1 className={styles.title}>{t('title')}</h1>
+        <p className={styles.subtitle}>{t('subtitle')}</p>
       </div>
 
       <div className={styles.headerToFormGap}></div>
@@ -242,8 +246,8 @@ const AllSectorsPage = () => {
           <div className={styles.inputRow}>
             <div className={styles.inputColumn}>
               <InputText
-                title='Назва сектора'
-                placeholder='Оператор машинного відділу'
+                title={t('form.sectorName.title')}
+                placeholder={t('form.sectorName.placeholder')}
                 isRequired={true}
                 value={sectorName}
                 onChange={(e) => setSectorName(e.target.value)}
@@ -254,8 +258,8 @@ const AllSectorsPage = () => {
           <div className={styles.inputRow}>
             <div className={styles.inputColumn}>
               <Select
-                title='Спеціальності, які входять в сектор'
-                placeholder='Оператор машинного відділу'
+                title={t('form.specialities.title')}
+                placeholder={t('form.specialities.placeholder')}
                 options={specialityOptions}
                 isRequired={true}
                 value={speciality}
@@ -265,7 +269,9 @@ const AllSectorsPage = () => {
           </div>
 
           <div className={styles.additionalSpecialities}>
-            <p className={styles.additionalLabel}>Додані спеціальності:</p>
+            <p className={styles.additionalLabel}>
+              {t('form.addedSpecialities.label')}
+            </p>
             {addedSpecialities.length > 0 ? (
               <div className={styles.specialityTags}>
                 {addedSpecialities.map((addedSpeciality) => (
@@ -280,13 +286,13 @@ const AllSectorsPage = () => {
               </div>
             ) : (
               <p className={styles.additionalText}>
-                Поки що нічого не додано :(
+                {t('form.addedSpecialities.empty')}
               </p>
             )}
           </div>
 
           <button className={styles.submitButton} onClick={handleSubmit}>
-            Додати сектор
+            {t('form.submitButton')}
           </button>
         </div>
       </div>
@@ -295,11 +301,11 @@ const AllSectorsPage = () => {
 
       <div className={styles.sectorsSection}>
         <div className={styles.sectorsHeader}>
-          <h2 className={styles.sectorsTitle}>СПИСОК СТВОРЕНИХ СЕКТОРІВ</h2>
+          <h2 className={styles.sectorsTitle}>{t('table.title')}</h2>
 
           <div className={styles.searchContainer}>
             <SearchInput
-              placeholder='Знайдіть сектор або спеціальність, яку ви шукаєте...'
+              placeholder={t('table.search.placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onClear={() => setSearchTerm('')}
@@ -308,15 +314,19 @@ const AllSectorsPage = () => {
         </div>
 
         <SuccessMessage
-          message='Сектор успішно відредаговано!'
+          message={t('messages.success')}
           isVisible={showSuccessMessage}
           onClose={() => setShowSuccessMessage(false)}
         />
 
         <div className={styles.sectorsTable}>
           <div className={styles.tableHeader}>
-            <div className={styles.headerCell}>Назва сектору</div>
-            <div className={styles.headerCell}>Спеціальності</div>
+            <div className={styles.headerCell}>
+              {t('table.headers.sectorName')}
+            </div>
+            <div className={styles.headerCell}>
+              {t('table.headers.specialities')}
+            </div>
             <div className={styles.headerCell}></div>
           </div>
 
@@ -338,14 +348,14 @@ const AllSectorsPage = () => {
                         onClick={() => handleEditSector(index)}
                       >
                         <EditIcon />
-                        Редагувати
+                        {t('table.actions.edit')}
                       </button>
                       <button
                         className={styles.deleteButton}
                         onClick={() => handleDeleteSector(index)}
                       >
                         <DeleteIcon />
-                        Видалити
+                        {t('table.actions.delete')}
                       </button>
                     </div>
                   </div>
@@ -355,9 +365,7 @@ const AllSectorsPage = () => {
           ) : (
             <div className={styles.noResults}>
               <p className={styles.noResultsText}>
-                {searchTerm
-                  ? 'Результатів не знайдено'
-                  : 'Поки що нічого не додано :('}
+                {searchTerm ? t('table.noResults') : t('table.empty')}
               </p>
             </div>
           )}
@@ -372,8 +380,11 @@ const AllSectorsPage = () => {
         isOpen={showDeleteModal}
         onClose={closeModal}
         onConfirm={confirmDelete}
-        title='Ви впевнені, що хочете видалити сектор?'
-        confirmText='Так, видалити спеціальність'
+        title={t('modals.delete.title')}
+        message={t('modals.delete.message')}
+        description={t('modals.delete.specialitiesLabel')}
+        confirmText={t('modals.delete.confirm')}
+        cancelText={t('modals.delete.cancel')}
         specialities={
           selectedSectorIndex !== null
             ? sectors[selectedSectorIndex]?.specialities || []
@@ -384,14 +395,14 @@ const AllSectorsPage = () => {
       <Modal
         isOpen={showEditModal}
         onClose={closeModal}
-        title='Редагувати сектор'
+        title={t('modals.edit.title')}
       >
         <div className={styles.formFields}>
           <div className={styles.inputRow}>
             <div className={styles.inputColumn}>
               <InputText
-                title='Назва сектора'
-                placeholder='Оператор машинного відділу'
+                title={t('modals.edit.form.sectorName.title')}
+                placeholder={t('modals.edit.form.sectorName.placeholder')}
                 isRequired={true}
                 value={editingSectorName}
                 onChange={(e) => setEditingSectorName(e.target.value)}
@@ -402,8 +413,8 @@ const AllSectorsPage = () => {
           <div className={styles.inputRow}>
             <div className={styles.inputColumn}>
               <Select
-                title='Спеціальності, які входять в сектор'
-                placeholder='Оператор машинного відділу'
+                title={t('modals.edit.form.specialities.title')}
+                placeholder={t('modals.edit.form.specialities.placeholder')}
                 options={specialityOptions}
                 isRequired={true}
                 value={editingSpeciality}
@@ -413,7 +424,9 @@ const AllSectorsPage = () => {
           </div>
 
           <div className={styles.additionalSpecialities}>
-            <p className={styles.additionalLabel}>Додані спеціальності:</p>
+            <p className={styles.additionalLabel}>
+              {t('modals.edit.form.addedSpecialities.label')}
+            </p>
             {editingSpecialities.length > 0 ? (
               <div className={styles.specialityTags}>
                 {editingSpecialities.map((addedSpeciality) => (
@@ -428,7 +441,7 @@ const AllSectorsPage = () => {
               </div>
             ) : (
               <p className={styles.additionalText}>
-                Поки що нічого не додано :(
+                {t('modals.edit.form.addedSpecialities.empty')}
               </p>
             )}
           </div>
@@ -436,7 +449,7 @@ const AllSectorsPage = () => {
 
         <ModalActions>
           <ModalButton variant='primary' onClick={confirmEdit}>
-            Зберегти зміни
+            {t('modals.edit.button')}
           </ModalButton>
         </ModalActions>
       </Modal>

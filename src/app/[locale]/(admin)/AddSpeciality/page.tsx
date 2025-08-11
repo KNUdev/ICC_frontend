@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react'
+import { useParams } from 'next/navigation'
 import InputText from '@/common/components/Input/InputText/InputText.module'
 import Select from '@/common/components/Input/Select/Select'
 import CloseButton from '@/common/components/Input/CloseButton/CloseButton'
@@ -10,6 +11,14 @@ import EditModal from '@/common/components/Modal/EditModal/EditModal'
 import DeleteConfirmModal from '@/common/components/Modal/DeleteConfirmModal/DeleteConfirmModal'
 import SuccessMessage from '@/common/components/SuccessMessage/SuccessMessage'
 import styles from './page.module.scss'
+
+import enTranslations from '@/i18n/locales/en/AddSpeciality/common.json'
+import ukTranslations from '@/i18n/locales/uk/AddSpeciality/common.json'
+
+interface TranslationsType {
+  sectors: string[]
+  [key: string]: any
+}
 
 const EditIcon = () => (
   <svg
@@ -42,6 +51,21 @@ const DeleteIcon = () => (
 )
 
 const AddSpecialityPage = () => {
+  const params = useParams()
+  const locale = params.locale as string
+
+  const translations: TranslationsType =
+    locale === 'en' ? enTranslations : ukTranslations
+
+  const t = (key: string) => {
+    const keys = key.split('.')
+    let value: any = translations
+    for (const k of keys) {
+      value = value?.[k]
+    }
+    return value || key
+  }
+
   const [specialityName, setSpecialityName] = useState('')
   const [category, setCategory] = useState('')
   const [sector, setSector] = useState('')
@@ -127,13 +151,7 @@ const AddSpecialityPage = () => {
     }
   }, [filteredSpecialities])
 
-  const sectorOptions = [
-    'Сектор мережевих технологій',
-    'Сектор веб-розробки',
-    'Сектор мобільних технологій',
-    'Сектор штучного інтелекту',
-    'Сектор кібербезпеки',
-  ]
+  const sectorOptions = translations.sectors
 
   const handleSectorChange = (selectedSector: string) => {
     setSector(selectedSector)
@@ -240,13 +258,8 @@ const AddSpecialityPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.headerSection}>
-        <h1 className={styles.title}>ДОДАТИ СПЕЦІАЛЬНІСТЬ</h1>
-        <p className={styles.subtitle}>
-          На цій сторінці ви можете додати нового працівника до системи,
-          вказавши його основні дані, контактну інформацію, посаду та зв
-          потребою — завантажити фотографію. Усі обов'язкові поля позначені, а
-          введені дані можна редагувати пізніше.
-        </p>
+        <h1 className={styles.title}>{t('title')}</h1>
+        <p className={styles.subtitle}>{t('subtitle')}</p>
       </div>
 
       <div className={styles.headerToFormGap}></div>
@@ -256,8 +269,8 @@ const AddSpecialityPage = () => {
           <div className={styles.inputRow}>
             <div className={styles.inputColumn}>
               <InputText
-                title='Назва спеціальності'
-                placeholder='Оператор машинного відділу'
+                title={t('form.specialityName.title')}
+                placeholder={t('form.specialityName.placeholder')}
                 isRequired={true}
                 value={specialityName}
                 onChange={(e) => setSpecialityName(e.target.value)}
@@ -265,8 +278,8 @@ const AddSpecialityPage = () => {
             </div>
             <div className={styles.inputColumn}>
               <InputText
-                title='Категорія (якщо потрібно вказувати)'
-                placeholder='1 категорія'
+                title={t('form.category.title')}
+                placeholder={t('form.category.placeholder')}
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               />
@@ -276,8 +289,8 @@ const AddSpecialityPage = () => {
           <div className={styles.inputRow}>
             <div className={styles.inputColumn}>
               <Select
-                title='Сектор'
-                placeholder='Сектор мережевих технологій'
+                title={t('form.sector.title')}
+                placeholder={t('form.sector.placeholder')}
                 options={sectorOptions}
                 isRequired={true}
                 value={sector}
@@ -287,7 +300,9 @@ const AddSpecialityPage = () => {
           </div>
 
           <div className={styles.additionalSectors}>
-            <p className={styles.additionalLabel}>Додані сектори:</p>
+            <p className={styles.additionalLabel}>
+              {t('form.addedSectors.label')}
+            </p>
             {addedSectors.length > 0 ? (
               <div className={styles.sectorTags}>
                 {addedSectors.map((addedSector) => (
@@ -300,13 +315,13 @@ const AddSpecialityPage = () => {
               </div>
             ) : (
               <p className={styles.additionalText}>
-                Поки що нічого не додано :(
+                {t('form.addedSectors.empty')}
               </p>
             )}
           </div>
 
           <button className={styles.submitButton} onClick={handleSubmit}>
-            Додати спеціальність
+            {t('form.submitButton')}
           </button>
         </div>
       </div>
@@ -315,13 +330,11 @@ const AddSpecialityPage = () => {
 
       <div className={styles.specialtiesSection}>
         <div className={styles.specialtiesHeader}>
-          <h2 className={styles.specialtiesTitle}>
-            СПИСОК СТВОРЕНИХ СПЕЦІАЛЬНОСТЕЙ
-          </h2>
+          <h2 className={styles.specialtiesTitle}>{t('table.title')}</h2>
 
           <div className={styles.searchContainer}>
             <SearchInput
-              placeholder='Знайдіть спеціальність, яку ви шукаєте...'
+              placeholder={t('table.search.placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onClear={() => setSearchTerm('')}
@@ -330,16 +343,20 @@ const AddSpecialityPage = () => {
         </div>
 
         <SuccessMessage
-          message='Спеціальність успішно відредаговано!'
+          message={t('messages.success')}
           isVisible={showSuccessMessage}
           onClose={() => setShowSuccessMessage(false)}
         />
 
         <div className={styles.specialtiesTable}>
           <div className={styles.tableHeader}>
-            <div className={styles.headerCell}>Спеціальність</div>
-            <div className={styles.headerCell}>Категорія</div>
-            <div className={styles.headerCell}>Сектор</div>
+            <div className={styles.headerCell}>
+              {t('table.headers.speciality')}
+            </div>
+            <div className={styles.headerCell}>
+              {t('table.headers.category')}
+            </div>
+            <div className={styles.headerCell}>{t('table.headers.sector')}</div>
             <div className={styles.headerCell}></div>
           </div>
 
@@ -370,7 +387,7 @@ const AddSpecialityPage = () => {
                         }
                       >
                         <EditIcon />
-                        Редагувати
+                        {t('table.actions.edit')}
                       </button>
                       <button
                         className={styles.deleteButton}
@@ -382,7 +399,7 @@ const AddSpecialityPage = () => {
                         }
                       >
                         <DeleteIcon />
-                        Видалити
+                        {t('table.actions.delete')}
                       </button>
                     </div>
                   </div>
@@ -392,9 +409,7 @@ const AddSpecialityPage = () => {
           ) : (
             <div className={styles.noResults}>
               <p className={styles.noResultsText}>
-                {searchTerm
-                  ? 'Результатів не знайдено'
-                  : 'Поки що нічого не додано :('}
+                {searchTerm ? t('table.noResults') : t('table.empty')}
               </p>
             </div>
           )}
@@ -410,14 +425,32 @@ const AddSpecialityPage = () => {
         onClose={handleCloseModal}
         onSave={handleSaveEditedSpeciality}
         speciality={editingSpeciality}
+        title={t('modals.edit.title')}
+        saveText={t('modals.edit.button')}
+        cancelText={t('modals.edit.cancel')}
+        formLabels={{
+          specialityName: t('modals.edit.form.specialityName.title'),
+          category: t('modals.edit.form.category.title'),
+          sector: t('modals.edit.form.sector.title'),
+          addedSectors: t('modals.edit.form.addedSectors.label'),
+        }}
+        formPlaceholders={{
+          specialityName: t('modals.edit.form.specialityName.placeholder'),
+          category: t('modals.edit.form.category.placeholder'),
+          sector: t('modals.edit.form.sector.placeholder'),
+          emptyMessage: t('modals.edit.form.addedSectors.empty'),
+        }}
+        sectorOptions={translations.sectors}
       />
 
       <DeleteConfirmModal
         isOpen={isDeleteModalOpen}
         onClose={handleCloseDeleteModal}
         onConfirm={confirmDelete}
-        title='Видалити спеціальність'
-        message='Ви впевнені, що хочете видалити цю спеціальність? Цю дію неможливо скасувати.'
+        title={t('modals.delete.title')}
+        message={t('modals.delete.message')}
+        confirmText={t('modals.delete.confirm')}
+        cancelText={t('modals.delete.cancel')}
       />
     </div>
   )
