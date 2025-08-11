@@ -9,6 +9,7 @@ $text-nat-150: #464646;
 $text-red-400: #ff525e;
 $text-nat-500: #6d6d6d;
 $border-red-400: #ff525e;
+$button-hover-color: #ae302c;
 
 .applicationSection {
   display: flex;
@@ -263,8 +264,8 @@ $border-red-400: #ff525e;
 .toTopContainer {
   display: flex;
   padding: 0.625rem;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .toTopParagraph {
@@ -277,7 +278,7 @@ $border-red-400: #ff525e;
 
   background: transparent;
   border: none;
-  color: $primary-button-color;
+  color: $border-red-400;
 
   font-family: Inter;
   font-size: 1rem;
@@ -291,6 +292,15 @@ $border-red-400: #ff525e;
   text-decoration-thickness: auto;
   text-underline-offset: auto;
   text-underline-position: from-font;
+}
+
+.toTopParagraph:hover {
+  color: $button-hover-color;
+}
+
+.toTopParagraph:focus {
+  color: $button-hover-color;
+  border: 1px solid $button-hover-color;
 }
 
 .deletePanelContainer {
