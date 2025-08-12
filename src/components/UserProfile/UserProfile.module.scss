@@ -45,6 +45,8 @@
   padding: 0;
   border-radius: 50%;
   transition: transform 0.2s ease;
+  width: 40px;
+  height: 40px;
 
   &:hover {
     transform: scale(1.05);
