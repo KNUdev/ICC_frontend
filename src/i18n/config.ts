@@ -17,6 +17,7 @@ export const NAMESPACES = [
   'form/application',
   'form/points',
   'form/success',
+  'form/application',
   'faq',
   'AddNewWorker/common',
   'Auth/warning',
@@ -25,4 +26,5 @@ export const NAMESPACES = [
   'AddPhoto/common',
   'photosAlt/alt',
   'history',
+  'admin/applications',
 ]

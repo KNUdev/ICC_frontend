@@ -1,0 +1,57 @@
+$primary-border-color: #ff525e;
+$primary-bg-color: #ffa1a6;
+$pressed-bg-color: #eb8288;
+$primary-text-color: #6d6d6d;
+$changed-text-color: #fff;
+
+.mainBtnWhite {
+  display: inline-flex;
+  width: 100%;
+  padding: 0.9375rem 1.25rem;
+  justify-content: flex-start;
+  text-align: left;
+  align-items: center;
+  align-self: stretch;
+  gap: 0.625rem;
+  flex-shrink: 0;
+  outline: none;
+  cursor: pointer;
+
+  border: 1px solid $primary-border-color;
+  color: $primary-text-color;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.mainBtnWhite:hover {
+  border: 1px solid $primary-border-color;
+  background: $primary-bg-color;
+}
+
+.mainBtnWhite:focus {
+  border: 1px solid $primary-border-color;
+  background: $primary-bg-color;
+}
+
+.mainBtnWhite:active {
+  border: 1px solid $primary-border-color;
+  background: $pressed-bg-color;
+}
+
+.mainBtnWhite:hover,
+.mainBtnWhite:focus,
+.mainBtnWhite:active {
+  color: $changed-text-color;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}

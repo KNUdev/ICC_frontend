@@ -1,0 +1,402 @@
+$primary-border-color: #d1d1d1;
+$primary-background-color: #f6f6f6;
+$primary-button-color: #ff525e;
+$heading-text-color: #272727;
+$container-bg-color: #fff;
+$wrapper-bg-color: #f7f7f7;
+$text-nat-0: #272727;
+$text-nat-150: #464646;
+$text-red-400: #ff525e;
+$text-nat-500: #6d6d6d;
+$border-red-400: #ff525e;
+$button-hover-color: #ae302c;
+
+.applicationSection {
+  display: flex;
+  padding: 0 3.75rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.1875rem;
+  align-self: stretch;
+}
+
+.headingContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+}
+
+.heading {
+  color: $heading-text-color;
+
+  font-family: Inter;
+  font-size: 1.875rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.00938rem;
+  text-transform: uppercase;
+}
+
+.searchFilterContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.9375rem;
+  align-items: center;
+  gap: 1.5625rem;
+
+  background: $container-bg-color;
+}
+
+.searchFilterContainer > input {
+  flex: 0 0 80%;
+}
+
+.searchFilterContainer > button {
+  flex: 0 0 20%;
+}
+
+.applicationArticle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  border: 1px solid $primary-border-color;
+  background: $container-bg-color;
+}
+
+.applicationFormData {
+  display: flex;
+  padding: 1.5625rem;
+  align-items: flex-start;
+  gap: 2.8125rem;
+  align-self: stretch;
+}
+
+.assignSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: 100%;
+  gap: 1.5625rem;
+
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.assignedEmployeesContainer {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.applicationPhotoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5625rem;
+  flex: 0 0 30%;
+}
+
+.problemPhoto {
+  width: 100%;
+  height: 100%;
+}
+
+.applicationPhotoDates {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+}
+
+.photoDate {
+  color: $text-nat-150;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4375rem;
+  letter-spacing: 0.005rem;
+}
+
+.photoDateSpan {
+  color: $text-nat-0;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.divider {
+  width: 0.0625rem;
+  align-self: stretch;
+
+  background: $primary-border-color;
+}
+
+.horizontalDivider {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid $primary-border-color;
+}
+
+.dividerHorizontal {
+  align-self: stretch;
+  width: 100%;
+  border: none;
+
+  border-bottom: 1.5px solid $border-red-400;
+  background: $primary-border-color;
+}
+
+.applicationFormContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.1875rem;
+  flex: 1;
+}
+
+.smallFieldWrapper {
+  display: flex;
+  height: 5.5625rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9375rem;
+  align-self: stretch;
+}
+
+.bigFieldWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.9375rem;
+  align-self: stretch;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.1875rem;
+}
+
+.labelText {
+  color: $text-nat-0;
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.labelSpan {
+  color: $text-red-400;
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  background-color: $wrapper-bg-color;
+  box-sizing: border-box;
+}
+
+.textArea {
+  display: flex;
+  height: 9.375rem;
+  padding: 1.25rem;
+  align-items: flex-start;
+  gap: 0.625rem;
+  align-self: stretch;
+  resize: vertical;
+
+  border: 1px solid $primary-border-color;
+  color: $text-nat-500;
+
+  font-family: 'Golos Text', sans-serif;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.1875rem;
+  align-self: stretch;
+}
+
+.buttonContainer > button {
+  flex: 1 1 50%;
+  max-width: 50%;
+}
+
+.toTopContainer {
+  display: flex;
+  padding: 0.625rem;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.toTopParagraph {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+
+  background: transparent;
+  border: none;
+  color: $border-red-400;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}
+
+.toTopParagraph:hover {
+  color: $button-hover-color;
+}
+
+.toTopParagraph:focus {
+  color: $button-hover-color;
+  border: 1px solid $button-hover-color;
+}
+
+.deletePanelContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.deletePanel {
+  display: flex;
+  width: 80%;
+  padding: 2.8125rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2.8125rem;
+
+  border: 1px solid $primary-border-color;
+  background: $container-bg-color;
+}
+
+.deletePanelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+}
+
+.deletePanelHeading {
+  color: $heading-text-color;
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 1.875rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.00938rem;
+  text-transform: uppercase;
+}
+
+.centerText {
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+}
+
+.heading {
+  color: $heading-text-color;
+  text-align: center;
+
+  font-family: Inter;
+  font-size: 1.875rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.00938rem;
+  text-transform: uppercase;
+}
+
+.editPanelContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.editPanel {
+  display: flex;
+  width: 90%;
+  max-width: 95rem;
+  padding: 2.8125rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.5625rem;
+
+  border: 1px solid $primary-border-color;
+  background: $container-bg-color;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}

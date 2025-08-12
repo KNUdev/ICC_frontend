@@ -1,0 +1,64 @@
+{
+  "header": {
+    "application": "Applications",
+    "search": "Find the application you need...",
+    "filter": "Filters"
+  },
+
+  "buttons": {
+    "edit": "Edit application",
+    "delete": "Delete application"
+  },
+
+  "problemPhotoName": "problem photo",
+
+  "dateParas": {
+    "create": "Created",
+    "update": "Updated"
+  },
+
+  "deletePanel": {
+    "question": "DO YOU REALLY WANT TO DELETE THE APPLICATION?",
+    "delete": "Yes, I want to",
+    "keep": "No, I don't want to"
+  },
+
+  "filterPanel": {
+    "heading": "LIST OF FILTERS",
+    "apply": "Apply filters"
+  },
+
+  "editPanel": {
+    "heading": "EDIT APPLICATION",
+    "save": "Save changes"
+  },
+
+  "noResults": "No applications",
+
+  "top": "Scroll up",
+
+  "aria-labels": {
+    "clearSearch": "Clear search",
+    "closeDialog": "Close dialog",
+    "deleteDialogDesc": "Confirm deletion of the selected application",
+    "searchHelp": "Open search and filter help tooltip"
+  },
+
+  "status": {
+    "IN_QUEUE": "In_Queue",
+    "IN_WORK": "In_Work",
+    "REJECTED": "Rejected",
+    "DONE": "Done",
+
+    "placeholder": "Select status"
+  },
+
+  "assign": "Assign employees to the application",
+
+  "searchHelpText": "The search works by matching letters in one of the four form fields. The 'Filters' button uses the values from one or more fields to find matching applications on the page.",
+
+  "assignedEmployees": {
+    "heading": "Assigned Employees",
+    "noEmployees": "There are no employees assigned to this task currently."
+  }
+}
