@@ -2,7 +2,7 @@ export const PAGES = {
   HOME: '/',
   SERVICE_REQUEST: '/service-request',
   HISTORY: '/history',
-  PHOTO_GALLERY: '/photo-gallery',
+  PHOTO_GALLERY: '/PhotoGallery',
   STAFF: '/staff',
   CIC: '/cic',
   DOCUMENTS: '/documents',
