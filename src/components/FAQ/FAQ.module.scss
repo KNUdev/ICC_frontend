@@ -1,0 +1,21 @@
+.faqSection {
+  width: 100%;
+  max-width: 80rem; 
+  margin: 0 auto;
+  padding: 4rem 2rem; 
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; 
+}
+
+.sectionTitle {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.875rem; 
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15px;
+  color: var(--text-nat-0, #272727);
+  margin-bottom: 2.5rem; 
+}

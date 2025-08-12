@@ -1,0 +1,37 @@
+{
+  "homepage": "Home",
+  "historypage": "History",
+  "title": "History of the ICC",
+  "back": "Back to homepage",
+  "sections": {
+    "section1": {
+      "title": "FOUNDING AND EARLY YEARS (1965–1975)",
+      "text": "In 1965, the first university computing center in the USSR was established at the Faculty of Cybernetics of Taras Shevchenko Kyiv University. The aim of the new unit was to consolidate computer resources to solve scientific and applied problems: from mathematical modeling to automating diploma research. The Center's first machine was the 'Minsk-22', on which students and lecturers performed manual computations using magnetic tapes."
+    },
+    "section2": {
+      "title": "INFRASTRUCTURE AND STAFF DEVELOPMENT (1976–1990)",
+      "text": "In 1978, the construction of a separate administrative building on Volodymyrska Street was completed, featuring modern computing halls and reading rooms. This enabled the number of simultaneously connected users to increase from 30 to 200. The Center actively implemented the ES EOM operating system, developed local networks based on the 'Universal-1' computer, and organized the first programming courses for lecturers and students."
+    },
+    "section3": {
+      "title": "TRANSITION TO CLIENT–SERVER SOLUTIONS (1991–2005)",
+      "text": "After the revival of independent Ukraine, the Center expanded its services: establishing labs for network administration and databases. In 1995, the first UNIX server was installed, enabling the implementation of client–server architectures for scientific projects in geophysics and computational linguistics. Simultaneously, courses in C/C++, Java, and later Python were launched, opening access to international programming standards."
+    },
+    "section4": {
+      "title": "DIGITAL TRANSFORMATION (2006–2015)",
+      "text": "During this period, the Center focused on digitalizing internal university services. The first web portals for students and faculty were launched, and email services were migrated to secure internal infrastructure. The use of virtualization and centralized data storage significantly improved service delivery and support."
+    },
+    "section5": {
+      "title": "MODERNIZATION AND CLOUD TECHNOLOGIES (2016–2020)",
+      "text": "With the rise of cloud computing, the Center began integrating hybrid cloud services into the university’s ecosystem. Automated backup, licensed software access, and digital identity systems were introduced. IT infrastructure was optimized to ensure scalability and security for all users."
+    },
+    "section6": {
+      "title": "RESILIENCE AND REMOTE WORK SUPPORT (2020–2022)",
+      "text": "In response to the global pandemic, the Center rapidly adapted systems to support remote learning and work. VPN services, cloud-based collaboration tools, and secure authentication methods were deployed. The staff provided round-the-clock support to ensure continuity of academic activities."
+    },
+    "section7": {
+      "title": "INNOVATION AND CYBERSECURITY (2023–PRESENT)",
+      "text": "Today, the ICC is focused on building a resilient, secure, and innovative IT environment. Cybersecurity protocols, zero-trust access models, and AI-driven monitoring tools are being implemented. The Center continues to play a key role in digital transformation at the university."
+    }
+  },
+  "scrollTop": "Scroll to top"
+}

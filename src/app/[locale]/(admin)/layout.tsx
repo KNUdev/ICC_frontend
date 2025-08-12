@@ -1,14 +1,19 @@
+import { Footer } from '@/components/Footer/Footer'
 import { Header } from '@/components/Header/Header'
-import { CustomHeaderNav } from '@/components/Header/CustomHeaderNav'
+import { RoleGuard } from '@/components/RoleGuard/RoleGuard'
 import type { PropsWithChildren } from 'react'
-import { ApplicationsPage } from '@/components/ApplicationsPage/ApplicationsPage'
 
 export default function Layout({ children }: PropsWithChildren<unknown>) {
   return (
     <div>
-      <Header customNav={<CustomHeaderNav />} />
-      <ApplicationsPage />
-      {children}
+      <Header />
+      <RoleGuard
+        requiredPermissions={['canAccessAdminPanel']}
+        requiredRoles={['SECRETARY', 'SITE_MANAGER', 'HEAD_MANAGER']}
+      >
+        {children}
+      </RoleGuard>
+      <Footer />
     </div>
   )
 }
