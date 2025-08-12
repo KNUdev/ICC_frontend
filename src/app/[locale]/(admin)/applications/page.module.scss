@@ -400,13 +400,3 @@ $button-hover-color: #ae302c;
   background: $container-bg-color;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
-
-:global {
-  button span[aria-hidden='true'],
-  input + span[aria-hidden='true'] {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 0;
-  }
-}
