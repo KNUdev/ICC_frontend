@@ -14,7 +14,12 @@
     "STAFF": "Штат",
     "CIC": "ЦОМ",
     "DOCUMENTS": "Документи",
-    "FAQ": "Часті запитання"
+    "FAQ": "Часті запитання",
+    "admin": {
+      "ADD_NEW_WORKER": "Додати працівника",
+      "MANAGE_EMPLOYEES": "Управління працівниками",
+      "REPORTS": "Звіти"
+    }
   },
 
   "institutions": {
@@ -48,6 +53,26 @@
 
   "authentication": {
     "login": "Увійти",
-    "register": "Зареєструватися"
-  }
+    "register": "Зареєструватися",
+    "logout": "Вийти"
+  },
+
+  "roles": {
+    "COMMON_USER": "Користувач",
+    "SECRETARY": "Секретар",
+    "SITE_MANAGER": "Менеджер сайту",
+    "HEAD_MANAGER": "Головний менеджер"
+  },
+
+  "customNavigation": {
+    "addNewWorker": "Додати нового працівника",
+    "addSpecialty": "Додати спеціальність",
+    "allSectors": "Всі сектори",
+    "allWorkers": "Всі працівники",
+    "jobApplications": "Заявки на роботу",
+    "creatingReports": "Створення звітів"
+  },
+
+  "backToHome": "Повернутись на головну",
+  "backToTop": "Прогорнути вгору"
 }

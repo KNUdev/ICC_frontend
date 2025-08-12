@@ -31,6 +31,18 @@ const nextConfig: NextConfig = {
       loaderFile: 'src/shared/lib/netlifyImageLoader.ts',
     },
   }),
+  ...(process.env.NODE_ENV === 'development' && {
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'http',
+          hostname: 'localhost',
+          port: '9000',
+          pathname: '/images/**',
+        },
+      ],
+    },
+  }),
 }
 
 const withNextIntl = createNextIntlPlugin()

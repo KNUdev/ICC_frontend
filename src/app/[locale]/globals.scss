@@ -1,10 +1,12 @@
 @use '@/common/styles/reset-style.scss';
 @use '@/common/styles/variables.scss';
-@use '@/common/styles/buttons/mainbutton.scss';
 @use '@/common/styles/buttons/iconbutton.scss';
 @use '@/common/styles/buttons/menunav.scss';
 @use '@/common/styles/buttons/textbutton.scss';
-@use '@/common/styles/buttons/choosebutton.scss';
+@use '@/common/styles/buttons/mainbutton/mainbutton.scss';
+@use '@/common/styles/buttons/mainbutton/mainbutton-white.scss';
+@use '@/common/styles/buttons/closebutton.scss';
+@use '@/common/styles/inputs/searchinput.scss';
 @use '@/common/styles/inputs/textinput.scss';
 @use '@/common/styles/inputs/searchinput.scss';
 

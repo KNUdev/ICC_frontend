@@ -14,7 +14,12 @@
     "STAFF": "Staff",
     "CIC": "CIC",
     "DOCUMENTS": "Documents",
-    "FAQ": "FAQ"
+    "FAQ": "FAQ",
+    "admin": {
+      "ADD_NEW_WORKER": "Add Employee",
+      "MANAGE_EMPLOYEES": "Manage Employees",
+      "REPORTS": "Reports"
+    }
   },
 
   "institutions": {
@@ -47,7 +52,27 @@
   },
 
   "authentication": {
-    "login": "Sing in",
-    "register": "Sign up"
-  }
+    "login": "Sign in",
+    "register": "Sign up",
+    "logout": "Sign out"
+  },
+
+  "roles": {
+    "COMMON_USER": "User",
+    "SECRETARY": "Secretary",
+    "SITE_MANAGER": "Site Manager",
+    "HEAD_MANAGER": "Head Manager"
+  },
+
+  "customNavigation": {
+    "addNewWorker": "Add a new employee",
+    "addSpecialty": "Add a specialty",
+    "allSectors": "All sectors",
+    "allWorkers": "All employees",
+    "jobApplications": "Job applications",
+    "creatingReports": "Creating reports"
+  },
+
+  "backToHome": "Back to Home",
+  "backToTop": "Back to top"
 }

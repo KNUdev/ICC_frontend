@@ -2,11 +2,26 @@ export const PAGES = {
   HOME: '/',
   SERVICE_REQUEST: '/service-request',
   HISTORY: '/history',
-  PHOTO_GALLERY: '/photo-gallery',
+  PHOTO_GALLERY: '/PhotoGallery',
   STAFF: '/staff',
   CIC: '/cic',
   DOCUMENTS: '/documents',
-  FAQ: '/faq',
+  FAQ: '/#faq',
+}
+
+export const ADMIN_PAGES = {
+  ADD_NEW_WORKER: '/AddNewWorker',
+  MANAGE_EMPLOYEES: '/manage-employees',
+  REPORTS: '/reports',
+}
+
+export const USER_PAGES = {
+  addNewWorker: '/add-new-worker',
+  addSpecialty: '/add-specialty',
+  allSectors: '/sectors',
+  allWorkers: '/workers',
+  jobApplications: '/applications',
+  creatingReports: '/reports',
 }
 
 export const INSTITUTION_LINKS = {
