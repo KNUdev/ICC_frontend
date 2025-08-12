@@ -28,7 +28,7 @@ export function UserProfile() {
     return null
   }
 
-  const fullName = `${employee.name.firstName} ${employee.name.lastName}`
+  const fullName = `${employee.name.lastName} ${employee.name.firstName}  ${employee.name.middleName}`
   const roleLabel = highestRole
     ? tCommon(`roles.${highestRole}`)
     : tCommon('roles.COMMON_USER')

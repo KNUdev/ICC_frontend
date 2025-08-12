@@ -24,4 +24,5 @@ export const NAMESPACES = [
   'Auth/singUp',
   'AddPhoto/common',
   'photosAlt/alt',
+  'history',
 ]

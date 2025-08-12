@@ -24,7 +24,7 @@ export default function AddPhoto() {
         photo?: string
       } = {}
 
-      const name = (formData.get('itemName') as string)?.trim()
+      const name = (formData.get('publicItemName') as string)?.trim()
       const description = (formData.get('itemDescription') as string)?.trim()
 
       if (!name) {
@@ -156,7 +156,7 @@ export default function AddPhoto() {
           <input
             type='text'
             id={`name-${formId}`}
-            name='itemName'
+            name='publicItemName'
             placeholder={tAddPhotoText('name.placeholder')}
             className='inputText'
             disabled={isSubmitting}

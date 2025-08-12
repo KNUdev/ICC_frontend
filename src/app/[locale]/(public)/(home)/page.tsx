@@ -8,6 +8,7 @@ import { PAGES } from '@/shared/config/page.config'
 import { useTranslations } from 'next-intl'
 import style from './page.module.scss'
 
+
 export default function HomePage() {
   const t = useTranslations('home')
   const tCommon = useTranslations('common')
