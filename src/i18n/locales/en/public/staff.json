@@ -1,0 +1,45 @@
+{
+  "headings": {
+    "filter": "FILTERS",
+    "pagination": "Workers on page",
+    "contacts": "Contacts",
+    "workers": "Workers with the same profession"
+  },
+
+  "paras": {
+    "sector": "Sector",
+    "student": "Student",
+    "notStudent": "Not a student",
+    "workHours": "Working hours"
+  },
+
+  "labels": {
+    "search": "Search by Full Name/Email",
+    "specialty": "Profession"
+  },
+
+  "placeholders": {
+    "search": "Popov Bohdan Vitaliyovych",
+    "specialty": "Engineer"
+  },
+
+  "aria-labels": {
+    "search": "Clear search",
+    "specialty": "Filter by profession",
+    "pagination": "Number of workers per page",
+    "list": "List of workers",
+    "details": "Open worker details",
+    "back": "Go back to the list of workers",
+    "listSame": "List of workers with the same profession",
+    "top": "Scroll page to top",
+    "help": "Help: Explanation of search and filter usage"
+  },
+
+  "buttons": {
+    "all": "All",
+    "back": "Back",
+    "top": "Scroll to top"
+  },
+
+  "help": "You can use the search and filter fields individually, or combine them for a more precise search if you know specific information."
+}

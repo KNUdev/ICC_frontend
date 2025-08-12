@@ -27,4 +27,5 @@ export const NAMESPACES = [
   'photosAlt/alt',
   'history',
   'admin/applications',
+  'public/staff',
 ]

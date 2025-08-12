@@ -1,11 +1,10 @@
 export const PAGES = {
   HOME: '/',
-  SERVICE_REQUEST: '/service-request',
+  SERVICE_REQUEST: '/#formApplication',
   HISTORY: '/history',
   PHOTO_GALLERY: '/PhotoGallery',
   STAFF: '/staff',
-  CIC: '/cic',
-  DOCUMENTS: '/documents',
+  CLUSTER: 'http://cluster.univ.kiev.ua/ukr/',
   FAQ: '/#faq',
 }
 
