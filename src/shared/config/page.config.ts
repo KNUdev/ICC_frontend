@@ -9,6 +9,12 @@ export const PAGES = {
   FAQ: '/faq',
 }
 
+export const ADMIN_PAGES = {
+  ADD_NEW_WORKER: '/AddNewWorker',
+  MANAGE_EMPLOYEES: '/manage-employees',
+  REPORTS: '/reports',
+}
+
 export const INSTITUTION_LINKS = {
   MILITARY: 'https://mil.knu.ua/',
   SECURITY: 'https://institute.do.gov.ua/',

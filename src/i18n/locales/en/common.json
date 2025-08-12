@@ -14,7 +14,12 @@
     "STAFF": "Staff",
     "CIC": "CIC",
     "DOCUMENTS": "Documents",
-    "FAQ": "FAQ"
+    "FAQ": "FAQ",
+    "admin": {
+      "ADD_NEW_WORKER": "Add Employee",
+      "MANAGE_EMPLOYEES": "Manage Employees",
+      "REPORTS": "Reports"
+    }
   },
 
   "institutions": {
@@ -48,6 +53,14 @@
 
   "authentication": {
     "login": "Sing in",
-    "register": "Sign up"
+    "register": "Sign up",
+    "logout": "Sign out"
+  },
+
+  "roles": {
+    "COMMON_USER": "User",
+    "SECRETARY": "Secretary",
+    "SITE_MANAGER": "Site Manager",
+    "HEAD_MANAGER": "Head Manager"
   }
 }
