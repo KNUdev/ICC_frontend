@@ -9,6 +9,12 @@ export const PAGES = {
   FAQ: '/faq',
 }
 
+export const ADMIN_PAGES = {
+  ADD_NEW_WORKER: '/AddNewWorker',
+  MANAGE_EMPLOYEES: '/manage-employees',
+  REPORTS: '/reports',
+}
+
 export const USER_PAGES = {
   addNewWorker: '/add-new-worker',
   addSpecialty: '/add-specialty',
@@ -19,17 +25,30 @@ export const USER_PAGES = {
 }
 
 export const INSTITUTION_LINKS = {
+  MILITARY: 'https://mil.knu.ua/',
+  SECURITY: 'https://institute.do.gov.ua/',
+  POSTGRADUATE: 'https://ipe.knu.ua/',
   GEOLOGY: 'https://geo.knu.ua/',
-  MILITARY: 'https://military.knu.ua/',
-  SECURITY: 'https://www.igov.gov.ua/',
-  POSTGRADUATE: 'https://ippo.knu.ua/',
-  SCIENTIFIC: 'https://www.science.knu.ua/',
+  JOURNALISM: 'https://journ.knu.ua/',
+  HIGHTECH: 'https://iht.knu.ua/',
+  INTRELATIONS: 'https://www.iir.edu.ua/',
+  LAW: 'https://law.knu.ua/',
+  PHILOLOGY: 'https://philology.knu.ua/',
+  CIVILADMIN: 'https://ipacs.knu.ua/',
+  MEDICINE: 'https://biomed.knu.ua/',
 }
 
 export const FACULTY_LINKS = {
   GEOGRAPHY: 'https://geo.knu.ua/',
   ECONOMICS: 'https://econom.knu.ua/',
-  HISTORY: 'https://history.knu.ua/',
-  MECHMATH: 'https://mmf.knu.ua/',
-  INFOTECH: 'https://it.knu.ua/',
+  HISTORY: 'http://www.history.univ.kiev.ua/',
+  MECHMATH: 'https://mechmat.knu.ua/',
+  INFOTECH: 'https://fit.knu.ua/',
+  CYBERNETICS: 'https://csc.knu.ua/en/',
+  PSYCHOLOGY: 'https://psy.knu.ua/',
+  RADIOPHYSICS: 'https://rex.knu.ua/',
+  SOCIOLOGY: 'https://sociology.knu.ua/',
+  PHYSICS: 'https://phys.knu.ua/',
+  PHILOSOPHY: 'https://www.philosophy.knu.ua/',
+  CHEMISTRY: 'https://chem.knu.ua/',
 }

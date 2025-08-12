@@ -1,0 +1,90 @@
+{
+  "title": "ADD NEW WORKER",
+  "description": "On this page you can add a new worker to the system by providing their basic data, contact information, position and optionally upload a photo. All required fields are marked, and entered data can be edited later.",
+
+  "photo": {
+    "title": "WORKER PHOTO *",
+    "uploadButton": "Upload worker photo",
+    "changeButton": "Change worker photo",
+    "deleteButton": "Delete existing photo"
+  },
+
+  "generalInfo": {
+    "title": "GENERAL INFORMATION",
+    "firstNameLabel": "First name *",
+    "firstName": "Enter first name...",
+    "lastNameLabel": "Last name *",
+    "lastName": "Enter last name...",
+    "middleNameLabel": "Middle name *",
+    "middleName": "Enter middle name...",
+    "isStudent": "Is a student",
+    "emailLabel": "Email *",
+    "email": "Enter email...",
+    "phoneLabel": "Phone number *",
+    "phonePlaceholder": "Enter phone number..."
+  },
+
+  "salary": {
+    "title": "SALARY",
+    "label": "Amount in hryvnias *",
+    "placeholder": "Enter amount..."
+  },
+
+  "specialty": {
+    "title": "SPECIALTY INFORMATION",
+    "specialtyLabel": "Specialty *",
+    "sectorLabel": "Sector *",
+    "specialtyPlaceholder": "Select specialty",
+    "sectorPlaceholder": "Select sector"
+  },
+
+  "role": {
+    "title": "ROLE INFORMATION",
+    "label": "Role *",
+    "placeholder": "Select role",
+    "options": {
+      "commonUser": "Common User",
+      "secretary": "Secretary",
+      "siteManager": "Site Manager",
+      "headManager": "Head Manager"
+    }
+  },
+
+  "workingHours": {
+    "title": "WORKING HOURS",
+    "fromLabel": "From *",
+    "toLabel": "To *"
+  },
+
+  "contract": {
+    "title": "CONTRACT INFORMATION",
+    "startDateLabel": "Contract start date *",
+    "endDateLabel": "Contract end date *"
+  },
+
+  "actions": {
+    "submit": "Add worker",
+    "submitting": "Adding worker...",
+    "scrollToTop": "Scroll to top"
+  },
+
+  "success": {
+    "title": "Worker Added Successfully!",
+    "message": "The new worker has been added to the system successfully.",
+    "button": "OK"
+  },
+
+  "errors": {
+    "firstName": "First name is required",
+    "lastName": "Last name is required",
+    "middleName": "Middle name is required",
+    "email": "Email is required",
+    "emailKnuOnly": "Email must be a valid knu.ua address",
+    "photo": "Worker photo is required",
+    "specialty": "Specialty is required",
+    "sector": "Sector is required",
+    "role": "Role is required",
+    "contractEndDate": "Contract end date is required",
+    "failedToCreateEmployee": "Failed to create employee. Please try again."
+  }
+}

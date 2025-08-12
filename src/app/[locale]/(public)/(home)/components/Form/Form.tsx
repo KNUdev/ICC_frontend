@@ -7,7 +7,7 @@ export function Form() {
   const tFormText = useTranslations('form/text')
 
   return (
-    <div className='main-wrapper'>
+    <>
       <section className={styles.sectionContainer}>
         <div className={styles.textContainer}>
           <h1 className={styles.heading}>{tFormText('heading')}</h1>
@@ -19,6 +19,6 @@ export function Form() {
           <FormPoints />
         </div>
       </section>
-    </div>
+    </>
   )
 }
