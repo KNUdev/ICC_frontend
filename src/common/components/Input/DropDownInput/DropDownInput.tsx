@@ -20,10 +20,7 @@ interface SearchableDropdownProps {
   hasError?: boolean
   value?: string | null
   errorMessage?: string | null
-<<<<<<< HEAD
   status?: 'DONE' | 'REJECTED' | 'IN_WORK' | 'IN_QUEUE'
-=======
->>>>>>> eadecd51e60bdb95b8443c1750a3014d0ad0153f
 }
 
 const DropDownInput: React.FC<SearchableDropdownProps> = ({
@@ -35,10 +32,7 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
   hasError,
   value,
   errorMessage,
-<<<<<<< HEAD
   status,
-=======
->>>>>>> eadecd51e60bdb95b8443c1750a3014d0ad0153f
 }) => {
   const [inputValue, setInputValue] = useState('')
   const [filteredOptions, setFilteredOptions] = useState<Option[]>([])
@@ -147,17 +141,11 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
           }}
           onBlur={handleInputBlur}
           placeholder={placeholder}
-<<<<<<< HEAD
           className={`
     ${styles.searchInput}
     ${hasError ? styles.searchInputError : ''}
     ${status ? styles[`status${status}`] : ''}
   `}
-=======
-          className={`${styles.searchInput} ${
-            hasError ? styles.searchInputError : ''
-          }`}
->>>>>>> eadecd51e60bdb95b8443c1750a3014d0ad0153f
         />
 
         <div
@@ -189,13 +177,9 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
 
             return (
               <li
-<<<<<<< HEAD
                 className={`${styles.listItem} ${
                   styles[`status${option.value}`] || ''
                 }`}
-=======
-                className={styles.listItem}
->>>>>>> eadecd51e60bdb95b8443c1750a3014d0ad0153f
                 key={option.value}
                 onMouseDown={() => setIsMouseDown(true)}
                 onMouseUp={() => setIsMouseDown(false)}
