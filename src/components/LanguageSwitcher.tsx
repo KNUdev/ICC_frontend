@@ -1,19 +1,21 @@
 'use client'
 
+import FlagEN from '@/assets/image/icons/English_flag.svg'
 import FlagUA from '@/assets/image/icons/Ukraine_flag.svg'
-import ArrowUp from '@/assets/image/icons/arrow-up.svg'
 import ArrowDown from '@/assets/image/icons/arrow-down.svg'
-import styles from './Header/Header.module.scss'
-import { useState } from 'react'
+import ArrowUp from '@/assets/image/icons/arrow-up.svg'
 import { LANGUAGE_LABELS, type Locale, SUPPORTED_LOCALES } from '@/i18n/config'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { useLocale } from 'next-intl'
+import { useState } from 'react'
+import styles from './Header/Header.module.scss'
 
 export default function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false)
   const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
+  const FlagIcon = locale === 'uk' ? FlagUA : FlagEN
 
   const handleChange = (newLang: Locale) => {
     router.push(pathname, { locale: newLang })

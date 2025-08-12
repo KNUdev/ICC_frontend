@@ -22,5 +22,6 @@ export const NAMESPACES = [
   'Auth/warning',
   'Auth/singIn',
   'Auth/singUp',
+  'AddPhoto/common',
   'photosAlt/alt',
 ]

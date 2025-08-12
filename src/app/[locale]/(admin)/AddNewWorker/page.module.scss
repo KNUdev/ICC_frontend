@@ -11,6 +11,13 @@ $bg-nat-900: #f6f6f6;
 $border-radius: 0px;
 $border-radius-small: 0px;
 $border-radius-tiny: 0px;
+
+.AddNewWorkerPage {
+  display: flex;
+  flex-direction: column;
+  margin: 2.25rem auto;
+}
+
 @mixin label-style {
   display: flex;
   width: 100%;

@@ -64,6 +64,15 @@
     "HEAD_MANAGER": "Головний менеджер"
   },
 
+  "customNavigation": {
+    "addNewWorker": "Додати нового працівника",
+    "addSpecialty": "Додати спеціальність",
+    "allSectors": "Всі сектори",
+    "allWorkers": "Всі працівники",
+    "jobApplications": "Заявки на роботу",
+    "creatingReports": "Створення звітів"
+  },
+
   "backToHome": "Повернутись на головну",
   "backToTop": "Прогорнути вгору"
 }

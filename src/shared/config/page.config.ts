@@ -15,6 +15,15 @@ export const ADMIN_PAGES = {
   REPORTS: '/reports',
 }
 
+export const USER_PAGES = {
+  addNewWorker: '/add-new-worker',
+  addSpecialty: '/add-specialty',
+  allSectors: '/sectors',
+  allWorkers: '/workers',
+  jobApplications: '/applications',
+  creatingReports: '/reports',
+}
+
 export const INSTITUTION_LINKS = {
   MILITARY: 'https://mil.knu.ua/',
   SECURITY: 'https://institute.do.gov.ua/',
