@@ -9,7 +9,11 @@ import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import styles from './Header.module.scss'
 
-export function Header() {
+type HeaderProps = {
+  customNav?: React.ReactNode
+}
+
+export function Header({ customNav }: HeaderProps) {
   const tCommon = useTranslations('common')
   const { isAuthenticated, isLoading } = useCurrentUser()
 

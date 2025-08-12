@@ -62,5 +62,14 @@
     "SECRETARY": "Секретар",
     "SITE_MANAGER": "Менеджер сайту",
     "HEAD_MANAGER": "Головний менеджер"
+  },
+
+  "customNavigation": {
+    "addNewWorker": "Додати нового працівника",
+    "addSpecialty": "Додати спеціальність",
+    "allSectors": "Всі сектори",
+    "allWorkers": "Всі працівники",
+    "jobApplications": "Заявки на роботу",
+    "creatingReports": "Створення звітів"
   }
 }

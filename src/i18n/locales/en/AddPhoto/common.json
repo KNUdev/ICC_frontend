@@ -1,0 +1,14 @@
+{
+  "heading": "Add Image",
+  "subheading": "On this page, you can add a new image to the system by specifying its main data, contact information, position, and if necessary, upload a photo. All required fields are marked, and the entered data can be edited later.",
+
+  "name": {
+    "label": "Name",
+    "placeholder": "Enter image name..."
+  },
+  "description": {
+    "label": "Description",
+    "placeholder": "Enter image description..."
+  },
+  "addButton": "Add Image"
+}
