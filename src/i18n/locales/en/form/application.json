@@ -36,7 +36,12 @@
   "button": "Leave a request",
 
   "error": "Something went wrong... ",
-  "success": "The form has been successfully submitted!",
+
+  "success": {
+    "title": "Success!",
+    "message": "The photo has been successfully uploaded!",
+    "button": "OK"
+  },
 
   "cooldown": {
     "title": "Form already submitted",

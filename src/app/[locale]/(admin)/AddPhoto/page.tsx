@@ -1,222 +1,150 @@
 'use client'
 
 import ArrowRight from '@/assets/image/icons/arrow-right.svg'
-import UploadFile from '@/assets/image/icons/file.svg'
 import { FieldError } from '@/common/components/FieldError/FieldError'
-import { API } from '@/shared/config/api.config'
 import { useTranslations } from 'next-intl'
 import Form from 'next/form'
-import { useRouter } from 'next/navigation'
 import { useCallback, useRef, useState } from 'react'
+import { FileUpload } from './FileUpload'
+import { ImageUpload } from './imageUpload'
 import styles from './page.module.scss'
 
-interface FormApplicationProps {
-  formId?: string
-}
-
-export default function AddPhoto({ formId = 'default' }: FormApplicationProps) {
-  const [file, setFile] = useState<File | null>(null)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [showSubmission, setShowSubmission] = useState<boolean | null>(null)
-  const [submissionErrorMessage, setSubmissionErrorMessage] = useState<
-    string | null
-  >(null)
-  const [formErrors, setFormErrors] = useState<{
-    fullname?: string
-    email?: string
-    faculty?: string
-    description?: string
-    photo?: string
-  }>({})
-
-  const tAddPhotoText = useTranslations('add-photo/text')
+export default function AddPhoto() {
+  const formId = 'add-photo-form'
+  const tAddPhotoText = useTranslations('AddPhoto/common')
   const tFormApplication = useTranslations('form/application')
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
-  const router = useRouter()
+  const validateForm = useCallback(
+    (formData: FormData, file: File | null) => {
+      const errors: {
+        name?: string
+        description?: string
+        photo?: string
+      } = {}
 
-  const setLastSubmissionTime = useCallback(() => {
-    localStorage.setItem('lastFormSubmission', Date.now().toString())
-  }, [])
+      const name = (formData.get('itemName') as string)?.trim()
+      const description = (formData.get('itemDescription') as string)?.trim()
 
-  const showSubmissionMessage = useCallback(() => {
-    setTimeout(() => setShowSubmission(null), 3000)
-  }, [])
-
-  const validateForm = useCallback(() => {
-    const errors: typeof formErrors = {}
-
-    if (!file) {
-      errors.photo = tFormApplication('validation.photo')
-    }
-
-    return errors
-  }, [tFormApplication, file])
-
-  const clearFieldError = useCallback((fieldName: keyof typeof formErrors) => {
-    setFormErrors((prev) => {
-      const newErrors = { ...prev }
-      delete newErrors[fieldName]
-      return newErrors
-    })
-  }, [])
-
-  const fetchForm = useCallback(
-    async (form: HTMLFormElement) => {
-      const formData = new FormData(form)
-
-      if (file) {
-        formData.append('problemPhotoName', file.name)
-        formData.set('problemPhoto', file)
+      if (!name) {
+        errors.name = tFormApplication('validation.name')
       }
 
-      try {
-        const response = await fetch(`${API}admin/gallery/image/upload`, {
-          method: 'POST',
-          body: formData,
-        })
-
-        if (response.ok) {
-          setLastSubmissionTime()
-          form.reset()
-          setFile(null)
-          setSubmissionErrorMessage(null)
-          router.push('/success')
-        } else {
-          const errorText = await response.text()
-          setSubmissionErrorMessage(errorText || 'Unknown error')
-          setShowSubmission(false)
-        }
-
-        showSubmissionMessage()
-      } catch (err) {
-        console.error('Error while sending: ', err)
-        setShowSubmission(false)
-        showSubmissionMessage()
-      } finally {
-        setIsSubmitting(false)
+      if (!description) {
+        errors.description = tFormApplication('validation.description')
       }
+
+      if (!file) {
+        errors.photo = tFormApplication('validation.photo')
+      }
+
+      return errors
     },
-    [file, showSubmissionMessage, router, setLastSubmissionTime],
+    [tFormApplication],
   )
+
+  const handleSuccess = useCallback(() => {
+    setShowSuccessModal(true)
+    if (fileInputRef.current?.form) {
+      fileInputRef.current.form.reset()
+    }
+  }, [])
+
+  const {
+    file,
+    isSubmitting,
+    errorMessage,
+    formErrors,
+    setFile,
+    clearFieldError,
+    validateAndSubmit,
+  } = ImageUpload({
+    validateForm,
+    onSuccess: handleSuccess,
+  })
 
   const handleSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-
-      if (isSubmitting) {
-        return
-      }
-
-      const form = e.currentTarget
-
-      setFormErrors({})
-
-      const errors = validateForm()
-
-      if (Object.keys(errors).length > 0) {
-        setFormErrors(errors)
-        return
-      }
-
-      setIsSubmitting(true)
-      fetchForm(form)
+      const formData = new FormData(e.currentTarget)
+      await validateAndSubmit(formData)
     },
-    [isSubmitting, validateForm, fetchForm],
+    [validateAndSubmit],
   )
-
-  const fileInput = useRef<HTMLInputElement>(null)
 
   const handleFileChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setFile(event.target.files?.[0] || null)
-      clearFieldError('photo')
+      const selectedFile = event.target.files?.[0] || null
+      setFile(selectedFile)
+      if (selectedFile) {
+        clearFieldError('photo')
+      }
     },
-    [clearFieldError],
+    [setFile, clearFieldError],
   )
 
   const handleFilePreview = useCallback(
     (e: React.MouseEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      if (file) {
-        const fileURL = URL.createObjectURL(file)
-        window.open(fileURL, '_blank')
+
+      if (!file) return
+
+      const fileURL = URL.createObjectURL(file)
+      const newWindow = window.open(fileURL, '_blank')
+
+      if (newWindow) {
+        newWindow.addEventListener('beforeunload', () => {
+          URL.revokeObjectURL(fileURL)
+        })
       }
     },
     [file],
   )
 
-  const handleFileDelete = useCallback((e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setFile(null)
+  const handleFileDelete = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      setFile(null)
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
+      }
+    },
+    [setFile],
+  )
+
+  const handleCloseModal = useCallback(() => {
+    setShowSuccessModal(false)
   }, [])
 
   return (
-    <div className={styles.mainContainer}>
-      <div className={styles.textContainer}>
+    <div className={styles.section + ' main-wrapper'}>
+      <header className={styles.textContainer}>
         <h1 className={styles.heading}>{tAddPhotoText('heading')}</h1>
         <p className={styles.paragraph}>{tAddPhotoText('subheading')}</p>
-      </div>
-      <Form
-        action='form'
-        onSubmit={handleSubmit}
-        className={styles.formContainer}
-      >
-        <label className={styles.customFileUpload}>
-          <input
-            type='file'
-            id={`file-${formId}`}
-            name='problemPhoto'
-            accept='image/*'
-            aria-labelledby={`fileLabel-${formId}`}
-            ref={fileInput}
-            onChange={handleFileChange}
-            disabled={!!file}
-          />
-          <div className={styles.uploadContent}>
-            <UploadFile />
-            {!file && (
-              <span className={styles.uploadText}>
-                {tFormApplication(`placeholders.photo`)}
-              </span>
-            )}
-          </div>
+      </header>
 
-          {file && (
-            <div className={styles.fileStatusContainer}>
-              <button
-                type='button'
-                className={styles.fileButton}
-                onClick={handleFilePreview}
-              >
-                {tFormApplication('file.preview')}
-              </button>
-
-              <div className={styles.divider}></div>
-              <p className={styles.fileStatusText}>
-                {tFormApplication('file.uploaded')}
-              </p>
-              <div className={styles.divider}></div>
-
-              <button
-                type='button'
-                className={styles.fileButton}
-                onClick={handleFileDelete}
-              >
-                {tFormApplication('file.delete')}
-              </button>
-            </div>
-          )}
-        </label>
+      <Form action='' onSubmit={handleSubmit} className={styles.formContainer}>
+        <FileUpload
+          ref={fileInputRef}
+          file={file}
+          onFileChange={handleFileChange}
+          onFilePreview={handleFilePreview}
+          onFileDelete={handleFileDelete}
+          disabled={isSubmitting}
+          id={`file-${formId}`}
+          name='item'
+        />
 
         <FieldError error={formErrors.photo} />
 
-        <div className={`${styles.fieldWrapper} ${styles.small}`}>
-          <label className={styles.label} htmlFor={`email-${formId}`}>
-            <p className={styles.labelText}>
-              {tFormApplication(`labels.email`)}
-            </p>
+        <div className={styles.fieldWrapper}>
+          <label className={styles.label} htmlFor={`name-${formId}`}>
+            <span className={styles.labelText}>
+              {tAddPhotoText('name.label')}
+            </span>
             <span
               className={styles.labelSpan}
               title={tFormApplication('required')}
@@ -225,38 +153,99 @@ export default function AddPhoto({ formId = 'default' }: FormApplicationProps) {
             </span>
           </label>
 
-          <div className={styles.inputWrapper}>
-            <input
-              type='email'
-              id={`email-${formId}`}
-              name='applicantEmail'
-              placeholder={tFormApplication(`placeholders.email`)}
-              className='inputText'
-              onChange={() => clearFieldError('email')}
-            />
-          </div>
+          <input
+            type='text'
+            id={`name-${formId}`}
+            name='itemName'
+            placeholder={tAddPhotoText('name.placeholder')}
+            className='inputText'
+            disabled={isSubmitting}
+            onChange={() => clearFieldError('name')}
+          />
 
-          <FieldError error={formErrors.email} />
+          <FieldError error={formErrors.name} />
+        </div>
+
+        <div className={styles.fieldWrapper}>
+          <label className={styles.label} htmlFor={`description-${formId}`}>
+            <span className={styles.labelText}>
+              {tAddPhotoText('description.label')}
+            </span>
+            <span
+              className={styles.labelSpan}
+              title={tFormApplication('required')}
+            >
+              *
+            </span>
+          </label>
+
+          <textarea
+            id={`description-${formId}`}
+            name='itemDescription'
+            placeholder={tAddPhotoText('description.placeholder')}
+            className='inputText'
+            disabled={isSubmitting}
+            onChange={() => clearFieldError('description')}
+          />
+
+          <FieldError error={formErrors.description} />
         </div>
 
         <button type='submit' className='mainBtn' disabled={isSubmitting}>
-          <p className={styles.buttonText}>
+          <span className={styles.buttonText}>
             {isSubmitting
               ? tFormApplication('loading')
-              : tFormApplication(`button`)}
-          </p>
+              : tAddPhotoText('addButton')}
+          </span>
           <ArrowRight />
         </button>
 
-        {showSubmission === false && (
+        {errorMessage && (
           <div className={`${styles.formMessage} ${styles.failure}`}>
             <p className={styles.failureText}>
-              {tFormApplication('error')}
-              {submissionErrorMessage}
+              {tFormApplication('error')} {errorMessage}
             </p>
           </div>
         )}
       </Form>
+
+      {showSuccessModal && (
+        <div className={styles.modalOverlay} onClick={handleCloseModal}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalContent}>
+              <div className={styles.modalIcon}>
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='48'
+                  height='48'
+                  viewBox='0 0 24 24'
+                  fill='none'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  className={styles.successIcon}
+                >
+                  <polyline points='20,6 9,17 4,12'></polyline>
+                </svg>
+              </div>
+              <h3 className={styles.modalTitle}>
+                {tFormApplication('success.title')}
+              </h3>
+              <p className={styles.modalMessage}>
+                {tFormApplication('success.message')}
+              </p>
+              <button
+                type='button'
+                className={styles.modalButton}
+                onClick={handleCloseModal}
+              >
+                {tFormApplication('success.button')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
