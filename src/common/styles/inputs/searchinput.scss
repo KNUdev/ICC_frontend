@@ -10,24 +10,15 @@ $typed-text-color: #3d3d3d;
 
   display: flex;
   align-items: center;
-<<<<<<< HEAD
-  width: 100%;
-=======
   width: 31.25rem;
->>>>>>> 19fe11ce045c8ef1b427ac440558c2f88be1e409
   height: 100%;
 
   gap: 0.625rem;
 
   flex: 1;
-<<<<<<< HEAD
-  background-color: $primary-background-color;
-  border: 1px solid $primary-border-color;
-=======
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
->>>>>>> 19fe11ce045c8ef1b427ac440558c2f88be1e409
   padding: 0.9375rem;
 
   &:has(input:focus:not(:placeholder-shown)) {
