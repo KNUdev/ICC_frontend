@@ -1,8 +1,8 @@
 'use client'
 
 import LogoIcc from '@/assets/image/icons/logo_icc.svg'
+import { UserProfile } from '@/components/Header/UserProfile/UserProfile'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
-import { UserProfile } from '@/components/UserProfile/UserProfile'
 import { PAGES } from '@/shared/config/page.config'
 import { useCurrentUser } from '@/shared/hooks/useCurrentUser'
 import { useTranslations } from 'next-intl'
