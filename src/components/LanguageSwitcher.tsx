@@ -1,6 +1,5 @@
 'use client'
 
-import FlagEN from '@/assets/image/icons/English_flag.svg'
 import FlagUA from '@/assets/image/icons/Ukraine_flag.svg'
 import ArrowDown from '@/assets/image/icons/arrow-down.svg'
 import ArrowUp from '@/assets/image/icons/arrow-up.svg'
@@ -15,7 +14,6 @@ export default function LanguageSwitcher() {
   const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
-  const FlagIcon = locale === 'uk' ? FlagUA : FlagEN
 
   const handleChange = (newLang: Locale) => {
     router.push(pathname, { locale: newLang })

@@ -71,5 +71,8 @@
     "allWorkers": "Всі працівники",
     "jobApplications": "Заявки на роботу",
     "creatingReports": "Створення звітів"
-  }
+  },
+
+  "backToHome": "Повернутись на головну",
+  "backToTop": "Прогорнути вгору"
 }

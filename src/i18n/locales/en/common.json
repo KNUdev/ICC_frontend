@@ -71,5 +71,8 @@
     "allWorkers": "All employees",
     "jobApplications": "Job applications",
     "creatingReports": "Creating reports"
-  }
+  },
+
+  "backToHome": "Back to Home",
+  "backToTop": "Back to top"
 }
