@@ -15,6 +15,12 @@
     "photo": "Click here to attach photo"
   },
 
+  "file": {
+    "uploaded": "Фото завантажене",
+    "preview": "Переглянути фото",
+    "delete": "Видалити фото"
+  },
+
   "required": "This field is required",
 
   "validation": {
