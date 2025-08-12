@@ -8,7 +8,7 @@ export function Form() {
 
   return (
     <>
-      <section className={styles.sectionContainer}>
+      <section className={styles.sectionContainer} id='formApplication'>
         <div className={styles.textContainer}>
           <h1 className={styles.heading}>{tFormText('heading')}</h1>
           <p className={styles.paragraph}>{tFormText('subheading')}</p>
