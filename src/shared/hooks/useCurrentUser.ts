@@ -9,6 +9,7 @@ interface UseCurrentUserReturn {
   employee: Employee | null
   isLoading: boolean
   isAuthenticated: boolean
+  refreshUserData: () => Promise<void>
 }
 
 export function useCurrentUser(): UseCurrentUserReturn {
@@ -16,36 +17,47 @@ export function useCurrentUser(): UseCurrentUserReturn {
   const [isLoading, setIsLoading] = useState(true)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  useEffect(() => {
-    const loadUserData = async () => {
-      setIsLoading(true)
+  const loadUserData = async () => {
+    setIsLoading(true)
 
-      const employeeId = getEmployeeIdFromToken()
+    const employeeId = getEmployeeIdFromToken()
 
-      if (!employeeId) {
-        setIsAuthenticated(false)
-        setEmployee(null)
-        setIsLoading(false)
-        return
-      }
-
-      setIsAuthenticated(true)
-
-      const employeeData = await getEmployeeById(employeeId)
-      setEmployee(employeeData)
+    if (!employeeId) {
+      setIsAuthenticated(false)
+      setEmployee(null)
       setIsLoading(false)
+      return
     }
 
+    setIsAuthenticated(true)
+
+    const employeeData = await getEmployeeById(employeeId)
+    setEmployee(employeeData)
+    setIsLoading(false)
+  }
+
+  const refreshUserData = async () => {
+    await loadUserData()
+  }
+
+  useEffect(() => {
     loadUserData()
 
     const handleAuthStateChange = () => {
       loadUserData()
     }
 
+    // Добавляем слушатель для обновления профиля
+    const handleProfileUpdate = () => {
+      loadUserData()
+    }
+
     window.addEventListener('auth-state-changed', handleAuthStateChange)
+    window.addEventListener('profile-updated', handleProfileUpdate)
 
     return () => {
       window.removeEventListener('auth-state-changed', handleAuthStateChange)
+      window.removeEventListener('profile-updated', handleProfileUpdate)
     }
   }, [])
 
@@ -53,5 +65,6 @@ export function useCurrentUser(): UseCurrentUserReturn {
     employee,
     isLoading,
     isAuthenticated,
+    refreshUserData,
   }
 }
