@@ -1,1 +1,42 @@
-{}
+{
+  "title": "SIGN IN",
+  "description": "Enter your credentials to sign in to the IOC employee management system",
+  "backLink": "Back to homepage",
+
+  "labels": {
+    "email": "Email",
+    "password": "Password"
+  },
+
+  "placeholders": {
+    "email": "Enter your email...",
+    "password": "Enter your password..."
+  },
+
+  "helpers": {
+    "email": "KNU email is required!"
+  },
+
+  "validation": {
+    "email": {
+      "required": "Email is required",
+      "invalid": "Invalid email format",
+      "domain": "Email must have @knu.ua domain"
+    },
+    "password": {
+      "required": "Password is required"
+    }
+  },
+
+  "button": {
+    "submit": "Sign In",
+    "loading": "Signing in..."
+  },
+
+  "error": {
+    "general": "An error occurred during sign in",
+    "login": "Invalid email or password"
+  },
+
+  "required": "*"
+}

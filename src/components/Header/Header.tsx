@@ -1,24 +1,27 @@
+'use client'
+
 import LogoIcc from '@/assets/image/icons/logo_icc.svg'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
+import { UserProfile } from '@/components/UserProfile/UserProfile'
 import { PAGES } from '@/shared/config/page.config'
+import { useCurrentUser } from '@/shared/hooks/useCurrentUser'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import styles from './Header.module.scss'
 
 export function Header() {
   const tCommon = useTranslations('common')
+  const { isAuthenticated, isLoading } = useCurrentUser()
 
   return (
     <header id={styles.header} role='contentinfo'>
       <div className='layout-wrapper'>
         <div className={styles.navLogoWrapper}>
           <LogoIcc
-            aria-label='iccIcon'
+            aria-label={`${tCommon('titleFullName')} logo`}
             role='img'
-            alt={`${tCommon('titleFullName')} logo`}
             width={70}
             height={37}
-            priority
           />
 
           <nav role='navigation' aria-label='Header navigation'>
@@ -37,15 +40,23 @@ export function Header() {
         <div className={styles.userPanel}>
           <LanguageSwitcher />
 
-          <div className={styles.authButtons}>
-            <Link href='/Auth/SingIn' className={styles.loginButton}>
-              {tCommon('authentication.login')}
-            </Link>
+          {!isLoading && (
+            <>
+              {isAuthenticated ? (
+                <UserProfile />
+              ) : (
+                <div className={styles.authButtons}>
+                  <Link href='/Auth/SingIn' className={styles.loginButton}>
+                    {tCommon('authentication.login')}
+                  </Link>
 
-            <Link href='/Auth/SingUp' className={styles.registerButton}>
-              {tCommon('authentication.register')}
-            </Link>
-          </div>
+                  <Link href='/Auth/SingUp' className={styles.registerButton}>
+                    {tCommon('authentication.register')}
+                  </Link>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
     </header>
