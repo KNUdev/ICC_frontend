@@ -21,12 +21,14 @@ export function Header({}: HeaderProps) {
     <header id={styles.header} role='contentinfo'>
       <div className='layout-wrapper'>
         <div className={styles.navLogoWrapper}>
-          <LogoIcc
-            aria-label={`${tCommon('titleFullName')} logo`}
-            role='img'
-            width={70}
-            height={37}
-          />
+          <Link href={PAGES.HOME} className='navLink'>
+            <LogoIcc
+              aria-label={`${tCommon('titleFullName')} logo`}
+              role='img'
+              width={70}
+              height={37}
+            />
+          </Link>
 
           <nav role='navigation' aria-label='Header navigation'>
             <ul className={styles.navList} role='list'>

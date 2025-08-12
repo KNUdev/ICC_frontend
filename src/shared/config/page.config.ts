@@ -6,7 +6,7 @@ export const PAGES = {
   STAFF: '/staff',
   CIC: '/cic',
   DOCUMENTS: '/documents',
-  FAQ: '/faq',
+  FAQ: '/#faq',
 }
 
 export const ADMIN_PAGES = {

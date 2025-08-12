@@ -32,7 +32,7 @@ export default function LazyImage({ item, className }: LazyImageProps) {
       {isIntersecting && !error && (
         <Image
           src={item.itemUrl}
-          alt={item.itemDescription || item.itemName}
+          alt={item.itemDescription || item.publicItemName}
           fill
           sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
           onLoad={handleLoad}

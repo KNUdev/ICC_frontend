@@ -2,7 +2,7 @@ export interface GalleryItem {
   creatorId: string
   itemId: string
   itemUrl: string
-  itemName: string
+  publicItemName: string
   itemDescription: string
   uploadedAt: number[]
   updatedAt: number[] | null

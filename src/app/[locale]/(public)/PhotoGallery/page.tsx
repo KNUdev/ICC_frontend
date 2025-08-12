@@ -1,7 +1,5 @@
 'use client'
 
-import LazyImage from '@/app/[locale]/(public)/PhotoGallery/LazyImage/LazyImage'
-import LoadMoreTrigger from '@/app/[locale]/(public)/PhotoGallery/LoadMoreTrigger/LoadMoreTrigger'
 import ArrowUp from '@/assets/image/icons/align_arrow_up_line.svg'
 import GalleryIcon from '@/assets/image/icons/animation/gallery.svg'
 import ArrowRight from '@/assets/image/icons/arrow-right.svg'
@@ -11,6 +9,8 @@ import { PAGES } from '@/shared/config/page.config'
 import { useGallery } from '@/shared/hooks/useGallery'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
+import LazyImage from './LazyImage/LazyImage'
+import LoadMoreTrigger from './LoadMoreTrigger/LoadMoreTrigger'
 import styles from './page.module.scss'
 
 export default function PhotoGalleryPage() {
@@ -158,7 +158,9 @@ export default function PhotoGalleryPage() {
                   <li key={item.itemId} className={styles.listItem}>
                     <LazyImage item={item} className={styles.galleryImage} />
                     <div className={styles.imageInfo}>
-                      <h3 className={styles.imageName}>{item.itemName}</h3>
+                      <h3 className={styles.imageName}>
+                        {item.publicItemName}
+                      </h3>
                       {item.itemDescription && (
                         <p className={styles.imageDescription}>
                           {item.itemDescription}
