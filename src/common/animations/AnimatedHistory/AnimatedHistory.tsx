@@ -231,7 +231,11 @@ export const AnimatedHistory = memo(function AnimatedHistory() {
         <path d={connectedPath} style={pulseStyle} className='animated-pulse' />
       </g>
 
-      <AnimatedLines {...animationConfig} className='animated-path' />
+      <AnimatedLines
+        {...animationConfig}
+        mode='random'
+        className='animated-path'
+      />
     </svg>
   )
 })

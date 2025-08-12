@@ -1,12 +1,13 @@
 import { useTranslations } from 'next-intl'
 import styles from './Form.module.scss'
+import { FormApplication } from './FormApplication/FormApplication'
 import { FormPoints } from './FormPoints/FormPoints'
 
 export function Form() {
   const tFormText = useTranslations('form/text')
 
   return (
-    <div className='main-wrapper'>
+    <>
       <section className={styles.sectionContainer}>
         <div className={styles.textContainer}>
           <h1 className={styles.heading}>{tFormText('heading')}</h1>
@@ -14,10 +15,10 @@ export function Form() {
         </div>
 
         <div className={styles.formContainer}>
-          <div className={styles.formApplications}></div>
+          <FormApplication formId='main' />
           <FormPoints />
         </div>
       </section>
-    </div>
+    </>
   )
 }

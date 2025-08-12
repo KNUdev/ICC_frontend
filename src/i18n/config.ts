@@ -14,7 +14,13 @@ export const NAMESPACES = [
   'home',
   'footer',
   'form/text',
+  'form/application',
   'form/points',
+  'form/success',
   'faq',
-  'photosAlt/alt'
+  'AddNewWorker/common',
+  'Auth/warning',
+  'Auth/singIn',
+  'Auth/singUp',
+  'photosAlt/alt',
 ]
