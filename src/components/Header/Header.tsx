@@ -13,7 +13,7 @@ type HeaderProps = {
   customNav?: React.ReactNode
 }
 
-export function Header({ customNav }: HeaderProps) {
+export function Header({}: HeaderProps) {
   const tCommon = useTranslations('common')
   const { isAuthenticated, isLoading } = useCurrentUser()
 
