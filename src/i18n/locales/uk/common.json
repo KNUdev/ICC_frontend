@@ -15,6 +15,7 @@
     "CLUSTER": "Кластер",
     "DOCUMENTS": "Документи",
     "FAQ": "Часті запитання",
+    "profile": "Профіль",
     "admin": {
       "ADD_NEW_WORKER": "Додати працівника",
       "MANAGE_EMPLOYEES": "Управління працівниками",

@@ -63,6 +63,16 @@ export async function getSectors(pageNumber = 0, pageSize = 10) {
   return (await res.json()) as PaginatedResponse<Sector>
 }
 
+export interface UpdateEmployeePayload {
+  id: string
+  firstName?: string
+  lastName?: string
+  middleName?: string
+  email?: string
+  phoneNumber?: string
+  avatarFile?: File
+}
+
 export async function createEmployee(payload: CreateEmployeePayload) {
   const formData = new FormData()
 
@@ -126,6 +136,78 @@ export async function createEmployee(payload: CreateEmployeePayload) {
       isRecord(errorJson) && typeof errorJson.message === 'string'
         ? errorJson.message
         : 'Failed to create employee'
+    throw new Error(message)
+  }
+
+  return await res.json()
+}
+
+export async function updateEmployee(payload: UpdateEmployeePayload) {
+  const formData = new FormData()
+
+  formData.append('id', payload.id)
+
+  if (payload.firstName !== undefined) {
+    formData.append('fullName.firstName', payload.firstName)
+  }
+  if (payload.lastName !== undefined) {
+    formData.append('fullName.lastName', payload.lastName)
+  }
+  if (payload.middleName !== undefined) {
+    formData.append('fullName.middleName', payload.middleName)
+  }
+  if (payload.email !== undefined) {
+    formData.append('email', payload.email)
+  }
+  if (payload.phoneNumber !== undefined) {
+    formData.append(
+      'phoneNumber',
+      String(payload.phoneNumber).trim().replace(/^\+/, ''),
+    )
+  }
+  if (payload.avatarFile) {
+    formData.append('avatarFile', payload.avatarFile)
+  }
+
+  const res = await fetch(`${API}admin/employee/update`, {
+    method: 'PATCH',
+    body: formData,
+  })
+
+  if (!res.ok) {
+    let errorJson: unknown
+    try {
+      errorJson = await res.json()
+    } catch {
+      throw new Error('Failed to update employee')
+    }
+
+    if (
+      isRecord(errorJson) &&
+      'fieldErrors' in errorJson &&
+      isRecord((errorJson as Record<string, unknown>).fieldErrors)
+    ) {
+      const fieldErrors = (errorJson as Record<string, unknown>)
+        .fieldErrors as Record<string, unknown>
+      const apiErrors: ApiFieldErrors = {}
+      for (const [key, val] of Object.entries(fieldErrors)) {
+        if (typeof val === 'string') apiErrors[key] = val
+      }
+      const message =
+        isRecord(errorJson) && typeof errorJson.message === 'string'
+          ? errorJson.message
+          : 'Validation error'
+      const apiErr = new Error(message) as Error & {
+        fieldErrors?: ApiFieldErrors
+      }
+      apiErr.fieldErrors = apiErrors
+      throw apiErr
+    }
+
+    const message =
+      isRecord(errorJson) && typeof errorJson.message === 'string'
+        ? errorJson.message
+        : 'Failed to update employee'
     throw new Error(message)
   }
 

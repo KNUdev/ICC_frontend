@@ -15,6 +15,7 @@
     "CLUSTER": "Cluster",
     "DOCUMENTS": "Documents",
     "FAQ": "FAQ",
+    "profile": "Profile",
     "admin": {
       "ADD_NEW_WORKER": "Add Employee",
       "MANAGE_EMPLOYEES": "Manage Employees",

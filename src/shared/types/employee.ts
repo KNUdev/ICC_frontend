@@ -38,7 +38,7 @@ export interface Employee {
   updatedAt: number[] | null
   salaryInUAH: number
   isStudent: boolean
-  avatarUrl: string
+  avatarUrl: string | null
   contractEndDate: number[]
   workHours: WorkHours
   role: string

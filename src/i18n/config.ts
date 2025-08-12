@@ -28,4 +28,5 @@ export const NAMESPACES = [
   'history',
   'admin/applications',
   'public/staff',
+  'UserProfile/common',
 ]

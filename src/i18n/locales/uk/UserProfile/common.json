@@ -1,0 +1,81 @@
+{
+  "title": "ПРОФІЛЬ КОРИСТУВАЧА",
+  "description": "Перегляд та редагування інформації про ваш профіль. Ви можете оновити свої особисті дані та фото.",
+
+  "photo": {
+    "title": "ФОТО ПРОФІЛЮ",
+    "uploadButton": "Завантажити фото",
+    "changeButton": "Змінити фото",
+    "deleteButton": "Видалити фото"
+  },
+
+  "generalInfo": {
+    "title": "ЗАГАЛЬНА ІНФОРМАЦІЯ",
+    "firstNameLabel": "Ім'я",
+    "lastNameLabel": "Прізвище",
+    "middleNameLabel": "По батькові",
+    "emailLabel": "Email",
+    "phoneLabel": "Номер телефону",
+    "isStudentLabel": "Статус студента",
+    "yes": "Так",
+    "no": "Ні"
+  },
+
+  "salary": {
+    "title": "ЗАРПЛАТА",
+    "label": "Сума в гривнях"
+  },
+
+  "specialty": {
+    "title": "ІНФОРМАЦІЯ ПРО СПЕЦІАЛЬНІСТЬ",
+    "specialtyLabel": "Спеціальність",
+    "sectorLabel": "Сектор"
+  },
+
+  "role": {
+    "title": "ІНФОРМАЦІЯ ПРО РОЛЬ",
+    "label": "Роль",
+    "options": {
+      "COMMON_USER": "Звичайний користувач",
+      "SECRETARY": "Секретар",
+      "SITE_MANAGER": "Менеджер сайту",
+      "HEAD_MANAGER": "Головний менеджер"
+    }
+  },
+
+  "workingHours": {
+    "title": "РОБОЧІ ГОДИНИ",
+    "fromLabel": "З",
+    "toLabel": "До"
+  },
+
+  "contract": {
+    "title": "ІНФОРМАЦІЯ ПРО КОНТРАКТ",
+    "endDateLabel": "Дата закінчення контракту"
+  },
+
+  "actions": {
+    "edit": "Редагувати",
+    "save": "Зберегти",
+    "cancel": "Скасувати",
+    "saving": "Збереження...",
+    "scrollToTop": "Прокрутити вгору"
+  },
+
+  "success": {
+    "title": "Профіль успішно оновлено!",
+    "message": "Інформація про ваш профіль була успішно оновлена.",
+    "button": "OK"
+  },
+
+  "errors": {
+    "firstName": "Ім'я обов'язкове",
+    "lastName": "Прізвище обов'язкове",
+    "middleName": "По батькові обов'язкове",
+    "email": "Email обов'язковий",
+    "emailKnuOnly": "Email повинен бути валідною адресою knu.ua",
+    "failedToUpdateProfile": "Не вдалося оновити профіль. Спробуйте ще раз.",
+    "failedToLoadProfile": "Не вдалося завантажити дані профілю. Спробуйте ще раз.",
+    "notAuthorized": "Ви не авторизовані для перегляду цієї сторінки."
+  }
+}

@@ -5,6 +5,7 @@ import { useRole } from '@/shared/hooks/useRole'
 import { logout } from '@/shared/lib/jwt'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 import styles from './UserProfile.module.scss'
 
@@ -52,7 +53,7 @@ export function UserProfile() {
           onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
         >
           <Image
-            src={employee.avatarUrl}
+            src={employee.avatarUrl || '/default-avatar.png'}
             alt={`${fullName} avatar`}
             width={40}
             height={40}
@@ -63,6 +64,13 @@ export function UserProfile() {
 
         {showDropdown && (
           <div className={styles.dropdown}>
+            <Link
+              href='/userProfile'
+              className={styles.profileLink}
+              onClick={() => setShowDropdown(false)}
+            >
+              {tCommon('navigation.profile')}
+            </Link>
             <button onClick={handleLogout} className={styles.logoutButton}>
               {tCommon('authentication.logout')}
             </button>
