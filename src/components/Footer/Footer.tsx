@@ -6,7 +6,11 @@ import Mail from '@/assets/image/icons/social/mail.svg'
 import Telephone from '@/assets/image/icons/social/telephone.svg'
 import ContactLink from '@/common/components/ContactLink/ContactLink'
 import Hyperlink from '@/common/components/Hyperlink/Hyperlink'
-import { FACULTY_LINKS, INSTITUTION_LINKS, PAGES } from '@/config/page.config'
+import {
+  FACULTY_LINKS,
+  INSTITUTION_LINKS,
+  PAGES,
+} from '@/shared/config/page.config'
 import { CONTACT_INFO } from '@/shared/data/footer.data'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
@@ -161,6 +165,12 @@ export function Footer() {
             </ContactLink>
           </div>
         </address>
+
+        <div className={styles.watermarkContainer}>
+          <p className={styles.designWatermark}>Developed by KNUdev</p>
+
+          <p className={styles.designWatermark}>Designed by Bohdan Popov</p>
+        </div>
       </div>
     </footer>
   )

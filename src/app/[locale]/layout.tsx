@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
-import { Geologica, Inter } from 'next/font/google'
+import { Geologica, Golos_Text, Inter } from 'next/font/google'
 import React from 'react'
 import './globals.scss'
 
@@ -14,6 +14,12 @@ const inter = Inter({
 const geologica = Geologica({
   subsets: ['latin', 'cyrillic-ext'],
   variable: '--font-geologica',
+  display: 'swap',
+})
+
+const golos = Golos_Text({
+  subsets: ['latin', 'cyrillic', 'cyrillic-ext'],
+  variable: '--font-golos',
   display: 'swap',
 })
 
@@ -33,7 +39,9 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${inter.variable} ${geologica.variable}`}>
+      <body
+        className={`${inter.variable} ${geologica.variable} ${golos.variable}`}
+      >
         <div className='container'>
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}

@@ -1,0 +1,43 @@
+.accentColor {
+  color: #ff525e;
+}
+
+.homePage {
+  display: flex;
+  flex-direction: column;
+  margin: 6.25rem auto;
+  gap: 12.5rem;
+
+  & > .into {
+    display: flex;
+    justify-content: space-between;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      gap: 1.56rem;
+      max-width: 46rem;
+      & > h1 {
+        font-family: Inter;
+        font-size: 2.8125rem;
+        font-style: normal;
+        font-weight: 900;
+        line-height: normal;
+        text-transform: uppercase;
+      }
+      & > p {
+        color: #4f4f4f;
+        font-family: Inter;
+        font-size: 1.125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.5625rem;
+        letter-spacing: 0.00563rem;
+      }
+
+      & > svg {
+        margin: auto 0;
+      }
+    }
+  }
+}

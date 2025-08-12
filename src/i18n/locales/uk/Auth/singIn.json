@@ -1,0 +1,42 @@
+{
+  "title": "ВХІД ДО СИСТЕМИ",
+  "description": "Введіть свої дані для входу до системи управління працівниками ІОЦ",
+  "backLink": "Назад на головну сторінку",
+
+  "labels": {
+    "email": "Email",
+    "password": "Пароль"
+  },
+
+  "placeholders": {
+    "email": "Введіть email...",
+    "password": "Введіть пароль..."
+  },
+
+  "helpers": {
+    "email": "Пошта КНУ обов'язкова!"
+  },
+
+  "validation": {
+    "email": {
+      "required": "Email є обов'язковим полем",
+      "invalid": "Невірний формат email",
+      "domain": "Email повинен мати домен @knu.ua"
+    },
+    "password": {
+      "required": "Пароль є обов'язковим полем"
+    }
+  },
+
+  "button": {
+    "submit": "Увійти",
+    "loading": "Вхід..."
+  },
+
+  "error": {
+    "general": "Сталася помилка при вході",
+    "login": "Неправильний email або пароль"
+  },
+
+  "required": "*"
+}

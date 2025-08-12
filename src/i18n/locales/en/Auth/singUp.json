@@ -1,0 +1,50 @@
+{
+  "title": "CREATE ACCOUNT",
+  "description": "Please fill in all fields carefully. When you are sure that everything is entered correctly - click the « Create Account » button",
+  "backLink": "Back to homepage",
+
+  "labels": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password"
+  },
+
+  "placeholders": {
+    "email": "Enter your email...",
+    "password": "Enter your password...",
+    "confirmPassword": "Enter your password again"
+  },
+
+  "helpers": {
+    "email": "KNU email is required!"
+  },
+
+  "validation": {
+    "email": {
+      "required": "Email is required",
+      "invalid": "Invalid email format",
+      "domain": "Email must have @knu.ua domain"
+    },
+    "password": {
+      "required": "Password is required",
+      "minLength": "Password must contain at least 8 characters",
+      "complexity": "Password must contain uppercase and lowercase letters, numbers and special characters"
+    },
+    "confirmPassword": {
+      "required": "Password confirmation is required",
+      "mismatch": "Passwords do not match"
+    }
+  },
+
+  "button": {
+    "submit": "Create Account",
+    "loading": "Creating account..."
+  },
+
+  "error": {
+    "general": "An error occurred during registration",
+    "registration": "Registration error"
+  },
+
+  "required": "*"
+}
