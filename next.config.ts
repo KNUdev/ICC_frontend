@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
+import withPWAInit from 'next-pwa'
 
 const nextConfig: NextConfig = {
   webpack(config) {
@@ -46,4 +47,14 @@ const nextConfig: NextConfig = {
 }
 
 const withNextIntl = createNextIntlPlugin()
-export default withNextIntl(nextConfig)
+
+const withPWA = withPWAInit({
+  dest: 'public',
+  register: false,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development',
+  buildExcludes: [/middleware-manifest\.json$/],
+  runtimeCaching: [],
+})
+
+export default withNextIntl(withPWA(nextConfig))

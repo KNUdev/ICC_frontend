@@ -1,3 +1,4 @@
+import ServiceWorkerRegister from '@/components/PWA/ServiceWorkerRegister'
 import type { Metadata } from 'next'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
@@ -47,6 +48,7 @@ export default async function RootLayout({
             {children}
           </NextIntlClientProvider>
         </div>
+        <ServiceWorkerRegister />
       </body>
     </html>
   )
