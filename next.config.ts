@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
+import withPWAInit from 'next-pwa'
 
 const nextConfig: NextConfig = {
   webpack(config) {
@@ -31,7 +32,28 @@ const nextConfig: NextConfig = {
       loaderFile: 'src/shared/lib/netlifyImageLoader.ts',
     },
   }),
+  ...(process.env.NODE_ENV === 'development' && {
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'http',
+          hostname: 'localhost',
+          port: '9000',
+          pathname: '/images/**',
+        },
+      ],
+    },
+  }),
 }
 
 const withNextIntl = createNextIntlPlugin()
-export default withNextIntl(nextConfig)
+
+const withPWA = withPWAInit({
+  dest: 'public',
+  register: false, // We'll register SW manually via a client component
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development',
+  buildExcludes: [/middleware-manifest\.json$/],
+})
+
+export default withNextIntl(withPWA(nextConfig))

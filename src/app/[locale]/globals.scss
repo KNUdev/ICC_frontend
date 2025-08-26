@@ -1,37 +1,35 @@
 @use '@/common/styles/reset-style.scss';
 @use '@/common/styles/variables.scss';
-@use '@/common/styles/buttons/mainbutton.scss';
 @use '@/common/styles/buttons/iconbutton.scss';
 @use '@/common/styles/buttons/menunav.scss';
 @use '@/common/styles/buttons/textbutton.scss';
+@use '@/common/styles/buttons/mainbutton/mainbutton.scss';
+@use '@/common/styles/buttons/mainbutton/mainbutton-white.scss';
+@use '@/common/styles/buttons/closebutton.scss';
+@use '@/common/styles/inputs/searchinput.scss';
 @use '@/common/styles/inputs/textinput.scss';
 
 .container {
   background: #f6f6f6;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
   width: 100%;
-  & > * {
-    justify-content: center;
-    width: 100%;
-  }
 }
 
 .layout-wrapper {
-  background: #fff;
   max-width: 115rem;
-  margin: 0 auto;
+  margin: auto;
+  padding: 0 2rem;
   width: 100%;
 }
 
 .main-wrapper {
   max-width: 93.5rem;
+  margin: auto;
+  padding: 0 2rem;
   width: 100%;
-  margin: 0 auto;
 }
 
 html {
   scroll-behavior: smooth;
 }
-

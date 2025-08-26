@@ -1,0 +1,43 @@
+$border-primary-color: #d1d1d1;
+$background-primary-color: #f6f6f6;
+$text-primary-color: #454545;
+
+$hover-color: #ff525e;
+
+.chooseBtn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  padding: 0.9375rem;
+
+  border: 1px solid $border-primary-color;
+  background: $background-primary-color;
+  color: $text-primary-color;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.chooseBtn:hover {
+  border: 1px solid $hover-color;
+}
+
+.chooseBtn:focus {
+  background: $hover-color;
+  color: var(--text-nat-1000, #fff);
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+
+  outline: none;
+}

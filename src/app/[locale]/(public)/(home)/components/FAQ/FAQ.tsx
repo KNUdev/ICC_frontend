@@ -1,4 +1,4 @@
-import Accordion from '@/components/Accordion/Accordion'
+import Accordion from '@/app/[locale]/(public)/(home)/components/FAQ/Accordion/Accordion'
 import { useTranslations } from 'next-intl'
 import styles from './FAQ.module.scss'
 

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import ServiceWorkerRegister from '@/components/PWA/ServiceWorkerRegister'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
 import { Geologica, Golos_Text, Inter } from 'next/font/google'
@@ -23,12 +23,6 @@ const golos = Golos_Text({
   display: 'swap',
 })
 
-export const metadata: Metadata = {
-  icons: {
-    icon: '/favicon.ico',
-  },
-}
-
 export default async function RootLayout({
   children,
 }: {
@@ -47,6 +41,7 @@ export default async function RootLayout({
             {children}
           </NextIntlClientProvider>
         </div>
+        <ServiceWorkerRegister />
       </body>
     </html>
   )

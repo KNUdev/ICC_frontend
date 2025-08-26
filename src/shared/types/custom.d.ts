@@ -18,3 +18,20 @@ declare module '*.jpeg' {
   const content: string
   export default content
 }
+
+declare module 'next-pwa' {
+  import type { NextConfig } from 'next'
+  type PWAOptions = {
+    dest?: string
+    register?: boolean
+    skipWaiting?: boolean
+    disable?: boolean
+    buildExcludes?: RegExp[]
+    cacheOnFrontEndNav?: boolean
+    extendDefaultRuntimeCaching?: boolean
+    [key: string]: unknown
+  }
+  export default function withPWA(
+    options?: PWAOptions,
+  ): (config: NextConfig) => NextConfig
+}

@@ -1,0 +1,32 @@
+.closeBtn {
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #3d3d3d;
+
+  &:hover {
+    color: #ff525e;
+  }
+
+  &:focus {
+    color: #ff525e;
+    outline: 2px solid #ff525e;
+    outline-offset: 2px;
+  }
+
+  &:active {
+    color: #a30e2c;
+  }
+}
+
+.closeBtn > svg {
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.2s ease, fill 0.2s ease;
+}

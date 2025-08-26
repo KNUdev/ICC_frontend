@@ -3,22 +3,22 @@
     "fullname": "Full Name",
     "email": "Email",
     "faculty": "Faculty",
-    "description": "Description of the problem",
-    "photo": "Photo of the problem"
+    "description": "Problem description",
+    "photo": "Problem photo"
   },
 
   "placeholders": {
     "fullname": "Last name First name Middle name",
-    "email": "example@gmail.com",
+    "email": "example@knu.ua",
     "faculty": "Type name of your faculty",
-    "description": "I have problems with",
-    "photo": "Click here to attach a photo"
+    "description": "I have problems with...",
+    "photo": "Click here to attach photo"
   },
 
   "file": {
-    "uploaded": "The photo is uploaded",
-    "preview": "View the photo",
-    "delete": "Delete the photo"
+    "uploaded": "Фото завантажене",
+    "preview": "Переглянути фото",
+    "delete": "Видалити фото"
   },
 
   "required": "This field is required",
@@ -36,7 +36,12 @@
   "button": "Leave a request",
 
   "error": "Something went wrong... ",
-  "success": "The form has been successfully submitted!",
+
+  "success": {
+    "title": "Success!",
+    "message": "The photo has been successfully uploaded!",
+    "button": "OK"
+  },
 
   "cooldown": {
     "title": "Form already submitted",

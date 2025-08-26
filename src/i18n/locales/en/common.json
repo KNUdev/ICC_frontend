@@ -2,7 +2,7 @@
   "title": "ICC",
   "titleFullName": "Information and Computing Center",
   "navigationHeading": "Navigation",
-  "institutionsHeading": "Institutes",
+  "institutionsHeading": "Institutions",
   "facultiesHeading": "Faculties",
   "seeMore": "See more",
 
@@ -12,17 +12,29 @@
     "HISTORY": "History",
     "PHOTO_GALLERY": "Photo Gallery",
     "STAFF": "Staff",
-    "CIC": "CIC",
+    "CLUSTER": "Cluster",
     "DOCUMENTS": "Documents",
-    "FAQ": "FAQ"
+    "FAQ": "FAQ",
+    "profile": "Profile",
+    "admin": {
+      "ADD_NEW_WORKER": "Add Employee",
+      "MANAGE_EMPLOYEES": "Manage Employees",
+      "REPORTS": "Reports"
+    }
   },
 
   "institutions": {
-    "GEOLOGY": "Educational and Scientific Institute 'Institute of Geology'",
     "MILITARY": "Military Institute",
     "SECURITY": "Institute of State Security Administration",
     "POSTGRADUATE": "Institute of Postgraduate Education",
-    "SCIENTIFIC": "Educational and Scientific Institute"
+    "GEOLOGY": "Educational and Scientific Institute 'Institute of Geology'",
+    "JOURNALISM": "Educational and Scientific Institute of Journalism",
+    "HIGHTECH": "Educational and Scientific Institute of High Technologies",
+    "INTRELATIONS": "Educational and Scientific Institute of International Relations",
+    "LAW": "Educational and Scientific Institute of Law",
+    "PHILOLOGY": "Educational and Scientific Institute of Philology",
+    "CIVILADMIN": "Educational and Scientific Institute of Public Administration and Civil Service",
+    "MEDICINE": "Educational and Scientific Center “Institute of Biology and Medicine”"
   },
 
   "faculties": {
@@ -30,11 +42,38 @@
     "ECONOMICS": "Faculty of Economics",
     "HISTORY": "Faculty of History",
     "MECHMATH": "Faculty of Mechanics and Mathematics",
-    "INFOTECH": "Faculty of Information Technology"
+    "INFOTECH": "Faculty of Information Technology",
+    "CYBERNETICS": "Computer Science and Cybernetics Department",
+    "PSYCHOLOGY": "Psychology Department",
+    "RADIOPHYSICS": "Radiophysics, Electronics, and Computer Systems Department",
+    "SOCIOLOGY": "Sociology Department",
+    "PHYSICS": "Department of Physics",
+    "PHILOSOPHY": "Department of Philosophy",
+    "CHEMISTRY": "Department of Chemistry"
   },
 
   "authentication": {
-    "login": "Sing in",
-    "register": "Sign up"
-  }
+    "login": "Sign in",
+    "register": "Sign up",
+    "logout": "Sign out"
+  },
+
+  "roles": {
+    "COMMON_USER": "User",
+    "SECRETARY": "Secretary",
+    "SITE_MANAGER": "Site Manager",
+    "HEAD_MANAGER": "Head Manager"
+  },
+
+  "customNavigation": {
+    "addNewWorker": "Add a new employee",
+    "addSpecialty": "Add a specialty",
+    "allSectors": "All sectors",
+    "allWorkers": "All employees",
+    "jobApplications": "Job applications",
+    "creatingReports": "Creating reports"
+  },
+
+  "backToHome": "Back to Home",
+  "backToTop": "Back to top"
 }
