@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'ICC - International Computing Center',
+    name: 'ICC - Information Computing Center',
     short_name: 'ICC',
-    description: 'International Computing Center application',
+    description: 'Information Computing Center application',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',
