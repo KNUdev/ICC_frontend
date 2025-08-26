@@ -18,12 +18,15 @@ export default function ServiceWorkerRegister() {
 
     const register = async () => {
       try {
+        // Prefer workbox helper injected by next-pwa when available
         if (window.workbox && typeof window.workbox.register === 'function') {
           await window.workbox.register()
           return
         }
         const registration = await navigator.serviceWorker.register(swUrl)
+        // Optional: listen for updates
         if (registration && registration.waiting) {
+          // If there's an updated SW waiting, prompt it to activate
           registration.waiting.postMessage({ type: 'SKIP_WAITING' })
         }
       } catch (e) {
@@ -33,7 +36,9 @@ export default function ServiceWorkerRegister() {
 
     register()
 
-    return () => {}
+    return () => {
+      // no-op cleanup
+    }
   }, [])
 
   return null

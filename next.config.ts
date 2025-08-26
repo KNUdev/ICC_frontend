@@ -50,11 +50,10 @@ const withNextIntl = createNextIntlPlugin()
 
 const withPWA = withPWAInit({
   dest: 'public',
-  register: false,
+  register: false, // We'll register SW manually via a client component
   skipWaiting: true,
   disable: process.env.NODE_ENV === 'development',
   buildExcludes: [/middleware-manifest\.json$/],
-  runtimeCaching: [],
 })
 
 export default withNextIntl(withPWA(nextConfig))
