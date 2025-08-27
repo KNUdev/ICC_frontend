@@ -1,0 +1,81 @@
+@import '../../../styles/variables.scss';
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: 2.8125rem;
+  margin-bottom: 2rem;
+}
+
+.inputRow {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+
+  @include tablet {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.inputColumn {
+  flex: 1;
+}
+
+.additionalSectors {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9375rem;
+}
+
+.sectorTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.sectorTag {
+  border: 1px solid #d1d1d1;
+  background: #fff;
+  display: flex;
+  padding: 0.9375rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.9375rem;
+
+  span {
+    color: #272727;
+    font-family: Inter;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.4375rem;
+    letter-spacing: 0.005rem;
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 1.5rem;
+  background: #d1d1d1;
+}
+
+.additionalLabel {
+  color: #272727;
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+}
+
+.additionalText {
+  color: #6d6d6d;
+  font-family: Inter;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+  letter-spacing: 0.004rem;
+}

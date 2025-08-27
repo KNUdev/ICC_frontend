@@ -1,0 +1,29 @@
+.errorMessage {
+  border: 1px solid var(--border-red-800, #a30e2c);
+  background: var(
+    --grad-label-label-grad-red,
+    linear-gradient(90deg, #ffb4b4 72.49%, #f6f6f6 94.82%)
+  );
+  padding: 1rem 1.5rem;
+  border-radius: 0.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.text {
+  color: var(--text-nat-0, #272727);
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4375rem;
+  letter-spacing: 0.005rem;
+}

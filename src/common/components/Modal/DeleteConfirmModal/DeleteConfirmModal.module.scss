@@ -1,0 +1,51 @@
+.confirmText {
+  color: #4f4f4f;
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.4375rem;
+  letter-spacing: 0.005rem;
+  margin: 0;
+  margin-bottom: 2rem;
+}
+
+.specialitiesSection {
+  margin-bottom: 2rem;
+}
+
+.specialitiesLabel {
+  color: #272727;
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+  margin: 0 0 0.9375rem 0;
+}
+
+.specialityTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+}
+
+.specialityTag {
+  border: 1px solid #d1d1d1;
+  background: #fff;
+  display: flex;
+  padding: 0.9375rem;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    color: #272727;
+    font-family: Inter;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.4375rem;
+    letter-spacing: 0.005rem;
+  }
+}

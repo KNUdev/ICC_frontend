@@ -1,0 +1,67 @@
+@import '../../styles/variables.scss';
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: #fff;
+  padding: 0;
+  border-radius: 0;
+  max-width: 64rem;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 2.8125rem;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.modalTitle {
+  color: #272727;
+  font-family: Inter;
+  font-size: 1.875rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  letter-spacing: 0.00938rem;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6d6d6d;
+  padding: 0;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+
+  &:hover {
+    color: #272727;
+  }
+}
+
+.modalBody {
+  padding: 0 2.8125rem 2.8125rem;
+  margin-bottom: 0;
+}

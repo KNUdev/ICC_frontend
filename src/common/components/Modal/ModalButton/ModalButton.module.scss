@@ -1,0 +1,38 @@
+@import '../../../styles/variables.scss';
+
+.modalButton {
+  border: none;
+  padding: 1.25rem 3rem;
+  border-radius: 0;
+  font-family: Inter;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.005rem;
+
+  &.primary {
+    background: #ff525e;
+    color: #fff;
+
+    &:hover {
+      background: #e04450;
+    }
+
+    &:disabled {
+      background: #d1d1d1;
+      cursor: not-allowed;
+    }
+  }
+
+  &.secondary {
+    background: transparent;
+    color: #272727;
+    border: 1px solid #d1d1d1;
+
+    &:hover {
+      background: #f6f6f6;
+    }
+  }
+}
