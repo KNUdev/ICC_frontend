@@ -30,4 +30,5 @@ export const NAMESPACES = [
   'public/staff',
   'UserProfile/common',
   'AddSpeciality/common',
+  'AddSectors/common',
 ]

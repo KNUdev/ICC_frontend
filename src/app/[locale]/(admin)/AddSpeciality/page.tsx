@@ -6,9 +6,19 @@ import ScrollUp from '@/common/components/Input/ScrollUp/ScrollUp'
 import SearchInput from '@/common/components/Input/SearchInput/SearchInput'
 import Select from '@/common/components/Input/Select/Select'
 import DeleteConfirmModal from '@/common/components/Modal/DeleteConfirmModal/DeleteConfirmModal'
-import EditModal from '@/common/components/Modal/EditModal/EditModal'
+import EditSpecialtyModal from '@/common/components/Modal/EditSpecialtyModal/EditSpecialtyModal'
 import SuccessMessage from '@/common/components/SuccessMessage/SuccessMessage'
-import { useTranslations } from 'next-intl'
+import { getAllSectors, type Sector } from '@/shared/api/sectors'
+import {
+  createSpecialty,
+  deleteSpecialty,
+  getAllSpecialties,
+  updateSpecialty,
+  type CreateSpecialtyRequest,
+  type Specialty,
+  type UpdateSpecialtyRequest,
+} from '@/shared/api/specialties'
+import { useLocale, useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 import styles from './page.module.scss'
 
@@ -43,53 +53,91 @@ const DeleteIcon = () => (
 )
 
 const AddSpecialityPage = () => {
-  const [specialityName, setSpecialityName] = useState('')
-  const [category, setCategory] = useState('')
+  const [specialityNameUk, setSpecialityNameUk] = useState('')
+  const [specialityNameEn, setSpecialityNameEn] = useState('')
+  const [category, setCategory] = useState<
+    'FIRST' | 'SECOND' | 'LEAD' | 'SENIOR' | ''
+  >('')
   const [sector, setSector] = useState('')
   const [addedSectors, setAddedSectors] = useState<string[]>([])
   const [searchTerm, setSearchTerm] = useState('')
-  const t = useTranslations('AddSector/common')
-  const [createdSpecialities, setCreatedSpecialities] = useState<
-    Array<{
-      name: string
-      category: string
-      sectors: string[]
-    }>
-  >([])
+  const [specialties, setSpecialties] = useState<Specialty[]>([])
+  const [sectors, setSectors] = useState<Sector[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const t = useTranslations('AddSpeciality/common')
+  const locale = useLocale()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingSpeciality, setEditingSpeciality] = useState<{
-    name: string
-    category: string
+    id: string
+    nameUk: string
+    nameEn: string
+    category: 'FIRST' | 'SECOND' | 'LEAD' | 'SENIOR' | ''
     sectors: string[]
-    index: number
   } | null>(null)
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState<{
-    specialityIndex: number
-    sectorIndex: number
+    specialtyId: string
+    specialtyName: string
   } | null>(null)
 
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
 
   const tableBodyContainerRef = useRef<HTMLDivElement>(null)
 
-  const filteredSpecialities = createdSpecialities
-    .flatMap((speciality, specialityIndex) =>
-      speciality.sectors.map((sector, sectorIndex) => ({
-        ...speciality,
-        sector: sector,
-        originalIndex: specialityIndex,
-        sectorIndex: sectorIndex,
-      })),
-    )
-    .filter(
-      (item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.sector.toLowerCase().includes(searchTerm.toLowerCase()),
-    )
+  const sectorOptions = sectors.map(
+    (sector) => sector.name[locale as 'en' | 'uk'],
+  )
+
+  const categoryOptions = ['FIRST', 'SECOND', 'LEAD', 'SENIOR']
+
+  const filteredSpecialities = specialties.filter(
+    (specialty) =>
+      specialty.name[locale as 'en' | 'uk']
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      specialty.name[locale === 'en' ? 'uk' : 'en']
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      (specialty.category &&
+        specialty.category.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      specialty.sectors.some(
+        (sector) =>
+          sector.name[locale as 'en' | 'uk']
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
+          sector.name[locale === 'en' ? 'uk' : 'en']
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()),
+      ),
+  )
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+
+        const [specialtiesData, sectorsData] = await Promise.all([
+          getAllSpecialties({ pageNumber: 0, pageSize: 100 }),
+          getAllSectors({ pageNumber: 0, pageSize: 100 }),
+        ])
+
+        setSpecialties(specialtiesData.content || specialtiesData || [])
+        setSectors(sectorsData.content || sectorsData || [])
+      } catch (err) {
+        setError(t('messages.error.loadData'))
+        console.error('Error fetching data:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   useEffect(() => {
     const updateScrollState = () => {
@@ -129,70 +177,85 @@ const AddSpecialityPage = () => {
     }
   }, [filteredSpecialities])
 
-  const sectorOptions = [
-    'Сектор мережевих технологій',
-    'Сектор веб-розробки',
-    'Сектор мобільних технологій',
-    'Сектор штучного інтелекту',
-    'Сектор кібербезпеки',
-  ]
-
-  const handleSectorChange = (selectedSector: string) => {
-    setSector(selectedSector)
-    if (selectedSector && !addedSectors.includes(selectedSector)) {
-      setAddedSectors([...addedSectors, selectedSector])
+  const handleSectorChange = (selectedSectorName: string) => {
+    setSector(selectedSectorName)
+    const selectedSector = sectors.find(
+      (sec) => sec.name[locale as 'en' | 'uk'] === selectedSectorName,
+    )
+    if (selectedSector && !addedSectors.includes(selectedSector.id)) {
+      setAddedSectors([...addedSectors, selectedSector.id])
     }
   }
 
-  const removeSector = (sectorToRemove: string) => {
-    setAddedSectors(addedSectors.filter((sector) => sector !== sectorToRemove))
+  const removeSector = (sectorIdToRemove: string) => {
+    setAddedSectors(addedSectors.filter((secId) => secId !== sectorIdToRemove))
   }
 
-  const handleSubmit = () => {
-    if (specialityName && addedSectors.length > 0) {
-      const newSpeciality = {
-        name: specialityName,
-        category: category,
-        sectors: addedSectors,
+  const handleSubmit = async () => {
+    if (specialityNameUk && specialityNameEn && addedSectors.length > 0) {
+      try {
+        setLoading(true)
+        setError(null)
+
+        const createData: CreateSpecialtyRequest = {
+          name: {
+            uk: specialityNameUk,
+            en: specialityNameEn,
+          },
+          category: category || undefined,
+          sectors: addedSectors.map((id) => ({ id })),
+        }
+
+        await createSpecialty(createData)
+        const data = await getAllSpecialties({ pageNumber: 0, pageSize: 100 })
+        setSpecialties(data.content || data || [])
+
+        setSpecialityNameUk('')
+        setSpecialityNameEn('')
+        setCategory('')
+        setSector('')
+        setAddedSectors([])
+
+        setSuccessMessage(t('messages.success.created'))
+        setShowSuccessMessage(true)
+        setTimeout(() => setShowSuccessMessage(false), 5000)
+      } catch (err) {
+        setError(t('messages.error.create'))
+        console.error('Error creating specialty:', err)
+      } finally {
+        setLoading(false)
       }
-
-      setCreatedSpecialities([...createdSpecialities, newSpeciality])
-
-      setSpecialityName('')
-      setCategory('')
-      setSector('')
-      setAddedSectors([])
     }
   }
 
-  const handleDeleteSector = (specialityIndex: number, sectorIndex: number) => {
-    setDeleteTarget({ specialityIndex, sectorIndex })
+  const handleDeleteSpecialty = (specialty: Specialty) => {
+    setDeleteTarget({
+      specialtyId: specialty.id,
+      specialtyName: specialty.name.uk,
+    })
     setIsDeleteModalOpen(true)
   }
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deleteTarget) {
-      setCreatedSpecialities(
-        (prevSpecialities) =>
-          prevSpecialities
-            .map((speciality, index) => {
-              if (index === deleteTarget.specialityIndex) {
-                const updatedSectors = speciality.sectors.filter(
-                  (_, i) => i !== deleteTarget.sectorIndex,
-                )
-                if (updatedSectors.length === 0) {
-                  return null
-                }
-                return { ...speciality, sectors: updatedSectors }
-              }
-              return speciality
-            })
-            .filter(Boolean) as Array<{
-            name: string
-            category: string
-            sectors: string[]
-          }>,
-      )
+      try {
+        setLoading(true)
+        setError(null)
+
+        await deleteSpecialty(deleteTarget.specialtyId)
+
+        const data = await getAllSpecialties({ pageNumber: 0, pageSize: 100 })
+        setSpecialties(data.content || data || [])
+
+        setSuccessMessage(t('messages.success.deleted'))
+        setShowSuccessMessage(true)
+        setTimeout(() => setShowSuccessMessage(false), 5000)
+      } catch (err) {
+        setError(t('messages.error.delete'))
+        console.error('Error deleting specialty:', err)
+      } finally {
+        setLoading(false)
+      }
     }
     setIsDeleteModalOpen(false)
     setDeleteTarget(null)
@@ -203,29 +266,52 @@ const AddSpecialityPage = () => {
     setDeleteTarget(null)
   }
 
-  const handleEditSpeciality = (specialityIndex: number) => {
-    const speciality = createdSpecialities[specialityIndex]
+  const handleEditSpeciality = (specialty: Specialty) => {
     setEditingSpeciality({
-      ...speciality,
-      index: specialityIndex,
+      id: specialty.id,
+      nameUk: specialty.name.uk,
+      nameEn: specialty.name.en,
+      category: specialty.category || '',
+      sectors: specialty.sectors.map((sec) => sec.id),
     })
     setIsModalOpen(true)
   }
 
-  const handleSaveEditedSpeciality = (editedSpeciality: {
-    name: string
-    category: string
+  const handleSaveEditedSpeciality = async (editedSpeciality: {
+    nameUk: string
+    nameEn: string
+    category: 'FIRST' | 'SECOND' | 'LEAD' | 'SENIOR' | ''
     sectors: string[]
   }) => {
     if (editingSpeciality !== null) {
-      setCreatedSpecialities((prevSpecialities) =>
-        prevSpecialities.map((speciality, index) =>
-          index === editingSpeciality.index ? editedSpeciality : speciality,
-        ),
-      )
+      try {
+        setLoading(true)
+        setError(null)
 
-      setShowSuccessMessage(true)
-      setTimeout(() => setShowSuccessMessage(false), 5000)
+        const updateData: UpdateSpecialtyRequest = {
+          id: editingSpeciality.id,
+          name: {
+            uk: editedSpeciality.nameUk,
+            en: editedSpeciality.nameEn,
+          },
+          category: editedSpeciality.category || undefined,
+          sectors: editedSpeciality.sectors.map((id) => ({ id })),
+        }
+
+        await updateSpecialty(updateData)
+
+        const data = await getAllSpecialties({ pageNumber: 0, pageSize: 100 })
+        setSpecialties(data.content || data || [])
+
+        setSuccessMessage(t('messages.success.updated'))
+        setShowSuccessMessage(true)
+        setTimeout(() => setShowSuccessMessage(false), 5000)
+      } catch (err) {
+        setError(t('messages.error.update'))
+        console.error('Error updating specialty:', err)
+      } finally {
+        setLoading(false)
+      }
     }
     setIsModalOpen(false)
     setEditingSpeciality(null)
@@ -240,12 +326,7 @@ const AddSpecialityPage = () => {
     <div className={styles.container}>
       <div className={styles.headerSection}>
         <h1 className={styles.title}>{t('title')}</h1>
-        <p className={styles.subtitle}>
-          На цій сторінці ви можете додати нового працівника до системи,
-          вказавши його основні дані, контактну інформацію, посаду та зв
-          потребою — завантажити фотографію. Усі обов&aposязкові поля позначені,
-          а введені дані можна редагувати пізніше.
-        </p>
+        <p className={styles.subtitle}>{t('subtitle')}</p>
       </div>
 
       <div className={styles.headerToFormGap}></div>
@@ -255,19 +336,20 @@ const AddSpecialityPage = () => {
           <div className={styles.inputRow}>
             <div className={styles.inputColumn}>
               <InputText
-                title='Назва спеціальності'
-                placeholder='Оператор машинного відділу'
+                title={t('form.specialtyNameUk.title')}
+                placeholder={t('form.specialtyNameUk.placeholder')}
                 isRequired={true}
-                value={specialityName}
-                onChange={(e) => setSpecialityName(e.target.value)}
+                value={specialityNameUk}
+                onChange={(e) => setSpecialityNameUk(e.target.value)}
               />
             </div>
             <div className={styles.inputColumn}>
               <InputText
-                title='Категорія (якщо потрібно вказувати)'
-                placeholder='1 категорія'
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                title={t('form.specialtyNameEn.title')}
+                placeholder={t('form.specialtyNameEn.placeholder')}
+                isRequired={true}
+                value={specialityNameEn}
+                onChange={(e) => setSpecialityNameEn(e.target.value)}
               />
             </div>
           </div>
@@ -275,8 +357,24 @@ const AddSpecialityPage = () => {
           <div className={styles.inputRow}>
             <div className={styles.inputColumn}>
               <Select
-                title='Сектор'
-                placeholder='Сектор мережевих технологій'
+                title={t('form.category.title')}
+                placeholder={t('form.category.placeholder')}
+                options={categoryOptions}
+                value={category}
+                onChange={(value) =>
+                  setCategory(
+                    value as 'FIRST' | 'SECOND' | 'LEAD' | 'SENIOR' | '',
+                  )
+                }
+              />
+            </div>
+          </div>
+
+          <div className={styles.inputRow}>
+            <div className={styles.inputColumn}>
+              <Select
+                title={t('form.sectors.title')}
+                placeholder={t('form.sectors.placeholder')}
                 options={sectorOptions}
                 isRequired={true}
                 value={sector}
@@ -286,26 +384,42 @@ const AddSpecialityPage = () => {
           </div>
 
           <div className={styles.additionalSectors}>
-            <p className={styles.additionalLabel}>Додані сектори:</p>
+            <p className={styles.additionalLabel}>
+              {t('form.addedSectors.label')}
+            </p>
             {addedSectors.length > 0 ? (
               <div className={styles.sectorTags}>
-                {addedSectors.map((addedSector) => (
-                  <div key={addedSector} className={styles.sectorTag}>
-                    <span>{addedSector}</span>
-                    <div className={styles.divider}></div>
-                    <CloseButton onClick={() => removeSector(addedSector)} />
-                  </div>
-                ))}
+                {addedSectors.map((sectorId) => {
+                  const sector = sectors.find((s) => s.id === sectorId)
+                  return (
+                    <div key={sectorId} className={styles.sectorTag}>
+                      <span>
+                        {sector?.name[locale as 'en' | 'uk'] || sectorId}
+                      </span>
+                      <div className={styles.divider}></div>
+                      <CloseButton onClick={() => removeSector(sectorId)} />
+                    </div>
+                  )
+                })}
               </div>
             ) : (
               <p className={styles.additionalText}>
-                Поки що нічого не додано :(
+                {t('form.addedSectors.empty')}
               </p>
             )}
           </div>
 
-          <button className={styles.submitButton} onClick={handleSubmit}>
-            Додати спеціальність
+          <button
+            className={styles.submitButton}
+            onClick={handleSubmit}
+            disabled={
+              loading ||
+              !specialityNameUk ||
+              !specialityNameEn ||
+              addedSectors.length === 0
+            }
+          >
+            {loading ? t('form.submitting') : t('form.submitButton')}
           </button>
         </div>
       </div>
@@ -314,13 +428,11 @@ const AddSpecialityPage = () => {
 
       <div className={styles.specialtiesSection}>
         <div className={styles.specialtiesHeader}>
-          <h2 className={styles.specialtiesTitle}>
-            СПИСОК СТВОРЕНИХ СПЕЦІАЛЬНОСТЕЙ
-          </h2>
+          <h2 className={styles.specialtiesTitle}>{t('table.title')}</h2>
 
           <div className={styles.searchContainer}>
             <SearchInput
-              placeholder='Знайдіть спеціальність, яку ви шукаєте...'
+              placeholder={t('table.search.placeholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onClear={() => setSearchTerm('')}
@@ -329,16 +441,24 @@ const AddSpecialityPage = () => {
         </div>
 
         <SuccessMessage
-          message='Спеціальність успішно відредаговано!'
+          message={successMessage}
           isVisible={showSuccessMessage}
           onClose={() => setShowSuccessMessage(false)}
         />
 
+        {error && <div className={styles.errorMessage}>{error}</div>}
+
         <div className={styles.specialtiesTable}>
           <div className={styles.tableHeader}>
-            <div className={styles.headerCell}>Спеціальність</div>
-            <div className={styles.headerCell}>Категорія</div>
-            <div className={styles.headerCell}>Сектор</div>
+            <div className={styles.headerCell}>
+              {t('table.headers.specialty')}
+            </div>
+            <div className={styles.headerCell}>
+              {t('table.headers.category')}
+            </div>
+            <div className={styles.headerCell}>
+              {t('table.headers.sectors')}
+            </div>
             <div className={styles.headerCell}></div>
           </div>
 
@@ -348,35 +468,33 @@ const AddSpecialityPage = () => {
               ref={tableBodyContainerRef}
             >
               <div className={styles.tableBody}>
-                {filteredSpecialities.map((item) => (
-                  <div
-                    key={`${item.originalIndex}-${item.sectorIndex}`}
-                    className={styles.tableRow}
-                  >
-                    <div className={styles.tableCell}>{item.name}</div>
+                {filteredSpecialities.map((specialty) => (
+                  <div key={specialty.id} className={styles.tableRow}>
                     <div className={styles.tableCell}>
-                      {item.category || '-'}
+                      {specialty.name[locale as 'en' | 'uk']}
                     </div>
-                    <div className={styles.tableCell}>{item.sector}</div>
+                    <div className={styles.tableCell}>
+                      {specialty.category || '-'}
+                    </div>
+                    <div className={styles.tableCell}>
+                      {specialty.sectors
+                        .map((sector) => sector.name[locale as 'en' | 'uk'])
+                        .join(', ')}
+                    </div>
                     <div className={styles.tableActions}>
                       <button
                         className={styles.editButton}
-                        onClick={() => handleEditSpeciality(item.originalIndex)}
+                        onClick={() => handleEditSpeciality(specialty)}
                       >
                         <EditIcon />
-                        Редагувати
+                        {t('table.actions.edit')}
                       </button>
                       <button
                         className={styles.deleteButton}
-                        onClick={() =>
-                          handleDeleteSector(
-                            item.originalIndex,
-                            item.sectorIndex,
-                          )
-                        }
+                        onClick={() => handleDeleteSpecialty(specialty)}
                       >
                         <DeleteIcon />
-                        Видалити
+                        {t('table.actions.delete')}
                       </button>
                     </div>
                   </div>
@@ -386,9 +504,7 @@ const AddSpecialityPage = () => {
           ) : (
             <div className={styles.noResults}>
               <p className={styles.noResultsText}>
-                {searchTerm
-                  ? 'Результатів не знайдено'
-                  : 'Поки що нічого не додано :('}
+                {searchTerm ? t('table.noResults') : t('table.empty')}
               </p>
             </div>
           )}
@@ -399,19 +515,20 @@ const AddSpecialityPage = () => {
         <ScrollUp />
       </div>
 
-      <EditModal
+      <EditSpecialtyModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onSave={handleSaveEditedSpeciality}
-        speciality={editingSpeciality}
+        specialty={editingSpeciality}
+        sectors={sectors}
       />
 
       <DeleteConfirmModal
         isOpen={isDeleteModalOpen}
         onClose={handleCloseDeleteModal}
         onConfirm={confirmDelete}
-        title='Видалити спеціальність'
-        message='Ви впевнені, що хочете видалити цю спеціальність? Цю дію неможливо скасувати.'
+        title={t('modals.delete.title')}
+        message={t('modals.delete.message')}
       />
     </div>
   )

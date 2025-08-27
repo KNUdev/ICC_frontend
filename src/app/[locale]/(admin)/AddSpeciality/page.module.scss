@@ -510,3 +510,17 @@
   justify-content: center;
   margin-top: 5rem;
 }
+
+.errorMessage {
+  background-color: #ffe6e6;
+  border: 1px solid #ff525e;
+  color: #d63384;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+  font-family: Inter;
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.25rem;
+}

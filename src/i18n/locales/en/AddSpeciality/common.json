@@ -2,15 +2,19 @@
   "title": "ADD SPECIALITY",
   "subtitle": "On this page you can add a new employee to the system by specifying their basic data, contact information, position and if needed — upload a photo. All required fields are marked, and entered data can be edited later.",
   "form": {
-    "specialityName": {
-      "title": "Speciality Name",
+    "specialtyNameUk": {
+      "title": "Specialty Name (Ukrainian)",
       "placeholder": "Machine Department Operator"
+    },
+    "specialtyNameEn": {
+      "title": "Specialty Name (English)",
+      "placeholder": "Machine Operator Department"
     },
     "category": {
       "title": "Category (if needed)",
-      "placeholder": "Category 1"
+      "placeholder": "Select category"
     },
-    "sector": {
+    "sectors": {
       "title": "Sector",
       "placeholder": "Network Technologies Sector"
     },
@@ -18,7 +22,8 @@
       "label": "Added sectors:",
       "empty": "Nothing added yet :("
     },
-    "submitButton": "Add Speciality"
+    "submitButton": "Add Speciality",
+    "submitting": "Adding..."
   },
   "table": {
     "title": "LIST OF CREATED SPECIALITIES",
@@ -26,9 +31,9 @@
       "placeholder": "Find the speciality you are looking for..."
     },
     "headers": {
-      "speciality": "Speciality",
+      "specialty": "Specialty",
       "category": "Category",
-      "sector": "Sector"
+      "sectors": "Sectors"
     },
     "actions": {
       "edit": "Edit",
@@ -48,13 +53,22 @@
     }
   },
   "messages": {
-    "success": "Speciality successfully edited!"
+    "success": {
+      "created": "Specialty successfully created!",
+      "updated": "Specialty successfully updated!",
+      "deleted": "Specialty successfully deleted!"
+    },
+    "error": {
+      "loadData": "Error loading data",
+      "create": "Error creating specialty",
+      "update": "Error editing specialty",
+      "delete": "Error deleting specialty"
+    }
   },
-  "sectors": [
-    "Network Technologies Sector",
-    "Web Development Sector",
-    "Mobile Technologies Sector",
-    "Artificial Intelligence Sector",
-    "Cybersecurity Sector"
-  ]
+  "categories": {
+    "FIRST": "FIRST",
+    "SECOND": "SECOND",
+    "LEAD": "LEAD",
+    "SENIOR": "SENIOR"
+  }
 }
