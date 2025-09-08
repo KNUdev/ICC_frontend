@@ -1,4 +1,5 @@
 import { API } from '@/shared/config/api.config'
+import { getEmployeeIdFromToken } from '@/shared/lib/jwt'
 import type { GalleryParams, GalleryResponse } from '@/shared/types/gallery'
 
 export async function getGalleryItems(
@@ -29,5 +30,36 @@ export async function getGalleryItems(
   } catch (error) {
     console.error('Error fetching gallery data:', error)
     return null
+  }
+}
+
+interface UploadImageParams {
+  file: File
+  formData: FormData
+}
+
+export async function uploadGalleryImage({
+  file,
+  formData,
+}: UploadImageParams): Promise<void> {
+  const creatorId = getEmployeeIdFromToken()
+
+  if (!creatorId) {
+    throw new Error('Authentication required')
+  }
+
+  formData.append('creatorId', creatorId)
+  formData.set('item', file)
+
+  const response = await fetch(`${API}admin/gallery/image/upload`, {
+    method: 'POST',
+    body: formData,
+  })
+
+  if (!response.ok) {
+    const errorText = await response.text()
+    throw new Error(
+      errorText || `HTTP ${response.status}: ${response.statusText}`,
+    )
   }
 }

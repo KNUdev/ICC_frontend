@@ -1,5 +1,4 @@
-import { API } from '@/shared/config/api.config'
-import { getEmployeeIdFromToken } from '@/shared/lib/jwt'
+import { uploadGalleryImage } from '@/shared/api/gallery'
 import { useCallback, useState } from 'react'
 
 interface FormErrors {
@@ -47,35 +46,6 @@ export function ImageUpload({
     setErrorMessage(null)
   }, [])
 
-  const uploadImage = useCallback(
-    async (formData: FormData): Promise<void> => {
-      const creatorId = getEmployeeIdFromToken()
-
-      if (!creatorId) {
-        throw new Error('Authentication required')
-      }
-
-      formData.append('creatorId', creatorId)
-
-      if (file) {
-        formData.set('item', file)
-      }
-
-      const response = await fetch(`${API}admin/gallery/image/upload`, {
-        method: 'POST',
-        body: formData,
-      })
-
-      if (!response.ok) {
-        const errorText = await response.text()
-        throw new Error(
-          errorText || `HTTP ${response.status}: ${response.statusText}`,
-        )
-      }
-    },
-    [file],
-  )
-
   const validateAndSubmit = useCallback(
     async (formData: FormData) => {
       if (isSubmitting) return
@@ -90,10 +60,15 @@ export function ImageUpload({
         return
       }
 
+      if (!file) {
+        setFormErrors({ photo: 'File is required' })
+        return
+      }
+
       setIsSubmitting(true)
 
       try {
-        await uploadImage(formData)
+        await uploadGalleryImage({ file, formData })
         localStorage.setItem('lastFormSubmission', Date.now().toString())
         resetForm()
 
@@ -109,7 +84,7 @@ export function ImageUpload({
         setIsSubmitting(false)
       }
     },
-    [file, isSubmitting, validateForm, uploadImage, resetForm, onSuccess],
+    [file, isSubmitting, validateForm, resetForm, onSuccess],
   )
 
   return {

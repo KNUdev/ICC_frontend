@@ -8,12 +8,13 @@ import PhoneIcon from '@/assets/image/icons/social/telephone.svg'
 import ContactLink from '@/common/components/ContactLink/ContactLink'
 import HelpBubble from '@/common/components/HelpBubble/HelpBubble'
 import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
+import { getEmployees } from '@/shared/api/employees'
+import { getPublicSectors } from '@/shared/api/sectors'
+import { getPublicSpecialties } from '@/shared/api/specialties'
 import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import styles from './page.module.scss'
-
-const api = process.env.NEXT_PUBLIC_API_URL
 
 interface SectorOption {
   value: string
@@ -90,25 +91,8 @@ export default function Staff() {
 
   const fetchEmployees = useCallback(async () => {
     try {
-      const formData = new FormData()
-      formData.append(
-        'pageSize',
-        pageSize === 'all' ? String(999) : String(pageSize),
-      )
-
-      const response = await fetch(`${api}admin/employee/all`, {
-        method: 'POST',
-        body: formData,
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      const result = await response.json()
-      console.log(result)
-
-      setEmployees(result.content)
+      const employees = await getEmployees({ pageSize })
+      setEmployees(employees)
     } catch (error) {
       console.error('Error fetching employees:', error)
     }
@@ -116,20 +100,10 @@ export default function Staff() {
 
   const fetchSectors = useCallback(async () => {
     try {
-      const response = await fetch(`${api}sector/all`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pageNumber: 0,
-          pageSize: 10,
-        }),
+      const result = await getPublicSectors({
+        pageNumber: 0,
+        pageSize: 10,
       })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      const result = await response.json()
 
       const mapped: SectorOption[] =
         (result?.content as SectorItem[])?.map((item) => ({
@@ -145,23 +119,10 @@ export default function Staff() {
 
   const fetchSpecialties = useCallback(async () => {
     try {
-      const response = await fetch(`${api}specialty/getAll`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          pageNumber: 0,
-          pageSize: 10,
-        }),
+      const result = await getPublicSpecialties({
+        pageNumber: 0,
+        pageSize: 10,
       })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      const result = await response.json()
-      console.log(result)
 
       const mapped: SpecialtyOption[] =
         result?.content?.map((item: Specialty) => ({

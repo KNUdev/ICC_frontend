@@ -3,7 +3,7 @@
 import EyeCloseIcon from '@/assets/image/icons/eye-close.svg'
 import EyeOpenIcon from '@/assets/image/icons/eye-open.svg'
 import { FieldError } from '@/common/components/FieldError/FieldError'
-import { API } from '@/shared/config/api.config'
+import { registerUser } from '@/shared/api/auth'
 import { useAuthWarning } from '@/shared/hooks/useAuthWarning'
 import { useTranslations } from 'next-intl'
 import Form from 'next/form'
@@ -134,19 +134,10 @@ export default function SignUpPage() {
     setErrors({})
 
     try {
-      const formDataToSend = new FormData()
-      formDataToSend.append('email', formData.email)
-      formDataToSend.append('password', formData.password)
-
-      const response = await fetch(`${API}account/register`, {
-        method: 'POST',
-        body: formDataToSend,
+      await registerUser({
+        email: formData.email,
+        password: formData.password,
       })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.message || t('error.registration'))
-      }
 
       router.push('/success')
     } catch (error) {

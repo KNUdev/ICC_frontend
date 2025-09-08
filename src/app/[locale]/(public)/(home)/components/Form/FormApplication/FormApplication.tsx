@@ -6,7 +6,8 @@ import UploadFile from '@/assets/image/icons/file.svg'
 import { FieldError } from '@/common/components/FieldError/FieldError'
 import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
 import { useRouter } from '@/i18n/navigation'
-import { API } from '@/shared/config/api.config'
+import { createApplication } from '@/shared/api/applications'
+import { getDepartments } from '@/shared/api/departments'
 import { useLocale, useTranslations } from 'next-intl'
 import Form from 'next/form'
 import { useCallback, useMemo, useRef, useState } from 'react'
@@ -120,23 +121,11 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
 
   const fetchDepartments = useCallback(async () => {
     try {
-      const response = await fetch(`${API}department/all`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          pageNumber: 0,
-          pageSize: 10,
-        }),
+      const departments = await getDepartments({
+        pageNumber: 0,
+        pageSize: 10,
       })
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch departments')
-      }
-
-      const data = await response.json()
-      setDepartments(data.content)
+      setDepartments(departments)
       setDropdownError(null)
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -157,54 +146,47 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
 
   const fetchForm = useCallback(
     async (form: HTMLFormElement) => {
-      const formData = new FormData(form)
-
-      if (selectedFacultyId) {
-        formData.append('departmentId', selectedFacultyId)
+      if (!selectedFacultyId) {
+        console.error('No faculty selected')
+        return
       }
-
-      formData.delete('applicantName')
 
       const { lastName, firstName, middleName } = parseFullName(
         form.applicantName.value,
       )
-      formData.append('applicantName.firstName', firstName)
-      formData.append('applicantName.lastName', lastName)
-      formData.append('applicantName.middleName', middleName)
-
-      if (file) {
-        formData.append('problemPhotoName', file.name)
-        formData.set('problemPhoto', file)
-      }
-
-      formData.append('status', 'IN_QUEUE')
 
       try {
-        const response = await fetch(`${API}application/create`, {
-          method: 'POST',
-          body: formData,
+        await createApplication({
+          applicantName: {
+            firstName,
+            lastName,
+            middleName,
+          },
+          applicantEmail: form.applicantEmail.value,
+          departmentId: selectedFacultyId,
+          problemDescription: form.problemDescription.value,
+          problemPhoto: file || undefined,
+          problemPhotoName: file?.name,
+          status: 'IN_QUEUE',
         })
 
-        if (response.ok) {
-          setLastSubmissionTime()
-          form.reset()
-          setFile(null)
-          setSelectedFacultyId(null)
-          setSubmissionErrorMessage(null)
-          router.push('/success')
-        } else {
-          const errorText = await response.text()
-          setSubmissionErrorMessage(errorText || 'Unknown error')
-          setShowSubmission(false)
-        }
-
-        showSubmissionMessage()
+        setLastSubmissionTime()
+        form.reset()
+        setFile(null)
+        setSelectedFacultyId(null)
+        setSubmissionErrorMessage(null)
+        router.push('/success')
       } catch (err) {
         console.error('Error while sending: ', err)
+        if (err instanceof Error) {
+          setSubmissionErrorMessage(err.message)
+        } else {
+          setSubmissionErrorMessage('Unknown error')
+        }
         setShowSubmission(false)
-        showSubmissionMessage()
       } finally {
         setIsSubmitting(false)
+        showSubmissionMessage()
       }
     },
     [

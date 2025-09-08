@@ -102,6 +102,24 @@ export const getAllSectors = async (
   return response.json()
 }
 
+export const getPublicSectors = async (
+  params: GetSectorsRequest,
+): Promise<SectorsResponse> => {
+  const response = await fetch(`${API}sector/all`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch public sectors')
+  }
+
+  return response.json()
+}
+
 export const updateSector = async (data: UpdateSectorRequest) => {
   const response = await fetch(`${API}admin/sector/update`, {
     method: 'PATCH',

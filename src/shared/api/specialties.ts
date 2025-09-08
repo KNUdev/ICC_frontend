@@ -107,6 +107,24 @@ export const getAllSpecialties = async (
   return response.json()
 }
 
+export const getPublicSpecialties = async (
+  params: GetSpecialtiesRequest,
+): Promise<SpecialtiesResponse> => {
+  const response = await fetch(`${API}specialty/getAll`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  })
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch public specialties')
+  }
+
+  return response.json()
+}
+
 export const updateSpecialty = async (data: UpdateSpecialtyRequest) => {
   const response = await fetch(`${API}admin/specialty/update`, {
     method: 'PATCH',

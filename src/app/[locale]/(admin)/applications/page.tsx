@@ -7,6 +7,15 @@ import EditIcon from '@/assets/image/icons/form/edit.svg'
 import FilterIcon from '@/assets/image/icons/form/filter.svg'
 import SearchIcon from '@/assets/image/icons/form/search.svg'
 import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
+import {
+  assignEmployeeToApplication,
+  deleteApplication,
+  getAdminApplications,
+  removeEmployeeFromApplication,
+  updateApplication,
+} from '@/shared/api/applications'
+import { getDepartments } from '@/shared/api/departments'
+import { getAdminEmployees } from '@/shared/api/employees'
 import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -55,8 +64,6 @@ interface Employee {
   id: string
   fullName: string
 }
-
-const api = process.env.NEXT_PUBLIC_API_URL
 
 export default function ApplicationsPage() {
   const [searchValue, setSearchValue] = useState('')
@@ -109,30 +116,11 @@ export default function ApplicationsPage() {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const formData = new FormData()
-        formData.append('pageNumber', '0')
-        formData.append('pageSize', '10')
-
-        const response = await fetch(`${api}admin/employee/all`, {
-          method: 'POST',
-          body: formData,
+        const employees = await getAdminEmployees({
+          pageNumber: 0,
+          pageSize: 10,
         })
-
-        if (!response.ok) throw new Error('Error fetching employees')
-
-        const result = await response.json()
-
-        const simplified = result.content.map(
-          (emp: {
-            id: string
-            name: { firstName: string; middleName: string; lastName: string }
-          }) => ({
-            id: emp.id,
-            fullName: `${emp.name.firstName} ${emp.name.middleName} ${emp.name.lastName}`,
-          }),
-        )
-
-        setAllEmployees(simplified)
+        setAllEmployees(employees)
       } catch (err) {
         console.error('Failed to fetch employees', err)
       }
@@ -192,25 +180,12 @@ export default function ApplicationsPage() {
 
   const fetchApplications = async () => {
     try {
-      const response = await fetch(`${api}admin/application/all`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          pageNumber: 0,
-          pageSize: 10,
-        }),
+      const applications = await getAdminApplications({
+        pageNumber: 0,
+        pageSize: 10,
       })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      const result = await response.json()
-
-      setApplications(result.content)
-      setOriginalApplications(result.content)
+      setApplications(applications)
+      setOriginalApplications(applications)
     } catch (error) {
       console.error('Error fetching applications:', error)
     }
@@ -232,22 +207,7 @@ export default function ApplicationsPage() {
     if (!deleteId) return
 
     try {
-      const response = await fetch(
-        `${api}admin/application/${deleteId}/delete`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      )
-
-      const resultText = await response.text()
-      if (!response.ok) {
-        console.error('❌ Delete failed:', response.status, resultText)
-        throw new Error('Delete failed')
-      }
-
+      await deleteApplication(deleteId)
       setApplications((prev) => prev.filter((app) => app.id !== deleteId))
       showDeletePanel(false)
       setDeleteId(null)
@@ -257,31 +217,17 @@ export default function ApplicationsPage() {
   }
 
   const handleUpdateApplication = async (updatedAppData: Application) => {
-    const formData = new FormData()
-
-    formData.append('id', updatedAppData.id)
-    formData.append('applicantEmail', updatedAppData.applicantEmail ?? '')
-    formData.append('firstName', updatedAppData.applicantName.firstName ?? '')
-    formData.append('middleName', updatedAppData.applicantName.middleName ?? '')
-    formData.append('lastName', updatedAppData.applicantName.lastName ?? '')
-    formData.append('departmentId', updatedAppData.departmentId)
-    formData.append('problemDescription', updatedAppData.problemDescription)
-    formData.append('status', updatedAppData.status)
-
     try {
-      const response = await fetch(`${api}admin/application/update`, {
-        method: 'PATCH',
-        body: formData,
+      await updateApplication({
+        id: updatedAppData.id,
+        applicantEmail: updatedAppData.applicantEmail,
+        applicantName: updatedAppData.applicantName,
+        departmentId: updatedAppData.departmentId,
+        problemDescription: updatedAppData.problemDescription,
+        status: updatedAppData.status,
       })
 
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('Update failed:', response.status, errorText)
-        throw new Error(`Error updating: ${response.status}`)
-      }
-
       await fetchApplications()
-
       setEditingApp(null)
     } catch (err) {
       console.error('Error while updating application', err)
@@ -298,26 +244,14 @@ export default function ApplicationsPage() {
 
       const updatedApp = { ...targetApp, status: newStatus }
 
-      const formData = new FormData()
-      formData.append('id', updatedApp.id)
-      formData.append('applicantEmail', updatedApp.applicantEmail)
-      formData.append('firstName', updatedApp.applicantName.firstName)
-      formData.append('middleName', updatedApp.applicantName.middleName)
-      formData.append('lastName', updatedApp.applicantName.lastName)
-      formData.append('departmentId', updatedApp.departmentId)
-      formData.append('problemDescription', updatedApp.problemDescription)
-      formData.append('status', updatedApp.status)
-
-      const response = await fetch(`${api}admin/application/update`, {
-        method: 'PATCH',
-        body: formData,
+      await updateApplication({
+        id: updatedApp.id,
+        applicantEmail: updatedApp.applicantEmail,
+        applicantName: updatedApp.applicantName,
+        departmentId: updatedApp.departmentId,
+        problemDescription: updatedApp.problemDescription,
+        status: updatedApp.status,
       })
-
-      if (!response.ok) {
-        const errText = await response.text()
-        console.error('Status update failed:', errText)
-        return
-      }
 
       setApplications((prev) =>
         prev.map((app) => (app.id === applicationId ? updatedApp : app)),
@@ -334,26 +268,7 @@ export default function ApplicationsPage() {
     try {
       const results = await Promise.allSettled(
         employeeIds.map(async (employeeId) => {
-          const formData = new FormData()
-          formData.append('applicationId', applicationId)
-          formData.append('employeeId', employeeId)
-
-          const response = await fetch(
-            `${api}admin/application/assign-employee`,
-            {
-              method: 'POST',
-              body: formData,
-            },
-          )
-
-          if (!response.ok) {
-            const errorText = await response.text()
-            throw new Error(
-              `Failed to assign employee ${employeeId}: ${errorText}`,
-            )
-          }
-
-          return await response.text()
+          await assignEmployeeToApplication(applicationId, employeeId)
         }),
       )
 
@@ -379,20 +294,7 @@ export default function ApplicationsPage() {
     employeeId: string,
   ) => {
     try {
-      const formData = new FormData()
-      formData.append('applicationId', applicationId)
-      formData.append('employeeId', employeeId)
-
-      const response = await fetch(`${api}admin/application/remove-employee`, {
-        method: 'POST',
-        body: formData,
-      })
-
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('Failed response:', errorText)
-        throw new Error('Failed to unassign employee')
-      }
+      await removeEmployeeFromApplication(applicationId, employeeId)
 
       setApplications((prev) =>
         prev.map((app) =>
@@ -442,20 +344,14 @@ export default function ApplicationsPage() {
       .trim()
       .toLowerCase()
 
-    let departments: { id: string; name: Record<string, string> }[] = []
+    let departments: { id: string; name: { en: string; uk: string } }[] = []
 
     try {
-      const res = await fetch(`${api}department/all`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ pageNumber: 0, pageSize: 100 }),
+      const departmentsData = await getDepartments({
+        pageNumber: 0,
+        pageSize: 100,
       })
-
-      if (!res.ok) throw new Error('Unable to retrieve list of faculties')
-      const data = await res.json()
-      departments = data.content
+      departments = departmentsData
     } catch (error) {
       console.error('Faculty retrieval error:', error)
     }
@@ -463,7 +359,7 @@ export default function ApplicationsPage() {
     const locale = document.documentElement.lang || 'en'
 
     const matchingDepartment = departments.find((dep) =>
-      dep.name[locale]?.toLowerCase().includes(departmentText),
+      dep.name[locale as 'en' | 'uk']?.toLowerCase().includes(departmentText),
     )
 
     const matchingDepartmentId = matchingDepartment?.id || null

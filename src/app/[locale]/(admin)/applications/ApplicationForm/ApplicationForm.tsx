@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useEffect, useMemo, useRef, useCallback } from 'react'
-import { Golos_Text } from 'next/font/google'
-import { useTranslations, useLocale } from 'next-intl'
 import type { Department } from '@/app/[locale]/(public)/(home)/components/Form/form.interfaces'
 import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
+import { getDepartmentById, getDepartments } from '@/shared/api/departments'
+import { useLocale, useTranslations } from 'next-intl'
+import { Golos_Text } from 'next/font/google'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styles from './ApplicationForm.module.scss'
 
 const golos = Golos_Text({
@@ -36,8 +37,6 @@ interface ApplicationFormProps {
   isDropDownInput: boolean
   onChange?: (updatedData: Application) => void
 }
-
-const api = process.env.NEXT_PUBLIC_API_URL
 
 export const ApplicationForm = ({
   formId,
@@ -74,23 +73,11 @@ export const ApplicationForm = ({
 
   const fetchDepartments = useCallback(async () => {
     try {
-      const response = await fetch(`${api}department/all`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          pageNumber: 0,
-          pageSize: 10,
-        }),
+      const departments = await getDepartments({
+        pageNumber: 0,
+        pageSize: 10,
       })
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch departments')
-      }
-
-      const data = await response.json()
-      setDepartments(data.content)
+      setDepartments(departments)
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error(err.message)
@@ -141,17 +128,8 @@ export const ApplicationForm = ({
       if (!formData.departmentId) return
 
       try {
-        const res = await fetch(`${api}department/${formData.departmentId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-
-        if (!res.ok) throw new Error('Failed to fetch department name')
-
-        const data = await res.json()
-        setDepartmentName(data.name[locale])
+        const department = await getDepartmentById(formData.departmentId)
+        setDepartmentName(department.name[locale as 'en' | 'uk'])
       } catch (error) {
         console.error(error)
         setDepartmentName('Unknown')

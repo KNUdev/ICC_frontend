@@ -3,8 +3,9 @@
 import EyeCloseIcon from '@/assets/image/icons/eye-close.svg'
 import EyeOpenIcon from '@/assets/image/icons/eye-open.svg'
 import { FieldError } from '@/common/components/FieldError/FieldError'
-import { API } from '@/shared/config/api.config'
+import { loginUser } from '@/shared/api/auth'
 import { useAuthWarning } from '@/shared/hooks/useAuthWarning'
+import { setAuthTokens } from '@/shared/lib/auth'
 import { useTranslations } from 'next-intl'
 import Form from 'next/form'
 import Link from 'next/link'
@@ -87,12 +88,6 @@ export default function SignInPage() {
     return !Object.values(newErrors).some((error) => error !== undefined)
   }
 
-  const setCookie = (name: string, value: string, days: number) => {
-    const expires = new Date()
-    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000)
-    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/;SameSite=Strict;Secure`
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -104,29 +99,12 @@ export default function SignInPage() {
     setErrors({})
 
     try {
-      const response = await fetch(`${API}account/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
+      const { accessToken, refreshToken } = await loginUser({
+        email: formData.email,
+        password: formData.password,
       })
 
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.message || t('error.login'))
-      }
-
-      const data = await response.json()
-
-      setCookie('accessToken', data.accessToken, 1)
-      setCookie('refreshToken', data.refreshToken, 7)
-
-      window.dispatchEvent(new Event('auth-state-changed'))
-
+      setAuthTokens(accessToken, refreshToken)
       router.push('/')
     } catch (error) {
       setErrors({
