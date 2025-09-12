@@ -9,17 +9,16 @@ $text-nat-300: #4f4f4f;
 $text-nat-500: #6d6d6d;
 
 .formPoints {
-  height: 54.688rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1.563rem;
+
+  gap: 1.5625rem;
   flex: 1 1 0;
 }
 
 .details {
   display: flex;
-  padding: 1.25rem 0.938rem;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
@@ -28,6 +27,8 @@ $text-nat-500: #6d6d6d;
   border: 1px solid $border-nat-800;
   background: $bg-nat-1000;
   cursor: pointer;
+
+  padding: 1.25rem 0.9375rem;
 }
 
 .details[open] {
@@ -67,8 +68,8 @@ $text-nat-500: #6d6d6d;
 
 .paragraph {
   align-self: stretch;
+
   color: $text-nat-300;
-  margin-top: 0.938rem;
 
   font-family: ver(--font-inter), sans-serif;
   font-size: 1rem;
