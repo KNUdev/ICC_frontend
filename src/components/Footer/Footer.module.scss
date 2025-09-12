@@ -1,7 +1,7 @@
 #footer {
   font-family: var(--font-inter), sans-serif;
   background: #fff;
-  padding: 2.5rem 3.125rem;
+  padding: 3.125rem 2.5rem;
 
   & > div {
     display: flex;
@@ -75,7 +75,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.938rem;
+  gap: 0.9375rem;
 }
 
 .list > li {
