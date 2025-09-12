@@ -6,6 +6,7 @@ $bg-nat-1000: #fff;
 
 $text-nat-0: #272727;
 $text-nat-300: #4f4f4f;
+$text-nat-500: #6d6d6d;
 
 .formPoints {
   height: 54.688rem;
@@ -37,6 +38,10 @@ $text-nat-300: #4f4f4f;
 .details:not([open]):hover {
   border: 1px solid $border-nat-0;
   background: $bg-nat-1000;
+}
+
+.details:not([open]) > summary {
+  color: $text-nat-500;
 }
 
 .summary {
