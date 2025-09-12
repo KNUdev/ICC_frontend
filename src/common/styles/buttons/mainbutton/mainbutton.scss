@@ -5,14 +5,10 @@ $active-color: #a30e2c;
 
 .mainBtn {
   display: inline-flex;
-  width: 100%;
-  padding: 0.9375rem 1.25rem;
-  justify-content: flex-start;
-  text-align: left;
+  justify-content: space-between;
   align-items: center;
   align-self: stretch;
-  gap: 0.625rem;
-  flex-shrink: 0;
+
   outline: none;
   border: none;
   cursor: pointer;
@@ -20,12 +16,18 @@ $active-color: #a30e2c;
   background: $primary-color;
   color: $primary-text-color;
 
+  text-align: left;
   font-family: Inter;
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   letter-spacing: 0.005rem;
+
+  flex-shrink: 0;
+  width: 100%;
+  padding: 0.9375rem 1.25rem;
+  gap: 0.625rem;
 }
 
 .mainBtn:hover {
