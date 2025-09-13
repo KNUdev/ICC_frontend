@@ -1,3 +1,5 @@
+@use '../../../../../../../common/styles/variables.scss' as *;
+
 $border-nat-800: #d1d1d1;
 $border-red-400: #ff525e;
 $border-nat-0: #272727;
@@ -79,4 +81,10 @@ $text-nat-500: #6d6d6d;
   font-weight: 400;
   line-height: 1.4375rem;
   letter-spacing: 0.005rem;
+}
+
+@include mobile {
+  .formPoints {
+    display: none;
+  }
 }
