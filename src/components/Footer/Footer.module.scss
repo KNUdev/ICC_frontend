@@ -1,3 +1,9 @@
+@use '../../common/styles/variables.scss' as *;
+
+$text-nat-0: #272727;
+
+$divider-bg-color: #d7d7d7;
+
 #footer {
   font-family: var(--font-inter), sans-serif;
   background: #fff;
@@ -11,7 +17,7 @@
 }
 
 .infoHeading {
-  color: #272727;
+  color: $text-nat-0;
 
   text-transform: uppercase;
   font-family: var(--font-inter), sans-serif;
@@ -43,7 +49,7 @@
   line-height: normal;
   letter-spacing: 0.00625rem;
 
-  color: #272727;
+  color: $text-nat-0;
 
   padding: 0 0.625rem;
 }
@@ -97,10 +103,16 @@
 
 .divider {
   border: none;
-  border-top: 1px solid #d7d7d7;
+  border-top: 1px solid $divider-bg-color;
 
   width: 100%;
   margin: 0;
+}
+
+.addressContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .mailContainer,
@@ -138,4 +150,59 @@
   font-weight: 400;
   line-height: 1.4375rem;
   letter-spacing: 0.005rem;
+}
+
+@include mobile {
+  #footer {
+    & > div {
+      gap: 5rem;
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+
+    gap: 2.1875rem;
+  }
+
+  .infoHeading {
+    font-family: Inter;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.005rem;
+    text-transform: uppercase;
+  }
+
+  .navLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+
+    gap: 5rem;
+  }
+
+  .addressContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+
+    gap: 1.5625rem;
+  }
+
+  .mailContainer,
+  .telephoneContainer {
+    gap: 0.625rem;
+  }
+
+  .watermarkContainer {
+    margin-top: -3.3375rem;
+    align-items: flex-start;
+  }
 }
