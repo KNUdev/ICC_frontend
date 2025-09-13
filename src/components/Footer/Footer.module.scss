@@ -154,6 +154,12 @@ $divider-bg-color: #d7d7d7;
   letter-spacing: 0.005rem;
 }
 
+@include mobile-horizontal {
+  .navContainer {
+    max-width: 14rem;
+  }
+}
+
 @include mobile {
   #footer {
     & > div {
@@ -206,11 +212,5 @@ $divider-bg-color: #d7d7d7;
   .watermarkContainer {
     margin-top: -3.3375rem;
     align-items: flex-start;
-  }
-}
-
-@include mobile-horizontal {
-  .navContainer {
-    max-width: 14rem;
   }
 }

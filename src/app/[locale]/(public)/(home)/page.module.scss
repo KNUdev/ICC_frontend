@@ -51,6 +51,16 @@ $text-color: #4f4f4f;
   }
 }
 
+@include mobile-horizontal {
+  .homePage {
+    & > .into {
+      & > div {
+        overflow-wrap: break-word;
+      }
+    }
+  }
+}
+
 @include mobile {
   .homePage {
     margin: 2.8125rem auto;
@@ -87,16 +97,6 @@ $text-color: #4f4f4f;
 
     .into > div:last-child {
       display: none;
-    }
-  }
-}
-
-@include mobile-horizontal {
-  .homePage {
-    & > .into {
-      & > div {
-        overflow-wrap: break-word;
-      }
     }
   }
 }
