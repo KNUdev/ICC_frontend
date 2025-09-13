@@ -9,8 +9,6 @@
 @use '@/common/styles/inputs/searchinput.scss';
 @use '@/common/styles/inputs/textinput.scss';
 
-@use '../../common/styles/variables.scss' as *;
-
 .container {
   background: #f6f6f6;
   display: flex;
@@ -28,16 +26,10 @@
 .main-wrapper {
   max-width: 93.5rem;
   margin: auto;
-  padding: 0 2rem;
+  padding-inline: clamp(0rem, 2vw, 2rem);
   width: 100%;
 }
 
 html {
   scroll-behavior: smooth;
 }
-
-// @include mobile {
-//   .layout-wrapper {
-//     padding: 0;
-//   }
-// }
