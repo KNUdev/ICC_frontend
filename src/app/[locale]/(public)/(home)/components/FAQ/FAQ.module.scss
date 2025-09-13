@@ -8,9 +8,8 @@ $text-nat-0: #272727;
   align-items: center;
 
   width: 100%;
-  max-width: 74.6rem;
+  max-width: 70rem;
   margin: 0 auto;
-  padding: 4rem 2rem;
   gap: 2rem;
 }
 
@@ -23,8 +22,6 @@ $text-nat-0: #272727;
   font-size: 1.875rem;
   font-weight: 800;
   letter-spacing: 0.15px;
-
-  margin-bottom: 2.5rem;
 }
 
 @include mobile {
@@ -44,11 +41,5 @@ $text-nat-0: #272727;
     text-transform: uppercase;
 
     margin-bottom: 0;
-  }
-}
-
-@include tablet-horizontal {
-  .section {
-    max-width: 70rem;
   }
 }

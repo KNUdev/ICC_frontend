@@ -90,3 +90,13 @@ $text-color: #4f4f4f;
     }
   }
 }
+
+@include mobile-horizontal {
+  .homePage {
+    & > .into {
+      & > div {
+        overflow-wrap: break-word;
+      }
+    }
+  }
+}
