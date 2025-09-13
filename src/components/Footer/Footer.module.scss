@@ -1,6 +1,7 @@
 @use '../../common/styles/variables.scss' as *;
 
 $text-nat-0: #272727;
+$text-nat-250: #3d3d3d;
 
 $divider-bg-color: #d7d7d7;
 
@@ -111,7 +112,6 @@ $divider-bg-color: #d7d7d7;
 
 .addressContainer {
   display: flex;
-  align-items: center;
   justify-content: space-between;
 }
 
@@ -138,11 +138,13 @@ $divider-bg-color: #d7d7d7;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  margin-top: -4rem;
+  margin-right: 2rem;
 }
 
 .designWatermark {
-  text-align: center;
-  color: var(--text-nat-250, #3d3d3d);
+  color: $text-nat-250;
 
   font-family: Inter;
   font-size: 1rem;
