@@ -208,3 +208,9 @@ $divider-bg-color: #d7d7d7;
     align-items: flex-start;
   }
 }
+
+@include mobile-horizontal {
+  .navContainer {
+    max-width: 14rem;
+  }
+}
