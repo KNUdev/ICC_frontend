@@ -1,3 +1,5 @@
+@use '../../../../../../../../common/styles/variables.scss' as *;
+
 $text-nat-0: #272727;
 
 .sectionLines {
@@ -24,4 +26,24 @@ $text-nat-0: #272727;
   text-transform: uppercase;
 
   margin: 0 0 1.5rem;
+}
+
+@include mobile {
+  .formHeading {
+    font-family: Inter;
+    font-size: 1.5625rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.00781rem;
+    text-transform: uppercase;
+    text-align: left;
+
+    margin: 0 0 2.1875rem;
+  }
+
+  .sectionLines > :first-child,
+  .sectionLines > :last-child {
+    display: none;
+  }
 }
