@@ -1,3 +1,5 @@
+@use '../../../../../../../common/styles/variables.scss' as *;
+
 .accordion {
   display: flex;
   flex-direction: column;
@@ -68,12 +70,27 @@
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   font-weight: 400;
-
   line-height: 1.4375rem;
+  letter-spacing: 0.005rem;
 
-  padding: 0 1.25rem 1.5625rem;
+  padding: 1.5625rem 1.25rem;
 
   @media (max-width: 48rem) {
     padding: 0 1rem 1.25rem;
+  }
+}
+
+@include mobile {
+  .accordion {
+    margin: 0;
+  }
+
+  .title {
+    font-family: Inter;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.00563rem;
   }
 }

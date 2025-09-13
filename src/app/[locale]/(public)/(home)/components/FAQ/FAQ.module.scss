@@ -1,4 +1,8 @@
-.faqSection {
+@use '../../../../../../common/styles/variables.scss' as *;
+
+$text-nat-0: #272727;
+
+.section {
   display: flex;
   flex-direction: column;
 
@@ -10,7 +14,7 @@
 }
 
 .sectionTitle {
-  color: #272727;
+  color: $text-nat-0;
 
   text-align: center;
   text-transform: uppercase;
@@ -20,4 +24,24 @@
   letter-spacing: 0.15px;
 
   margin-bottom: 2.5rem;
+}
+
+@include mobile {
+  .section {
+    padding: 0;
+    margin: 0;
+    gap: 2.1875rem;
+  }
+
+  .sectionTitle {
+    font-family: Inter;
+    font-size: 1.5625rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.00781rem;
+    text-transform: uppercase;
+
+    margin-bottom: 0;
+  }
 }
