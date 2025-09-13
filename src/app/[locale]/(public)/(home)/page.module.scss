@@ -58,12 +58,12 @@ $text-color: #4f4f4f;
     padding: 0 0.9375rem;
 
     & > .into {
-      justify-content: center;
+      justify-content: flex-start;
 
       & > div {
         overflow-wrap: break-word;
 
-        max-width: 20rem;
+        max-width: 100%;
 
         & > h1 {
           font-family: Inter;
