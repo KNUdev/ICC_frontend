@@ -47,6 +47,10 @@ export function isTokenExpired(token: string): boolean {
 
 export function getEmployeeIdFromToken(): string | null {
   const accessToken = getCookie('accessToken')
+  console.log(
+    'Is Token Expired:',
+    accessToken ? isTokenExpired(accessToken) : 'No token',
+  )
   if (!accessToken || isTokenExpired(accessToken)) {
     return null
   }
