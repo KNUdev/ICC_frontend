@@ -290,3 +290,36 @@ $hover-color: #ff525e;
     justify-content: center;
   }
 }
+
+@include mobile {
+  .historyPage {
+    padding: 2.8125rem 1rem;
+    gap: 5rem;
+  }
+
+  .galleryIconsWrapper {
+    display: none;
+  }
+
+  .title {
+    font-family: Inter;
+    font-size: 1.5625rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.00781rem;
+    text-transform: uppercase;
+  }
+
+  .section {
+    h3 {
+      font-family: Inter;
+      font-size: 1.125rem;
+      font-style: normal;
+      font-weight: 800;
+      line-height: normal;
+      letter-spacing: 0.00563rem;
+      text-transform: uppercase;
+    }
+  }
+}
