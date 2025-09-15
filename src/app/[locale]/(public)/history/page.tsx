@@ -28,7 +28,7 @@ export default function History() {
   return (
     <div>
       <section className={styles.historyPage + ' main-wrapper'} id='top'>
-        <div className='header-container'>
+        <div className={styles.header}>
           <div className='hyperlink-container'>
             <Hyperlink href={PAGES.HOME}>
               <div className={styles.hyperlink}>
