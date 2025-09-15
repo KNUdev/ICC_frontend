@@ -63,15 +63,17 @@ export default function History() {
               </div>
               <div className={`${styles.gradientShadow} ${styles.shadow_1}`} />
               <div className={`${styles.gradientShadow} ${styles.shadow_2}`} />
-              <h1 className={styles.title}>{tCommon('navigation.HISTORY')}</h1>
+              <h1 className={styles.title}>{t('title')}</h1>
             </div>
           </div>
-          <div className={styles.navButtons}>
+          <div className={styles.breadcrumbs}>
             <Link href={PAGES.HOME} className={styles.navLink}>
               {tCommon('navigation.HOME')}
             </Link>
             <ArrowRight />
-            <span>{tCommon('navigation.HISTORY')}</span>
+            <span className={styles.currentPage}>
+              {tCommon('navigation.HISTORY')}
+            </span>
           </div>
         </div>
 
