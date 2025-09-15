@@ -276,3 +276,17 @@ $hover-color: #ff525e;
 
   cursor: pointer;
 }
+
+@include mobile-horizontal {
+  .galleryIconsWrapper {
+    right: auto;
+    left: 0;
+    width: 160%;
+    gap: 0.25rem;
+    transform: scale(0.8);
+  }
+
+  .galleryIcons {
+    justify-content: center;
+  }
+}
