@@ -1,3 +1,5 @@
+@use '../../../../common/styles/variables.scss' as *;
+
 $primary-bg-color: #fff;
 
 $text-nat-0: #272727;
@@ -33,6 +35,19 @@ $hover-color: #ff525e;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
 
   padding: 0.625rem;
   gap: 0.625rem;
