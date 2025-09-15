@@ -37,6 +37,7 @@ export default function History() {
               </div>
             </Hyperlink>
           </div>
+
           <div className={styles.galleryHeader}>
             <div className={styles.galleryHeaderContainer}>
               <div className={styles.galleryIconsWrapper}>
@@ -50,6 +51,7 @@ export default function History() {
                     ))}
                   </div>
                 ))}
+
                 {[...Array(5)].map((_, rowIdx) => (
                   <div key={`set2-${rowIdx}`} className={styles.galleryIcons}>
                     {[...Array(6)].map((_, iconIdx) => (
@@ -62,15 +64,20 @@ export default function History() {
                 ))}
               </div>
               <div className={`${styles.gradientShadow} ${styles.shadow_1}`} />
+
               <div className={`${styles.gradientShadow} ${styles.shadow_2}`} />
+
               <h1 className={styles.title}>{t('title')}</h1>
             </div>
           </div>
+
           <div className={styles.breadcrumbs}>
             <Link href={PAGES.HOME} className={styles.navLink}>
               {tCommon('navigation.HOME')}
             </Link>
+
             <ArrowRight />
+
             <span className={styles.currentPage}>
               {tCommon('navigation.HISTORY')}
             </span>
