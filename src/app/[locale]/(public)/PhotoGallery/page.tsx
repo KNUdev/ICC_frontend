@@ -170,8 +170,10 @@ export default function PhotoGalleryPage() {
               {items.map((item) => (
                 <li key={item.itemId} className={styles.listItem}>
                   <LazyImage item={item} className={styles.galleryImage} />
+
                   <div className={styles.imageInfo}>
                     <h3 className={styles.imageName}>{item.publicItemName}</h3>
+
                     {item.itemDescription && (
                       <p className={styles.imageDescription}>
                         {item.itemDescription}
@@ -189,6 +191,7 @@ export default function PhotoGalleryPage() {
           </>
         )}
       </div>
+
       <div className={styles.hyperlinkContainer}>
         <Hyperlink href='#top'>
           <div className={styles.hyperlink}>
