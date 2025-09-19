@@ -1,10 +1,13 @@
+@use '../../../../../../../../common/styles/variables.scss' as *;
+
 $text-nat-0: #272727;
 
 .sectionLines {
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  position: relative;
 }
 
 .formContainer {
@@ -14,12 +17,33 @@ $text-nat-0: #272727;
 
 .formHeading {
   color: $text-nat-0;
-  text-align: center;
-  margin: 0 0 1.5rem;
 
+  text-align: center;
   font-family: Inter;
   font-size: 1.875rem;
   font-weight: 800;
   letter-spacing: 0.00938rem;
   text-transform: uppercase;
+
+  margin: 0 0 1.5rem;
+}
+
+@include mobile {
+  .formHeading {
+    font-family: Inter;
+    font-size: 1.5625rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.00781rem;
+    text-transform: uppercase;
+    text-align: left;
+
+    margin: 0 0 2.1875rem;
+  }
+
+  .sectionLines > :first-child,
+  .sectionLines > :last-child {
+    display: none;
+  }
 }

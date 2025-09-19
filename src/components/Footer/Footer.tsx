@@ -118,7 +118,7 @@ export function Footer() {
 
         <hr className={styles.divider} role='separator' />
 
-        <address className={styles.container}>
+        <address className={styles.addressContainer}>
           <div className={styles.mailContainer}>
             <ContactLink href={`mailto:${CONTACT_INFO.email}`} icon={Mail}>
               {CONTACT_INFO.email}

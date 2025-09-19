@@ -1,7 +1,14 @@
+@use '../../common/styles/variables.scss' as *;
+
+$text-nat-0: #272727;
+$text-nat-250: #3d3d3d;
+
+$divider-bg-color: #d7d7d7;
+
 #footer {
   font-family: var(--font-inter), sans-serif;
   background: #fff;
-  padding: 2.5rem 3.125rem;
+  padding: 3.125rem 2.5rem;
 
   & > div {
     display: flex;
@@ -11,8 +18,9 @@
 }
 
 .infoHeading {
+  color: $text-nat-0;
+
   text-transform: uppercase;
-  color: #272727;
   font-family: var(--font-inter), sans-serif;
   font-size: 1.125rem;
   font-style: normal;
@@ -25,22 +33,24 @@
 }
 
 .footerLogo {
-  flex: 0 1 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  flex: 0 1 0;
 }
 
 .heading {
+  text-transform: uppercase;
   font-family: var(--font-inter), sans-serif;
   font-size: 1.25rem;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
   letter-spacing: 0.00625rem;
-  text-transform: uppercase;
-  color: #272727;
+
+  color: $text-nat-0;
 
   padding: 0 0.625rem;
 }
@@ -63,36 +73,46 @@
 .navContainer {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+
   flex: 1;
   max-width: 21rem;
   min-width: 0;
   gap: 1.563rem;
-  box-sizing: border-box;
 }
 
 .list {
-  max-width: 23.75rem;
-  list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.938rem;
+
+  list-style: none;
+
+  max-width: 23.75rem;
+  gap: 0.9375rem;
 }
 
 .list > li {
-  width: 100%;
   font-size: 1rem;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   letter-spacing: 0.08px;
+
+  width: 100%;
   padding: 0 0.625rem;
 }
 
 .divider {
-  width: 100%;
   border: none;
-  border-top: 1px solid #d7d7d7;
+  border-top: 1px solid $divider-bg-color;
+
+  width: 100%;
   margin: 0;
+}
+
+.addressContainer {
+  display: flex;
+  justify-content: space-between;
 }
 
 .mailContainer,
@@ -100,6 +120,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   gap: 0.313rem;
 }
 
@@ -108,6 +129,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+
   gap: 3.125rem;
 }
 
@@ -116,11 +138,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  margin-top: -4rem;
+  margin-right: 2rem;
 }
 
 .designWatermark {
-  text-align: center;
-  color: var(--text-nat-250, #3d3d3d);
+  color: $text-nat-250;
 
   font-family: Inter;
   font-size: 1rem;
@@ -128,4 +152,65 @@
   font-weight: 400;
   line-height: 1.4375rem;
   letter-spacing: 0.005rem;
+}
+
+@include mobile-horizontal {
+  .navContainer {
+    max-width: 14rem;
+  }
+}
+
+@include mobile {
+  #footer {
+    & > div {
+      gap: 5rem;
+    }
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+
+    gap: 2.1875rem;
+  }
+
+  .infoHeading {
+    font-family: Inter;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.005rem;
+    text-transform: uppercase;
+  }
+
+  .navLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+
+    gap: 5rem;
+  }
+
+  .addressContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+
+    gap: 1.5625rem;
+  }
+
+  .mailContainer,
+  .telephoneContainer {
+    gap: 0.625rem;
+  }
+
+  .watermarkContainer {
+    margin-top: -3.3375rem;
+    align-items: flex-start;
+  }
 }
