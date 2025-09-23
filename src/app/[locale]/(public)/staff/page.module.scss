@@ -397,6 +397,13 @@ $button-hover-color: #ae302c;
   .staffSection {
     padding: 3.125rem 0rem;
   }
+
+  .searchTextContainer {
+    max-width: 100%;
+    width: 100%;
+
+    flex: 0 0 50%;
+  }
 }
 
 @include mobile-horizontal {
@@ -469,6 +476,11 @@ $button-hover-color: #ae302c;
   }
 
   .detailPhotoBlock {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .detailInfoBlock {
     max-width: 100%;
     width: 100%;
   }
