@@ -1,3 +1,5 @@
+@use '../../../../common/styles/variables.scss' as *;
+
 $text-primary-color: #3d3d3d;
 $label-primary-color: #272727;
 $border-primary-color: #d1d1d1;
@@ -380,4 +382,10 @@ $button-hover-color: #ae302c;
 .centeredText {
   text-align: center;
   justify-content: center;
+}
+
+@include tablet-horizontal {
+  .staffSection {
+    padding: 3.125rem 0rem;
+  }
 }
