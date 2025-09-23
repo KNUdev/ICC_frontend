@@ -254,6 +254,7 @@ $button-hover-color: #ae302c;
 
 .workerPhoto {
   display: block;
+  margin: 0 auto;
 
   max-width: 100%;
   height: auto;
@@ -446,5 +447,29 @@ $button-hover-color: #ae302c;
 
     gap: 1.5625rem;
     margin-bottom: -1.25rem;
+  }
+
+  .detailHeader {
+    flex-direction: column;
+  }
+
+  .contacts {
+    gap: 1.5625rem;
+  }
+
+  .contactsDetails {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 0.9375rem;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .detailPhotoBlock {
+    max-width: 100%;
+    width: 100%;
   }
 }
