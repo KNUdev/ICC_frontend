@@ -413,6 +413,10 @@ $button-hover-color: #ae302c;
 
     flex: 0 0 40%;
   }
+
+  .detailSection {
+    padding: 3.125rem 0rem;
+  }
 }
 
 @include mobile {
