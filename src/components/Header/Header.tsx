@@ -1,10 +1,12 @@
 'use client'
 
 import LogoIcc from '@/assets/image/icons/logo_icc.svg'
+import { AdminDropdown } from '@/components/Header/AdminDropdown/AdminDropdown'
 import { UserProfile } from '@/components/Header/UserProfile/UserProfile'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { PAGES } from '@/shared/config/page.config'
 import { useCurrentUser } from '@/shared/hooks/useCurrentUser'
+import { useRole } from '@/shared/hooks/useRole'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import styles from './Header.module.scss'
@@ -16,6 +18,7 @@ type HeaderProps = {
 export function Header({}: HeaderProps) {
   const tCommon = useTranslations('common')
   const { isAuthenticated, isLoading } = useCurrentUser()
+  const { hasRole } = useRole()
 
   return (
     <header id={styles.header} role='contentinfo'>
@@ -44,6 +47,10 @@ export function Header({}: HeaderProps) {
         </div>
 
         <div className={styles.userPanel}>
+          {isAuthenticated && hasRole('HEAD_MANAGER') && (
+            <AdminDropdown className={styles.adminDropdown} />
+          )}
+
           <LanguageSwitcher />
 
           {!isLoading && (

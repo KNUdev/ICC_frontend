@@ -31,10 +31,8 @@ export function useRole(): UseRoleReturn {
       setIsLoading(false)
     }
 
-    // Загружаем роли при монтировании
     updateRoles()
 
-    // Слушаем события изменения состояния аутентификации
     const handleAuthStateChange = () => {
       updateRoles()
     }
