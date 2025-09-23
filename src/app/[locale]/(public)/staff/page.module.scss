@@ -5,6 +5,10 @@ $background-primary-color: #fff;
 $hover-color: #ff525e;
 $button-hover-color: #ae302c;
 
+.staffSection {
+  padding: 3.125rem 6.25rem;
+}
+
 .staffSection,
 .detailSection {
   display: flex;
@@ -109,6 +113,7 @@ $button-hover-color: #ae302c;
   align-self: stretch;
 
   padding: 1.5625rem;
+  margin-bottom: -3.125rem;
 
   border: 1px solid $border-primary-color;
   background: $background-primary-color;
@@ -141,7 +146,7 @@ $button-hover-color: #ae302c;
 
   list-style: none;
 
-  gap: 1.25rem;
+  gap: 3.75rem 1.25rem;
 }
 
 .employeeListItem {
@@ -172,9 +177,9 @@ $button-hover-color: #ae302c;
 
 .toTopContainer {
   display: flex;
+
   padding: 0.625rem;
-  justify-content: flex-end;
-  align-items: flex-end;
+  margin-left: auto;
 }
 
 .toTopParagraph {
