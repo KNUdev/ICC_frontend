@@ -351,6 +351,7 @@ export default function Staff() {
                 <Image
                   src={selectedEmployee.avatarUrl}
                   alt={`${selectedEmployee.name.firstName} ${selectedEmployee.name.middleName} ${selectedEmployee.name.lastName}`}
+                  className={styles.workerPhoto}
                   width={300}
                   height={300}
                   unoptimized

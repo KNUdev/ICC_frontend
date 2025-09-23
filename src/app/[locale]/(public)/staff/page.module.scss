@@ -226,7 +226,8 @@ $button-hover-color: #ae302c;
   align-items: flex-start;
   align-self: stretch;
 
-  gap: 1.5625rem;
+  gap: 6.25rem;
+  padding: 3.125rem 6.25rem;
 }
 
 .detailHeader {
@@ -249,6 +250,13 @@ $button-hover-color: #ae302c;
 
   border: 1px solid $border-primary-color;
   background: $background-primary-color;
+}
+
+.workerPhoto {
+  display: block;
+
+  max-width: 100%;
+  height: auto;
 }
 
 .contacts {
