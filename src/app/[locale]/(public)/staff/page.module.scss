@@ -389,3 +389,20 @@ $button-hover-color: #ae302c;
     padding: 3.125rem 0rem;
   }
 }
+
+@include mobile-horizontal {
+  .staffSection {
+    padding: 3.125rem 0rem;
+  }
+
+  .employeeList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .searchTextContainer {
+    max-width: 100%;
+    width: 100%;
+
+    flex: 0 0 40%;
+  }
+}
