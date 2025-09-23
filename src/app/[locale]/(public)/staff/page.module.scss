@@ -406,3 +406,33 @@ $button-hover-color: #ae302c;
     flex: 0 0 40%;
   }
 }
+
+@include mobile {
+  .staffSection {
+    padding: 2.8125rem 0rem;
+    gap: 5rem;
+  }
+
+  .employeeList {
+    grid-template-columns: repeat(1, 1fr);
+
+    gap: 1.25rem;
+  }
+
+  .searchFilterContainer {
+    flex-direction: column;
+
+    gap: 1.5625rem;
+  }
+
+  .specialtyFilterContainer {
+    width: 100%;
+  }
+
+  .workersArticle {
+    flex-direction: column;
+
+    gap: 1.5625rem;
+    margin-bottom: -1.25rem;
+  }
+}
