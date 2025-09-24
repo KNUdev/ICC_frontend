@@ -31,7 +31,7 @@ const nextConfig: NextConfig = {
       remotePatterns: [
         {
           protocol: 'https',
-          hostname: 'eea45cfde346f2fad488852fffd89c83.serveo.net',
+          hostname: 'd86351cc47b006577bb439ee64d44767.serveo.net',
           pathname: '/images/**',
         },
       ],
