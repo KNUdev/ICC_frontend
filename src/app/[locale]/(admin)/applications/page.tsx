@@ -37,7 +37,7 @@ interface Application {
   receivedAt: number[]
   completedAt: string
   problemDescription: string
-  problemPhoto: string
+  problemPhoto: string | null
   status: string
   departmentId: string
   assignedEmployeeIds: string[]
@@ -54,7 +54,7 @@ const emptyApplication: Application = {
   receivedAt: [],
   completedAt: new Date().toISOString(),
   problemDescription: '',
-  problemPhoto: '',
+  problemPhoto: null,
   status: 'IN_PROGRESS',
   departmentId: '',
   assignedEmployeeIds: [],
@@ -456,14 +456,20 @@ export default function ApplicationsPage() {
           <article key={app.id} className={styles.applicationArticle}>
             <section className={styles.applicationFormData}>
               <div className={styles.applicationPhotoContainer}>
-                <Image
-                  src={app.problemPhoto}
-                  alt={tApplications('problemPhotoName')}
-                  width={150}
-                  height={150}
-                  unoptimized
-                  className={styles.problemPhoto}
-                />
+                {app.problemPhoto ? (
+                  <Image
+                    src={app.problemPhoto}
+                    alt={tApplications('problemPhotoName')}
+                    width={150}
+                    height={150}
+                    unoptimized
+                    className={styles.problemPhoto}
+                  />
+                ) : (
+                  <div className={styles.problemPhoto}>
+                    <span>{tApplications('noImage')}</span>
+                  </div>
+                )}
 
                 <div className={styles.applicationPhotoDates}>
                   <p className={styles.photoDate}>
