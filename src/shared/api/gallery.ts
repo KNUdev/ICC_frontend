@@ -26,7 +26,18 @@ export async function getGalleryItems(
     }
 
     const galleryData: GalleryResponse = await response.json()
-    return galleryData
+
+    const processedData = {
+      ...galleryData,
+      content: galleryData.content.map((item) => ({
+        ...item,
+        itemUrl: item.itemUrl.startsWith('/')
+          ? `${API}${item.itemUrl.slice(1)}`
+          : item.itemUrl,
+      })),
+    }
+
+    return processedData
   } catch (error) {
     console.error('Error fetching gallery data:', error)
     return null
