@@ -1,4 +1,5 @@
 import { API } from '@/shared/config/api.config'
+import { getFullImageUrl } from '@/shared/lib/imageUrl'
 import { getEmployeeIdFromToken } from '@/shared/lib/jwt'
 import type { GalleryParams, GalleryResponse } from '@/shared/types/gallery'
 
@@ -31,9 +32,7 @@ export async function getGalleryItems(
       ...galleryData,
       content: galleryData.content.map((item) => ({
         ...item,
-        itemUrl: item.itemUrl.startsWith('/')
-          ? `${API}${item.itemUrl.slice(1)}`
-          : item.itemUrl,
+        itemUrl: getFullImageUrl(item.itemUrl) || item.itemUrl,
       })),
     }
 

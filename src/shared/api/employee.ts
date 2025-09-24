@@ -1,4 +1,5 @@
 import { API } from '@/shared/config/api.config'
+import { getFullImageUrl } from '@/shared/lib/imageUrl'
 import type { Employee } from '@/shared/types/employee'
 
 export async function getEmployeeById(
@@ -18,7 +19,13 @@ export async function getEmployeeById(
     }
 
     const employee: Employee = await response.json()
-    return employee
+
+    const processedEmployee = {
+      ...employee,
+      avatarUrl: getFullImageUrl(employee.avatarUrl),
+    }
+
+    return processedEmployee
   } catch (error) {
     console.error('Error fetching employee data:', error)
     return null
