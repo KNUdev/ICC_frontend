@@ -216,7 +216,7 @@ const UserProfile = () => {
 
       await updateEmployee({
         id: employee.id,
-        avatarFile: new File([''], 'empty'),
+        avatarFile: new File([''], ''),
       })
 
       setEmployee((prev) => {
