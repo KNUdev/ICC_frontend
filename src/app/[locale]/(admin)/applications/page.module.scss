@@ -185,6 +185,7 @@ $button-hover-color: #ae302c;
 
   gap: 2.1875rem;
   flex: 1;
+  width: 100%;
 }
 
 .smallFieldWrapper {
@@ -450,5 +451,27 @@ $button-hover-color: #ae302c;
 
   .buttonContainer > button {
     max-width: 100%;
+  }
+}
+
+@include mobile {
+  .applicationSection {
+    padding: 1.5625rem 0rem;
+  }
+
+  .headingContainer {
+    flex-direction: column;
+  }
+
+  .searchFilterContainer {
+    flex-direction: column;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .applicationFormData {
+    flex-direction: column;
   }
 }

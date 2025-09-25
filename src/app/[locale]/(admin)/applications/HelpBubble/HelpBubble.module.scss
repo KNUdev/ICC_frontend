@@ -88,3 +88,9 @@
     max-width: 12rem;
   }
 }
+
+@include mobile {
+  .helpWrapper {
+    display: none;
+  }
+}
