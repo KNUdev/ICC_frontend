@@ -442,3 +442,13 @@ $button-hover-color: #ae302c;
     padding: 3.125rem 2.125rem;
   }
 }
+
+@include mobile-horizontal {
+  .buttonContainer {
+    flex-direction: column;
+  }
+
+  .buttonContainer > button {
+    max-width: 100%;
+  }
+}

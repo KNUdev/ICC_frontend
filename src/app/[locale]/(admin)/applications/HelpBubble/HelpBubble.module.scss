@@ -1,13 +1,17 @@
+@use '../../../../../common/styles/variables.scss' as *;
+
 .helpWrapper {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
   position: relative;
+
+  gap: 0.75rem;
 }
 
 .helpText {
-  font-size: 1rem;
   color: #333;
+
+  font-size: 1rem;
   line-height: 1.4;
 }
 
@@ -15,15 +19,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
+
   border-radius: 50%;
   border: none;
   background-color: #ff525e;
-  cursor: pointer;
-  flex-shrink: 0;
-  padding: 0;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
     transform: scale(1.1);
@@ -35,24 +34,37 @@
     height: 100%;
     fill: #fff;
   }
+
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  padding: 0;
+
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .helpTooltip {
   position: absolute;
+  z-index: 10;
+
   background: #333;
   color: #fff;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
+
   font-size: 0.875rem;
   line-height: 1.4;
-  z-index: 10;
+
   opacity: 0;
-  transition: all 0.3s ease;
 
   white-space: normal;
+  word-break: break-word;
+
   max-width: 18rem;
   width: max-content;
-  word-break: break-word;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+
+  transition: all 0.3s ease;
 
   &.bottom {
     top: calc(100% + 0.5rem);
@@ -68,5 +80,11 @@
 
   &.open {
     opacity: 1;
+  }
+}
+
+@include mobile-horizontal {
+  .helpTooltip {
+    max-width: 12rem;
   }
 }
