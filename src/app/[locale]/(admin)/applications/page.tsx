@@ -389,7 +389,7 @@ export default function ApplicationsPage() {
   }
 
   return (
-    <section className={styles.applicationSection}>
+    <section className={styles.applicationSection + ' main-wrapper'}>
       <div className={styles.headingContainer}>
         <h1 className={styles.heading}>
           {tApplications('header.application')}
