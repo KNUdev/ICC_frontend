@@ -434,13 +434,23 @@ $button-hover-color: #ae302c;
 
   gap: 1.5625rem;
   width: 90%;
-  max-width: 95rem;
+  max-width: 85rem;
   padding: 2.8125rem;
 }
 
 @include tablet-horizontal {
   .applicationSection {
     padding: 3.125rem 2.125rem;
+  }
+
+  .editPanelContainer {
+    position: absolute;
+
+    height: 65%;
+  }
+
+  .editPanel {
+    max-width: 60rem;
   }
 }
 
@@ -451,6 +461,12 @@ $button-hover-color: #ae302c;
 
   .buttonContainer > button {
     max-width: 100%;
+  }
+
+  .editPanelContainer {
+    position: absolute;
+
+    height: 100%;
   }
 }
 
