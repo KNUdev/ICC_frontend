@@ -13,12 +13,14 @@ $button-hover-color: #ae302c;
 
 .applicationSection {
   display: flex;
-  padding: 0 3.75rem;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2.1875rem;
   align-self: stretch;
+
+  gap: 2.1875rem;
+  padding: 0 3.75rem;
 }
 
 .headingContainer {
@@ -43,8 +45,9 @@ $button-hover-color: #ae302c;
 .searchFilterContainer {
   display: flex;
   justify-content: space-between;
-  padding: 0.9375rem;
   align-items: center;
+
+  padding: 0.9375rem;
   gap: 1.5625rem;
 
   background: $container-bg-color;
@@ -63,18 +66,20 @@ $button-hover-color: #ae302c;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
 
   border: 1px solid $primary-border-color;
   background: $container-bg-color;
+
+  width: 100%;
 }
 
 .applicationFormData {
   display: flex;
-  padding: 1.5625rem;
   align-items: flex-start;
-  gap: 2.8125rem;
   align-self: stretch;
+
+  padding: 1.5625rem;
+  gap: 2.8125rem;
 }
 
 .assignSection {
@@ -83,9 +88,9 @@ $button-hover-color: #ae302c;
   align-items: center;
   justify-content: center;
   align-self: stretch;
+
   width: 100%;
   gap: 1.5625rem;
-
   padding: 1rem;
   margin-top: 1rem;
 }
@@ -93,16 +98,18 @@ $button-hover-color: #ae302c;
 .assignedEmployeesContainer {
   display: flex;
   align-items: flex-start;
-  gap: 2rem;
 
-  width: 100%;
   flex-wrap: wrap;
+
+  gap: 2rem;
+  width: 100%;
 }
 
 .applicationPhotoContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
   gap: 1.5625rem;
   flex: 0 0 30%;
 }
@@ -142,57 +149,65 @@ $button-hover-color: #ae302c;
 }
 
 .divider {
-  width: 0.0625rem;
   align-self: stretch;
 
   background: $primary-border-color;
+
+  width: 0.0625rem;
 }
 
 .horizontalDivider {
-  width: 100%;
   border: none;
   border-bottom: 1.5px solid $primary-border-color;
+
+  width: 100%;
 }
 
 .dividerHorizontal {
   align-self: stretch;
-  width: 100%;
-  border: none;
 
+  border: none;
   border-bottom: 1.5px solid $border-red-400;
   background: $primary-border-color;
+
+  width: 100%;
 }
 
 .applicationFormContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
   gap: 2.1875rem;
   flex: 1;
 }
 
 .smallFieldWrapper {
   display: flex;
-  height: 5.5625rem;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.9375rem;
   align-self: stretch;
+
+  gap: 0.9375rem;
+  height: 5.5625rem;
 }
 
 .bigFieldWrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 0.9375rem;
   align-self: stretch;
-  width: 100%;
+
   box-sizing: border-box;
+
+  width: 100%;
+  gap: 0.9375rem;
 }
 
 .label {
   display: flex;
   align-items: flex-start;
+
   gap: 0.1875rem;
 }
 
@@ -222,18 +237,18 @@ $button-hover-color: #ae302c;
 
 .inputWrapper {
   position: relative;
-  width: 100%;
-  background-color: $wrapper-bg-color;
   box-sizing: border-box;
+
+  background-color: $wrapper-bg-color;
+
+  width: 100%;
 }
 
 .textArea {
   display: flex;
-  height: 9.375rem;
-  padding: 1.25rem;
   align-items: flex-start;
-  gap: 0.625rem;
   align-self: stretch;
+
   resize: vertical;
 
   border: 1px solid $primary-border-color;
@@ -245,15 +260,20 @@ $button-hover-color: #ae302c;
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.005rem;
+
+  gap: 0.625rem;
+  height: 9.375rem;
+  padding: 1.25rem;
 }
 
 .buttonContainer {
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2.1875rem;
   align-self: stretch;
+
+  gap: 2.1875rem;
+  width: 100%;
 }
 
 .buttonContainer > button {
@@ -263,9 +283,10 @@ $button-hover-color: #ae302c;
 
 .toTopContainer {
   display: flex;
-  padding: 0.625rem;
   justify-content: flex-end;
   align-items: flex-end;
+
+  padding: 0.625rem;
 }
 
 .toTopParagraph {
@@ -274,7 +295,6 @@ $button-hover-color: #ae302c;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.625rem;
 
   background: transparent;
   border: none;
@@ -292,6 +312,8 @@ $button-hover-color: #ae302c;
   text-decoration-thickness: auto;
   text-underline-offset: auto;
   text-underline-position: from-font;
+
+  gap: 0.625rem;
 }
 
 .toTopParagraph:hover {
@@ -305,28 +327,33 @@ $button-hover-color: #ae302c;
 
 .deletePanelContainer {
   position: fixed;
+  z-index: 1000;
+
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(5px);
+
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+
+  backdrop-filter: blur(5px);
+
+  width: 100%;
+  height: 100%;
 }
 
 .deletePanel {
   display: flex;
-  width: 80%;
-  padding: 2.8125rem;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  gap: 2.8125rem;
 
   border: 1px solid $primary-border-color;
   background: $container-bg-color;
+
+  gap: 2.8125rem;
+  width: 80%;
+  padding: 2.8125rem;
 }
 
 .deletePanelHeader {
@@ -375,28 +402,33 @@ $button-hover-color: #ae302c;
 
 .editPanelContainer {
   position: fixed;
+  z-index: 1000;
+
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(5px);
+
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+
+  backdrop-filter: blur(5px);
+
+  width: 100%;
+  height: 100%;
 }
 
 .editPanel {
   display: flex;
-  width: 90%;
-  max-width: 95rem;
-  padding: 2.8125rem;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 1.5625rem;
 
   border: 1px solid $primary-border-color;
   background: $container-bg-color;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+  gap: 1.5625rem;
+  width: 90%;
+  max-width: 95rem;
+  padding: 2.8125rem;
 }
