@@ -617,10 +617,6 @@ export default function ApplicationsPage() {
               </button>
             </div>
 
-            <p id={dialogIds.deleteDesc} className='sr-only'>
-              {tApplications('aria-labels.deleteDialogDesc')}
-            </p>
-
             <div className={styles.buttonContainer}>
               <button
                 type='button'

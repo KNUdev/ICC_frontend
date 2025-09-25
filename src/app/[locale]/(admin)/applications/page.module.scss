@@ -357,7 +357,8 @@ $button-hover-color: #ae302c;
   background: $container-bg-color;
 
   gap: 2.8125rem;
-  width: 80%;
+  width: 100%;
+  max-width: 82rem;
   padding: 2.8125rem;
 }
 
@@ -443,13 +444,11 @@ $button-hover-color: #ae302c;
     padding: 3.125rem 2.125rem;
   }
 
-  .editPanelContainer {
-    position: absolute;
-
-    height: 65%;
+  .editPanel {
+    max-width: 60rem;
   }
 
-  .editPanel {
+  .deletePanel {
     max-width: 60rem;
   }
 }
@@ -463,10 +462,8 @@ $button-hover-color: #ae302c;
     max-width: 100%;
   }
 
-  .editPanelContainer {
-    position: absolute;
-
-    height: 100%;
+  .buttonContainer {
+    gap: 1rem;
   }
 }
 
@@ -489,5 +486,9 @@ $button-hover-color: #ae302c;
 
   .applicationFormData {
     flex-direction: column;
+  }
+
+  .buttonContainer {
+    gap: 1rem;
   }
 }
