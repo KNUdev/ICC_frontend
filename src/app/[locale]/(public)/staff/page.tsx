@@ -45,7 +45,7 @@ interface Specialty {
 }
 
 interface Employee {
-  avatarUrl: string
+  avatarUrl: string | null
   contractEndDate: [number, number, number]
   createdAt: [number, number, number, number, number, number, number]
   email: string
@@ -313,14 +313,16 @@ export default function Staff() {
                       employee.name.firstName
                     } ${employee.name.middleName} ${employee.name.lastName}`}
                   >
-                    <Image
-                      src={employee.avatarUrl}
-                      alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
-                      width={150}
-                      height={150}
-                      unoptimized
-                      className={styles.employeePhoto}
-                    />
+                    {employee.avatarUrl && (
+                      <Image
+                        src={employee.avatarUrl}
+                        alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
+                        width={150}
+                        height={150}
+                        unoptimized
+                        className={styles.employeePhoto}
+                      />
+                    )}
                   </button>
                 </li>
               ))}
@@ -348,14 +350,16 @@ export default function Staff() {
           >
             <div className={styles.detailHeader}>
               <div className={styles.detailPhotoBlock}>
-                <Image
-                  src={selectedEmployee.avatarUrl}
-                  alt={`${selectedEmployee.name.firstName} ${selectedEmployee.name.middleName} ${selectedEmployee.name.lastName}`}
-                  className={styles.workerPhoto}
-                  width={300}
-                  height={300}
-                  unoptimized
-                />
+                {selectedEmployee.avatarUrl && (
+                  <Image
+                    src={selectedEmployee.avatarUrl}
+                    alt={`${selectedEmployee.name.firstName} ${selectedEmployee.name.middleName} ${selectedEmployee.name.lastName}`}
+                    className={styles.workerPhoto}
+                    width={300}
+                    height={300}
+                    unoptimized
+                  />
+                )}
 
                 <div className={styles.contacts}>
                   <h3 className={styles.contactsHeader}>
@@ -460,14 +464,16 @@ export default function Staff() {
                       employee.name.firstName
                     } ${employee.name.middleName} ${employee.name.lastName}`}
                   >
-                    <Image
-                      src={employee.avatarUrl}
-                      alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
-                      width={150}
-                      height={150}
-                      unoptimized
-                      className={styles.employeePhoto}
-                    />
+                    {employee.avatarUrl && (
+                      <Image
+                        src={employee.avatarUrl}
+                        alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
+                        width={150}
+                        height={150}
+                        unoptimized
+                        className={styles.employeePhoto}
+                      />
+                    )}
                   </button>
                 </li>
               ))}

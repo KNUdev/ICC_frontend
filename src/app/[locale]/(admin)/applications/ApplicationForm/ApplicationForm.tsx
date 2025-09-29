@@ -23,7 +23,7 @@ interface Application {
   applicantEmail: string
   completedAt: string
   problemDescription: string
-  problemPhoto: string
+  problemPhoto: string | null
   status: string
   departmentId: string
   receivedAt: number[]

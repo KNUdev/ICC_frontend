@@ -1,4 +1,5 @@
 import { API } from '@/shared/config/api.config'
+import { getFullImageUrl } from '@/shared/lib/imageUrl'
 
 interface ApplicantName {
   firstName: string
@@ -55,7 +56,7 @@ interface Application {
   receivedAt: number[]
   completedAt: string
   problemDescription: string
-  problemPhoto: string
+  problemPhoto: string | null
   status: string
   departmentId: string
   assignedEmployeeIds: string[]
@@ -86,7 +87,13 @@ export async function getAdminApplications(
   }
 
   const result: ApplicationsResponse = await response.json()
-  return result.content
+
+  const processedApplications = result.content.map((app) => ({
+    ...app,
+    problemPhoto: getFullImageUrl(app.problemPhoto),
+  }))
+
+  return processedApplications
 }
 
 export async function deleteApplication(applicationId: string): Promise<void> {

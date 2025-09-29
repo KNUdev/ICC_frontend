@@ -16,8 +16,13 @@
     "DOCUMENTS": "Documents",
     "FAQ": "FAQ",
     "profile": "Profile",
+    "adminDropdown": "Admin",
     "admin": {
       "ADD_NEW_WORKER": "Add Employee",
+      "ADD_PHOTO": "Add Photo",
+      "ADD_SPECIALTY": "Add Specialty",
+      "ADD_SECTORS": "Add Sectors",
+      "APPLICATIONS": "Applications",
       "MANAGE_EMPLOYEES": "Manage Employees",
       "REPORTS": "Reports"
     }

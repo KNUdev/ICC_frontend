@@ -1,4 +1,5 @@
 import { API } from '@/shared/config/api.config'
+import { getFullImageUrl } from '@/shared/lib/imageUrl'
 import { getEmployeeIdFromToken } from '@/shared/lib/jwt'
 import type { GalleryParams, GalleryResponse } from '@/shared/types/gallery'
 
@@ -26,7 +27,16 @@ export async function getGalleryItems(
     }
 
     const galleryData: GalleryResponse = await response.json()
-    return galleryData
+
+    const processedData = {
+      ...galleryData,
+      content: galleryData.content.map((item) => ({
+        ...item,
+        itemUrl: getFullImageUrl(item.itemUrl) || item.itemUrl,
+      })),
+    }
+
+    return processedData
   } catch (error) {
     console.error('Error fetching gallery data:', error)
     return null

@@ -16,8 +16,13 @@
     "DOCUMENTS": "Документи",
     "FAQ": "Часті запитання",
     "profile": "Профіль",
+    "adminDropdown": "Адмін",
     "admin": {
       "ADD_NEW_WORKER": "Додати працівника",
+      "ADD_PHOTO": "Додати фото",
+      "ADD_SPECIALTY": "Додати спеціальність",
+      "ADD_SECTORS": "Додати сектори",
+      "APPLICATIONS": "Заявки",
       "MANAGE_EMPLOYEES": "Управління працівниками",
       "REPORTS": "Звіти"
     }

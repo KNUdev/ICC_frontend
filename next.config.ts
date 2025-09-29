@@ -28,6 +28,13 @@ const nextConfig: NextConfig = {
   ...(process.env.NODE_ENV === 'production' && {
     images: {
       domains: ['knu-icc.netlify.app'],
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: '87a23e163aa8399c38ea8b9e0cf67cc2.serveo.net',
+          pathname: '/images/**',
+        },
+      ],
       loader: 'custom',
       loaderFile: 'src/shared/lib/netlifyImageLoader.ts',
     },
@@ -38,7 +45,7 @@ const nextConfig: NextConfig = {
         {
           protocol: 'http',
           hostname: 'localhost',
-          port: '9000',
+          port: '5003',
           pathname: '/images/**',
         },
       ],

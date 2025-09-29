@@ -7,6 +7,10 @@ export default function netlifyImageLoader({
   width: number
   quality?: number
 }) {
+  if (src.startsWith('http://') || src.startsWith('https://')) {
+    return src
+  }
+
   const params = new URLSearchParams()
   params.set('w', width.toString())
   if (quality) {

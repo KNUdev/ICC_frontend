@@ -47,7 +47,6 @@ export function useCurrentUser(): UseCurrentUserReturn {
       loadUserData()
     }
 
-    // Добавляем слушатель для обновления профиля
     const handleProfileUpdate = () => {
       loadUserData()
     }

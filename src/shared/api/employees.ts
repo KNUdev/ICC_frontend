@@ -1,4 +1,5 @@
 import { API } from '@/shared/config/api.config'
+import { getFullImageUrl } from '@/shared/lib/imageUrl'
 
 interface EmployeeName {
   firstName: string
@@ -12,7 +13,7 @@ interface WorkHours {
 }
 
 interface Employee {
-  avatarUrl: string
+  avatarUrl: string | null
   contractEndDate: [number, number, number]
   createdAt: [number, number, number, number, number, number, number]
   email: string
@@ -57,7 +58,13 @@ export async function getEmployees({
     }
 
     const result: EmployeesResponse = await response.json()
-    return result.content
+
+    const processedEmployees = result.content.map((emp) => ({
+      ...emp,
+      avatarUrl: getFullImageUrl(emp.avatarUrl),
+    }))
+
+    return processedEmployees
   } catch (error) {
     console.error('Error fetching employees:', error)
     throw error
@@ -96,7 +103,15 @@ export async function getAdminEmployees(
 
     const result: EmployeesResponse = await response.json()
 
-    const simplified: SimpleEmployee[] = result.content.map((emp) => ({
+    const processedResult = {
+      ...result,
+      content: result.content.map((emp) => ({
+        ...emp,
+        avatarUrl: getFullImageUrl(emp.avatarUrl),
+      })),
+    }
+
+    const simplified: SimpleEmployee[] = processedResult.content.map((emp) => ({
       id: emp.id,
       fullName: `${emp.name.firstName} ${emp.name.middleName} ${emp.name.lastName}`,
     }))
