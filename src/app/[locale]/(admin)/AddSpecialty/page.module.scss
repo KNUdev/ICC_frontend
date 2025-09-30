@@ -623,7 +623,8 @@ $dark-pink: #d63384;
     padding: 1rem;
   }
 
-  .tableCell {
+  .tableCell,
+  .headerCell {
     padding: 0.5rem;
 
     word-break: normal;
@@ -644,8 +645,6 @@ $dark-pink: #d63384;
 
   .headerCell {
     font-size: 1rem;
-
-    padding-left: 1.5625rem;
   }
 
   .errorMessage {
