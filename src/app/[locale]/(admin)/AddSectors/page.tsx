@@ -326,90 +326,89 @@ const AllSectorsPage = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.headerSection}>
-        <h1 className={styles.title}>{t('title')}</h1>
-        <p className={styles.subtitle}>{t('subtitle')}</p>
-      </div>
+    <div className={styles.container + ' main-wrapper'}>
+      <div className={styles.form}>
+        <div className={styles.heading}>
+          <h1 className={styles.title}>{t('title')}</h1>
+          <p className={styles.subtitle}>{t('subtitle')}</p>
+        </div>
 
-      <div className={styles.headerToFormGap}></div>
+        <div className={styles.formContainer}>
+          <div className={styles.formFields}>
+            <div className={styles.inputRow}>
+              <div className={styles.inputColumn}>
+                <InputText
+                  title={t('form.sectorNameUk.title')}
+                  placeholder={t('form.sectorNameUk.placeholder')}
+                  isRequired={true}
+                  value={sectorNameUk}
+                  onChange={(e) => setSectorNameUk(e.target.value)}
+                />
 
-      <div className={styles.formContainer}>
-        <div className={styles.formFields}>
-          <div className={styles.inputRow}>
-            <div className={styles.inputColumn}>
-              <InputText
-                title={t('form.sectorNameUk.title')}
-                placeholder={t('form.sectorNameUk.placeholder')}
-                isRequired={true}
-                value={sectorNameUk}
-                onChange={(e) => setSectorNameUk(e.target.value)}
-              />
-
-              <InputText
-                title={t('form.sectorNameEn.title')}
-                placeholder={t('form.sectorNameEn.placeholder')}
-                isRequired={true}
-                value={sectorNameEn}
-                onChange={(e) => setSectorNameEn(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div className={styles.inputRow}>
-            <div className={styles.inputColumn}>
-              <Select
-                title={t('form.specialties.title')}
-                placeholder={t('form.specialties.placeholder')}
-                options={specialtyOptions}
-                isRequired={false}
-                value={speciality}
-                onChange={handleSpecialityChange}
-              />
-            </div>
-          </div>
-
-          <div className={styles.additionalSpecialities}>
-            <p className={styles.additionalLabel}>
-              {t('form.addedSpecialties.label')}
-            </p>
-            {addedSpecialities.length > 0 ? (
-              <div className={styles.specialityTags}>
-                {addedSpecialities.map((specialtyId) => {
-                  const specialty = specialties.find(
-                    (s) => s.id === specialtyId,
-                  )
-                  return (
-                    <div key={specialtyId} className={styles.specialityTag}>
-                      <span>
-                        {specialty?.name[locale as 'en' | 'uk'] || specialtyId}
-                      </span>
-                      <div className={styles.divider}></div>
-                      <CloseButton
-                        onClick={() => removeSpeciality(specialtyId)}
-                      />
-                    </div>
-                  )
-                })}
+                <InputText
+                  title={t('form.sectorNameEn.title')}
+                  placeholder={t('form.sectorNameEn.placeholder')}
+                  isRequired={true}
+                  value={sectorNameEn}
+                  onChange={(e) => setSectorNameEn(e.target.value)}
+                />
               </div>
-            ) : (
-              <p className={styles.additionalText}>
-                {t('form.addedSpecialties.empty')}
-              </p>
-            )}
-          </div>
+            </div>
 
-          <button
-            className={styles.submitButton}
-            onClick={handleSubmit}
-            disabled={loading || !sectorNameUk || !sectorNameEn}
-          >
-            {loading ? t('form.submitting') : t('form.submitButton')}
-          </button>
+            <div className={styles.inputRow}>
+              <div className={styles.inputColumn}>
+                <Select
+                  title={t('form.specialties.title')}
+                  placeholder={t('form.specialties.placeholder')}
+                  options={specialtyOptions}
+                  isRequired={false}
+                  value={speciality}
+                  onChange={handleSpecialityChange}
+                />
+              </div>
+            </div>
+
+            <div className={styles.additionalSpecialities}>
+              <p className={styles.additionalLabel}>
+                {t('form.addedSpecialties.label')}
+              </p>
+              {addedSpecialities.length > 0 ? (
+                <div className={styles.specialityTags}>
+                  {addedSpecialities.map((specialtyId) => {
+                    const specialty = specialties.find(
+                      (s) => s.id === specialtyId,
+                    )
+                    return (
+                      <div key={specialtyId} className={styles.specialityTag}>
+                        <span>
+                          {specialty?.name[locale as 'en' | 'uk'] ||
+                            specialtyId}
+                        </span>
+                        <div className={styles.divider}></div>
+                        <CloseButton
+                          onClick={() => removeSpeciality(specialtyId)}
+                        />
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : (
+                <p className={styles.additionalText}>
+                  {t('form.addedSpecialties.empty')}
+                </p>
+              )}
+            </div>
+
+            <button
+              className={styles.submitButton}
+              onClick={handleSubmit}
+              disabled={loading || !sectorNameUk || !sectorNameEn}
+            >
+              {loading ? t('form.submitting') : t('form.submitButton')}
+            </button>
+          </div>
         </div>
       </div>
-
-      <div className={styles.formToSectorsGap}></div>
 
       <div className={styles.sectorsSection}>
         <div className={styles.sectorsHeader}>
