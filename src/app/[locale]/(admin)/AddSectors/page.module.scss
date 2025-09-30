@@ -189,13 +189,6 @@ $dark-pink: #d63384;
   align-items: center;
 
   gap: 2rem;
-
-  @include tablet {
-    flex-direction: column;
-    align-items: flex-start;
-
-    gap: 1rem;
-  }
 }
 
 .sectorsTitle {
@@ -437,15 +430,6 @@ $dark-pink: #d63384;
   min-width: 120px;
   flex-shrink: 0;
 
-  @include tablet {
-    flex-direction: column;
-    align-items: center;
-
-    gap: 0.75rem;
-    min-width: 100px;
-    padding-left: 2rem;
-  }
-
   @include mobile {
     align-items: center;
 
@@ -543,4 +527,14 @@ $dark-pink: #d63384;
   padding: 0.75rem 1rem;
   border-radius: 0.25rem;
   margin-bottom: 1rem;
+}
+
+@include tablet {
+  .container {
+    padding: 3.125rem 3.75rem;
+  }
+
+  .sectorsHeader {
+    gap: 10rem;
+  }
 }
