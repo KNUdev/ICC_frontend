@@ -559,15 +559,39 @@ $dark-pink: #d63384;
   }
 
   .title {
-    font-size: 1.5rem;
+    font-size: 1.5625rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .formContainer {
+    padding: 1rem;
+  }
+
+  .inputColumn {
+    gap: 1.5625rem;
+  }
+
+  .formFields {
+    gap: 1.5625rem;
+  }
+
+  .sectorsHeader {
+    gap: 1.25rem;
   }
 
   .sectorsTitle {
     font-size: 1.5rem;
   }
 
-  .formContainer {
-    padding: 1rem;
+  .searchContainer {
+    padding: 0.5rem;
+  }
+
+  .sectorsSection {
+    gap: 1.5625rem;
   }
 
   .tableRow {
@@ -595,5 +619,11 @@ $dark-pink: #d63384;
 
   .headerCell {
     font-size: 1rem;
+  }
+
+  .errorMessage {
+    font-size: 0.9rem;
+
+    padding: 1rem;
   }
 }
