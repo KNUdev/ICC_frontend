@@ -86,11 +86,6 @@ $dark-pink: #d63384;
 
   gap: 1.5rem;
   width: 100%;
-
-  @include tablet {
-    flex-direction: column;
-    gap: 1rem;
-  }
 }
 
 .inputColumn {
@@ -537,8 +532,6 @@ $dark-pink: #d63384;
 .scrollUpContainer {
   display: flex;
   justify-content: center;
-
-  margin-top: 5rem;
 }
 
 .errorMessage {
@@ -564,5 +557,27 @@ $dark-pink: #d63384;
 
   .specialtiesHeader {
     gap: 10rem;
+  }
+}
+
+@include mobile-horizontal {
+  .container {
+    padding: 3.125rem 2.5rem;
+  }
+
+  .specialtiesHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    gap: 2.1875rem;
+  }
+
+  .tableActions {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    gap: 1.25rem;
   }
 }
