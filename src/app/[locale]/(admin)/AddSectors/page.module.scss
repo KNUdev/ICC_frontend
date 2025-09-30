@@ -538,3 +538,25 @@ $dark-pink: #d63384;
     gap: 10rem;
   }
 }
+
+@include mobile-horizontal {
+  .container {
+    padding: 3.125rem 2.5rem;
+  }
+
+  .sectorsHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    gap: 2.1875rem;
+  }
+
+  .tableActions {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    gap: 1.25rem;
+  }
+}

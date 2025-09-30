@@ -452,11 +452,13 @@ const AllSectorsPage = () => {
                 {filteredSectors.map((sector, index) => (
                   <div key={index} className={styles.tableRow}>
                     <div className={styles.tableCell}>{sector.name.uk}</div>
+
                     <div className={styles.tableCell}>
                       {sector.specialties
                         .map((spec) => spec.name.uk)
                         .join(', ')}
                     </div>
+
                     <div className={styles.tableActions}>
                       <button
                         className={styles.editButton}
@@ -465,6 +467,7 @@ const AllSectorsPage = () => {
                         <EditIcon />
                         {t('table.actions.edit')}
                       </button>
+
                       <button
                         className={styles.deleteButton}
                         onClick={() => handleDeleteSector(sector)}
