@@ -26,6 +26,20 @@ $dark-pink: #d63384;
   gap: 5rem;
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2.1875rem;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.9375rem;
+}
+
 .formContainer {
   border: 1px solid $primary-border-color;
   background: $primary-bg-color;
@@ -160,20 +174,6 @@ $dark-pink: #d63384;
   @include mobile {
     width: 100%;
   }
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-
-  gap: 2.1875rem;
-}
-
-.heading {
-  display: flex;
-  flex-direction: column;
-
-  gap: 0.9375rem;
 }
 
 .sectorsSection {

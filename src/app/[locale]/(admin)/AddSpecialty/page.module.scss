@@ -17,12 +17,27 @@ $scrollbar-thumb: #a0a0a0;
 $dark-pink: #d63384;
 
 .container {
+  position: relative;
+
   display: flex;
   flex-direction: column;
 
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 3.125rem;
+  gap: 5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2.1875rem;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+
+  gap: 0.9375rem;
 }
 
 .formContainer {
@@ -79,7 +94,11 @@ $dark-pink: #d63384;
 }
 
 .inputColumn {
+  display: flex;
+  flex-direction: column;
+
   flex: 1;
+  gap: 2.8125rem;
 }
 
 .additionalSectors {
@@ -167,7 +186,7 @@ $dark-pink: #d63384;
   display: flex;
   flex-direction: column;
 
-  gap: 1.5rem;
+  gap: 2.1875rem;
 }
 
 .specialtiesHeader {
@@ -448,7 +467,7 @@ $dark-pink: #d63384;
 
   width: 25%;
   min-width: 120px;
-  gap: 0.75rem;
+  gap: 1.5625rem;
   padding-left: 3.60438rem;
   flex-shrink: 0;
 
@@ -529,14 +548,6 @@ $dark-pink: #d63384;
   letter-spacing: 0.004rem;
 
   margin: 0;
-}
-
-.headerToFormGap {
-  height: 2.1875rem;
-}
-
-.formToSpecialtiesGap {
-  height: 5rem;
 }
 
 .scrollUpContainer {
