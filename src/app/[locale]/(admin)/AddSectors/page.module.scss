@@ -521,7 +521,7 @@ $dark-pink: #d63384;
   border-radius: 0.25rem;
 }
 
-@include tablet {
+@include tablet-horizontal {
   .container {
     padding: 3.125rem 3.75rem;
   }
