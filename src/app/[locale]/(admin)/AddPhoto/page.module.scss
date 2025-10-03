@@ -396,3 +396,9 @@ $success-text-color: #389e0d;
     padding: 3.125rem 3.75rem;
   }
 }
+
+@include mobile-horizontal {
+  .section {
+    padding: 3.125rem 1.25rem;
+  }
+}
