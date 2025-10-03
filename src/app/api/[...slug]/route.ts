@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const API_URL = process.env.NGROK_API_URL
+const API_URL = process.env.NEXT_PUBLIC_NGROK_API_URL
 
 async function handleRequest(
   req: NextRequest,
@@ -10,7 +10,10 @@ async function handleRequest(
 
   if (!API_URL) {
     return NextResponse.json(
-      { error: 'NGROK_API_URL is not defined in .env.local' },
+      {
+        error:
+          'NEXT_PUBLIC_NGROK_API_URL is not defined in environment variables',
+      },
       { status: 500 },
     )
   }
