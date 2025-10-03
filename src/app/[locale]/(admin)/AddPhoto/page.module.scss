@@ -19,11 +19,8 @@ $success-text-color: #389e0d;
   display: flex;
   flex-direction: column;
 
-  width: 100%;
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 4rem 2rem;
-  gap: 2rem;
+  padding: 3.125rem 2rem;
+  gap: 2.1875rem;
 }
 
 .textContainer {
@@ -46,7 +43,7 @@ $success-text-color: #389e0d;
 
   width: 100%;
   padding: 2.8125rem;
-  gap: 1.5rem;
+  gap: 2.8125rem;
   border-radius: 0.5rem;
 
   @media (max-width: 768px) {
@@ -92,8 +89,7 @@ $success-text-color: #389e0d;
 
   border: 2px dashed $border-nat-800;
 
-  height: 9.375rem;
-  padding: 0.9375rem;
+  padding: 5rem 0rem;
   gap: 0.9375rem;
   width: 100%;
   border-radius: 0.5rem;
