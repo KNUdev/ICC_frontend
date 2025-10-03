@@ -1,3 +1,5 @@
+@use '../../../../common/styles/variables.scss' as *;
+
 $bg-nat-900: #f6f6f6;
 $text-nat-0: #272727;
 $text-nat-500: #6d6d6d;
@@ -386,5 +388,11 @@ $success-text-color: #389e0d;
   &:focus {
     outline: 2px solid $text-red-400;
     outline-offset: 2px;
+  }
+}
+
+@include tablet-horizontal {
+  .section {
+    padding: 3.125rem 3.75rem;
   }
 }
