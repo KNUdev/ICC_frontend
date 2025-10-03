@@ -27,12 +27,13 @@ async function handleRequest(
       method: req.method,
       headers: {
         'Content-Type': req.headers.get('Content-Type') || 'application/json',
-        Authorization: req.headers.get('Authorization') || '', // Перенаправляем авторизацию
       },
       body: req.body,
-      cache: 'no-store', // Отключаем кеширование
+      cache: 'no-store',
       // duplex - это поле нужно для передачи body в fetch в Node.js >= 18
-      // @ts-ignore
+      // --- ИСПРАВЛЕНИЕ ЗДЕСЬ ---
+      // @ts-ignore заменяем на @ts-expect-error
+      // @ts-expect-error
       duplex: 'half',
     })
 
