@@ -1,8 +1,8 @@
-import type { NextConfig } from 'next'
-import createNextIntlPlugin from 'next-intl/plugin'
-import withPWAInit from 'next-pwa'
+const createNextIntlPlugin = require('next-intl/plugin')
+const withPWAInit = require('next-pwa')
 
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -17,14 +17,7 @@ const nextConfig: NextConfig = {
     })
     return config
   },
-  turbopack: {
-    rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
-      },
-    },
-  },
+
   ...(process.env.NODE_ENV === 'production' && {
     images: {
       domains: ['knu-icc.netlify.app'],
@@ -63,4 +56,4 @@ const withPWA = withPWAInit({
   buildExcludes: [/middleware-manifest\.json$/],
 })
 
-export default withNextIntl(withPWA(nextConfig))
+module.exports = withNextIntl(withPWA(nextConfig))
