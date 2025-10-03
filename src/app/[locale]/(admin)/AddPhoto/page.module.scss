@@ -402,3 +402,21 @@ $success-text-color: #389e0d;
     padding: 3.125rem 1.25rem;
   }
 }
+
+@include mobile {
+  .section {
+    padding: 2.1875rem 1rem;
+  }
+
+  .paragraph {
+    font-size: 0.95rem;
+  }
+
+  .customFileUpload {
+    padding: 2.5rem;
+  }
+
+  .uploadText {
+    font-size: 0.95rem;
+  }
+}
