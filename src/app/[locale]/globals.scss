@@ -6,6 +6,7 @@
 @use '@/common/styles/buttons/mainbutton/mainbutton.scss';
 @use '@/common/styles/buttons/mainbutton/mainbutton-white.scss';
 @use '@/common/styles/buttons/closebutton.scss';
+@use '@/common/styles/buttons/choosebutton.scss';
 @use '@/common/styles/inputs/searchinput.scss';
 @use '@/common/styles/inputs/textinput.scss';
 
@@ -19,14 +20,14 @@
 .layout-wrapper {
   max-width: 115rem;
   margin: auto;
-  padding: 0 2rem;
+  padding-inline: clamp(0rem, 2vw, 2rem);
   width: 100%;
 }
 
 .main-wrapper {
   max-width: 93.5rem;
   margin: auto;
-  padding: 0 2rem;
+  padding-inline: clamp(0rem, 2vw, 2rem);
   width: 100%;
 }
 

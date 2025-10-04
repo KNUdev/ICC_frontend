@@ -1,3 +1,5 @@
+@use '../../../../../../common/styles/variables.scss' as *;
+
 $text-nat-0: #272727;
 $text-red-400: #ff525e;
 
@@ -48,4 +50,26 @@ $text-red-400: #ff525e;
   align-items: flex-start;
   gap: 1.25rem;
   align-self: stretch;
+}
+
+@include mobile {
+  .heading {
+    font-family: Inter;
+    font-size: 1.5625rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.00781rem;
+    text-transform: uppercase;
+  }
+
+  .paragraph {
+    font-family: Inter;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.005rem;
+    text-transform: uppercase;
+  }
 }
