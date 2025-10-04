@@ -31,7 +31,7 @@ const nextConfig: NextConfig = {
       remotePatterns: [
         {
           protocol: 'https',
-          hostname: 'multiparous-waggly-krysta.ngrok-free.dev',
+          hostname: 'iccknu.pp.ua',
           pathname: '/images/**',
         },
       ],
