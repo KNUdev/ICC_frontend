@@ -16,7 +16,7 @@ $border-radius-tiny: 0px;
   display: flex;
   flex-direction: column;
 
-  margin: 2.25rem auto;
+  padding: 3.125rem;
 }
 
 @mixin label-style {
@@ -32,7 +32,6 @@ $border-radius-tiny: 0px;
 
   width: 100%;
   max-width: 18.0625rem;
-  gap: 0.9375rem;
 }
 
 @mixin section-heading {
@@ -70,7 +69,7 @@ $border-radius-tiny: 0px;
     font-weight: 500;
     font-family: Inter;
 
-    margin-bottom: 0.625rem;
+    margin-bottom: 0.9375rem;
     width: 100%;
   }
 
@@ -262,6 +261,8 @@ $border-radius-tiny: 0px;
       line-height: normal;
       letter-spacing: 0.00938rem;
       text-transform: uppercase;
+
+      margin: 0;
     }
 
     .description {
@@ -525,6 +526,10 @@ $border-radius-tiny: 0px;
         .inputGroup {
           input {
             height: 3.4375rem;
+          }
+
+          span {
+            margin: 0;
           }
         }
       }
@@ -890,7 +895,7 @@ $border-radius-tiny: 0px;
   display: flex;
   flex-direction: column;
 
-  gap: 1.5625rem;
+  gap: 2.1825rem;
 
   .inputGroup:last-child {
     display: flex;
