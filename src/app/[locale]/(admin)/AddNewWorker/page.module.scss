@@ -186,6 +186,11 @@ $border-radius-tiny: 0px;
 
   padding: 2.8125rem;
   gap: 2.8125rem;
+
+  @include mobile {
+    padding: 1.5625rem;
+    gap: 1.5625rem;
+  }
 }
 
 .fieldWrapper {
@@ -1183,5 +1188,31 @@ $border-radius-tiny: 0px;
 @include mobile-horizontal {
   .AddNewWorkerPage {
     padding: 3.125rem 2.5rem;
+  }
+}
+
+@include mobile {
+  .AddNewWorkerPage {
+    padding: 2.1825rem 1rem;
+  }
+
+  .startpage {
+    margin-bottom: 1.5625rem;
+  }
+
+  .formContent {
+    padding: 1.25rem;
+  }
+
+  .inputsContainer {
+    gap: 1.5625rem;
+  }
+
+  .inputRow {
+    flex-direction: column;
+  }
+
+  .pagecontin {
+    margin-bottom: 3rem;
   }
 }
