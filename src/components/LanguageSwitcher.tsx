@@ -22,6 +22,8 @@ export default function LanguageSwitcher() {
   const pathname = usePathname()
 
   const handleChange = (newLang: Locale) => {
+    document.cookie = `locale=${newLang}; path=/; max-age=31536000; SameSite=Lax`
+
     router.replace(pathname, { locale: newLang })
     setIsOpen(false)
   }
