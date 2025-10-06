@@ -15,24 +15,29 @@ $border-radius-tiny: 0px;
 .AddNewWorkerPage {
   display: flex;
   flex-direction: column;
+
   margin: 2.25rem auto;
 }
 
 @mixin label-style {
   display: flex;
-  width: 100%;
-  max-width: 18.0625rem;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.9375rem;
+
+  color: #555;
+
   font-size: 0.85rem;
   font-weight: 500;
-  color: #555;
   font-family: Inter;
+
+  width: 100%;
+  max-width: 18.0625rem;
+  gap: 0.9375rem;
 }
 
 @mixin section-heading {
   color: $text-nat-0;
+
   text-align: left;
   font-family: Inter;
   font-size: 1.25rem;
@@ -41,25 +46,30 @@ $border-radius-tiny: 0px;
   line-height: normal;
   letter-spacing: 0.00625rem;
   text-transform: uppercase;
+
   white-space: nowrap;
 }
 
 @mixin input-row-base {
   display: flex;
+
   gap: 1.5625rem;
 }
 
 @mixin input-field-base {
-  flex: 1;
   display: flex;
   flex-direction: column;
+
   width: 100%;
+  flex: 1;
 
   .fieldLabel {
+    color: #555;
+
     font-size: 0.85rem;
     font-weight: 500;
-    color: #555;
     font-family: Inter;
+
     margin-bottom: 0.625rem;
     width: 100%;
   }
@@ -71,9 +81,10 @@ $border-radius-tiny: 0px;
 }
 
 @mixin input-group-base {
-  flex: 1;
   display: flex;
   flex-direction: column;
+
+  flex: 1;
   gap: 0.9375rem;
 }
 
@@ -92,20 +103,24 @@ $border-radius-tiny: 0px;
 }
 
 @mixin input-style {
-  width: 100%;
+  box-sizing: border-box;
+
+  color: $text-nat-500;
   border: 1px solid $border-nat-800;
   border-radius: $border-radius-tiny;
+
   background: $bg-nat-900;
-  min-height: 2.5rem;
-  box-sizing: border-box;
-  padding: 0.9375rem;
-  color: $text-nat-500;
+
   font-family: Inter;
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
   line-height: 1.375rem;
   letter-spacing: 0.005rem;
+
+  width: 100%;
+  padding: 0.9375rem;
+  min-height: 2.5rem;
 
   &:focus {
     outline: none;
@@ -114,6 +129,7 @@ $border-radius-tiny: 0px;
 
   &::placeholder {
     color: $text-nat-500;
+
     font-family: Inter;
     font-size: 1rem;
     font-style: normal;
@@ -128,20 +144,24 @@ $border-radius-tiny: 0px;
 }
 
 @mixin button-style($bg-color, $hover-color) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background: $bg-color;
   color: $white;
   border: none;
   border-radius: $border-radius-small;
-  cursor: pointer;
+
   font-size: 1rem;
   font-family: Inter;
-  transition: background 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
   gap: 0.5rem;
   min-height: 3rem;
   padding: 0.9375rem 1.875rem;
+
+  cursor: pointer;
+  transition: background 0.3s ease;
 
   &:hover {
     background: $hover-color;
@@ -149,33 +169,39 @@ $border-radius-tiny: 0px;
 }
 
 @mixin card-style {
+  display: flex;
+  flex-direction: column;
+
   border: 1px solid $border-nat-800;
   background: $bg-nat-1000;
   border-radius: $border-radius;
-  display: flex;
-  flex-direction: column;
+
   gap: 2.8125rem;
 }
 
 @mixin card-content {
-  padding: 2.8125rem;
   display: flex;
   flex-direction: column;
+
+  padding: 2.8125rem;
   gap: 2.8125rem;
 }
 
 .fieldWrapper {
   display: flex;
   flex-direction: column;
+
   gap: 0.5rem;
   width: 100%;
 }
 
 .inputWrapper {
   position: relative;
-  width: 100%;
-  background-color: $bg-nat-900;
   box-sizing: border-box;
+
+  background-color: $bg-nat-900;
+
+  width: 100%;
 }
 
 .requiredStar {
@@ -183,44 +209,52 @@ $border-radius-tiny: 0px;
 }
 
 .container {
-  min-height: 100vh;
-  background: $background-color;
-  font-family: Inter;
   display: flex;
   justify-content: center;
   align-items: flex-start;
+
+  background: $background-color;
+
+  font-family: Inter;
+
+  min-height: 100vh;
   gap: 2.8125rem;
 }
 
 .mainWrapper {
   display: flex;
-  width: 100%;
-  max-width: 93.5rem;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+
+  width: 100%;
+  max-width: 93.5rem;
   margin: 2.8125rem auto;
 }
 
 .startpage {
-  width: 100%;
-  max-width: 93.5rem;
   display: flex;
   flex-direction: column;
+
+  width: 100%;
+  max-width: 93.5rem;
   gap: 2.1875rem;
   margin-bottom: 2.1875rem;
 
   .content {
     display: flex;
     flex-direction: column;
-    gap: 0.9375rem;
-    width: 100%;
-    text-align: left;
     justify-content: flex-start;
     align-items: flex-start;
 
+    text-align: left;
+
+    gap: 0.9375rem;
+    width: 100%;
+
     .title {
       color: $text-nat-0;
+
       font-family: Inter;
       font-size: 1.875rem;
       font-style: normal;
@@ -232,6 +266,7 @@ $border-radius-tiny: 0px;
 
     .description {
       color: $text-nat-300;
+
       font-family: Inter;
       font-size: 1rem;
       font-style: normal;
@@ -258,6 +293,7 @@ $border-radius-tiny: 0px;
     .formSection {
       display: flex;
       flex-direction: column;
+
       gap: 2.8125rem;
 
       h3 {
@@ -267,8 +303,9 @@ $border-radius-tiny: 0px;
       .sectionContent {
         display: grid;
         grid-template-columns: 25rem 1px 1fr;
-        gap: 2.8125rem;
         align-items: start;
+
+        gap: 2.8125rem;
 
         @media (max-width: 1024px) {
           grid-template-columns: 1fr;
@@ -280,10 +317,12 @@ $border-radius-tiny: 0px;
 
     .photoSection {
       grid-column: 1;
+
       display: flex;
       flex-direction: column;
-      gap: 1.5625rem;
       align-self: start;
+
+      gap: 1.5625rem;
       width: 25rem;
       min-width: 25rem;
       max-width: 25rem;
@@ -292,22 +331,25 @@ $border-radius-tiny: 0px;
       @media (max-width: 1024px) {
         grid-column: 1;
         grid-row: 1;
+
         width: 100%;
         min-width: 100%;
         max-width: 100%;
 
         h3 {
-          text-align: left;
           white-space: normal;
           word-wrap: break-word;
+
+          text-align: left;
           line-height: 1.3;
         }
 
         .photoUpload {
+          align-self: flex-start;
+
           width: 100%;
           max-width: 25rem;
           margin: 0;
-          align-self: flex-start;
 
           .photoPlaceholder {
             width: 100%;
@@ -321,19 +363,24 @@ $border-radius-tiny: 0px;
         display: flex;
         flex-direction: column;
         align-items: stretch;
+
         gap: 1.5625rem;
         height: 100%;
+
         .photoPlaceholder {
           display: flex;
-          height: 19.8125rem;
           justify-content: center;
           align-items: center;
+
+          overflow: hidden;
+
+          background: $bg-nat-900;
+
+          height: 19.8125rem;
           gap: 0.625rem;
           flex-shrink: 0;
-          background: $bg-nat-900;
           width: 100%;
           border-radius: $border-radius-tiny;
-          overflow: hidden;
 
           svg {
             width: 80px;
@@ -349,22 +396,26 @@ $border-radius-tiny: 0px;
 
         .uploadBtn {
           display: flex;
-          height: 3.75rem;
-          padding: 0.9375rem 1.25rem;
           justify-content: center;
           align-items: center;
-          gap: 0.625rem;
-          flex-shrink: 0;
           align-self: stretch;
+
           background: $primary-color;
           color: $white;
           border: none;
           border-radius: $border-radius-small;
-          cursor: pointer;
+
           font-size: 0.9rem;
           font-family: Inter;
-          transition: background 0.3s ease;
+
+          height: 3.75rem;
+          padding: 0.9375rem 1.25rem;
+          gap: 0.625rem;
+          flex-shrink: 0;
           margin-top: auto;
+
+          cursor: pointer;
+          transition: background 0.3s ease;
 
           &:hover {
             background: $primary-hover;
@@ -379,20 +430,24 @@ $border-radius-tiny: 0px;
 
         .deleteBtn {
           display: flex;
-          height: 3.75rem;
-          padding: 0.9375rem 1.25rem;
           justify-content: center;
           align-items: center;
-          gap: 0.625rem;
-          flex-shrink: 0;
           align-self: stretch;
-          background: transparent;
+
           color: $primary-color;
           border: 1px solid $primary-color;
+          background: transparent;
+
+          height: 3.75rem;
+          padding: 0.9375rem 1.25rem;
+          gap: 0.625rem;
+          flex-shrink: 0;
           border-radius: $border-radius-small;
-          cursor: pointer;
+
           font-size: 0.9rem;
           font-family: Inter;
+
+          cursor: pointer;
           transition: all 0.3s ease;
 
           &:hover {
@@ -419,11 +474,14 @@ $border-radius-tiny: 0px;
 
     .sectionDivider {
       grid-column: 2;
-      width: 1px;
-      height: 100%;
-      background: var(--border-nat-800, #d1d1d1);
+
       justify-self: center;
       align-self: stretch;
+
+      background: var(--border-nat-800, #d1d1d1);
+
+      width: 1px;
+      height: 100%;
 
       @media (max-width: 1024px) {
         display: none;
@@ -431,21 +489,25 @@ $border-radius-tiny: 0px;
     }
 
     .sectionDividerHorizontal {
-      width: 100%;
-      height: 1px;
-      background: var(--border-nat-800, #d1d1d1);
       align-self: stretch;
+
+      background: var(--border-nat-800, #d1d1d1);
       border: none;
+
       margin: 0;
       flex-shrink: 0;
+      width: 100%;
+      height: 1px;
     }
 
     .generalInfo {
       grid-column: 3;
+
       display: flex;
       flex-direction: column;
-      gap: 1.5625rem;
       align-self: start;
+
+      gap: 1.5625rem;
 
       @media (max-width: 1024px) {
         grid-column: 1;
@@ -489,23 +551,28 @@ $border-radius-tiny: 0px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      flex: 1 0 0;
       align-self: stretch;
+
+      flex: 1 0 0;
 
       .checkboxGroup {
         display: flex;
         align-items: center;
+
         gap: 0.9375rem;
 
         .checkbox {
-          width: 18px;
-          height: 18px;
+          position: relative;
+
           border: 1px solid $border-nat-800;
           border-radius: $border-radius-tiny;
           background: $bg-nat-1000;
+
+          width: 18px;
+          height: 18px;
+
           cursor: pointer;
           appearance: none;
-          position: relative;
 
           &:checked {
             background: $primary-color;
@@ -514,10 +581,14 @@ $border-radius-tiny: 0px;
             &::after {
               content: '✓';
               position: absolute;
+
               top: 50%;
               left: 50%;
+
               transform: translate(-50%, -50%);
+
               color: white;
+
               font-size: 12px;
               font-weight: bold;
             }
@@ -531,22 +602,26 @@ $border-radius-tiny: 0px;
 
         .checkboxLabel {
           color: $text-nat-500;
+
           font-family: Inter;
           font-size: 1rem;
           font-style: normal;
           font-weight: 400;
           line-height: 1.375rem;
           letter-spacing: 0.005rem;
+
           cursor: pointer;
         }
       }
     }
     .salarySection {
       grid-column: 1;
+
       display: flex;
       flex-direction: column;
-      gap: 1.5625rem;
       align-self: start;
+
+      gap: 1.5625rem;
       width: 25rem;
       min-width: 25rem;
       max-width: 25rem;
@@ -560,9 +635,10 @@ $border-radius-tiny: 0px;
         max-width: 100%;
 
         h3 {
-          text-align: left;
           white-space: normal;
           word-wrap: break-word;
+
+          text-align: left;
           line-height: 1.3;
         }
 
@@ -603,10 +679,12 @@ $border-radius-tiny: 0px;
     .specialtySection,
     .roleSection {
       grid-column: 3;
+
       display: flex;
       flex-direction: column;
-      gap: 1.5625rem;
       align-self: start;
+
+      gap: 1.5625rem;
 
       @media (max-width: 1024px) {
         grid-column: 1;
@@ -652,6 +730,7 @@ $border-radius-tiny: 0px;
       .inputRow {
         display: flex;
         flex-direction: row;
+
         gap: 2.1875rem;
         width: 100%;
 
@@ -684,10 +763,11 @@ $border-radius-tiny: 0px;
 
     .workingHours,
     .contractInfo {
-      flex: 1;
-      width: 100%;
       display: flex;
       flex-direction: column;
+
+      flex: 1;
+      width: 100%;
       gap: 1.5625rem;
 
       .inputRow {
@@ -723,12 +803,15 @@ $border-radius-tiny: 0px;
         .inputField {
           .dateInputWrapper {
             position: relative;
+
             display: flex;
             align-items: center;
-            width: 100%;
+
             border: 1px solid $border-nat-800;
             border-radius: $border-radius-tiny;
             background: $bg-nat-900;
+
+            width: 100%;
             height: 3.4375rem;
             padding: 0 0.9375rem;
             gap: 0.75rem;
@@ -737,6 +820,7 @@ $border-radius-tiny: 0px;
               flex-shrink: 0;
               width: 20px;
               height: 21px;
+
               pointer-events: none;
             }
 
@@ -744,10 +828,9 @@ $border-radius-tiny: 0px;
               border: none;
               background: transparent;
               outline: none;
-              padding: 0;
-              height: auto;
-              flex: 1;
+
               color: $text-nat-500;
+
               font-family: Inter;
               font-size: 1rem;
               font-style: normal;
@@ -755,13 +838,20 @@ $border-radius-tiny: 0px;
               line-height: 1.375rem;
               letter-spacing: 0.005rem;
 
+              padding: 0;
+              height: auto;
+              flex: 1;
+
               &::-webkit-calendar-picker-indicator {
-                opacity: 0;
                 position: absolute;
+
                 left: 0;
                 right: 0;
+
                 width: 100%;
                 height: 100%;
+
+                opacity: 0;
                 cursor: pointer;
               }
 
@@ -783,6 +873,7 @@ $border-radius-tiny: 0px;
     .formActions {
       display: flex;
       justify-content: stretch;
+
       width: 100%;
 
       .submitBtn {
@@ -798,6 +889,7 @@ $border-radius-tiny: 0px;
 .inputsContainer {
   display: flex;
   flex-direction: column;
+
   gap: 1.5625rem;
 
   .inputGroup:last-child {
@@ -816,63 +908,76 @@ $border-radius-tiny: 0px;
 
 .modalOverlay {
   position: fixed;
+  z-index: 1000;
+
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .modal {
   background: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+
   border-radius: 8px;
   padding: 0;
   max-width: 400px;
   width: 90%;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .modalContent {
-  padding: 2rem;
-  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  text-align: center;
+
   gap: 1.5rem;
+  padding: 2rem;
 }
 
 .modalIcon {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: #4caf50;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  background: #4caf50;
+
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
 }
 
 .successIcon {
+  color: white;
+
   width: 32px;
   height: 32px;
-  color: white;
 }
 
 .modalTitle {
+  color: $text-nat-0;
+
   font-family: Inter;
   font-size: 1.5rem;
   font-weight: 600;
-  color: $text-nat-0;
+
   margin: 0;
 }
 
 .modalMessage {
+  color: $text-nat-300;
+
   font-family: Inter;
   font-size: 1rem;
-  color: $text-nat-300;
+
   margin: 0;
 }
 
@@ -880,13 +985,16 @@ $border-radius-tiny: 0px;
   background: $primary-color;
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 0.75rem 2rem;
+
   font-family: Inter;
   font-size: 1rem;
   font-weight: 500;
+
   cursor: pointer;
   transition: background 0.3s ease;
+
+  border-radius: 6px;
+  padding: 0.75rem 2rem;
 
   &:hover {
     background: $primary-hover;
@@ -926,6 +1034,7 @@ $border-radius-tiny: 0px;
 
   .pagecontin .form .formSection .sectionContent {
     grid-template-columns: 25rem 1px 1fr;
+
     gap: 2.5rem;
   }
 }
@@ -945,6 +1054,7 @@ $border-radius-tiny: 0px;
 
   .pagecontin .form .formSection .sectionContent {
     grid-template-columns: 25rem 1px 1fr;
+
     gap: 2rem;
   }
 }
@@ -965,6 +1075,7 @@ $border-radius-tiny: 0px;
   .pagecontin .form .formSection .sectionContent {
     grid-template-columns: 1fr !important;
     grid-template-rows: auto auto;
+
     gap: 2rem;
   }
 
@@ -975,6 +1086,7 @@ $border-radius-tiny: 0px;
   .pagecontin .form .formSection h3 {
     white-space: normal;
     word-wrap: break-word;
+
     line-height: 1.3;
     text-align: left;
   }
@@ -1005,6 +1117,7 @@ $border-radius-tiny: 0px;
 
 .fullWidth {
   grid-template-columns: 1fr !important;
+
   width: 100%;
 }
 
@@ -1017,11 +1130,13 @@ $border-radius-tiny: 0px;
   align-items: center;
   justify-content: center;
   align-self: center;
+
   gap: 0.625rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
   width: 100%;
   max-width: 93.5rem;
+
+  cursor: pointer;
+  transition: all 0.3s ease;
 
   .scrollIcon {
     width: 20px;
@@ -1031,6 +1146,7 @@ $border-radius-tiny: 0px;
 
   .scrollText {
     color: $primary-color;
+
     font-family: Inter;
     font-size: 1rem;
     font-style: normal;
