@@ -1179,3 +1179,9 @@ $border-radius-tiny: 0px;
     padding: 3.125rem 3.75rem;
   }
 }
+
+@include mobile-horizontal {
+  .AddNewWorkerPage {
+    padding: 3.125rem 2.5rem;
+  }
+}
