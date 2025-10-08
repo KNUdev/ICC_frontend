@@ -1,30 +1,69 @@
-.mainContainer {
+@use '../../../../common/styles/variables.scss' as *;
+
+$primary-bg-color: #fff;
+$other-bg-color: #f5f5f5;
+
+$primary-border-color: #e0e0e0;
+
+$text-nat-0: #272727;
+$text-nat-500: #6d6d6d;
+
+$hover-color: #ff525e;
+$error-message: #dc3545;
+
+.galleryPage {
   display: flex;
-  margin: 3.12rem 15rem;
-  padding: 0 2.5rem;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  justify-content: space-between;
+  align-self: stretch;
+
+  padding: 3.125rem;
+  gap: 6.25rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  align-self: stretch;
 
   gap: 1.5625rem;
-  align-self: stretch;
+  padding: 1rem 0rem;
 }
 
 .hyperlink {
   display: flex;
-  padding: 0.625rem;
   justify-content: center;
   align-items: center;
+
+  font-family: Inter;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+
+  padding: 0.625rem;
   gap: 0.625rem;
 
   svg {
     fill: currentColor;
+
     transition: fill 300ms ease-out;
   }
 }
 
 .title {
+  color: $text-nat-0;
+
   font-family: Inter;
   font-size: 1.875rem;
   font-style: normal;
@@ -32,46 +71,31 @@
   line-height: normal;
   letter-spacing: 0.00938rem;
   text-transform: uppercase;
-  position: relative;
-  z-index: 3;
-}
-
-.navButtons {
-  display: flex;
-  align-items: center;
-  gap: 0.31rem;
-
-  .navLink {
-    color: #6d6d6d;
-    text-decoration: none;
-    transition: color 0.2s;
-
-    &:hover {
-      color: #ff525e;
-      cursor: pointer;
-    }
-  }
 }
 
 .galleryHeader {
   position: relative;
-  width: 100%;
   overflow: hidden;
-  background-color: #fff;
-  margin: 1.56rem 0;
+
+  background-color: $primary-bg-color;
+
+  width: 100%;
 }
 
 .galleryHeaderContainer {
   position: relative;
-  display: flex;
-  height: 6.625rem;
   overflow: hidden;
-  padding-left: 2.1875rem;
+
+  display: flex;
   align-items: center;
+  align-self: stretch;
+
+  background-color: $primary-bg-color;
+
+  padding-left: 2.1875rem;
+  height: 6.625rem;
   gap: 2.8125rem;
   flex-shrink: 0;
-  align-self: stretch;
-  background-color: #fff;
 }
 
 @keyframes scrollDown {
@@ -85,11 +109,14 @@
 
 .galleryIconsWrapper {
   position: absolute;
+
   top: -35px;
   right: -30px;
   width: 100%;
+
   display: flex;
   flex-direction: column;
+
   animation: scrollDown 15s linear infinite;
 }
 
@@ -97,16 +124,23 @@
   display: flex;
   justify-content: flex-end;
   flex-wrap: nowrap;
+
   gap: 0.13663rem;
 }
 
 .gradientShadow {
   position: absolute;
+  z-index: 2;
+
   top: 0;
   bottom: 0;
   width: 12rem;
-  background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
-  z-index: 2;
+
+  background: linear-gradient(
+    270deg,
+    rgba(255, 255, 255, 0) 0%,
+    $primary-bg-color 100%
+  );
 }
 
 .shadow_1 {
@@ -119,61 +153,85 @@
   right: 0.0635rem;
   width: 9.375rem;
   height: 6.625rem;
+
   transform: scaleX(-1.02);
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+
+  gap: 0.3125rem;
+
+  .navLink {
+    color: $text-nat-500;
+
+    text-decoration: none;
+    font-family: Inter;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.4375rem;
+    letter-spacing: 0.005rem;
+
+    padding: 0.3125rem;
+
+    transition: color 0.2s;
+
+    &:hover {
+      color: $hover-color;
+
+      cursor: pointer;
+    }
+  }
+
+  > :nth-child(2) {
+    color: $text-nat-500;
+
+    font-family: Inter;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.4375rem;
+    letter-spacing: 0.005rem;
+  }
+
+  .currentPage {
+    color: $text-nat-0;
+
+    font-family: Inter;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.4375rem;
+    letter-spacing: 0.005rem;
+
+    padding: 0.3125rem;
+  }
 }
 
 .list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem 1.25rem;
-  padding: 6.25rem 0;
-  margin: 0 auto;
-  max-width: 90rem;
-}
 
-@media (max-width: 1024px) {
-  .list {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem 1rem;
-    padding: 4rem 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .list {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 3rem 1rem;
-  }
-
-  .galleryHeaderContainer {
-    padding-left: 1rem;
-    gap: 1.5rem;
-  }
-
-  .title {
-    font-size: 1.5rem;
-  }
+  gap: 3.75rem 1.25rem;
+  width: 100%;
 }
 
 .listItem {
   position: relative;
-  height: 13.75rem;
   overflow: hidden;
-  border-radius: 8px;
-  background-color: #f5f5f5;
-}
 
-.galleryImage {
-  width: 100%;
-  height: 13.75rem;
+  background-color: $other-bg-color;
 }
 
 .imageInfo {
   position: absolute;
+
   bottom: 0;
   left: 0;
   right: 0;
+
   background: linear-gradient(
     to top,
     rgba(0, 0, 0, 0.8) 0%,
@@ -181,7 +239,9 @@
     transparent 100%
   );
   color: white;
+
   padding: 1rem;
+
   transform: translateY(100%);
   transition: transform 0.3s ease;
 }
@@ -193,15 +253,17 @@
 .imageName {
   font-size: 1rem;
   font-weight: 600;
-  margin: 0 0 0.25rem 0;
   line-height: 1.2;
+
+  margin: 0 0 0.25rem 0;
 }
 
 .imageDescription {
   font-size: 0.875rem;
+  line-height: 1.3;
+
   margin: 0;
   opacity: 0.9;
-  line-height: 1.3;
 }
 
 .initialLoading,
@@ -211,8 +273,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;
+
   text-align: center;
+
+  padding: 4rem 2rem;
 }
 
 .spinner {
@@ -220,32 +284,42 @@
 }
 
 .spinnerCircle {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #e0e0e0;
-  border-top: 4px solid #dc3545;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 4px solid $primary-border-color;
+  border-top: 4px solid $error-message;
   border-radius: 50%;
+
   animation: spin 1s linear infinite;
 }
 
 .errorMessage {
-  color: #dc3545;
+  color: $error-message;
+
+  font-family: Inter;
   font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.005rem;
+
   margin-bottom: 1rem;
 }
 
 .retryButton {
-  background-color: #dc3545;
+  background-color: $error-message;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
+
   font-size: 1rem;
+
   cursor: pointer;
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: #ff525e;
+    background-color: $hover-color;
   }
 }
 
@@ -258,17 +332,44 @@
   }
 }
 
-.bgImage {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
 .hyperlinkContainer {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  margin-bottom: 3.12rem;
+  justify-content: end;
+}
+
+@include mobile {
+  .galleryPage {
+    padding: 2.8125rem 1rem;
+    gap: 5rem;
+  }
+
+  .galleryIconsWrapper {
+    display: none;
+  }
+
+  .shadow_1 {
+    display: none;
+  }
+
+  .shadow_2 {
+    display: none;
+  }
+
+  .title {
+    font-family: Inter;
+    font-size: 1.5625rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.00781rem;
+    text-transform: uppercase;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1.25rem;
+  }
 }

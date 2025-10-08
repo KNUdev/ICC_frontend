@@ -327,6 +327,18 @@ export default function Staff() {
                 </li>
               ))}
             </ul>
+
+            <div className={styles.toTopContainer}>
+              <button
+                type='button'
+                className={styles.toTopParagraph}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                aria-label={tStaff('aria-labels.top')}
+              >
+                <AlignArrowUpIcon aria-hidden='true' />
+                {tStaff('buttons.top')}
+              </button>
+            </div>
           </section>
         </>
       ) : (
@@ -342,6 +354,7 @@ export default function Staff() {
                   <Image
                     src={selectedEmployee.avatarUrl}
                     alt={`${selectedEmployee.name.firstName} ${selectedEmployee.name.middleName} ${selectedEmployee.name.lastName}`}
+                    className={styles.workerPhoto}
                     width={300}
                     height={300}
                     unoptimized
@@ -465,21 +478,21 @@ export default function Staff() {
                 </li>
               ))}
             </ul>
+
+            <div className={styles.toTopContainer}>
+              <button
+                type='button'
+                className={styles.toTopParagraph}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                aria-label={tStaff('aria-labels.top')}
+              >
+                <AlignArrowUpIcon aria-hidden='true' />
+                {tStaff('buttons.top')}
+              </button>
+            </div>
           </section>
         </>
       )}
-
-      <div className={styles.toTopContainer}>
-        <button
-          type='button'
-          className={styles.toTopParagraph}
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          aria-label={tStaff('aria-labels.top')}
-        >
-          <AlignArrowUpIcon aria-hidden='true' />
-          {tStaff('buttons.top')}
-        </button>
-      </div>
     </div>
   )
 }

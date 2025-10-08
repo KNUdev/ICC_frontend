@@ -1,10 +1,16 @@
+@use '../../../../common/styles/variables.scss' as *;
+
+$accent-color: #ff525e;
+$text-color: #4f4f4f;
+
 .accentColor {
-  color: #ff525e;
+  color: $accent-color;
 }
 
 .homePage {
   display: flex;
   flex-direction: column;
+
   margin: 6.25rem auto;
   gap: 12.5rem;
 
@@ -15,8 +21,10 @@
     & > div {
       display: flex;
       flex-direction: column;
+
       gap: 1.56rem;
       max-width: 46rem;
+
       & > h1 {
         font-family: Inter;
         font-size: 2.8125rem;
@@ -26,7 +34,8 @@
         text-transform: uppercase;
       }
       & > p {
-        color: #4f4f4f;
+        color: $text-color;
+
         font-family: Inter;
         font-size: 1.125rem;
         font-style: normal;
@@ -38,6 +47,56 @@
       & > svg {
         margin: auto 0;
       }
+    }
+  }
+}
+
+@include mobile-horizontal {
+  .homePage {
+    & > .into {
+      & > div {
+        overflow-wrap: break-word;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .homePage {
+    margin: 2.8125rem auto;
+    gap: 5rem;
+    padding: 0 0.9375rem;
+
+    & > .into {
+      justify-content: flex-start;
+
+      & > div {
+        overflow-wrap: break-word;
+
+        max-width: 100%;
+
+        & > h1 {
+          font-family: Inter;
+          font-size: 2.1875rem;
+          font-style: normal;
+          font-weight: 900;
+          line-height: normal;
+          text-transform: uppercase;
+        }
+
+        & > p {
+          font-family: Inter;
+          font-size: 1rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 1.5625rem;
+          letter-spacing: 0.005rem;
+        }
+      }
+    }
+
+    .into > div:last-child {
+      display: none;
     }
   }
 }

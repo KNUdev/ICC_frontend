@@ -1,5 +1,6 @@
 'use client'
 
+import FlagEN from '@/assets/image/icons/English_flag.svg'
 import FlagUA from '@/assets/image/icons/Ukraine_flag.svg'
 import ArrowDown from '@/assets/image/icons/arrow-down.svg'
 import ArrowUp from '@/assets/image/icons/arrow-up.svg'
@@ -9,6 +10,11 @@ import { useLocale } from 'next-intl'
 import { useState } from 'react'
 import styles from './Header/Header.module.scss'
 
+const FLAG_ICONS: Record<Locale, React.FC<React.SVGProps<SVGSVGElement>>> = {
+  uk: FlagUA,
+  en: FlagEN,
+}
+
 export default function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false)
   const locale = useLocale()
@@ -16,9 +22,13 @@ export default function LanguageSwitcher() {
   const pathname = usePathname()
 
   const handleChange = (newLang: Locale) => {
-    router.push(pathname, { locale: newLang })
+    document.cookie = `locale=${newLang}; path=/; max-age=31536000; SameSite=Lax`
+
+    router.replace(pathname, { locale: newLang })
     setIsOpen(false)
   }
+
+  const CurrentFlag = FLAG_ICONS[locale as Locale]
 
   return (
     <div className={styles.languageSwitcher}>
@@ -27,7 +37,11 @@ export default function LanguageSwitcher() {
         className={styles.toggleButton}
       >
         <div className={styles.flagTextContainer}>
-          <FlagUA className={styles.flag} aria-label='flagIcon' role='img' />
+          <CurrentFlag
+            className={styles.flag}
+            aria-label='flagIcon'
+            role='img'
+          />
 
           {LANGUAGE_LABELS[locale as Locale]}
         </div>
@@ -43,28 +57,35 @@ export default function LanguageSwitcher() {
       {isOpen && (
         <ul className={styles.dropdown}>
           <li className={`${styles.option} ${styles.active}`}>
-            <FlagUA className={styles.flag} aria-label='flagIcon' role='img' />
+            <CurrentFlag
+              className={styles.flag}
+              aria-label='flagIcon'
+              role='img'
+            />
 
             {LANGUAGE_LABELS[locale as Locale]}
           </li>
 
           <hr className={styles.divider} role='separator' />
 
-          {SUPPORTED_LOCALES.filter((code) => code !== locale).map((code) => (
-            <li
-              key={code}
-              onClick={() => handleChange(code)}
-              className={styles.option}
-            >
-              <FlagUA
-                className={styles.flag}
-                aria-label='flagIcon'
-                role='img'
-              />
+          {SUPPORTED_LOCALES.filter((code) => code !== locale).map((code) => {
+            const Flag = FLAG_ICONS[code]
+            return (
+              <li
+                key={code}
+                onClick={() => handleChange(code)}
+                className={styles.option}
+              >
+                <Flag
+                  className={styles.flag}
+                  aria-label='flagIcon'
+                  role='img'
+                />
 
-              {LANGUAGE_LABELS[code]}
-            </li>
-          ))}
+                {LANGUAGE_LABELS[code]}
+              </li>
+            )
+          })}
         </ul>
       )}
     </div>

@@ -1,14 +1,22 @@
+@use '../../../../../../../common/styles/variables.scss' as *;
+
 .accordion {
-  max-width: 78.125rem;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  align-self: stretch;
+
   gap: 1.25rem;
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .accordionItem {
   border: 1px solid #d9d9d9;
   background-color: #fff;
+
+  width: 100%;
 
   &.open {
     background-color: #fafafa;
@@ -19,23 +27,24 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5625rem 1.25rem;
-  width: 100%;
+
   background: none;
   border: none;
   cursor: pointer;
+
   font-family: 'Inter', sans-serif;
   font-size: 1.125rem;
   font-weight: 600;
 
+  padding: 1.5625rem 1.25rem;
+  width: 100%;
+
   .title {
     color: #6d6d6d;
-    flex: 1;
-    text-align: left;
-  }
 
-  .icon {
-    margin-left: 1rem;
+    text-align: left;
+
+    flex: 1;
   }
 
   &.active {
@@ -57,14 +66,32 @@
 }
 
 .accordionBody {
-  padding: 0 1.25rem 1.5625rem;
+  color: #454545;
+
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
   font-weight: 400;
-  color: #454545;
   line-height: 1.4375rem;
+  letter-spacing: 0.005rem;
+
+  padding: 1.5625rem 1.25rem;
 
   @media (max-width: 48rem) {
     padding: 0 1rem 1.25rem;
+  }
+}
+
+@include mobile {
+  .accordion {
+    margin: 0;
+  }
+
+  .title {
+    font-family: Inter;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.00563rem;
   }
 }

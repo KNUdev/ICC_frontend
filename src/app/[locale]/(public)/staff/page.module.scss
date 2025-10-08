@@ -1,9 +1,15 @@
+@use '../../../../common/styles/variables.scss' as *;
+
 $text-primary-color: #3d3d3d;
 $label-primary-color: #272727;
 $border-primary-color: #d1d1d1;
 $background-primary-color: #fff;
 $hover-color: #ff525e;
 $button-hover-color: #ae302c;
+
+.staffSection {
+  padding: 3.125rem 6.25rem;
+}
 
 .staffSection,
 .detailSection {
@@ -109,6 +115,7 @@ $button-hover-color: #ae302c;
   align-self: stretch;
 
   padding: 1.5625rem;
+  margin-bottom: -3.125rem;
 
   border: 1px solid $border-primary-color;
   background: $background-primary-color;
@@ -141,7 +148,7 @@ $button-hover-color: #ae302c;
 
   list-style: none;
 
-  gap: 1.25rem;
+  gap: 3.75rem 1.25rem;
 }
 
 .employeeListItem {
@@ -172,9 +179,9 @@ $button-hover-color: #ae302c;
 
 .toTopContainer {
   display: flex;
+
   padding: 0.625rem;
-  justify-content: flex-end;
-  align-items: flex-end;
+  margin-left: auto;
 }
 
 .toTopParagraph {
@@ -219,7 +226,8 @@ $button-hover-color: #ae302c;
   align-items: flex-start;
   align-self: stretch;
 
-  gap: 1.5625rem;
+  gap: 6.25rem;
+  padding: 3.125rem 6.25rem;
 }
 
 .detailHeader {
@@ -242,6 +250,14 @@ $button-hover-color: #ae302c;
 
   border: 1px solid $border-primary-color;
   background: $background-primary-color;
+}
+
+.workerPhoto {
+  display: block;
+  margin: 0 auto;
+
+  max-width: 100%;
+  height: auto;
 }
 
 .contacts {
@@ -375,4 +391,97 @@ $button-hover-color: #ae302c;
 .centeredText {
   text-align: center;
   justify-content: center;
+}
+
+@include tablet-horizontal {
+  .staffSection {
+    padding: 3.125rem 0rem;
+  }
+
+  .searchTextContainer {
+    max-width: 100%;
+    width: 100%;
+
+    flex: 0 0 50%;
+  }
+}
+
+@include mobile-horizontal {
+  .staffSection {
+    padding: 3.125rem 0rem;
+  }
+
+  .employeeList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .searchTextContainer {
+    max-width: 100%;
+    width: 100%;
+
+    flex: 0 0 40%;
+  }
+
+  .detailSection {
+    padding: 3.125rem 0rem;
+  }
+}
+
+@include mobile {
+  .staffSection {
+    padding: 2.8125rem 0rem;
+    gap: 5rem;
+  }
+
+  .employeeList {
+    grid-template-columns: repeat(1, 1fr);
+
+    gap: 1.25rem;
+  }
+
+  .searchFilterContainer {
+    flex-direction: column;
+
+    gap: 1.5625rem;
+  }
+
+  .specialtyFilterContainer {
+    width: 100%;
+  }
+
+  .workersArticle {
+    flex-direction: column;
+
+    gap: 1.5625rem;
+    margin-bottom: -1.25rem;
+  }
+
+  .detailHeader {
+    flex-direction: column;
+  }
+
+  .contacts {
+    gap: 1.5625rem;
+  }
+
+  .contactsDetails {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 0.9375rem;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .detailPhotoBlock {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .detailInfoBlock {
+    max-width: 100%;
+    width: 100%;
+  }
 }

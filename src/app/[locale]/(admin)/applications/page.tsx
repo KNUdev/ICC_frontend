@@ -389,7 +389,7 @@ export default function ApplicationsPage() {
   }
 
   return (
-    <section className={styles.applicationSection}>
+    <section className={styles.applicationSection + ' main-wrapper'}>
       <div className={styles.headingContainer}>
         <h1 className={styles.heading}>
           {tApplications('header.application')}
@@ -622,10 +622,6 @@ export default function ApplicationsPage() {
                 </span>
               </button>
             </div>
-
-            <p id={dialogIds.deleteDesc} className='sr-only'>
-              {tApplications('aria-labels.deleteDialogDesc')}
-            </p>
 
             <div className={styles.buttonContainer}>
               <button

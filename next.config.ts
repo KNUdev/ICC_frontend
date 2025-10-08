@@ -31,7 +31,7 @@ const nextConfig: NextConfig = {
       remotePatterns: [
         {
           protocol: 'https',
-          hostname: '87a23e163aa8399c38ea8b9e0cf67cc2.serveo.net',
+          hostname: 'iccknu.pp.ua',
           pathname: '/images/**',
         },
       ],
