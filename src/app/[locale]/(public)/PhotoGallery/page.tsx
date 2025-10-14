@@ -44,6 +44,8 @@ export default function PhotoGalleryPage() {
                       <GalleryIcon
                         key={iconIdx}
                         className={styles.galleryIcon}
+                        width={60}
+                        height={60}
                       />
                     ))}
                   </div>
@@ -55,8 +57,8 @@ export default function PhotoGalleryPage() {
                       <GalleryIcon
                         key={iconIdx}
                         className={styles.galleryIcon}
-                        width={80}
-                        height={80}
+                        width={60}
+                        height={60}
                       />
                     ))}
                   </div>
