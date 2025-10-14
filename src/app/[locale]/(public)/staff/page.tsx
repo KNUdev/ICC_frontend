@@ -426,8 +426,8 @@ export default function Staff() {
                   <p>
                     {tStaff('paras.workHours')}:{' '}
                     <span className={styles.spanWorkingHours}>
-                      {selectedEmployee.workHours.startTime} -{' '}
-                      {selectedEmployee.workHours.endTime}
+                      {selectedEmployee.workHours.startTime.slice(0, 5)} -{' '}
+                      {selectedEmployee.workHours.endTime.slice(0, 5)}
                     </span>
                   </p>
                 </div>
