@@ -119,7 +119,12 @@ export default function PhotoGalleryPage() {
               {[...Array(5)].map((_, rowIdx) => (
                 <div key={rowIdx} className={styles.galleryIcons}>
                   {[...Array(6)].map((_, iconIdx) => (
-                    <GalleryIcon key={iconIdx} className={styles.galleryIcon} />
+                    <GalleryIcon
+                      key={iconIdx}
+                      className={styles.galleryIcon}
+                      width={60}
+                      height={60}
+                    />
                   ))}
                 </div>
               ))}
@@ -127,7 +132,12 @@ export default function PhotoGalleryPage() {
               {[...Array(5)].map((_, rowIdx) => (
                 <div key={`set2-${rowIdx}`} className={styles.galleryIcons}>
                   {[...Array(6)].map((_, iconIdx) => (
-                    <GalleryIcon key={iconIdx} className={styles.galleryIcon} />
+                    <GalleryIcon
+                      key={iconIdx}
+                      className={styles.galleryIcon}
+                      width={60}
+                      height={60}
+                    />
                   ))}
                 </div>
               ))}
