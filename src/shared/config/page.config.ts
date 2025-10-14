@@ -13,7 +13,7 @@ export const ADMIN_PAGES = {
   ADD_PHOTO: '/AddPhoto',
   ADD_SPECIALTY: '/AddSpecialty',
   ADD_SECTORS: '/AddSectors',
-  APPLICATIONS: '/Applications',
+  APPLICATIONS: '/applications',
 }
 
 export const INSTITUTION_LINKS = {
