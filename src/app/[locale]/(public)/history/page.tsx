@@ -58,6 +58,8 @@ export default function History() {
                       <HistoryIcon
                         key={iconIdx}
                         className={styles.galleryIcon}
+                        width={40}
+                        height={40}
                       />
                     ))}
                   </div>

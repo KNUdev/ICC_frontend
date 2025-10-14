@@ -55,6 +55,8 @@ export default function PhotoGalleryPage() {
                       <GalleryIcon
                         key={iconIdx}
                         className={styles.galleryIcon}
+                        width={40}
+                        height={40}
                       />
                     ))}
                   </div>
