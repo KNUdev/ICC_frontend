@@ -7,6 +7,7 @@
   },
 
   "paras": {
+    "specialty": "Specialty",
     "sector": "Sector",
     "student": "Student",
     "notStudent": "Not a student",

@@ -392,10 +392,6 @@ export default function Staff() {
 
               <div className={styles.detailInfoBlock}>
                 <div className={styles.infoMain}>
-                  <p className={styles.specialty}>
-                    {getSpecialtyName(selectedEmployee.specialty.id)}
-                  </p>
-
                   <h2 className={styles.infoHeading}>
                     {`${selectedEmployee.name.firstName} ${selectedEmployee.name.middleName} ${selectedEmployee.name.lastName}`}
                   </h2>
@@ -404,6 +400,10 @@ export default function Staff() {
                 <div className={styles.horizontalDivider} />
 
                 <div className={styles.infoOther}>
+                  <p>{tStaff('paras.specialty')}: </p>
+                  <span className={styles.specialty}>
+                    {getSpecialtyName(selectedEmployee.specialty.id)}
+                  </span>
                   <p>
                     {tStaff('paras.sector')}:{' '}
                     <span className={styles.spanSector}>
