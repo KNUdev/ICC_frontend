@@ -2,17 +2,17 @@ export const PAGES = {
   HOME: '/',
   SERVICE_REQUEST: '/#formApplication',
   HISTORY: '/history',
-  PHOTO_GALLERY: '/PhotoGallery',
+  PHOTO_GALLERY: '/photo-gallery',
   STAFF: '/staff',
   CLUSTER: 'http://cluster.univ.kiev.ua/ukr/',
   FAQ: '/#faq',
 }
 
 export const ADMIN_PAGES = {
-  ADD_NEW_WORKER: '/AddNewWorker',
-  ADD_PHOTO: '/AddPhoto',
-  ADD_SPECIALTY: '/AddSpecialty',
-  ADD_SECTORS: '/AddSectors',
+  ADD_NEW_WORKER: '/add-new-worker',
+  ADD_PHOTO: '/add-photo',
+  ADD_SPECIALTY: '/add-specialty',
+  ADD_SECTORS: '/add-sectors',
   APPLICATIONS: '/applications',
 }
 
