@@ -1,6 +1,7 @@
 'use client'
 
 import LogoIcc from '@/assets/image/icons/logo_icc.svg'
+import { AdminDropdown } from '@/components/Header/AdminDropdown/AdminDropdown'
 import { UserProfile } from '@/components/Header/UserProfile/UserProfile'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import { ADMIN_PAGES, PAGES } from '@/shared/config/page.config'
@@ -9,7 +10,6 @@ import { useRole } from '@/shared/hooks/useRole'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { AdminDropdown } from './AdminDropdown/AdminDropdown'
 import styles from './Header.module.scss'
 
 type HeaderProps = {
@@ -71,7 +71,6 @@ export function Header({}: HeaderProps) {
                     </Link>
                   </li>
                 ))}
-                <AdminDropdown />
               </ul>
             </nav>
 
@@ -100,6 +99,10 @@ export function Header({}: HeaderProps) {
           </div>
 
           <div className={styles.userPanel}>
+            {!isLoading && isAuthenticated && hasRole('HEAD_MANAGER') && (
+              <AdminDropdown className={styles.adminDropdown} />
+            )}
+
             <LanguageSwitcher />
 
             {!isLoading && (
