@@ -9,6 +9,7 @@ import { useRole } from '@/shared/hooks/useRole'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { AdminDropdown } from './AdminDropdown/AdminDropdown'
 import styles from './Header.module.scss'
 
 type HeaderProps = {
@@ -70,6 +71,7 @@ export function Header({}: HeaderProps) {
                     </Link>
                   </li>
                 ))}
+                <AdminDropdown />
               </ul>
             </nav>
 
