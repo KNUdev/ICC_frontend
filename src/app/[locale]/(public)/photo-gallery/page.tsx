@@ -7,8 +7,11 @@ import HomeIcon from '@/assets/image/icons/icon_home.svg'
 import Hyperlink from '@/common/components/Hyperlink/Hyperlink'
 import { PAGES } from '@/shared/config/page.config'
 import { useGallery } from '@/shared/hooks/useGallery'
+import type { GalleryItem } from '@/shared/types/gallery'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
+import { useState } from 'react'
+import ImageModal from './ImageModal/ImageModal'
 import LazyImage from './LazyImage/LazyImage'
 import LoadMoreTrigger from './LoadMoreTrigger/LoadMoreTrigger'
 import styles from './page.module.scss'
@@ -18,6 +21,7 @@ export default function PhotoGalleryPage() {
   const { items, loading, hasMore, error, loadMore, refresh } = useGallery({
     pageSize: 12,
   })
+  const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null)
 
   if (error) {
     return (
@@ -182,7 +186,11 @@ export default function PhotoGalleryPage() {
           <>
             <ul className={styles.list} role='list'>
               {items.map((item) => (
-                <li key={item.itemId} className={styles.listItem}>
+                <li
+                  key={item.itemId}
+                  className={styles.listItem}
+                  onClick={() => setSelectedImage(item)}
+                >
                   <LazyImage item={item} className={styles.galleryImage} />
 
                   <div className={styles.imageInfo}>
@@ -214,6 +222,14 @@ export default function PhotoGalleryPage() {
           </div>
         </Hyperlink>
       </div>
+
+      <ImageModal
+        isOpen={!!selectedImage}
+        onClose={() => setSelectedImage(null)}
+        imageUrl={selectedImage?.itemUrl || ''}
+        title={selectedImage?.publicItemName || ''}
+        description={selectedImage?.itemDescription}
+      />
     </section>
   )
 }

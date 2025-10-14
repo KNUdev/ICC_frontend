@@ -223,6 +223,17 @@ $error-message: #dc3545;
   overflow: hidden;
 
   background-color: $other-bg-color;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(-2px);
+  }
 }
 
 .imageInfo {
