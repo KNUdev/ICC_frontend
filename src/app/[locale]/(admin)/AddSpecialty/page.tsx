@@ -472,7 +472,9 @@ const AddSpecialityPage = () => {
                       {specialty.name[locale as 'en' | 'uk']}
                     </div>
                     <div className={styles.tableCell}>
-                      {specialty.category || '-'}
+                      {specialty.category
+                        ? t(`categories.${specialty.category}`)
+                        : '-'}
                     </div>
                     <div className={styles.tableCell}>
                       {specialty.sectors
