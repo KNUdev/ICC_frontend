@@ -400,10 +400,13 @@ export default function Staff() {
                 <div className={styles.horizontalDivider} />
 
                 <div className={styles.infoOther}>
-                  <p>{tStaff('paras.specialty')}: </p>
-                  <span className={styles.specialty}>
-                    {getSpecialtyName(selectedEmployee.specialty.id)}
-                  </span>
+                  <p>
+                    {tStaff('paras.specialty')}:
+                    <span className={styles.specialty}>
+                      {getSpecialtyName(selectedEmployee.specialty.id)}
+                    </span>
+                  </p>
+
                   <p>
                     {tStaff('paras.sector')}:{' '}
                     <span className={styles.spanSector}>
