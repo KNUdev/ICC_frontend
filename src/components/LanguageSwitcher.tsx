@@ -7,7 +7,7 @@ import ArrowUp from '@/assets/image/icons/arrow-up.svg'
 import { LANGUAGE_LABELS, type Locale, SUPPORTED_LOCALES } from '@/i18n/config'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { useLocale } from 'next-intl'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './Header/Header.module.scss'
 
 const FLAG_ICONS: Record<Locale, React.FC<React.SVGProps<SVGSVGElement>>> = {
@@ -20,6 +20,26 @@ export default function LanguageSwitcher() {
   const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false)
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen])
 
   const handleChange = (newLang: Locale) => {
     document.cookie = `locale=${newLang}; path=/; max-age=31536000; SameSite=Lax`
@@ -31,7 +51,7 @@ export default function LanguageSwitcher() {
   const CurrentFlag = FLAG_ICONS[locale as Locale]
 
   return (
-    <div className={styles.languageSwitcher}>
+    <div className={styles.languageSwitcher} ref={dropdownRef}>
       <switch
         onClick={() => setIsOpen(!isOpen)}
         className={styles.toggleButton}
