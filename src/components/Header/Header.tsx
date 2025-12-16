@@ -1,12 +1,8 @@
 'use client'
 
 import LogoIcc from '@/assets/image/icons/logo_icc.svg'
-import { AdminDropdown } from '@/components/Header/AdminDropdown/AdminDropdown'
-import { UserProfile } from '@/components/Header/UserProfile/UserProfile'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
-import { ADMIN_PAGES, PAGES } from '@/shared/config/page.config'
-import { useCurrentUser } from '@/shared/hooks/useCurrentUser'
-import { useRole } from '@/shared/hooks/useRole'
+import { PAGES } from '@/shared/config/page.config'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -18,8 +14,6 @@ type HeaderProps = {
 
 export function Header({}: HeaderProps) {
   const tCommon = useTranslations('common')
-  const { isAuthenticated, isLoading } = useCurrentUser()
-  const { hasRole } = useRole()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const toggleMobileMenu = () => {
@@ -99,34 +93,11 @@ export function Header({}: HeaderProps) {
           </div>
 
           <div className={styles.userPanel}>
-            {!isLoading && isAuthenticated && hasRole('HEAD_MANAGER') && (
-              <AdminDropdown className={styles.adminDropdown} />
-            )}
-
             <LanguageSwitcher />
-
-            {!isLoading && (
-              <>
-                {isAuthenticated ? (
-                  <UserProfile />
-                ) : (
-                  <div className={styles.authButtons}>
-                    <Link href='/Auth/SingIn' className={styles.loginButton}>
-                      {tCommon('authentication.login')}
-                    </Link>
-
-                    <Link href='/Auth/SingUp' className={styles.registerButton}>
-                      {tCommon('authentication.register')}
-                    </Link>
-                  </div>
-                )}
-              </>
-            )}
           </div>
         </div>
       </header>
 
-      {/* Mobile overlay */}
       <div
         className={`${styles.mobileOverlay} ${
           isMobileMenuOpen ? styles.open : ''
@@ -149,26 +120,6 @@ export function Header({}: HeaderProps) {
             </li>
           ))}
         </ul>
-
-        {isAuthenticated && hasRole('HEAD_MANAGER') && (
-          <div className={styles.mobileAdminSection}>
-            <div className={styles.adminTitle}>
-              {tCommon('navigation.adminDropdown')}
-            </div>
-            <div className={styles.adminActions}>
-              {Object.entries(ADMIN_PAGES).map(([key, link]) => (
-                <Link
-                  key={key}
-                  href={link}
-                  className={styles.adminButton}
-                  onClick={closeMobileMenu}
-                >
-                  {tCommon(`navigation.admin.${key}`)}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
       </nav>
     </>
   )
