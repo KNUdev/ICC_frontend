@@ -278,6 +278,9 @@ export default function Staff() {
                         className={styles.employeePhoto}
                       />
                     )}
+                    <p className={styles.employeeName}>
+                      {`${employee.name.lastName} ${employee.name.firstName} ${employee.name.middleName}`}
+                    </p>
                   </button>
                 </li>
               ))}
@@ -432,6 +435,9 @@ export default function Staff() {
                         className={styles.employeePhoto}
                       />
                     )}
+                    <p className={styles.employeeName}>
+                      {`${employee.name.lastName} ${employee.name.firstName} ${employee.name.middleName}`}
+                    </p>
                   </button>
                 </li>
               ))}

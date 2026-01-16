@@ -171,6 +171,19 @@ $button-hover-color: #ae302c;
   height: auto;
 }
 
+.employeeName {
+  margin-top: 0.9375rem;
+
+  color: $text-primary-color;
+  text-align: center;
+  font-family: Inter;
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0.00563rem;
+}
+
 .active {
   background: $hover-color;
   border-color: $hover-color;
