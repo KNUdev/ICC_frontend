@@ -1,3 +1,5 @@
+import PlaceholderImage from '@/assets/image/photo-gallery/image.png'
+
 export const PAGES = {
   HOME: '/',
   SERVICE_REQUEST: '/#formApplication',
@@ -88,7 +90,7 @@ export const EMPLOYEES = [
     updatedAt: '2026-01-16T14:36:00.863Z',
     salaryInUAH: 18000,
     isStudent: true,
-    avatarUrl: null,
+    avatarUrl: PlaceholderImage,
     contractEndDate: '2026-05-16',
     workHours: {
       startTime: '09:00:00',
@@ -115,7 +117,7 @@ export const EMPLOYEES = [
     updatedAt: '2026-01-16T14:36:00.863Z',
     salaryInUAH: 20000,
     isStudent: false,
-    avatarUrl: null,
+    avatarUrl: PlaceholderImage,
     contractEndDate: '2026-05-16',
     workHours: {
       startTime: '10:00:00',

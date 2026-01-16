@@ -14,6 +14,7 @@ import {
   SPECIALTIES,
 } from '@/shared/config/page.config'
 import { useLocale, useTranslations } from 'next-intl'
+import type { StaticImageData } from 'next/image'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import styles from './page.module.scss'
@@ -29,7 +30,7 @@ interface SpecialtyOption {
 }
 
 interface Employee {
-  avatarUrl: string | null
+  avatarUrl: string | StaticImageData | null
   contractEndDate: string
   createdAt: string
   email: string
