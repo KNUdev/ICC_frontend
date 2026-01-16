@@ -8,12 +8,14 @@ import PhoneIcon from '@/assets/image/icons/social/telephone.svg'
 import ContactLink from '@/common/components/ContactLink/ContactLink'
 import HelpBubble from '@/common/components/HelpBubble/HelpBubble'
 import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
-import { getEmployees } from '@/shared/api/employees'
-import { getPublicSectors } from '@/shared/api/sectors'
-import { getPublicSpecialties } from '@/shared/api/specialties'
+import {
+  EMPLOYEES,
+  SECTORS,
+  SPECIALTIES,
+} from '@/shared/config/page.config'
 import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './page.module.scss'
 
 interface SectorOption {
@@ -21,33 +23,15 @@ interface SectorOption {
   label: string
 }
 
-interface SectorItem {
-  id: string
-  name: {
-    [key: string]: string | undefined
-    en?: string
-    uk?: string
-  }
-}
-
 interface SpecialtyOption {
   value: string
   label: string
 }
 
-interface Specialty {
-  id: string
-  name: {
-    [key: string]: string | undefined
-    en?: string
-    uk?: string
-  }
-}
-
 interface Employee {
   avatarUrl: string | null
-  contractEndDate: [number, number, number]
-  createdAt: [number, number, number, number, number, number, number]
+  contractEndDate: string
+  createdAt: string
   email: string
   id: string
   isStudent: boolean
@@ -89,61 +73,31 @@ export default function Staff() {
   const locale = useLocale()
   const tStaff = useTranslations('public/staff')
 
-  const fetchEmployees = useCallback(async () => {
-    try {
-      const employees = await getEmployees({ pageSize })
-      setEmployees(employees)
-    } catch (error) {
-      console.error('Error fetching employees:', error)
+  useEffect(() => {
+    let filtered = EMPLOYEES as unknown as Employee[]
+    if (pageSize !== 'all') {
+      filtered = filtered.slice(0, pageSize)
     }
+    setEmployees(filtered)
   }, [pageSize])
 
-  const fetchSectors = useCallback(async () => {
-    try {
-      const result = await getPublicSectors({
-        pageNumber: 0,
-        pageSize: 10,
-      })
-
-      const mapped: SectorOption[] =
-        (result?.content as SectorItem[])?.map((item) => ({
-          value: item.id,
-          label: item.name?.[locale] || item.name?.en || '',
-        })) ?? []
-
-      setSectors(mapped)
-    } catch (error) {
-      console.error('Error fetching sectors:', error)
-    }
-  }, [locale])
-
-  const fetchSpecialties = useCallback(async () => {
-    try {
-      const result = await getPublicSpecialties({
-        pageNumber: 0,
-        pageSize: 10,
-      })
-
-      const mapped: SpecialtyOption[] =
-        result?.content?.map((item: Specialty) => ({
-          value: item.id,
-          label: item.name?.[locale] || item.name?.en || '',
-        })) ?? []
-
-      setSpecialties(mapped)
-    } catch (error) {
-      console.error('Error fetching specialties:', error)
-    }
-  }, [locale])
-
   useEffect(() => {
-    fetchEmployees()
-  }, [fetchEmployees])
+    const mappedSectors: SectorOption[] = Object.entries(SECTORS).map(
+      ([id, names]) => ({
+        value: id,
+        label: names[locale as keyof typeof names] || names.en || '',
+      }),
+    )
+    setSectors(mappedSectors)
 
-  useEffect(() => {
-    fetchSpecialties()
-    fetchSectors()
-  }, [fetchSpecialties, fetchSectors])
+    const mappedSpecialties: SpecialtyOption[] = Object.entries(SPECIALTIES).map(
+      ([id, names]) => ({
+        value: id,
+        label: names[locale as keyof typeof names] || names.en || '',
+      }),
+    )
+    setSpecialties(mappedSpecialties)
+  }, [locale])
 
   const getSectorName = (sectorId: string) => {
     const sec = sectors.find((s) => s.value === sectorId)
@@ -240,7 +194,7 @@ export default function Staff() {
                       options={specialties}
                       placeholder={tStaff('placeholders.specialty')}
                       value={specialty}
-                      onOpen={fetchSpecialties}
+                      onOpen={() => {}}
                       onSelect={(val) => setSpecialty(val)}
                       aria-label={tStaff('aria-labels.specialty')}
                     />
