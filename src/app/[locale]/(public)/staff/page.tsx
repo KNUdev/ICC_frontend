@@ -79,6 +79,7 @@ export default function Staff() {
     if (pageSize !== 'all') {
       filtered = filtered.slice(0, pageSize)
     }
+    console.log('Employees in state:', filtered)
     setEmployees(filtered)
   }, [pageSize])
 
@@ -274,7 +275,6 @@ export default function Staff() {
                         alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
                         width={150}
                         height={150}
-                        unoptimized
                         className={styles.employeePhoto}
                       />
                     )}
@@ -315,7 +315,6 @@ export default function Staff() {
                     className={styles.workerPhoto}
                     width={300}
                     height={300}
-                    unoptimized
                   />
                 )}
 
@@ -431,7 +430,6 @@ export default function Staff() {
                         alt={`${employee.name.firstName} ${employee.name.middleName} ${employee.name.lastName}`}
                         width={150}
                         height={150}
-                        unoptimized
                         className={styles.employeePhoto}
                       />
                     )}
