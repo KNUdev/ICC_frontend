@@ -3,6 +3,7 @@ import PlaceholderImage from '@/assets/image/photo-gallery/image.png'
 export const PAGES = {
   HOME: '/',
   SERVICE_REQUEST: '/#formApplication',
+  PHOTO_GALLERY: '/photo-gallery',
   HISTORY: '/history',
   STAFF: '/staff',
   CLUSTER: 'http://cluster.univ.kiev.ua/ukr/',
