@@ -14,7 +14,7 @@ interface LazyImageProps {
 export default function LazyImage({ item, className }: LazyImageProps) {
   const [loaded, setLoaded] = useState(false)
   const [error, setError] = useState(false)
-  const { targetRef, isIntersecting } = useIntersectionObserver({
+  const { targetRef, isIntersecting } = useIntersectionObserver<HTMLDivElement>({
     threshold: 0.1,
     rootMargin: '50px',
   })
