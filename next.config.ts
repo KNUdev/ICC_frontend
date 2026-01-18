@@ -27,8 +27,11 @@ const nextConfig: NextConfig = {
   },
   ...(process.env.NODE_ENV === 'production' && {
     images: {
-      domains: ['knu-icc.netlify.app'],
       remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'knu-icc.netlify.app',
+        },
         {
           protocol: 'https',
           hostname: 'iccknu.pp.ua',
