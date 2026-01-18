@@ -15,7 +15,7 @@ export default function LoadMoreTrigger({
   hasMore,
   loading,
 }: LoadMoreTriggerProps) {
-  const { targetRef, isIntersecting } = useIntersectionObserver({
+  const { targetRef, isIntersecting } = useIntersectionObserver<HTMLDivElement>({
     threshold: 0.1,
     rootMargin: '100px',
   })
