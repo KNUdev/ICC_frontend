@@ -1,15 +1,12 @@
 'use client'
 
-import type { Department } from '@/app/[locale]/(public)/(home)/components/Form/form.interfaces'
 import ArrowRight from '@/assets/image/icons/arrow-right.svg'
 import UploadFile from '@/assets/image/icons/file.svg'
 import { FieldError } from '@/common/components/FieldError/FieldError'
-import DropDownInput from '@/common/components/Input/DropDownInput/DropDownInput'
 import { useRouter } from '@/i18n/navigation'
-import { getDepartments } from '@/shared/api/departments'
-import { useLocale, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 import Form from 'next/form'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { CooldownModal } from './CooldownModal/CooldownModal'
 import styles from './FormApplication.module.scss'
 import { submitToZammad } from './zammad'
@@ -19,41 +16,25 @@ interface FormApplicationProps {
 }
 
 export function FormApplication({ formId = 'default' }: FormApplicationProps) {
-  const [selectedFacultyId, setSelectedFacultyId] = useState<string | null>(
-    null,
-  )
-  const [departments, setDepartments] = useState<Department[]>([])
   const [file, setFile] = useState<File | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showSubmission, setShowSubmission] = useState<boolean | null>(null)
   const [submissionErrorMessage, setSubmissionErrorMessage] = useState<
     string | null
   >(null)
-  const [dropdownError, setDropdownError] = useState<string | null>(null)
   const [showCooldownModal, setShowCooldownModal] = useState(false)
   const [cooldownRemainingTime, setCooldownRemainingTime] = useState(0)
   const [formErrors, setFormErrors] = useState<{
     fullname?: string
     email?: string
-    faculty?: string
     description?: string
     photo?: string
   }>({})
 
   const tFormApplication = useTranslations('form/application')
-  const locale = useLocale()
   const router = useRouter()
 
   const COOLDOWN_DURATION = 5 * 60 * 1000
-
-  const facultyOptions = useMemo(
-    () =>
-      departments.map((faculty) => ({
-        value: faculty.id,
-        label: faculty.name[locale as 'en' | 'uk'],
-      })),
-    [departments, locale],
-  )
 
   const showSubmissionMessage = useCallback(() => {
     setTimeout(() => setShowSubmission(null), 3000)
@@ -93,10 +74,6 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
         errors.email = tFormApplication('validation.email')
       }
 
-      if (!selectedFacultyId) {
-        errors.faculty = tFormApplication('validation.faculty')
-      }
-
       const description = form.problemDescription.value.trim()
       if (!description) {
         errors.description = tFormApplication('validation.description')
@@ -108,7 +85,7 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
 
       return errors
     },
-    [tFormApplication, selectedFacultyId, file],
+    [tFormApplication, file],
   )
 
   const clearFieldError = useCallback((fieldName: keyof typeof formErrors) => {
@@ -119,53 +96,23 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
     })
   }, [])
 
-  const fetchDepartments = useCallback(async () => {
-    try {
-      const departments = await getDepartments({
-        pageNumber: 0,
-        pageSize: 10,
-      })
-      setDepartments(departments)
-      setDropdownError(null)
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.error(err.message)
-        setDropdownError(tFormApplication('error'))
-      }
-    }
-  }, [tFormApplication])
-
   const fetchForm = useCallback(
     async (form: HTMLFormElement) => {
-      if (!selectedFacultyId) {
-        console.error('No faculty selected')
-        return
-      }
-
       const fullname = form.applicantName.value
       const email = form.applicantEmail.value
       const description = form.problemDescription.value
-
-      const selectedDepartment = departments.find(
-        (d) => d.id === selectedFacultyId,
-      )
-      const facultyName =
-        selectedDepartment?.name[locale as 'en' | 'uk'] || selectedFacultyId
-
-      const body = `Faculty: ${facultyName}\n\n${description}`
 
       try {
         await submitToZammad({
           name: fullname,
           email: email,
-          body: body,
+          body: description,
           file: file,
         })
 
         setLastSubmissionTime()
         form.reset()
         setFile(null)
-        setSelectedFacultyId(null)
         setSubmissionErrorMessage(null)
         router.push('/success')
       } catch (err) {
@@ -181,15 +128,7 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
         showSubmissionMessage()
       }
     },
-    [
-      selectedFacultyId,
-      file,
-      departments,
-      locale,
-      showSubmissionMessage,
-      router,
-      setLastSubmissionTime,
-    ],
+    [file, showSubmissionMessage, router, setLastSubmissionTime],
   )
 
   const handleSubmit = useCallback(
@@ -324,39 +263,6 @@ export function FormApplication({ formId = 'default' }: FormApplicationProps) {
         </div>
 
         <FieldError error={formErrors.email} />
-      </div>
-
-      <div className={`${styles.fieldWrapper} ${styles.small}`}>
-        <label className={styles.label} htmlFor={`faculty-${formId}`}>
-          <p className={styles.labelText}>
-            {tFormApplication(`labels.faculty`)}
-          </p>
-          <span
-            className={styles.labelSpan}
-            title={tFormApplication('required')}
-          >
-            *
-          </span>
-        </label>
-
-        <DropDownInput
-          options={facultyOptions}
-          value={selectedFacultyId}
-          onOpen={() => {
-            if (departments.length === 0) {
-              fetchDepartments()
-            }
-          }}
-          onSelect={(value) => {
-            setSelectedFacultyId(value)
-            clearFieldError('faculty')
-          }}
-          placeholder={tFormApplication('placeholders.faculty')}
-          hasError={!!dropdownError || !!formErrors.faculty}
-          errorMessage={dropdownError || formErrors.faculty}
-        />
-
-        <FieldError error={formErrors.faculty} />
       </div>
 
       <div className={`${styles.fieldWrapper} ${styles.big}`}>
