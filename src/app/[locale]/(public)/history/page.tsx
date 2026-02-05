@@ -5,8 +5,23 @@ import HomeIcon from '@/assets/image/icons/icon_home.svg'
 import Hyperlink from '@/common/components/Hyperlink/Hyperlink'
 import { PAGES } from '@/shared/config/page.config'
 import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import styles from './page.module.scss'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'history' })
+
+  return {
+    title: t('title'),
+  }
+}
 
 export default function History() {
   const tCommon = useTranslations('common')
@@ -91,7 +106,7 @@ export default function History() {
         <div className={styles.content}>
           {sections.map((section) => (
             <section key={section.id} className={styles.section}>
-              <h3>{section.title}</h3>
+              <h2>{section.title}</h2>
               <p>{section.text}</p>
             </section>
           ))}

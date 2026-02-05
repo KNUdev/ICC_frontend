@@ -1,0 +1,13 @@
+{
+  "title": "Documents",
+  "sections": {
+    "regulations": "Regulations",
+    "instructions": "Instructions",
+    "procedures": "Procedures",
+    "other": "Other documents"
+  },
+  "list": [
+    { "name": "ICC Regulations", "link": "#" },
+    { "name": "Network User Instructions", "link": "#" }
+  ]
+}

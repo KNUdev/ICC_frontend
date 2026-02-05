@@ -27,7 +27,7 @@ const ErrorMessage = ({ message, isVisible, onClose }: ErrorMessageProps) => {
   if (!isVisible) return null
 
   return (
-    <div className={styles.errorMessage}>
+    <div className={styles.errorMessage} role='alert'>
       <div className={styles.content}>
         <ErrorIcon />
         <span className={styles.text}>{message}</span>

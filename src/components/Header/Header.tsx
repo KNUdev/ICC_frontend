@@ -44,7 +44,7 @@ export function Header({}: HeaderProps) {
 
   return (
     <>
-      <header id={styles.header} role='contentinfo'>
+      <header id={styles.header} role='banner'>
         <div className='layout-wrapper'>
           <div className={styles.navLogoWrapper}>
             <Link href={PAGES.HOME} className='navLink'>

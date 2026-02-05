@@ -1,6 +1,21 @@
 import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
+import type { Metadata } from 'next'
 import { INSTITUTION_LINKS } from '@/shared/config/page.config'
 import styles from './page.module.scss'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'common' })
+
+  return {
+    title: t('institutionsHeading'),
+  }
+}
 
 export default function ApplicationsPage() {
   const tCommon = useTranslations('common')

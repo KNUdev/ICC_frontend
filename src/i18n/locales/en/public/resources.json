@@ -1,0 +1,8 @@
+{
+  "title": "Resources",
+  "description": "Useful materials, instructions, and external services.",
+  "list": [
+    { "name": "University Email", "link": "https://mail.univ.kiev.ua" },
+    { "name": "Distance Learning System", "link": "https://moodle.univ.kiev.ua" }
+  ]
+}
