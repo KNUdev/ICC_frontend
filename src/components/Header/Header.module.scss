@@ -283,7 +283,7 @@
   border: none;
   cursor: pointer;
   padding: 0.5rem;
-  z-index: 150;
+  z-index: 1100;
   position: relative;
   border-radius: 4px;
   transition: all 0.2s ease;
@@ -345,27 +345,17 @@
     display: block;
     position: fixed;
     top: 0;
+    bottom: 0;
     left: -100%;
-    width: 80%;
-    height: 100dvh;
+    width: 100%;
     background: #fff;
     z-index: 1000;
     
-    // Продлеваем фон вверх для статус-бара iOS
-    &::before {
-      content: '';
-      position: absolute;
-      top: -100px;
-      left: 0;
-      right: 0;
-      height: 100px;
-      background: #fff;
-    }
-
     padding: calc(5rem + env(safe-area-inset-top)) 2rem calc(2rem + env(safe-area-inset-bottom));
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
     transition: left 0.3s ease;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 
     &.open {
       left: 0;
@@ -373,7 +363,6 @@
   }
 
   @include mobile {
-    width: 100%;
     padding: calc(4.5rem + env(safe-area-inset-top)) 1.5rem calc(2rem + env(safe-area-inset-bottom));
   }
 }
@@ -469,8 +458,10 @@
     transition: opacity 0.3s ease, visibility 0.3s ease;
 
     &.open {
-      opacity: 1;
-      visibility: visible;
+      @media (min-width: 769px) {
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 }
