@@ -96,11 +96,14 @@ export function useFormLinesAnimation(
     const simplifiedEasing = 'cubic-bezier(0.4, 0.0, 0.2, 1)'
 
     requestAnimationFrame(() => {
+      let allPathsReady = true
+      
       const pathData = paths.map((path, index) => {
         const line = lines[index]
         const totalLength = path.getTotalLength()
 
         if (totalLength === 0) {
+          allPathsReady = false
           return {
             path,
             line,
@@ -125,9 +128,13 @@ export function useFormLinesAnimation(
         }
       })
 
+      if (!allPathsReady) return
+
       const validPathData = pathData.filter((data) => data.isValid)
       const mainPathData = validPathData.find((data) => data.isMainLine)
+      
       if (mainPathData) {
+        isFormInitializedRef.current = true
         const mainAnimation = mainPathData.path.animate(
           [
             { strokeDashoffset: mainPathData.totalLength },
@@ -138,7 +145,6 @@ export function useFormLinesAnimation(
             duration: adaptedMainDuration,
             easing: simplifiedEasing,
             fill: 'forwards',
-            composite: 'replace',
           },
         )
         formAnimationsRef.current.push(mainAnimation)
@@ -147,7 +153,7 @@ export function useFormLinesAnimation(
 
         setTimeout(() => {
           const sideAnimations = pathData
-            .filter((data) => !data.isMainLine)
+            .filter((data) => !data.isMainLine && data.isValid)
             .map((data) => {
               const animation = data.path.animate(
                 [
@@ -159,7 +165,6 @@ export function useFormLinesAnimation(
                   duration: adaptedSideDuration,
                   easing: simplifiedEasing,
                   fill: 'forwards',
-                  composite: 'replace',
                 },
               )
               return animation
@@ -170,6 +175,7 @@ export function useFormLinesAnimation(
       }
     })
   }, [
+    isMounted,
     lines,
     mainLineDuration,
     sideLineDuration,
@@ -197,15 +203,19 @@ export function useFormLinesAnimation(
 
   useEffect(() => {
     if (!isMounted) return
-    const timeoutId = setTimeout(() => {
+    
+    const checkAndInit = () => {
       if (!isFormInitializedRef.current && baseAnimation.pathRefs.length > 0) {
         startFormAnimationCycle()
-        isFormInitializedRef.current = true
       }
-    }, 200)
+    }
+
+    const timeoutId = setTimeout(checkAndInit, 200)
+    const backupTimeoutId = setTimeout(checkAndInit, 1200)
 
     return () => {
       clearTimeout(timeoutId)
+      clearTimeout(backupTimeoutId)
     }
   }, [startFormAnimationCycle, baseAnimation.pathRefs.length, isMounted])
 

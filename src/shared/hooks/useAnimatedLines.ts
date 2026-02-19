@@ -88,10 +88,15 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
     }
 
     requestAnimationFrame(() => {
+      let allPathsReady = true
+      
       paths.forEach((path, index) => {
         try {
           const totalLength = path.getTotalLength()
-          if (totalLength === 0) return
+          if (totalLength === 0) {
+            allPathsReady = false
+            return
+          }
 
           const duration =
             animationConfig.durationVariation > 0
@@ -116,7 +121,6 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
               easing: animationConfig.easing,
               iterations: Infinity,
               fill: 'forwards',
-              composite: 'replace',
             },
           )
 
@@ -131,6 +135,10 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
           console.warn('Failed to create animation for path:', error)
         }
       })
+
+      if (allPathsReady && paths.length > 0) {
+        isInitializedRef.current = true
+      }
     })
   }, [animationConfig])
 
@@ -141,15 +149,18 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
   useEffect(() => {
     if (!isMounted) return
 
-    const timeoutId = setTimeout(() => {
+    const checkAndInit = () => {
       if (!isInitializedRef.current && pathRefs.current.length > 0) {
         createAnimations()
-        isInitializedRef.current = true
       }
-    }, 100)
+    }
+
+    const timeoutId = setTimeout(checkAndInit, 100)
+    const backupTimeoutId = setTimeout(checkAndInit, 1000)
 
     return () => {
       clearTimeout(timeoutId)
+      clearTimeout(backupTimeoutId)
     }
   }, [createAnimations, lines.length, isMounted])
 
