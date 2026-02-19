@@ -1,13 +1,17 @@
 {
-  "title": "Documents",
-  "sections": {
-    "regulations": "Regulations",
-    "instructions": "Instructions",
-    "procedures": "Procedures",
-    "other": "Other documents"
-  },
-  "list": [
-    { "name": "ICC Regulations", "link": "#" },
-    { "name": "Network User Instructions", "link": "#" }
-  ]
+	"title": "Documents",
+	"list": [
+		{
+			"name": "ICC Regulations",
+			"link": "https://siteforicc.wordpress.com/документи-2/"
+		},
+		{
+			"name": "Network User Instructions",
+			"link": "https://siteforicc.wordpress.com/наказ-ректора/"
+		},
+		{
+			"name": "Internet Usage Rules",
+			"link": "https://siteforicc.wordpress.com/правила-користування-мережею-інтерн/"
+		}
+	]
 }
