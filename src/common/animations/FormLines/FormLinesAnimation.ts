@@ -114,7 +114,7 @@ export function useFormLinesAnimation(
         }
 
         Object.assign(path.style, baseAnimation.defaultLineStyles)
-        path.style.strokeDasharray = `${totalLength}`
+        path.style.strokeDasharray = `${totalLength} ${totalLength}`
 
         const initialOffset = line.isMainLine ? totalLength : -totalLength
         path.style.strokeDashoffset = `${initialOffset}`

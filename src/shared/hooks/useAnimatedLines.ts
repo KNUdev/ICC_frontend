@@ -107,8 +107,13 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
               : animationConfig.baseDuration
 
           Object.assign(path.style, defaultLineStyles)
-          path.style.strokeDasharray = `${totalLength}`
+          path.style.strokeDasharray = `${totalLength} ${totalLength}`
           path.style.strokeDashoffset = `${totalLength}`
+
+          const timeOffset =
+            animationConfig.durationVariation > 0
+              ? (index * 200) % duration
+              : (index * 100) % duration
 
           const animation = path.animate(
             [
@@ -121,15 +126,10 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
               easing: animationConfig.easing,
               iterations: Infinity,
               fill: 'forwards',
+              iterationStart: timeOffset / duration,
             },
           )
 
-          const timeOffset =
-            animationConfig.durationVariation > 0
-              ? (index * 200) % duration
-              : index * 100
-
-          animation.currentTime = timeOffset
           animationsRef.current.push(animation)
         } catch (error) {
           console.warn('Failed to create animation for path:', error)
