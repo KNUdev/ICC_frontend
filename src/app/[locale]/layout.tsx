@@ -82,7 +82,7 @@ export async function generateMetadata({
 			userScalable: false,
 			viewportFit: 'cover',
 		},
-		themeColor: '#ffffff',
+		themeColor: '#f6f6f6',
 	}
 }
 
