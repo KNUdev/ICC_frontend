@@ -347,10 +347,21 @@
     top: 0;
     left: -100%;
     width: 80%;
-    height: 100vh;
     height: 100dvh;
     background: #fff;
-    z-index: 100;
+    z-index: 1000;
+    
+    // Продлеваем фон вверх для статус-бара iOS
+    &::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: #fff;
+    }
+
     padding: calc(5rem + env(safe-area-inset-top)) 2rem calc(2rem + env(safe-area-inset-bottom));
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     transition: left 0.3s ease;
