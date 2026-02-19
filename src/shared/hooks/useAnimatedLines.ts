@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 export interface LineConfig {
   d: string
@@ -37,8 +37,6 @@ const defaultLineStyles: React.CSSProperties = {
   fill: 'none',
   strokeLinecap: 'round',
   strokeLinejoin: 'round',
-  willChange: 'stroke-dashoffset',
-  transform: 'translateZ(0)',
 }
 
 export function useAnimatedLines(config: AnimatedLinesConfig) {
@@ -52,6 +50,7 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
     forceDisable = false,
   } = config
 
+  const [isMounted, setIsMounted] = useState(false)
   const pathRefs = useRef<(SVGPathElement | null)[]>([])
   const animationsRef = useRef<Animation[]>([])
   const isInitializedRef = useRef(false)
@@ -61,9 +60,9 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
       baseDuration,
       durationVariation,
       easing,
-      shouldAnimate: !forceDisable,
+      shouldAnimate: !forceDisable && isMounted,
     }
-  }, [baseDuration, durationVariation, easing, forceDisable])
+  }, [baseDuration, durationVariation, easing, forceDisable, isMounted])
 
   const setPathRef = useCallback(
     (index: number) => (ref: SVGPathElement | null) => {
@@ -92,6 +91,8 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
       paths.forEach((path, index) => {
         try {
           const totalLength = path.getTotalLength()
+          if (totalLength === 0) return
+
           const duration =
             animationConfig.durationVariation > 0
               ? getRandomDuration(
@@ -134,6 +135,12 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
   }, [animationConfig])
 
   useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isMounted) return
+
     const timeoutId = setTimeout(() => {
       if (!isInitializedRef.current && pathRefs.current.length > 0) {
         createAnimations()
@@ -144,7 +151,7 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
     return () => {
       clearTimeout(timeoutId)
     }
-  }, [createAnimations, lines.length])
+  }, [createAnimations, lines.length, isMounted])
 
   useEffect(() => {
     return () => {

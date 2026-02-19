@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 export interface AnimatedPulseConfig {
   duration?: number
@@ -25,6 +25,7 @@ const defaultConfig: Required<AnimatedPulseConfig> = {
 const createdKeyframes = new Set<string>()
 
 export function useAnimatedPulse(config: AnimatedPulseConfig = {}) {
+  const [isMounted, setIsMounted] = useState(false)
   const finalConfig = useMemo(() => {
     return { ...defaultConfig, ...config }
   }, [config])
@@ -43,17 +44,15 @@ export function useAnimatedPulse(config: AnimatedPulseConfig = {}) {
   )
 
   const pulseStyle = useMemo(() => {
-    if (shouldDisableAnimation) {
+    if (shouldDisableAnimation || !isMounted) {
       return {
         fill: finalConfig.colors.from,
-        transform: 'translateZ(0)',
       } as React.CSSProperties
     }
 
     return {
+      fill: finalConfig.colors.from,
       animation: `${keyframeName} ${finalConfig.duration}ms ${finalConfig.easing} infinite`,
-      willChange: 'fill',
-      transform: 'translateZ(0)',
     } as React.CSSProperties
   }, [
     keyframeName,
@@ -61,41 +60,40 @@ export function useAnimatedPulse(config: AnimatedPulseConfig = {}) {
     finalConfig.easing,
     finalConfig.colors.from,
     shouldDisableAnimation,
+    isMounted,
   ])
 
   useEffect(() => {
+    setIsMounted(true)
+
     if (
       typeof document === 'undefined' ||
-      createdKeyframes.has(keyframeName) ||
       shouldDisableAnimation
     ) {
       return
     }
 
-    const keyframes = `
-      @keyframes ${keyframeName} {
-        0% { fill: ${finalConfig.colors.from}; }
-        50% { fill: ${finalConfig.colors.to}; }
-        100% { fill: ${finalConfig.colors.from}; }
-      }
-    `
-
     const styleId = `pulse-keyframes-${keyframeName}`
+    let styleElement = document.getElementById(styleId) as HTMLStyleElement
 
-    if (!document.getElementById(styleId)) {
-      const style = document.createElement('style')
-      style.id = styleId
-      style.textContent = keyframes
-      document.head.appendChild(style)
-      styleRef.current = style
+    if (!styleElement) {
+      const keyframes = `
+        @keyframes ${keyframeName} {
+          0% { fill: ${finalConfig.colors.from}; }
+          50% { fill: ${finalConfig.colors.to}; }
+          100% { fill: ${finalConfig.colors.from}; }
+        }
+      `
+      styleElement = document.createElement('style')
+      styleElement.id = styleId
+      styleElement.textContent = keyframes
+      document.head.appendChild(styleElement)
       createdKeyframes.add(keyframeName)
     }
 
     return () => {
-      if (styleRef.current && styleRef.current.parentNode) {
-        styleRef.current.parentNode.removeChild(styleRef.current)
-        createdKeyframes.delete(keyframeName)
-      }
+      // We don't remove the style element here because other components 
+      // might be using the same keyframes.
     }
   }, [
     keyframeName,

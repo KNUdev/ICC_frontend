@@ -4,7 +4,7 @@ import {
   type GradientConfig,
   type LineConfig,
 } from '@/shared/hooks/useAnimatedLines'
-import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 export interface FormLineConfig {
   d: string
@@ -45,9 +45,14 @@ export function useFormLinesAnimation(
     forceDisable = false,
   } = config
 
+  const [isMounted, setIsMounted] = useState(false)
   const formAnimationsRef = useRef<Animation[]>([])
   const cycleTimeoutRef = useRef<number | null>(null)
   const isFormInitializedRef = useRef(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const animatedLinesConfig = useMemo(() => {
     const convertedLines: LineConfig[] = lines.map((line) => ({
@@ -68,6 +73,7 @@ export function useFormLinesAnimation(
   const baseAnimation = useAnimatedLines(animatedLinesConfig)
 
   const createSynchronizedFormAnimation = useCallback(() => {
+    if (!isMounted) return
     formAnimationsRef.current.forEach((animation) => animation.cancel())
     formAnimationsRef.current = []
 
@@ -94,6 +100,16 @@ export function useFormLinesAnimation(
         const line = lines[index]
         const totalLength = path.getTotalLength()
 
+        if (totalLength === 0) {
+          return {
+            path,
+            line,
+            totalLength: 0,
+            isMainLine: line.isMainLine,
+            isValid: false,
+          }
+        }
+
         Object.assign(path.style, baseAnimation.defaultLineStyles)
         path.style.strokeDasharray = `${totalLength}`
 
@@ -105,10 +121,12 @@ export function useFormLinesAnimation(
           line,
           totalLength,
           isMainLine: line.isMainLine,
+          isValid: true,
         }
       })
 
-      const mainPathData = pathData.find((data) => data.isMainLine)
+      const validPathData = pathData.filter((data) => data.isValid)
+      const mainPathData = validPathData.find((data) => data.isMainLine)
       if (mainPathData) {
         const mainAnimation = mainPathData.path.animate(
           [
@@ -178,6 +196,7 @@ export function useFormLinesAnimation(
   }, [createSynchronizedFormAnimation, cycleDuration, forceDisable])
 
   useEffect(() => {
+    if (!isMounted) return
     const timeoutId = setTimeout(() => {
       if (!isFormInitializedRef.current && baseAnimation.pathRefs.length > 0) {
         startFormAnimationCycle()
@@ -188,7 +207,7 @@ export function useFormLinesAnimation(
     return () => {
       clearTimeout(timeoutId)
     }
-  }, [startFormAnimationCycle, baseAnimation.pathRefs.length])
+  }, [startFormAnimationCycle, baseAnimation.pathRefs.length, isMounted])
 
   useEffect(() => {
     return () => {
