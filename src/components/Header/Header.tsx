@@ -68,32 +68,32 @@ export function Header({}: HeaderProps) {
 							</ul>
 						</nav>
 
-						<button
-							className={styles.mobileMenuButton}
-							onClick={toggleMobileMenu}
-							aria-label={isMobileMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
-							aria-expanded={isMobileMenuOpen}
-						>
-							<span
-								className={`${styles.hamburgerLine} ${
-									isMobileMenuOpen ? styles.open : ''
-								}`}
-							></span>
-							<span
-								className={`${styles.hamburgerLine} ${
-									isMobileMenuOpen ? styles.open : ''
-								}`}
-							></span>
-							<span
-								className={`${styles.hamburgerLine} ${
-									isMobileMenuOpen ? styles.open : ''
-								}`}
-							></span>
-						</button>
-					</div>
+						<div className={styles.headerActions}>
+							<LanguageSwitcher />
 
-					<div className={styles.userPanel}>
-						<LanguageSwitcher />
+							<button
+								className={styles.mobileMenuButton}
+								onClick={toggleMobileMenu}
+								aria-label={isMobileMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
+								aria-expanded={isMobileMenuOpen}
+							>
+								<span
+									className={`${styles.hamburgerLine} ${
+										isMobileMenuOpen ? styles.open : ''
+									}`}
+								></span>
+								<span
+									className={`${styles.hamburgerLine} ${
+										isMobileMenuOpen ? styles.open : ''
+									}`}
+								></span>
+								<span
+									className={`${styles.hamburgerLine} ${
+										isMobileMenuOpen ? styles.open : ''
+									}`}
+								></span>
+							</button>
+						</div>
 					</div>
 				</div>
 			</header>

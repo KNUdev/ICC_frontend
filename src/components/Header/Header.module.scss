@@ -34,6 +34,7 @@
 .navLogoWrapper {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   gap: 3.125rem;
   flex-grow: 1;
@@ -44,22 +45,31 @@
 
   @include mobile-horizontal {
     gap: 1.5rem;
-    flex-grow: 0;
+    flex-grow: 1;
     min-width: auto;
-    justify-content: space-between;
     width: 100%;
   }
 
   @include mobile {
     gap: 1rem;
     width: 100%;
-    justify-content: space-between;
+  }
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  @include mobile {
+    gap: 1.25rem;
   }
 }
 
 .navList {
   display: flex;
   align-items: center;
+  justify-content: center;
 
   list-style: none;
   overflow: hidden;
@@ -98,25 +108,6 @@
 
   @include tablet {
     font-size: 0.875rem;
-  }
-}
-
-.userPanel {
-  display: flex;
-  align-items: center;
-
-  gap: 0.625rem;
-  position: relative;
-  z-index: 200;
-
-  @include mobile-horizontal {
-    width: 100%;
-    justify-content: flex-end;
-    order: 2;
-  }
-
-  @include mobile {
-    gap: 0.5rem;
   }
 }
 
