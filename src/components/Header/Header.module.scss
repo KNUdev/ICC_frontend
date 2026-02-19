@@ -345,13 +345,13 @@
     display: block;
     position: fixed;
     top: 0;
-    bottom: 0;
     left: -100%;
     width: 100%;
+    height: 100%;
     background: #fff;
     z-index: 1000;
     
-    padding: calc(5rem + env(safe-area-inset-top)) 2rem calc(2rem + env(safe-area-inset-bottom));
+    padding: calc(5rem + env(safe-area-inset-top)) 2rem 0; // Убираем нижний паддинг отсюда
     box-shadow: none;
     transition: left 0.3s ease;
     overflow-y: auto;
@@ -363,7 +363,7 @@
   }
 
   @include mobile {
-    padding: calc(4.5rem + env(safe-area-inset-top)) 1.5rem calc(2rem + env(safe-area-inset-bottom));
+    padding: calc(4.5rem + env(safe-area-inset-top)) 1.5rem 0;
   }
 }
 
@@ -372,7 +372,7 @@
   flex-direction: column;
   gap: 1.5rem;
   list-style: none;
-  padding: 0;
+  padding: 0 0 calc(2rem + env(safe-area-inset-bottom)); // Переносим паддинг сюда
   margin: 0;
 
   li {
