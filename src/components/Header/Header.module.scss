@@ -3,16 +3,16 @@
 #header {
   font-family: Inter, sans-serif;
   background: #fff;
-  padding: 1.5625rem 0;
+  padding: calc(1.5625rem + env(safe-area-inset-top)) 0 1.5625rem;
   position: relative;
-  z-index: 1001; // Должно быть выше, чем mobileNav (1000)
+  z-index: 1001;
 
   @include tablet {
-    padding: 1.25rem 0;
+    padding: calc(1.25rem + env(safe-area-inset-top)) 0 1.25rem;
   }
 
   @include mobile {
-    padding: 1rem 0;
+    padding: calc(1rem + env(safe-area-inset-top)) 0 1rem;
   }
 
   & > div {
@@ -351,7 +351,7 @@
     background: #fff;
     z-index: 1000;
     
-    padding: calc(5rem + env(safe-area-inset-top)) 2rem 0; // Убираем нижний паддинг отсюда
+    padding: calc(6rem + env(safe-area-inset-top)) 2rem 0; 
     box-shadow: none;
     transition: left 0.3s ease;
     overflow-y: auto;

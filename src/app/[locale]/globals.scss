@@ -10,12 +10,15 @@
 @use '@/common/styles/inputs/searchinput.scss';
 @use '@/common/styles/inputs/textinput.scss';
 
+body {
+  background: #fff;
+}
+
 .container {
   background: #f6f6f6;
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding-top: env(safe-area-inset-top);
 }
 
 .layout-wrapper {
