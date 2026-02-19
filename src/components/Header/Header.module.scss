@@ -5,7 +5,7 @@
   background: #fff;
   padding: 1.5625rem 0;
   position: relative;
-  z-index: 200;
+  z-index: 1001; // Должно быть выше, чем mobileNav (1000)
 
   @include tablet {
     padding: 1.25rem 0;
