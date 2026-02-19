@@ -348,9 +348,10 @@
     left: -100%;
     width: 80%;
     height: 100vh;
+    height: 100dvh;
     background: #fff;
     z-index: 100;
-    padding: 5rem 2rem 2rem;
+    padding: calc(5rem + env(safe-area-inset-top)) 2rem calc(2rem + env(safe-area-inset-bottom));
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
     transition: left 0.3s ease;
     overflow-y: auto;
@@ -361,8 +362,8 @@
   }
 
   @include mobile {
-    width: 85%;
-    padding: 4rem 1.5rem 2rem;
+    width: 100%;
+    padding: calc(4.5rem + env(safe-area-inset-top)) 1.5rem calc(2rem + env(safe-area-inset-bottom));
   }
 }
 
