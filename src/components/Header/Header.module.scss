@@ -7,6 +7,17 @@
   position: relative;
   z-index: 1001;
 
+  &::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: #fff;
+    pointer-events: none;
+  }
+
   @include tablet {
     padding: 1.25rem 0;
   }
@@ -350,12 +361,12 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     z-index: 1000;
     
-    padding: calc(6rem + env(safe-area-inset-top)) 2rem 0; 
+    padding: calc(6.5rem + env(safe-area-inset-top)) 2rem 0; 
     box-shadow: none;
     transition: left 0.3s ease;
     overflow-y: auto;
@@ -367,7 +378,7 @@
   }
 
   @include mobile {
-    padding: calc(4.5rem + env(safe-area-inset-top)) 1.5rem 0;
+    padding: calc(6rem + env(safe-area-inset-top)) 1.5rem 0;
   }
 }
 
