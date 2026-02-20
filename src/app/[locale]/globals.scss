@@ -13,28 +13,27 @@
 body {
   background: #f6f6f6;
 }
-
 .container {
-  background: #f6f6f6;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+	background: #f6f6f6;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 }
 
 .layout-wrapper {
-  max-width: 115rem;
-  margin: auto;
-  padding-inline: clamp(0rem, 2vw, 2rem);
-  width: 100%;
+	max-width: 115rem;
+	margin: auto;
+	padding-inline: clamp(0rem, 2vw, 2rem);
+	width: 100%;
 }
 
 .main-wrapper {
-  max-width: 93.5rem;
-  margin: auto;
-  padding-inline: clamp(0rem, 2vw, 2rem);
-  width: 100%;
+	max-width: 93.5rem;
+	margin: auto;
+	padding-inline: clamp(0rem, 2vw, 2rem);
+	width: 100%;
 }
 
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }

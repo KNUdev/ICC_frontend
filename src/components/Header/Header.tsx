@@ -35,10 +35,12 @@ export function Header({}: HeaderProps) {
 			document.addEventListener('keydown', handleEscape)
 			document.body.style.overflow = 'hidden'
 		}
+		document.body.classList.toggle('mobile-menu-open', isMobileMenuOpen)
 
 		return () => {
 			document.removeEventListener('keydown', handleEscape)
 			document.body.style.overflow = 'unset'
+			document.body.classList.remove('mobile-menu-open')
 		}
 	}, [isMobileMenuOpen])
 
