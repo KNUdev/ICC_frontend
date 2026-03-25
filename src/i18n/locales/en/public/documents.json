@@ -3,15 +3,15 @@
 	"list": [
 		{
 			"name": "ICC Regulations",
-			"link": "https://siteforicc.wordpress.com/документи-2/"
+			"link": "/upload/documents/ICC Regulations.pdf"
 		},
 		{
-			"name": "Network User Instructions",
-			"link": "https://siteforicc.wordpress.com/наказ-ректора/"
+			"name": "Rector`s order",
+			"link": "/upload/documents/Rector`s order.pdf"
 		},
 		{
 			"name": "Internet Usage Rules",
-			"link": "https://siteforicc.wordpress.com/правила-користування-мережею-інтерн/"
+			"link": "/upload/documents/Internet Usage Rules.pdf"
 		}
 	]
 }

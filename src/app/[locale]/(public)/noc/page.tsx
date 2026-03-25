@@ -7,43 +7,47 @@ import type { Metadata } from 'next'
 import styles from './page.module.scss'
 
 export async function generateMetadata({
-  params,
+	params,
 }: {
-  params: Promise<{ locale: string }>
+	params: Promise<{ locale: string }>
 }): Promise<Metadata> {
-  const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'public/noc' })
+	const { locale } = await params
+	const t = await getTranslations({ locale, namespace: 'public/noc' })
 
-  return {
-    title: t('title'),
-  }
+	return {
+		title: t('title'),
+	}
 }
 
 export default function NOC() {
-  const tCommon = useTranslations('common')
-  const t = useTranslations('public/noc')
+	const tCommon = useTranslations('common')
+	const t = useTranslations('public/noc')
 
-  return (
-    <div>
-      <section className={styles.historyPage + ' main-wrapper'} id='top'>
-        <div className={styles.header}>
-          <div className='hyperlink-container'>
-            <Hyperlink href={PAGES.HOME}>
-              <div className={styles.hyperlink}>
-                <HomeIcon />
-                <span>{tCommon('backToHome')}</span>
-              </div>
-            </Hyperlink>
-          </div>
-          <h1 className={styles.title}>{t('title')}</h1>
-        </div>
+	return (
+		<div>
+			<section
+				className={styles.historyPage + ' main-wrapper'}
+				id='top'
+				style={{ gap: '2.4rem' }}
+			>
+				<div className={styles.header}>
+					<div className='hyperlink-container'>
+						<Hyperlink href={PAGES.HOME}>
+							<div className={styles.hyperlink}>
+								<HomeIcon />
+								<span>{tCommon('backToHome')}</span>
+							</div>
+						</Hyperlink>
+					</div>
+					<h1 className={styles.title}>{t('title')}</h1>
+				</div>
 
-        <div className={styles.content}>
-          <section className={styles.section}>
-            <p>{t('description')}</p>
-          </section>
-        </div>
-      </section>
-    </div>
-  )
+				<div className={styles.content}>
+					<section className={styles.section}>
+						<p>{t('description')}</p>
+					</section>
+				</div>
+			</section>
+		</div>
+	)
 }
