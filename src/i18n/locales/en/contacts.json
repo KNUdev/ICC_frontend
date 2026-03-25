@@ -1,0 +1,22 @@
+{
+	"title": "Contacts",
+	"headings": {
+		"main": "Our Contacts",
+		"address": "Official ICC Address",
+		"postal": "Postal Address",
+		"phone": "Reception Phone",
+		"email": "Email",
+		"staff": "Phone Directory",
+		"form": "Feedback Form",
+		"map": "We are on the Map"
+	},
+	"address": "Kyiv, Academician Glushkov Avenue, 4d",
+	"postal": "03127, PO Box",
+	"mapMarker": "Nearest metro station: 'Vystavkovyi Tsentr'",
+	"table": {
+		"department": "Position / Department",
+		"name": "Full Name",
+		"phones": "Phone",
+		"room": "Room"
+	}
+}

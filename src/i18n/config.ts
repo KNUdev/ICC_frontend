@@ -11,6 +11,7 @@ export type Locale = (typeof SUPPORTED_LOCALES)[number]
 
 export const NAMESPACES = [
 	'common',
+	'contacts',
 	'home',
 	'footer',
 	'form/text',
@@ -18,11 +19,9 @@ export const NAMESPACES = [
 	'form/points',
 	'form/success',
 	'faq',
-	'photosAlt/alt',
 	'history',
 	'public/staff',
 	'public/documents',
-	'public/gallery',
 	'public/noc',
 	'public/resources',
 ]
