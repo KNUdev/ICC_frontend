@@ -7,11 +7,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
 	const routes = [
 		PAGES.HOME,
-		PAGES.PHOTO_GALLERY,
 		PAGES.HISTORY,
 		PAGES.STAFF,
 		PAGES.DOCUMENTS,
 		PAGES.RESOURCES,
+		PAGES.CONTACTS,
 		PAGES.NOC,
 	].filter((path) => typeof path === 'string' && path.startsWith('/'))
 
