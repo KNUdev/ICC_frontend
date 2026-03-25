@@ -45,14 +45,7 @@ export default function Documents() {
 					<section className={styles.section}>
 						{list.map((item, idx) => (
 							<div key={idx} style={{ marginBottom: '10px' }}>
-								<a
-									href={item.link}
-									target='_blank'
-									rel='noreferrer'
-									style={{ textDecoration: 'underline' }}
-								>
-									{item.name}
-								</a>
+								<Hyperlink href={item.link}>{item.name}</Hyperlink>
 							</div>
 						))}
 					</section>
