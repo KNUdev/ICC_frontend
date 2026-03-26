@@ -16,6 +16,10 @@ const isExternalLink = (href: string): boolean => {
 	)
 }
 
+const isStaticAsset = (href: string): boolean => {
+	return href.startsWith('/upload/') || href.includes('.')
+}
+
 const Hyperlink = ({ href, icon: IconComponent, children }: HyperlinkProps) => {
 	const linkContent = (
 		<>
@@ -24,7 +28,7 @@ const Hyperlink = ({ href, icon: IconComponent, children }: HyperlinkProps) => {
 		</>
 	)
 
-	if (isExternalLink(href)) {
+	if (isExternalLink(href) || isStaticAsset(href)) {
 		return (
 			<a
 				href={href}
