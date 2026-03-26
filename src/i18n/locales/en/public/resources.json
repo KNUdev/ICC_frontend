@@ -1,34 +1,113 @@
 {
 	"title": "Resources",
-	"description": "Useful materials, instructions, and external services.",
+	"description": "Useful materials, instructions and external services.",
+	"backToResources": "Back to resources",
 	"list": [
 		{
-			"name": "University Email",
-			"link": "https://siteforicc.wordpress.com/%d1%80%d0%b5%d1%81%d1%83%d1%80%d1%81%d0%b8-%d0%bf%d0%be%d1%88%d1%82%d0%be%d0%b2%d1%96-%d1%81%d0%b5%d1%80%d0%b2%d0%b5%d1%80%d0%b8/"
+			"name": "University E-mail",
+			"link": "/resources/mail"
 		},
 		{
-			"name": "Websites of university faculties and departments",
+			"name": "Websites of faculties and departments of the university",
 			"link": "http://univ.kiev.ua/ua/dep"
 		},
 		{
 			"name": "Educational and scientific web projects",
-			"link": "https://siteforicc.wordpress.com/%d1%80%d0%b5%d1%81%d1%83%d1%80%d1%81%d0%b8-%d0%b2%d0%b5%d0%b1-%d0%bf%d1%80%d0%be%d0%b5%d0%ba%d1%82%d0%b8-%d0%be%d1%81%d0%b2%d1%96%d1%82%d0%bd%d1%8c%d0%be%d0%b3%d0%be-%d1%96-%d0%bd%d0%b0%d1%83%d0%ba/"
+			"link": "/resources/web-projects-educational"
 		},
 		{
-			"name": "Web projects involving ICC staff",
-			"link": "https://siteforicc.wordpress.com/%d1%80%d0%b5%d1%81%d1%83%d1%80%d1%81%d0%b8-%d0%b2%d0%b5%d0%b1-%d0%bf%d1%80%d0%be%d0%b5%d0%ba%d1%82%d0%b8-%d1%83-%d1%8f%d0%ba%d0%b8%d1%85-%d0%b1%d0%b5%d1%80%d1%83%d1%82%d1%8c-%d1%83%d1%87%d0%b0%d1%81/"
+			"name": "Web projects in which ICC employees participate",
+			"link": "/resources/web-projects-participating"
 		},
 		{
 			"name": "Anonymous FTP servers",
-			"link": "https://siteforicc.wordpress.com/128-2/"
+			"link": "/resources/ftp"
 		},
 		{
 			"name": "Proxy server",
-			"link": "https://siteforicc.wordpress.com/%d1%80%d0%b5%d1%81%d1%83%d1%80%d1%81%d0%b8-%d0%bf%d1%80%d0%be%d0%ba%d1%81%d1%96-%d1%81%d0%b5%d1%80%d0%b2%d0%b5%d1%80/"
+			"link": "/resources/proxy"
 		},
 		{
-			"name": "Computing Cluster",
+			"name": "Computing cluster",
 			"link": "http://cluster.univ.kiev.ua/ukr/"
 		}
-	]
+	],
+	"mail": {
+		"title": "University E-mail",
+		"description": "Currently, five mail servers are available at Taras Shevchenko National University of Kyiv:",
+		"servers": [
+			{
+				"name": "mail.univ.kiev.ua",
+				"description": "the university's main mail server. Supports access via POP3 and IMAP protocols (with encryption), as well as via the web interface (WebMail)."
+			},
+			{
+				"name": "biocc.univ.kiev.ua",
+				"description": "mail server of the biological faculty. Serves the @biocc.univ.kiev.ua domain."
+			},
+			{
+				"name": "econom.univ.kiev.ua",
+				"description": "mail server of the faculty of economics. Serves the @econom.univ.kiev.ua domain."
+			},
+			{
+				"name": "red-gw.univ.kiev.ua",
+				"description": "mail server of the university administration and faculties located in and near the Red Building. Serves domains: @history.univ.kiev.ua, @chem.univ.kiev.ua, @forofice.univ.kiev.ua, @prof.univ.kiev.ua and others."
+			},
+			{
+				"name": "soc-gw.univ.kiev.ua",
+				"description": "mail server of the faculty of sociology and psychology. Serves the @socd.univ.kiev.ua domain."
+			}
+		]
+	},
+	"webProjectsEdu": {
+		"title": "Educational and scientific web projects",
+		"items": [
+			{
+				"name": "M. Maksymovych Scientific Library Website",
+				"description": "Provides access to the library catalog via the Internet with the possibility of regular and advanced search."
+			},
+			{
+				"name": "Periodicals Catalog",
+				"description": "SciLib periodicals server of Taras Shevchenko National University of Kyiv. The goal of the project is to provide university employees with access to scientific and popular science journals in various fields."
+			}
+		]
+	},
+	"webProjectsPart": {
+		"title": "Web projects in which ICC employees participate",
+		"items": [
+			{
+				"name": "CISCO Regional Network Academy",
+				"description": "Created on the basis of the ICC of Taras Shevchenko National University of Kyiv. The cooperation agreement between Cisco Corporation and the university was signed in March 2000."
+			},
+			{
+				"name": "International Nuclear Safety Center in Ukraine",
+				"description": "The International Nuclear Safety Center (INSC) was created to exchange information between nuclear power plants of the world. A representative office of this center in Ukraine operates on the territory of the ICC."
+			}
+		]
+	},
+	"ftp": {
+		"title": "Anonymous FTP servers",
+		"description": "Currently, the following are available on the university network:",
+		"items": [
+			{
+				"name": "University FTP server",
+				"link": "ftp://ftp.univ.kiev.ua",
+				"description": "(Exhibition)."
+			},
+			{
+				"name": "File archives of faculties and institutes",
+				"description": "Available only from the university's internal network."
+			}
+		],
+		"purpose": "The FTP server can be used for temporary file storage and as an intermediate point when transferring data between computers, in particular outside the university network."
+	},
+	"proxy": {
+		"title": "Proxy server",
+		"description": "The proxy server serves to optimize access to the Internet. It provides users of the university network with access to WWW and FTP resources and regulates the load on the external channels of the university.",
+		"stats": [
+			"The load level is up to 50 requests per second",
+			"Serves more than 1500 clients",
+			"The size of the file cache is 33 GB"
+		],
+		"monitoring": "The proxy server is also used to monitor compliance with the rules for using the Internet, approved by the order of the rector. For violation of the rules, penalties are provided in the form of deprivation of the right of access to external resources for a period of one month."
+	}
 }
