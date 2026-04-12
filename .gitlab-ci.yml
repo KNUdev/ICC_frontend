@@ -1,0 +1,42 @@
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - when: never
+
+stages:
+  - lint
+  - deploy
+
+default:
+  image: node:22-alpine
+  before_script:
+    - corepack enable
+    - pnpm config set store-dir .pnpm-store
+  cache:
+    key:
+      files:
+        - pnpm-lock.yaml
+    paths:
+      - .pnpm-store/
+
+lint:
+  stage: lint
+  script:
+    - pnpm install --frozen-lockfile
+    - pnpm run lint
+
+deploy-staging:
+  stage: deploy
+  script:
+    - echo "TODO — add staging deployment steps for the development branch"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "development"'
+
+deploy-production:
+  stage: deploy
+  script:
+    - echo "TODO — add production deployment steps for the main branch"
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"'
+      when: manual
