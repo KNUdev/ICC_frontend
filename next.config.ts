@@ -3,6 +3,7 @@ import createNextIntlPlugin from 'next-intl/plugin'
 import withPWAInit from 'next-pwa'
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
