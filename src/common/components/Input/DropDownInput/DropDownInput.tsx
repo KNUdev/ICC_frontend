@@ -3,7 +3,7 @@
 import ArrowDown from '@/assets/image/icons/arrow-down.svg'
 import ArrowUp from '@/assets/image/icons/arrow-up.svg'
 import ErrorIcon from '@/assets/image/icons/bigger-error.svg'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import styles from './DropDownInput.module.scss'
 
 interface Option {
@@ -35,29 +35,25 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
   status,
 }) => {
   const [inputValue, setInputValue] = useState('')
-  const [filteredOptions, setFilteredOptions] = useState<Option[]>([])
   const [isExpanded, setIsExpanded] = useState(false)
   const [isMouseDown, setIsMouseDown] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (!isExpanded) {
-      if (value === null || value === '') {
-        setInputValue('')
-      } else {
-        const selected = options.find((o) => o.value === value)
-        if (selected) setInputValue(selected.label)
-      }
-    }
-  }, [value, options, isExpanded])
-
-  useEffect(() => {
-    setFilteredOptions(
+  const filteredOptions = useMemo(
+    () =>
       options.filter((option) =>
         option.label.toLowerCase().includes(inputValue.toLowerCase()),
       ),
-    )
-  }, [inputValue, options])
+    [inputValue, options],
+  )
+
+  const selectedLabel = useMemo(() => {
+    if (value === null || value === '') {
+      return ''
+    }
+
+    return options.find((option) => option.value === value)?.label ?? ''
+  }, [options, value])
 
   useEffect(() => {
     const isValid = options.some(
@@ -106,7 +102,8 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
 
   const toggleExpanded = () => {
     if (!isExpanded) {
-      onOpen(inputValue)
+      setInputValue(selectedLabel)
+      onOpen(selectedLabel)
     }
     setIsExpanded((prev) => !prev)
   }
@@ -131,11 +128,12 @@ const DropDownInput: React.FC<SearchableDropdownProps> = ({
       <div className={styles.inputContainer}>
         <input
           type='text'
-          value={inputValue}
+          value={isExpanded ? inputValue : selectedLabel}
           onChange={handleInputChange}
           onFocus={() => {
             if (!isExpanded) {
-              onOpen(inputValue)
+              setInputValue(selectedLabel)
+              onOpen(selectedLabel)
               setIsExpanded(true)
             }
           }}

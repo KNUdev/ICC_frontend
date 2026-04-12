@@ -4,7 +4,7 @@ import {
   type GradientConfig,
   type LineConfig,
 } from '@/shared/hooks/useAnimatedLines'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 
 export interface FormLineConfig {
   d: string
@@ -45,14 +45,10 @@ export function useFormLinesAnimation(
     forceDisable = false,
   } = config
 
-  const [isMounted, setIsMounted] = useState(false)
   const formAnimationsRef = useRef<Animation[]>([])
   const cycleTimeoutRef = useRef<number | null>(null)
   const isFormInitializedRef = useRef(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+  const startFormAnimationCycleRef = useRef<() => void>(() => {})
 
   const animatedLinesConfig = useMemo(() => {
     const convertedLines: LineConfig[] = lines.map((line) => ({
@@ -71,20 +67,20 @@ export function useFormLinesAnimation(
   }, [lines, gradients, className])
 
   const baseAnimation = useAnimatedLines(animatedLinesConfig)
+  const { defaultLineStyles, getPathRefs } = baseAnimation
 
   const createSynchronizedFormAnimation = useCallback(() => {
-    if (!isMounted) return
     formAnimationsRef.current.forEach((animation) => animation.cancel())
     formAnimationsRef.current = []
 
-    const paths = baseAnimation.pathRefs.filter(Boolean) as SVGPathElement[]
+    const paths = getPathRefs().filter(Boolean) as SVGPathElement[]
 
     if (paths.length === 0) return
 
     const shouldDisableAnimation = forceDisable
     if (shouldDisableAnimation) {
       paths.forEach((path) => {
-        Object.assign(path.style, baseAnimation.defaultLineStyles)
+        Object.assign(path.style, defaultLineStyles)
         path.style.strokeDasharray = 'none'
         path.style.strokeDashoffset = '0'
       })
@@ -113,7 +109,7 @@ export function useFormLinesAnimation(
           }
         }
 
-        Object.assign(path.style, baseAnimation.defaultLineStyles)
+        Object.assign(path.style, defaultLineStyles)
         path.style.strokeDasharray = `${totalLength} ${totalLength}`
 
         const initialOffset = line.isMainLine ? totalLength : -totalLength
@@ -175,13 +171,12 @@ export function useFormLinesAnimation(
       }
     })
   }, [
-    isMounted,
     lines,
     mainLineDuration,
     sideLineDuration,
     forceDisable,
-    baseAnimation.pathRefs,
-    baseAnimation.defaultLineStyles,
+    defaultLineStyles,
+    getPathRefs,
   ])
 
   const startFormAnimationCycle = useCallback(() => {
@@ -196,16 +191,18 @@ export function useFormLinesAnimation(
       const adaptedCycleDuration = cycleDuration
 
       cycleTimeoutRef.current = window.setTimeout(() => {
-        startFormAnimationCycle()
+        startFormAnimationCycleRef.current()
       }, adaptedCycleDuration)
     }
   }, [createSynchronizedFormAnimation, cycleDuration, forceDisable])
 
   useEffect(() => {
-    if (!isMounted) return
-    
+    startFormAnimationCycleRef.current = startFormAnimationCycle
+  }, [startFormAnimationCycle])
+
+  useEffect(() => {
     const checkAndInit = () => {
-      if (!isFormInitializedRef.current && baseAnimation.pathRefs.length > 0) {
+      if (!isFormInitializedRef.current && lines.length > 0) {
         startFormAnimationCycle()
       }
     }
@@ -217,7 +214,7 @@ export function useFormLinesAnimation(
       clearTimeout(timeoutId)
       clearTimeout(backupTimeoutId)
     }
-  }, [startFormAnimationCycle, baseAnimation.pathRefs.length, isMounted])
+  }, [startFormAnimationCycle, lines.length])
 
   useEffect(() => {
     return () => {

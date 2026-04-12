@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 export interface LineConfig {
   d: string
@@ -50,7 +50,6 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
     forceDisable = false,
   } = config
 
-  const [isMounted, setIsMounted] = useState(false)
   const pathRefs = useRef<(SVGPathElement | null)[]>([])
   const animationsRef = useRef<Animation[]>([])
   const isInitializedRef = useRef(false)
@@ -60,9 +59,9 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
       baseDuration,
       durationVariation,
       easing,
-      shouldAnimate: !forceDisable && isMounted,
+      shouldAnimate: !forceDisable,
     }
-  }, [baseDuration, durationVariation, easing, forceDisable, isMounted])
+  }, [baseDuration, durationVariation, easing, forceDisable])
 
   const setPathRef = useCallback(
     (index: number) => (ref: SVGPathElement | null) => {
@@ -142,13 +141,9 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
     })
   }, [animationConfig])
 
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+  const getPathRefs = useCallback(() => pathRefs.current, [])
 
   useEffect(() => {
-    if (!isMounted) return
-
     const checkAndInit = () => {
       if (!isInitializedRef.current && pathRefs.current.length > 0) {
         createAnimations()
@@ -162,7 +157,7 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
       clearTimeout(timeoutId)
       clearTimeout(backupTimeoutId)
     }
-  }, [createAnimations, lines.length, isMounted])
+  }, [createAnimations, lines.length])
 
   useEffect(() => {
     return () => {
@@ -178,6 +173,6 @@ export function useAnimatedLines(config: AnimatedLinesConfig) {
     gradients,
     defaultLineStyles,
     className,
-    pathRefs: pathRefs.current,
+    getPathRefs,
   }
 }

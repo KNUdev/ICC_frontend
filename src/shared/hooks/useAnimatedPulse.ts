@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 
 export interface AnimatedPulseConfig {
   duration?: number
@@ -25,14 +25,11 @@ const defaultConfig: Required<AnimatedPulseConfig> = {
 const createdKeyframes = new Set<string>()
 
 export function useAnimatedPulse(config: AnimatedPulseConfig = {}) {
-  const [isMounted, setIsMounted] = useState(false)
   const finalConfig = useMemo(() => {
     return { ...defaultConfig, ...config }
   }, [config])
 
   const shouldDisableAnimation = finalConfig.forceDisable
-
-  const styleRef = useRef<HTMLStyleElement | null>(null)
 
   const keyframeName = useMemo(
     () =>
@@ -44,7 +41,7 @@ export function useAnimatedPulse(config: AnimatedPulseConfig = {}) {
   )
 
   const pulseStyle = useMemo(() => {
-    if (shouldDisableAnimation || !isMounted) {
+    if (shouldDisableAnimation) {
       return {
         fill: finalConfig.colors.from,
       } as React.CSSProperties
@@ -60,12 +57,9 @@ export function useAnimatedPulse(config: AnimatedPulseConfig = {}) {
     finalConfig.easing,
     finalConfig.colors.from,
     shouldDisableAnimation,
-    isMounted,
   ])
 
   useEffect(() => {
-    setIsMounted(true)
-
     if (
       typeof document === 'undefined' ||
       shouldDisableAnimation

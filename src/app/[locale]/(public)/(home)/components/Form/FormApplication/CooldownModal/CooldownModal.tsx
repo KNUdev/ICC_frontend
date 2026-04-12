@@ -11,35 +11,36 @@ interface CooldownModalProps {
   onCancel: () => void
 }
 
-export function CooldownModal({
-  isOpen,
+interface CooldownModalContentProps {
+  remainingTime: number
+  onConfirm: () => void
+  onCancel: () => void
+}
+
+function CooldownModalContent({
   remainingTime,
   onConfirm,
   onCancel,
-}: CooldownModalProps) {
+}: CooldownModalContentProps) {
   const [timeLeft, setTimeLeft] = useState(remainingTime)
   const tFormApplication = useTranslations('form/application')
 
   useEffect(() => {
-    if (!isOpen) return
-
-    setTimeLeft(remainingTime)
-
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
-        if (prev <= 1000) {
+        const next = Math.max(prev - 1000, 0)
+
+        if (next <= 0) {
           clearInterval(interval)
           onCancel()
-          return 0
         }
-        return prev - 1000
+
+        return next
       })
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [isOpen, remainingTime, onCancel])
-
-  if (!isOpen) return null
+  }, [onCancel])
 
   const minutes = Math.floor(timeLeft / 60000)
   const seconds = Math.floor((timeLeft % 60000) / 1000)
@@ -78,5 +79,23 @@ export function CooldownModal({
         </div>
       </div>
     </div>
+  )
+}
+
+export function CooldownModal({
+  isOpen,
+  remainingTime,
+  onConfirm,
+  onCancel,
+}: CooldownModalProps) {
+  if (!isOpen) return null
+
+  return (
+    <CooldownModalContent
+      key={remainingTime}
+      remainingTime={remainingTime}
+      onConfirm={onConfirm}
+      onCancel={onCancel}
+    />
   )
 }

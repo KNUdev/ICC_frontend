@@ -13,18 +13,8 @@ import { EMPLOYEES } from '@/shared/data/emplotees.data'
 import { useLocale, useTranslations } from 'next-intl'
 import type { StaticImageData } from 'next/image'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import styles from './page.module.scss'
-
-interface SectorOption {
-	value: string
-	label: string
-}
-
-interface SpecialtyOption {
-	value: string
-	label: string
-}
 
 interface Employee {
 	avatarUrl: string | StaticImageData | null
@@ -55,12 +45,7 @@ export default function StaffClient() {
 	const [searchValue, setSearchValue] = useState('')
 	const inputRef = useRef<HTMLInputElement>(null)
 
-	const [sectors, setSectors] = useState<SectorOption[]>([])
-
 	const [specialty, setSpecialty] = useState<string | null>(null)
-	const [specialties, setSpecialties] = useState<SpecialtyOption[]>([])
-
-	const [employees, setEmployees] = useState<Employee[]>([])
 
 	const [pageSize, setPageSize] = useState<number | 'all'>(10)
 
@@ -71,32 +56,28 @@ export default function StaffClient() {
 	const locale = useLocale()
 	const tStaff = useTranslations('public/staff')
 
-	useEffect(() => {
-		let filtered = EMPLOYEES as unknown as Employee[]
-		if (pageSize !== 'all') {
-			filtered = filtered.slice(0, pageSize)
-		}
-		console.log('Employees in state:', filtered)
-		setEmployees(filtered)
-	}, [pageSize])
-
-	useEffect(() => {
-		const mappedSectors: SectorOption[] = Object.entries(SECTORS).map(
-			([id, names]) => ({
+	const sectors = useMemo(
+		() =>
+			Object.entries(SECTORS).map(([id, names]) => ({
 				value: id,
 				label: names[locale as keyof typeof names] || names.en || '',
-			}),
-		)
-		setSectors(mappedSectors)
+			})),
+		[locale],
+	)
 
-		const mappedSpecialties: SpecialtyOption[] = Object.entries(
-			SPECIALTIES,
-		).map(([id, names]) => ({
+	const specialties = useMemo(
+		() =>
+			Object.entries(SPECIALTIES).map(([id, names]) => ({
 			value: id,
 			label: names[locale as keyof typeof names] || names.en || '',
-		}))
-		setSpecialties(mappedSpecialties)
-	}, [locale])
+			})),
+		[locale],
+	)
+
+	const employees = useMemo(() => {
+		const source = EMPLOYEES as unknown as Employee[]
+		return pageSize === 'all' ? source : source.slice(0, pageSize)
+	}, [pageSize])
 
 	const getSectorName = (sectorId: string) => {
 		const sec = sectors.find((s) => s.value === sectorId)

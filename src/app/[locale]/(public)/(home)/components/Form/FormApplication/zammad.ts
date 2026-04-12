@@ -17,7 +17,7 @@ const fingerprint = () => {
         ctx.fillStyle = 'rgba(100, 200, 0, 0.7)';
         ctx.fillText(txt, 4, 17);
         return canvas.toDataURL();
-    } catch (e) {
+    } catch {
         return '';
     }
 };
