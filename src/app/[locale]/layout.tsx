@@ -33,27 +33,40 @@ export async function generateMetadata({
 	const t = await getTranslations({ locale, namespace: 'common' })
 	const tHome = await getTranslations({ locale, namespace: 'home' })
 
-	const baseUrl = 'https://icc.knu.ua'
+	const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://icc.knu.ua'
+
+	const description = tHome
+		.raw('subheading')
+		.replace(/<[^>]*>?/gm, '')
+		.replace(/[«»“”]/g, '')
+		.trim()
+
+	const truncatedDescription =
+		description.length > 160
+			? description.substring(0, 157) + '...'
+			: description
+
+	const title = t('titleFullName')
+	const titleLong = t('titleLong')
 
 	return {
 		title: {
-			template: `%s | ${t('titleFullName')}`,
-			default: t('titleFullName'),
+			template: `%s | ${title}`,
+			default: titleLong,
 		},
-		description: tHome.raw('subheading').replace(/<[^>]*>?/gm, ''),
+		description: truncatedDescription,
 		metadataBase: new URL(baseUrl),
 		alternates: {
-			canonical: '/',
 			languages: {
 				uk: '/uk',
 				en: '/en',
 			},
 		},
 		openGraph: {
-			title: t('titleFullName'),
-			description: tHome.raw('subheading').replace(/<[^>]*>?/gm, ''),
-			url: baseUrl,
-			siteName: t('titleFullName'),
+			title: titleLong,
+			description: truncatedDescription,
+			url: `${baseUrl}/${locale}`,
+			siteName: title,
 			locale: locale,
 			type: 'website',
 			images: [
@@ -61,14 +74,14 @@ export async function generateMetadata({
 					url: '/icons/icon-512x512.png',
 					width: 512,
 					height: 512,
-					alt: t('titleFullName'),
+					alt: title,
 				},
 			],
 		},
 		twitter: {
 			card: 'summary_large_image',
-			title: t('titleFullName'),
-			description: tHome.raw('subheading').replace(/<[^>]*>?/gm, ''),
+			title: titleLong,
+			description: truncatedDescription,
 			images: ['/icons/icon-512x512.png'],
 		},
 		robots: {

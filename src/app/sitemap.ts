@@ -3,7 +3,7 @@ import { PAGES } from '@/shared/config/page.config'
 import { SUPPORTED_LOCALES } from '@/i18n/config'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-	const baseUrl = 'https://icc.knu.ua'
+	const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://icc.knu.ua'
 
 	const routes = [
 		PAGES.HOME,
