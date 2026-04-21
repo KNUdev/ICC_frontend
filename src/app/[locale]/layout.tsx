@@ -73,20 +73,11 @@ export async function generateMetadata({
 			siteName: title,
 			locale: locale,
 			type: 'website',
-			images: [
-				{
-					url: `${baseUrl}/icons/icon-512x512.png`,
-					width: 512,
-					height: 512,
-					alt: title,
-				},
-			],
 		},
 		twitter: {
 			card: 'summary_large_image',
 			title: titleLong,
 			description: truncatedDescription,
-			images: [`${baseUrl}/icons/icon-512x512.png`],
 		},
 		other: {
 			'twitter:domain': new URL(baseUrl).host,
