@@ -1,12 +1,13 @@
 import type { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
+	const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://icc.knu.ua'
 	return {
 		rules: {
 			userAgent: '*',
 			allow: '/',
 			disallow: ['/api/', '/admin/'],
 		},
-		sitemap: 'https://icc.knu.ua/sitemap.xml',
+		sitemap: `${baseUrl}/sitemap.xml`,
 	}
 }

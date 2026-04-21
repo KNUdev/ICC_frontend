@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages, getTranslations } from 'next-intl/server'
 import { Geologica, Golos_Text, Inter } from 'next/font/google'
 import type { Metadata } from 'next'
+import { headers } from 'next/headers'
 import React from 'react'
 import './globals.scss'
 
@@ -33,7 +34,10 @@ export async function generateMetadata({
 	const t = await getTranslations({ locale, namespace: 'common' })
 	const tHome = await getTranslations({ locale, namespace: 'home' })
 
-	const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://icc.knu.ua'
+	const headerList = await headers()
+	const host = headerList.get('host')
+	const protocol = headerList.get('x-forwarded-proto') || 'https'
+	const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || `${protocol}://${host}`
 
 	const description = tHome
 		.raw('subheading')
@@ -71,7 +75,7 @@ export async function generateMetadata({
 			type: 'website',
 			images: [
 				{
-					url: '/icons/icon-512x512.png',
+					url: `${baseUrl}/icons/icon-512x512.png`,
 					width: 512,
 					height: 512,
 					alt: title,
@@ -82,7 +86,10 @@ export async function generateMetadata({
 			card: 'summary_large_image',
 			title: titleLong,
 			description: truncatedDescription,
-			images: ['/icons/icon-512x512.png'],
+			images: [`${baseUrl}/icons/icon-512x512.png`],
+		},
+		other: {
+			'twitter:domain': new URL(baseUrl).host,
 		},
 		robots: {
 			index: true,
